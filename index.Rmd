@@ -1,0 +1,16 @@
+--- 
+title: "Chesterfield County Rental Market Analysis"
+author: "HDAdvisors"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+# description: add description
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# About {-}
+
+[short background]
