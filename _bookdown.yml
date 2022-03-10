@@ -1,8 +1,29 @@
 book_filename: "chesterfield-market-analysis"
+language:
+  label:
+    fig: "FIGURE "
+    TAB: "TABLE "
+  ui:
+    chapter_name: "Chapter "
 new_session: true
 before_chapter_script: _common.R
 delete_merged_file: true
 output_dir: "docs"
-language:
-  ui:
-    chapter_name: "Chapter "
+
+rmd_files:
+
+- "index.Rmd"
+
+- "execsum.Rmd"
+
+- "part-1a-1.Rmd"
+# - "part-1a-2.Rmd"
+# - "part-1a-3.Rmd"
+# - "part-1a-4.Rmd"
+# - "part-1a-5.Rmd"
+# 
+# - "part-1b-1.Rmd"
+# - "part-1b-2.Rmd"
+# - "part-1b-3.Rmd"
+# - "part-1b-4.Rmd"
+# - "part-1b-5.Rmd"
