@@ -21,9 +21,11 @@ rmd_files:
 - "part-1a-3.Rmd"
 - "part-1a-4.Rmd"
 - "part-1a-5.Rmd"
-# 
-# - "part-1b-1.Rmd"
-# - "part-1b-2.Rmd"
-# - "part-1b-3.Rmd"
-# - "part-1b-4.Rmd"
-# - "part-1b-5.Rmd"
+
+- "part-1b-1.Rmd"
+- "part-1b-2.Rmd"
+- "part-1b-3.Rmd"
+- "part-1b-4.Rmd"
+- "part-1b-5.Rmd"
+
+- "references.Rmd"
