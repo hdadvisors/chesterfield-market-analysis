@@ -71,7 +71,8 @@ cpi <- cpi %>%
 
 b25119_cpi <- b25119_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate))
+  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
+  select(year, tenure, dollars19, moe, reliability)
 
 
 
@@ -134,7 +135,8 @@ cpi <- cpi %>%
 
 b19049_cpi <- b19049_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate))
+  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
+  select(year, age, dollars19, moe, reliability)
 
 # Reserved for Shiny app
 ```
@@ -209,7 +211,8 @@ cpi <- cpi %>%
 
 b19013_cpi <- b19013_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate))
+  transform(dollars19 = ((376.5/priceindex)*estimate))%>%
+  select(year, race, dollars19, moe, reliability)
 
 # Reserved for Shiny app
 ```
