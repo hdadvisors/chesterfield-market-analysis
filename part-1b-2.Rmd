@@ -6,17 +6,213 @@ This section provides an analysis of household incomes in Chesterfield County di
 
 In 2020, housing expenses increased amid the pandemic to account for nearly 35 percent of household spending — the largest share of average annual expenditures regardless of household type.
 
+```{r global, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, 
+                      message=FALSE, 
+                      warning=FALSE, 
+                      include=FALSE)
+
+```
+
 ## Tenure
 
-[reserved]
+```{r tenure, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidycensus)
+library(readxl)
+
+years <- 2010:2019
+
+b25119_vars <- load_variables(2010, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
+
+b25119_raw <- map_dfr(years, function(yr){
+  b25119_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = yr,
+    survey = "acs1"
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure) %>%
+  mutate(tenure = case_when(
+    tenure == "Total" ~ "All households",
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter"
+  ))
+
+b25119_data <- b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, year, tenure, estimate, moe) %>%
+  group_by(year, tenure) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
+
+cpi <- read_excel("data/CPI_U_RS.xlsx")
+cpi <- cpi %>% 
+  rename(year = Year,
+         priceindex = Index) %>%
+  transform(year = as.numeric(year))
+
+b25119_cpi <- b25119_data %>%
+    left_join(cpi, by = 'year') %>%
+  transform(dollars19 = ((376.5/priceindex)*estimate))
+
+
+
+# Reserved for Shiny app
+```
 
 ## Age
 
-[reserved]
+```{r age}
+
+years <- 2010:2019
+
+b19049_vars <- load_variables(2010, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B19049")
+
+b19049_raw <- map_dfr(years, function(yr){
+  b25119_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B19049",
+    year = yr,
+    survey = "acs1"
+  ) %>%
+    mutate(year = yr)
+  })
+
+b19049_vars_cleaned <- b19049_vars %>%
+  separate(label, into = c("est", "income", "age"), sep = "!!") %>% 
+  select(variable = name, age) %>%
+  mutate(age = case_when(
+    age == "Total" ~ "All",
+    age == "Householder under 25 years" ~ "Under 25 years",
+    age == "Householder 25 to 44 years" ~ "25 to 44 years",
+    age == "Householder 45 to 64 years"~ "45 to 64 years",
+    age == "Householder 65 years and over"~ "65 years and over"
+  ))
+
+b19049_data <- b19049_raw %>%
+  right_join(b19049_vars_cleaned, by = "variable") %>%
+  select(NAME, year, age, estimate, moe) %>%
+  group_by(year, age) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
+
+cpi <- read_excel("data/CPI_U_RS.xlsx")
+cpi <- cpi %>% 
+  rename(year = Year,
+         priceindex = Index) %>%
+  transform(year = as.numeric(year))
+
+b19049_cpi <- b19049_data %>%
+    left_join(cpi, by = 'year') %>%
+  transform(dollars19 = ((376.5/priceindex)*estimate))
+
+# Reserved for Shiny app
+```
 
 ## Race/ethnicity
+```{r race}
 
-[reserved]
+years <- 2010:2019
+
+b19013 <- c("B19013", paste0("B19013", LETTERS[2:9]))
+
+concept_to_race <- function(x) {
+  out <- x %>%
+    str_remove_all("MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS \\(\\IN 2019 INFLATION-ADJUSTED DOLLARS\\)\\ \\(|\\)") %>%
+    str_to_title()
+}
+
+b19013_vars <- load_variables(2019, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% b19013) %>%
+  filter(str_detect(name, "A") == FALSE) %>%
+  mutate(race = concept_to_race(concept)) %>%
+  mutate(race = case_when(
+    race == "Median Household Income In The Past 12 Months (In 2019 Inflation-Adjusted Dollars" ~ "All",
+    TRUE ~ race)) %>%
+  mutate(across(.fns = ~str_remove_all(.x, "Householder")),
+         across(.fn = ~str_remove_all(.x, "Alone"))) %>%
+  mutate(race = case_when(
+    race == "Two Or More Races " ~ "Multiracial",
+    race == "White , Not Hispanic Or Latino " ~ "White, non-Hispanic",
+    TRUE ~ race))
+  
+
+b19013_raw <- map_dfr(b19013, function(tb){
+  yearly_data <- map_dfr(years, function(yr){
+  b25119_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = tb,
+    year = yr,
+    survey = "acs1"
+  ) %>%
+    mutate(year = yr)
+  })
+  yearly_data
+})
+
+b19013_vars_cleaned <- b19013_vars %>%
+  select(variable = name, race)
+
+b19013_data <- b19013_raw %>%
+  right_join(b19013_vars_cleaned, by = "variable") %>%
+  select(NAME, year, race, estimate, moe) %>%
+  group_by(year, race) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
+
+cpi <- read_excel("data/CPI_U_RS.xlsx")
+cpi <- cpi %>% 
+  rename(year = Year,
+         priceindex = Index) %>%
+  transform(year = as.numeric(year))
+
+b19013_cpi <- b19013_data %>%
+    left_join(cpi, by = 'year') %>%
+  transform(dollars19 = ((376.5/priceindex)*estimate))
+
+# Reserved for Shiny app
+```
 
 ## Takeaways
 
