@@ -100,13 +100,67 @@ chesterfield_chas <- chesterfield %>%
 ```
 
 ## Age
+```{r hhtype}
+
+library(tidyverse)
+
+hhtype_chas <- read_csv("data/Table7_2012to2018.csv") %>%
+  filter(fips == 51041) %>%
+  filter(Line_Type == "Detail") %>%
+  select(year = Year, estimate = Estimate, moe = MOE, tenure = Tenure, income = `Household income`, hhtype = `Household type`, costburden = `Cost burden`)
+
+hhtype_clean <- hhtype_chas %>%
+  mutate(income = case_when(
+    income == "household income is less than or equal to 30% of HAMFI" ~ "30% AMI or less",
+    income == "household income is greater than 30% but less than or equal to 50% of HAMFI" ~ "31% to 50% AMI",
+    income == "household income is greater than 50% but less than or equal to 80% of HAMFI" ~ "51% to 80% AMI",
+    income == "household income is greater than 80% but less than or equal to 100% of HAMFI" ~ "81% to 100% AMI",
+    income == "household income is greater than 100% of HAMFI" ~ "Greater than 100% AMI"
+  )) %>%
+  mutate(hhtype = case_when(
+    hhtype == "household type is elderly family (2 persons, with either or both age 62 or over)" ~ "Elderly family",
+    hhtype == "household type is elderly non-family" ~ "Elderly non-family",
+    hhtype == "household type is large family (5 or more persons)" ~ "Large family",
+    hhtype == "household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)" ~ "Small family",
+    hhtype == "other household type (non-elderly non-family)" ~ "Other family type"
+  )) %>%
+  mutate(costburden = case_when(
+    costburden == "housing cost burden is less than or equal to 30%" ~ "Not cost-burdened",
+    costburden == "housing cost burden is greater than 30% but less than or equal to 50%" ~ "Cost-burdened"
+    costburden == "housing cost burden is greater than 50%" ~ "Severely cost-burdened",
+    costburden == "housing cost burden not computed (household has no/negative income)" ~ "No or negative income"
+  ))
+
+```
 
 [reserved]
 
 ## Race/ethnicity
 
-[reserved]
+```{r race}
 
+library(tidyverse)
+
+race_chas <- read_csv("data/Table9_2012to2018.csv") %>%
+  filter(fips == 51041) %>%
+  filter(Line_Type == "Detail") %>%
+  select(year = Year, estimate = Estimate, moe = MOE, tenure = Tenure, race = `Race/ethnicity`, costburden = `Cost burden`)
+
+race_clean <- race_chas %>%
+  mutate(across(.fns = ~str_remove_all(.x, "alone, non-Hispanic"))) %>% # I haven't figured out how to retain this for White
+  mutate(race = case_when(
+    race == "other (including multiple races, non-Hispanic)" ~ "Another race incuding multiracial",
+    TRUE ~ race
+  )) %>%
+    mutate(costburden = case_when(
+    costburden == "less than or equal to 30%" ~ "Not cost-burdened",
+    costburden == "greater than 30% but less than or equal to 50%" ~ "Cost-burdened",
+    costburden == "greater than 50%" ~ "Severely cost-burdened",
+    costburden == "not computed (household has no/negative income)" ~ "No or negative income"
+  ))
+  
+  
+```
 ## Takeaways
 
 [reserved]
