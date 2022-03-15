@@ -21,24 +21,26 @@ library(glue)
 library(httr)
 library(jsonlite)
 library(tidyverse)
-library(usethis)
 
-hud <- "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI5NjcyMzM3MjBkMGNlZWUxMGE5NjU0MWMzNmUyZWMzNzc4NWExOWFlMjMwMzM5YjFlZDg2NmQ3M2JkOTNkNjk5YmYzZGFmZTQyMWU3YjBlIn0.eyJhdWQiOiI2IiwianRpIjoiYjk2NzIzMzcyMGQwY2VlZTEwYTk2NTQxYzM2ZTJlYzM3Nzg1YTE5YWUyMzAzMzliMWVkODY2ZDczYmQ5M2Q2OTliZjNkYWZlNDIxZTdiMGUiLCJpYXQiOjE2NDcyODg0NjEsIm5iZiI6MTY0NzI4ODQ2MSwiZXhwIjoxOTYyOTA3NjYxLCJzdWIiOiIzMTEzOSIsInNjb3BlcyI6W119.fi0sEW9r_1i4_0pDI69ejp8rOhmc8xBL-yzhTpRvIQ5lX3kqEavFJ-GDg3FKVP_6Q9hdyhrRefVe6jH-SkAm6g"
+my_token <- Sys.getenv("HUD_KEY")
 
+hud_chas_request <- GET("https://www.huduser.gov/hudapi/public/chas?type=3&year=2012-2016&stateId=51&entityId=59",
+                        add_headers(Authorization = glue("Bearer {my_token}")))
 
+hud_chas_request$status_code
 
 get_hud_chas <- function(
   type, 
-  year = "2013-2017", 
+  year = NULL, 
   state_id = NULL, 
   entity_id = NULL, 
   token = NULL
 ) {
   
   # Check to see if a token exists
-  if (is.null(hud)) {
-    if (Sys.getenv(hud) != "") {
-      token <- Sys.getenv(hud)
+  if (is.null(token)) {
+    if (Sys.getenv("HUD_KEY") != "") {
+      token <- Sys.getenv("HUD_KEY")
     }
   }
   
@@ -74,9 +76,20 @@ get_hud_chas <- function(
                         values_to = "value")
   
   return(hud_tibble)
+  
 }
 
-get_hud_chas(type = 3, state_id = 51, entity_id = 510)
+years <- c("2014-2018", "2013-2017","2012-2016","2011-2015", "2010-2014", 
+           "2009-2013", "2008-2012","2007-2011", "2006-2010")
+
+chesterfield <- map_dfr(years, function(yr){
+  chesterfield_chas <- get_hud_chas(
+    type = 3, 
+    year = yr, 
+    state_id = 51, 
+    entity_id = 041
+    )
+})
 ```
 
 ## Age
