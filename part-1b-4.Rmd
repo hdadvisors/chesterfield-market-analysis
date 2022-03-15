@@ -6,9 +6,99 @@ This section provides an analysis of homeowner and renter incomes versus the act
 
 [reserved]
 
+```{r global, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, 
+                      message=FALSE, 
+                      warning=FALSE, 
+                      include=FALSE)
+
+```
+
 ## Homeowner affordability
 
-[reserved]
+```{r homeowner}
+library(tidyverse)
+library(tidycensus)
+library(readxl)
+library(lubridate)
+
+years <- 2010:2019
+
+b25119_vars <- load_variables(2010, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
+
+b25119_raw <- map_dfr(years, function(yr){
+  b25119_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = yr,
+    survey = "acs1"
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure) %>%
+  mutate(tenure = case_when(
+    tenure == "Total" ~ "All households",
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter"
+  ))
+
+b25119_data <- b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, year, tenure, estimate, moe) %>%
+  group_by(year, tenure) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
+
+cpi <- read_excel("data/CPI_U_RS.xlsx")
+cpi <- cpi %>% 
+  rename(year = Year,
+         priceindex = Index) %>%
+  transform(year = as.numeric(year))
+
+b25119_cpi <- b25119_data %>%
+    left_join(cpi, by = 'year') %>%
+  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
+  select(year, tenure, dollars19, moe, reliability) %>%
+  filter(tenure == "Homeowner")
+
+medsales <- read_csv("data/cvrmls_medsales.csv")
+
+cpi_less <- read_csv("data/CUUR0000SA0L2.csv")
+
+cpi_less$year <- floor_date(cpi$DATE, "year")
+
+cpi_less <- cpi_less %>%
+  rename(cpi_value = CUUR0000SA0L2) %>%
+  transform(cpi_value = as.numeric(cpi_value))
+
+annual_cpi_less <- cpi_less %>%
+  group_by(year) %>%
+  summarize(mean = mean(cpi_value))%>%
+  mutate(year = as.integer(substring(year, 1,4)))
+
+medsales_adjusted <- medsales %>% 
+  left_join(annual_cpi_less, by = 'year') %>%
+  rename(cpi = mean) %>%
+  mutate(dollars19 = ((234.21450/cpi)*estimate))
+
+
+
+```
 
 ## Renter affordability
 
