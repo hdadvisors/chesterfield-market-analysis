@@ -80,7 +80,7 @@ medsales <- read_csv("data/cvrmls_medsales.csv")
 
 cpi_less <- read_csv("data/CUUR0000SA0L2.csv")
 
-cpi_less$year <- floor_date(cpi$DATE, "year")
+cpi_less$year <- floor_date(cpi_less$DATE, "year")
 
 cpi_less <- cpi_less %>%
   rename(cpi_value = CUUR0000SA0L2) %>%
@@ -94,7 +94,10 @@ annual_cpi_less <- cpi_less %>%
 medsales_adjusted <- medsales %>% 
   left_join(annual_cpi_less, by = 'year') %>%
   rename(cpi = mean) %>%
-  mutate(dollars19 = ((234.21450/cpi)*estimate))
+  mutate(sales19 = ((234.21450/cpi)*medsales)) 
+
+income_price <- b25119_cpi %>%
+  left_join(medsales_adjusted, by = 'year') # Missing 2010 and 2011, as well as 2020-2022
 
 
 
