@@ -21,6 +21,7 @@ library(glue)
 library(httr)
 library(jsonlite)
 library(tidyverse)
+library(readxl)
 
 my_token <- Sys.getenv("HUD_KEY")
 
@@ -90,6 +91,12 @@ chesterfield <- map_dfr(years, function(yr){
     entity_id = 041
     )
 })
+
+labels <- read_excel("data/CHAS_HUD_Dictionary.xlsx")
+
+chesterfield_chas <- chesterfield %>%
+  right_join(labels, by = 'indicator')
+
 ```
 
 ## Age
