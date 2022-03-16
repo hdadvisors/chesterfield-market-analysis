@@ -12,7 +12,13 @@ Other measures have gained credibility over time such as the Housing Affordabili
 
 The following summarizes select standard and alternative measures and provides an understanding of affordability within a Chesterfield County-specific context.
 
-[add table]
+| Measure                                 | Method                                                                                                                  | Pros | Cons |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------------|------|------|
+| 30 percent standard                     | No more than 30 percent of household income is spent on housing costs                                                   |      |      |
+| NAR's Housing Affordability Index (HAI) | Comparision of whether a household can afforda a mortgage loan for a typical home                                       |      |      |
+| NLIHC's Housing Wage                    | Hourly wage full-time worker must earn to afford fair market rent without spending more than 30 percent of their income |      |      |
+| Residual income approach                | Income after non-housing costs determines the price of housing that is affordable to households                         |      |      |
+| CNT's H+T Affordability Index           | No more than 45 percent of household is spent on housing and transportation costs combined                              |      |      |
 
 ## Takeaways
 
