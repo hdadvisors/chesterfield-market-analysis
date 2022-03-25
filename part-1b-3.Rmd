@@ -113,11 +113,10 @@ chesterfield_cb <- chesterfield_chas %>%
   select(year, cb = income, tenure, value) %>%
   subset(tenure != "All")
 
-
-
 ```
 
 ## Household type
+
 ```{r hhtype}
 
 hhtype_chas <- read_csv("data/Table7_2012to2018.csv") %>%
@@ -152,6 +151,7 @@ hhtype_clean <- hhtype_chas %>%
 [reserved]
 
 ## Race/ethnicity
+
 In the county, there are major disparities in cost burden between racial and ethnic 
 groups. In 2018, the share of cost-burdened white households was ten percentage points 
 lower than the share of Black, Asian, and Hispanic households.
@@ -163,9 +163,8 @@ one in three (34 percent) in 2018.
 
 These decreases in cost burden among households of color may be in large part to the 
 relative affordability and attractiveness of Chesterfield County to growing families. 
-```{r race}
 
-library(tidyverse)
+```{r race}
 
 race_chas <- read_csv("data/Table9_2012to2018.csv") %>%
   filter(fips == 51041) %>%

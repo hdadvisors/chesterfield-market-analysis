@@ -1,12 +1,12 @@
 # Household income {#part-1b-2}
 
-This section provides an analysis of household incomes in Chesterfield County disaggregated by tenure, age, and race/ethnicity. The major data source for this information will be the American Community Survey. Data will be provided at the county and census tract level.
+This section provides an analysis of household incomes in Chesterfield County disaggregated by tenure, age, and race/ethnicity. The major data source for this information is the American Community Survey.
 
 ## Background
 
-In 2020, housing expenses increased amid the pandemic to account for nearly 35 percent of household spending---[the largest share of average annual expenditures regardless of household type](https://www.bls.gov/news.release/pdf/cesan.pdf). While housing prices have been on the rise, household incomes across the country have not kept pace. This has largely resulted in a higher share of household incomes being spent on basic living expenses.
+In 2020, housing expenses increased amid the pandemic to account for nearly 35 percent of the average American household's spending---[the largest share of average annual expenditures regardless of household type](https://www.bls.gov/news.release/pdf/cesan.pdf). While housing prices have been on the rise, household incomes across the country have not kept pace. This has largely resulted in a higher share of household incomes being spent on basic living expenses.
 
-But like the rest of the country, households in Chesterfield County vary and so do their incomes and expenditures. The following shows how household incomes vary by tenure, age, race and ethnicity. Income disparities exist across the county, and have major implications on the need for housing diversity.
+However, like the rest of the country, households in Chesterfield County have a wide range of incomes and expenditures. The following sections show how household incomes vary by tenure, age, race and ethnicity. Income disparities exist across the county, and have major implications on the need for housing diversity.
 
 
 ```{r global, include=FALSE}
@@ -21,14 +21,13 @@ library(plotly)
 
 ## Tenure
 
-A majority of Chesterfield residents are homeowners, but the number of renters has 
-been on the rise over the past decade. The increase in renters can be attributed to 
-the growing cost of homeownership and changing preferences among individuals and families. 
+While a majority of Chesterfield residents are homeowners, the number of renters has grown over the past decade. The increase in households who rent can be attributed to the growing cost of homeownership in the county, as well as changing preferences among individuals and families. 
 
-But as of 2020, the renter median household income is nearly half (55%) that of a 
-typical homeowner's household income \$53,147 compared to  $96,296. While the median 
-renter income has been on the rise and homeowner incomes have declined over the past decade, 
-the income gap of nearly $40,000 has remained steady.
+As of 2020, the median household income for renters is nearly half (55 percent) that of the typical homeowner's household income: \$53,147 compared to \$96,296. When adjusted for inflation, the median renter income has risen slightly over the past decade (by just under \$4,000). This is likely in part due to some middle-income households delaying homeownership because of limited affordable inventory and, for some young working adults, burdensome student loan debt.
+
+At the same time, average homeowner incomes have actually declined slightly (by just over \$1,000). One potential explanation for the limited income growth among homeowners is the ongoing transition from full employment to fixed income for baby boomers entering retirement.
+
+Because real average incomes for both homeowners and renters in Chesterfield County have remained steady for a decade, a wide gap of more than \$43,000 remains.
 
 ```{r tenure, fig.cap="Median household income by tenure"}
 
@@ -106,24 +105,17 @@ ggplotly(tenure)
 
 ## Age
 
-While younger households generally have less income because they are typically getting 
-started in their careers, senior households can face similar challenges as they approach 
-retirement age and transition to fixed-incomes. This is evident in Chesterfield County where 
-households both under 25 and 65 and older have substantially lower incomes.
+While younger households generally have less income because they are typically getting started in their careers, senior households can face similar challenges as they approach retirement age and transition to fixed incomes. This is evident in Chesterfield County, where households both under 25 and 65 and older have substantially lower average incomes.
 
-The 45 to 64 year age group has a high median household income nearing \$100,000 in 2020. This 
-age group represents a significant number of Generation X'ers and baby boomers who have chosen to 
-live in the county. Millennial households in the county also have high incomes ($87,328).
+The 45 to 64 year age group had a high median household income nearing \$100,000 in 2020. This age group represents a significant number of Generation X'ers and baby boomers in their prime working years who have chosen to live in the county. Millennial households in the county---those 25 to 44 years old---also have high incomes ($87,328).
 
-Chesterfield seniors in 2020 had a median household income of \$61,777. Although this was the only 
-age group to see a moderate increase (11 percent) in median household income, senior incomes are still
-significantly less than their older adult counterparts. This translates to less income to compete for housing in the Chesterfield market.
+Chesterfield seniors in 2020 had a median household income of \$61,777. Although this was the only age group to see a moderate increase (11 percent) in median household income, senior incomes are still significantly lower than their other adult counterparts. This translates to less income to compete for housing in the Chesterfield market.
 
 At the opposite end of the spectrum, households under 25 have seen decreasing incomes---going 
 from \$48,591 in 2010 to \$40,881 in 2020, a 16 percent decrease. Lower incomes among Generation Z 
 may have major implications on the need for more rental and starter home options amid rising costs.
 
-```{r age}
+```{r age, fig.cap="Median household income by age"}
 
 years <- 2010:2020
 
@@ -198,11 +190,17 @@ ggplotly(age)
 
 ```
 
-## Race/ethnicity
+## Race and ethnicity
 
-The racial wealth gap has been reported on in numerous studies and articles over the past decades. This wealth gap is most pronounced between Black and white households in America and can be attributed to centuries of discriminatory practices. In Chesterfield County,...
+Like the rest of Virginia and the nation, average household incomes across Chesterfield vary significantly by race and ethnicity. These differences are the result of many historical and structural disparities affecting economic opportunities for persons of color.
 
-```{r race}
+Over the last decade, Asian and white non-Hispanic households in Chesterfield have maintained the highest median incomes. As of 2020, the estimated median income for the county's Asian households topped $100,000. White non-Hispanic households also had high incomes, averaging \$90,712.
+
+Multiracial households saw the largest real increase in incomes, growing by over 28 percent from 2010 to 2020. However, this increase occurred almost entirely from 2019 to 2020, which is likely reflective of additional individuals and households choosing to identify with more than one race or ethnicity than they would have in previous years. [ADD REFERENCE TO 2020 CENSUS PATTERNS]
+
+The lowest average incomes in the county are found among Hispanic and Black households; both groups have also not seen significant changes in real incomes since 2010. Black households had a median income of \$71,962 in 2020, while Hispanic households had a median income of \$60,875. That amount is roughly equal to the annual gross pay for two full-time workers earning \$15 per hour.
+
+```{r race, fig.cap="Median household income by race and ethnicity"}
 
 years <- 2010:2020
 

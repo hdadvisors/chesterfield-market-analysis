@@ -1,4 +1,6 @@
 fig:tenure
+fig:age
+fig:race
 part-1a-1
 background
 summaries-of-housing-elements-in-planning-documents
@@ -31,13 +33,13 @@ part-1b-2
 background-5
 tenure
 age
-raceethnicity
+race-and-ethnicity
 takeaways-4
 part-1b-3
 background-6
 tenure-1
 household-type
-raceethnicity-1
+raceethnicity
 takeaways-5
 part-1b-4
 background-7

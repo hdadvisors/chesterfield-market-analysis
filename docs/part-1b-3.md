@@ -29,9 +29,11 @@ homeowners (24 percent) in 2010 to 18 percent in 2018.
 ## Household type
 
 
+
 [reserved]
 
 ## Race/ethnicity
+
 In the county, there are major disparities in cost burden between racial and ethnic 
 groups. In 2018, the share of cost-burdened white households was ten percentage points 
 lower than the share of Black, Asian, and Hispanic households.
@@ -43,6 +45,7 @@ one in three (34 percent) in 2018.
 
 These decreases in cost burden among households of color may be in large part to the 
 relative affordability and attractiveness of Chesterfield County to growing families. 
+
 
 ## Takeaways
 
