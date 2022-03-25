@@ -4,24 +4,39 @@ This section provides an analysis of household incomes in Chesterfield County di
 
 ## Background
 
-In 2020, housing expenses increased amid the pandemic to account for nearly 35 percent of household spending — the largest share of average annual expenditures regardless of household type.
+In 2020, housing expenses increased amid the pandemic to account for nearly 35 percent of household spending — [the largest share of average annual expenditures regardless of household type](https://www.bls.gov/news.release/pdf/cesan.pdf). While housing prices have been on the rise, household incomes across the country have not kept pace. This has largely resulted in a higher share of household incomes being spent on basic living expenses.
+
+But like the rest of the country, households in Chesterfield County vary and so do their incomes and expenditures. The following shows how household incomes vary by tenure, age, race and ethnicity. Income disparities exist across the county, and have major implications on the need for housing diversity.
+
 
 ```{r global, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, 
                       message=FALSE, 
                       warning=FALSE, 
-                      include=FALSE)
+                      include=FALSE,
+                      eval=FALSE)
 
 ```
 
 ## Tenure
 
+A majority of Chesterfield residents are homeowners, but the number of renters has 
+been on the rise over the past decade. The increase in renters can be attributed to 
+the growing cost of homeownership and changing preferences among individuals and families. 
+
+But as of 2020, the renter median household income is nearly half (55%) that of a 
+typical homeowner's household income \$53,147 compared to  $96,296. While the median 
+renter income has been on the rise and homeowner incomes have declined over the past decade, 
+the income gap of nearly $40,000 has remained steady.
+
 ```{r tenure, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(tidycensus)
 library(readxl)
+library(ggplot2)
+library(plotly)
 
-years <- 2010:2019
+years <- 2010:2020
 
 b25119_vars <- load_variables(2010, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25119")
@@ -33,7 +48,7 @@ b25119_raw <- map_dfr(years, function(yr){
     state = "VA",
     table = "B25119",
     year = yr,
-    survey = "acs1"
+    survey = "acs5" # Using 5-year because 1-year ACS isn't available?
   ) %>%
     mutate(year = yr)
   })
@@ -71,9 +86,24 @@ cpi <- cpi %>%
 
 b25119_cpi <- b25119_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
-  select(year, tenure, dollars19, moe, reliability)
+  transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
+  select(year, tenure, dollars20, moe, reliability) %>%
+  subset(tenure != "All households")
 
+tenure <- ggplot(b25119_cpi, aes(x=year, y=dollars20, group=tenure)) +
+  geom_line(aes(color=tenure)) +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "Median household income by tenure",
+    subtitle = "From 2010 to 2020 in Chesterfield County",
+    source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
+  ) +
+  scale_y_continuous(labels=scales::dollar_format()) +
+  scale_x_continuous(breaks = 2010:2020)
+  
+
+ggplotly(tenure)
 
 
 # Reserved for Shiny app
@@ -81,9 +111,26 @@ b25119_cpi <- b25119_data %>%
 
 ## Age
 
+While younger households generally have less income because they are typically getting 
+started in their careers, senior households can face similar challenges as they approach 
+retirement age and transition to fixed-incomes. This is evident in Chesterfield County where 
+households both under 25 and 65 and older have substantially lower incomes.
+
+The 45 to 64 year age group has a high median household income nearing \$100,000 in 2020. This 
+age group represents a significant number of Generation X'ers and baby boomers who have chosen to 
+live in the county. Millennial households in the county also have high incomes ($87,328).
+
+Chesterfield seniors in 2020 had a median household income of \$61,777. Although this was the only 
+age group to see a moderate increase (11 percent) in nedian household income, senior incomes are still
+significantly less than their older adult couunterparts. This translates to less income to compete for housing in the Chesterfield market.
+
+At the opposite end of the spectrum, households under 25 have seen decreasing incomes --- going 
+from \$48,591 in 2010 to \$40,881 in 2020, a 16 percent decrease. Lower incomes among Generation Z 
+may have major implications on the need for more rental and starter home options amid rising costs.
+
 ```{r age}
 
-years <- 2010:2019
+years <- 2010:2020
 
 b19049_vars <- load_variables(2010, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B19049")
@@ -95,7 +142,7 @@ b19049_raw <- map_dfr(years, function(yr){
     state = "VA",
     table = "B19049",
     year = yr,
-    survey = "acs1"
+    survey = "acs5"
   ) %>%
     mutate(year = yr)
   })
@@ -135,16 +182,33 @@ cpi <- cpi %>%
 
 b19049_cpi <- b19049_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
-  select(year, age, dollars19, moe, reliability)
+  transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
+  select(year, age, dollars20, moe, reliability) %>%
+  subset(age != "All")
 
-# Reserved for Shiny app
+age <- ggplot(b19049_cpi, aes(x=year, y=dollars20, group=age)) +
+  geom_line(aes(color=age)) +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "Median household income by age",
+    subtitle = "From 2010 to 2020 in Chesterfield County",
+    source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
+  ) +
+  scale_y_continuous(labels=scales::dollar_format()) +
+  scale_x_continuous(breaks = 2010:2020)
+
+
+ggplotly(age)
+
 ```
 
 ## Race/ethnicity
+
+The racial wealth gap has been reported on in numerous studies and articles over the past decades. This wealth gap is most pronounced between Black and white households in America and can be attributed to centuries of discriminatory practices. In Chesterfield County,...
 ```{r race}
 
-years <- 2010:2019
+years <- 2010:2020
 
 b19013 <- c("B19013", paste0("B19013", LETTERS[2:9]))
 
@@ -161,11 +225,13 @@ b19013_vars <- load_variables(2019, "acs5") %>%
   mutate(race = case_when(
     race == "Median Household Income In The Past 12 Months (In 2019 Inflation-Adjusted Dollars" ~ "All",
     TRUE ~ race)) %>%
+    mutate(across(where(is.character), str_trim)) %>%
   mutate(across(.fns = ~str_remove_all(.x, "Householder")),
-         across(.fn = ~str_remove_all(.x, "Alone"))) %>%
+         across(.fns = ~str_remove_all(.x, "Alone")),
+         across(.fns = ~str_trim(.x, side = "right"))) %>%
   mutate(race = case_when(
-    race == "Two Or More Races " ~ "Multiracial",
-    race == "White , Not Hispanic Or Latino " ~ "White, non-Hispanic",
+    race == "Two Or More Races" ~ "Multiracial",
+    race == "White, Not Hispanic Or Latino" ~ "White, non-Hispanic",
     TRUE ~ race))
   
 
@@ -177,7 +243,7 @@ b19013_raw <- map_dfr(b19013, function(tb){
     state = "VA",
     table = tb,
     year = yr,
-    survey = "acs1"
+    survey = "acs5"
   ) %>%
     mutate(year = yr)
   })
@@ -211,10 +277,28 @@ cpi <- cpi %>%
 
 b19013_cpi <- b19013_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate))%>%
-  select(year, race, dollars19, moe, reliability)
+  transform(dollars20 = ((381.2/priceindex)*estimate))%>%
+  select(year, race, dollars20, moe, reliability) %>%
+  subset(race != "All") %>%
+  subset(race != "American Indian And Alaska Native") %>%
+  subset(race != "Native Hawaiian And Other Pacific Islander") %>%
+  subset(race != "Some Other Race")
 
-# Reserved for Shiny app
+race <- ggplot(b19013_cpi, aes(x=year, y=dollars20, group=race)) +
+  geom_line(aes(color=race)) +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "Median household income by race and ethnicity",
+    subtitle = "From 2010 to 2020 in Chesterfield County",
+    source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19013B-I."
+  ) +
+  scale_y_continuous(labels=scales::dollar_format()) +
+  scale_x_continuous(breaks = 2010:2020)
+  
+
+ggplotly(race)
+
 ```
 
 ## Takeaways
