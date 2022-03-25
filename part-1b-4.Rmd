@@ -7,20 +7,17 @@ This section provides an analysis of homeowner and renter incomes versus the act
 [reserved]
 
 ```{r global, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, 
-                      message=FALSE, 
-                      warning=FALSE, 
-                      include=FALSE)
+
+library(tidyverse)
+library(tidycensus)
+library(readxl)
+library(lubridate)
 
 ```
 
 ## Homeowner affordability
 
 ```{r homeowner}
-library(tidyverse)
-library(tidycensus)
-library(readxl)
-library(lubridate)
 
 years <- 2010:2019
 

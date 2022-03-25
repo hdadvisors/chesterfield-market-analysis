@@ -12,31 +12,64 @@ Public and proprietary data are both available to help determine the level of ho
 
 ### Decennial Census
 
-[reserved]
+The U.S. Census Bureau is constitutionally obligated to conduct a full count of the American population every 10 years. These enumerations determine the number and location of every person in the country as of April 1 of the year each Census is conducted. Current Census forms also ask respondents to include information on their sex, age, race, ethnicity, and whether they own or rent their home.
+
+This report will use data from the most recent 2020 Census. The Census Bureau released the first data from this enumeration in April 2021 (state apportionment counts) and has since published additional datasets with greater detail.
+
+As of March 2022, the 2020 Census data available for this report include:
+
+* Total population and household counts,
+* Occupancy status of housing units,
+* Group quarters population,
+* Race and ethnicity, and
+* Voting age (18 years and over) population.
+
+These data are part of the [2020 Census Redistricting Data (P.L. 94-171) Summary Files](https://www.census.gov/programs-surveys/decennial-census/about/rdo/summary-files.html) released in August 2021. Data is available at the state, locality, tract, and block level.
+
+::: {.rmdcaution}
+
+Important context for 2020 Census data:
+
+Differential privacy...
+
+Impact of COVID-19 on response rates...
+
+:::
 
 ### American Community Survey
 
-[reserved]
+The American Community Survey is a program of the U.S. Census Bureau that provides annual data on communities across the country. This provides communities with up-to-date and more detailed socioeconomic information between the official census, which occurs every ten years and only collects basic information. 
+
+The ACS produces both 1-year and 5-year period  estimates of the U.S. population. The 1-year estimates are produced every year for geographic areas with a population of 65,000 or more. Data for 1-year estimates are collected over a 12 month period and have a smaller sample size than 5-year estimates. Although better for getting the most current data, 1-year estimates are less reliable than 5-year estimates. 
+
+The 5-year estimates are collected over a 60 month period. For 2019 5-year estimates, this meant that data was collected from January 1, 2015 to December 31, 2019. Sample sizes are large due to this length of time. While this results in higher data reliability, data is not as current.
+
 
 ### Comprehensive Housing Affordability Strategy
 
-[reserved]
+Comprehensive Housing Affordability Strategy (CHAS) data are custom tabulations of ACS data that are sent to the U.S. Department of Housing and Urban Development (HUD) by the U.S. Census Bureau every year. These custom tabulations demonstrate the extent of housing needs across the country — mainly in terms of housing cost burden. 
+
+CHAS data is produced using ACS 5-year estimates and lags behind 5-year estimate releases by a year. Therefore, the most recent release of CHAS data was for the 2014-2018 5-year period. 
+
 
 ### Center for Neighborhood Technology
 
-[reserved]
+The Center for Neighborhood Technology’s Housing and Transportation (H+T) Affordability Index utilizes a cost model reviewed by practitioners and academics specializing in transportation and community indicators. The index was last updated in 2017, but is the most comprehensive, publicly-available tool to measure both housing and transportation affordability in the United States.
+
+The H+T Affordability Index utilizes the 2015 American Community Survey, Longitudinal Employer-Household Dynamics (LEHD) Origin Destination Employment Statistics (LODES), and CNT’s own General Transit Feed Specification (GTFS) data. 
+
 
 ### Central Virginia Regional Multiple Listing Service
 
-[reserved]
+The Central Virginia Regional Multiple Listing Service (CVR MLS) is a database created and maintained by real estate professionals. The database provides real-time data on properties for sale and helps real estate agents and brokers connect homebuyers to sellers. 
 
-### Center for Neighborhood Technology
+Although the data is dependent on agent inputs, the MLS is a highly reliable source of information on residential real estate sales. 
 
-[reserved]
 
 ### CoStar
 
-[reserved]
+CoStar has a proprietary database of commercial real estate information and is seen as the largest source of this data in the entire world. CoStar collects a multitude of data on multifamily properties through a comprehensive approach of direct communication with properties and online data scraping.
+
 
 ## Takeaways
 

@@ -8,18 +8,15 @@ from Northern Chesterfield to Route 10.
 [reserved]
 
 ```{r global, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, 
-                      message=FALSE, 
-                      warning=FALSE, 
-                      include=FALSE)
+
+library(tidyverse)
+library(tidycensus)
+library(readxl)
 
 ```
 
 
-```{r route1, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(tidycensus)
-library(readxl)
+```{r route1}
 
 years <- 2010:2019
 

@@ -12,7 +12,29 @@ Public and proprietary data are both available to help determine the level of ho
 
 ### Decennial Census
 
-[reserved]
+The U.S. Census Bureau is constitutionally obligated to conduct a full count of the American population every 10 years. These enumerations determine the number and location of every person in the country as of April 1 of the year each Census is conducted. Current Census forms also ask respondents to include information on their sex, age, race, ethnicity, and whether they own or rent their home.
+
+This report will use data from the most recent 2020 Census. The Census Bureau released the first data from this enumeration in April 2021 (state apportionment counts) and has since published additional datasets with greater detail.
+
+As of March 2022, the 2020 Census data available for this report include:
+
+* Total population and household counts,
+* Occupancy status of housing units,
+* Group quarters population,
+* Race and ethnicity, and
+* Voting age (18 years and over) population.
+
+These data are part of the [2020 Census Redistricting Data (P.L. 94-171) Summary Files](https://www.census.gov/programs-surveys/decennial-census/about/rdo/summary-files.html) released in August 2021. Data is available at the state, locality, tract, and block level.
+
+::: {.rmdcaution}
+
+Important context for 2020 Census data:
+
+Differential privacy...
+
+Impact of COVID-19 on response rates...
+
+:::
 
 ### American Community Survey
 

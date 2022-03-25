@@ -6,9 +6,11 @@ This section provides an analysis of homeowner and renter incomes versus the act
 
 [reserved]
 
+
+
 ## Homeowner affordability
 
-[reserved]
+
 
 ## Renter affordability
 

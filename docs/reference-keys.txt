@@ -1,3 +1,4 @@
+fig:tenure
 part-1a-1
 background
 summaries-of-housing-elements-in-planning-documents
@@ -24,7 +25,6 @@ american-community-survey
 comprehensive-housing-affordability-strategy
 center-for-neighborhood-technology
 central-virginia-regional-multiple-listing-service
-center-for-neighborhood-technology-1
 costar
 takeaways-3
 part-1b-2
@@ -36,7 +36,7 @@ takeaways-4
 part-1b-3
 background-6
 tenure-1
-age-1
+household-type
 raceethnicity-1
 takeaways-5
 part-1b-4

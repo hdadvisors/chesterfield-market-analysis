@@ -1,8 +1,8 @@
-# example R options set globally
-options(width = 60)
-
-# example chunk options set globally
+# Set global knitr options
 knitr::opts_chunk$set(
   comment = "#>",
-  collapse = TRUE
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  cache = TRUE
   )

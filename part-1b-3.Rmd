@@ -7,14 +7,19 @@ This section provides an analysis of cost burden within Chesterfield County disa
 [reserved]
 
 ```{r global, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, 
-                      message=FALSE, 
-                      warning=FALSE, 
-                      include=FALSE)
+
+library(glue)
+library(httr)
+library(jsonlite)
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(plotly)
 
 ```
 
 ## Tenure
+
 With the share of renters increasing in Chesterfield County, the share of renter 
 households experiencing cost burden has been in decline in recent years --- dropping 
 from 45 percent in 2013 to 42 percent in 2018. But the actual number of cost-burdened 
@@ -25,14 +30,8 @@ For homeowners, cost burden has decreasing across the board. There were 21,305 c
 homeowners in 2010, but that number has decreased significantly to 16,945 in 2018 --- a 20 
 percent decrease. The total share of homeowners has shrunk, from nearly one in four 
 homeowners (24 percent) in 2010 to 18 percent in 2018. 
+
 ```{r tenure}
-library(glue)
-library(httr)
-library(jsonlite)
-library(tidyverse)
-library(readxl)
-library(ggplot2)
-library(plotly)
 
 my_token <- Sys.getenv("HUD_KEY")
 
@@ -80,9 +79,9 @@ get_hud_chas <- function(
   hud_content <- httr::content(hud_query, as = "text")
   
   # Convert the data to a long-form tibble
-  hud_tibble <- hud_content |>
-    jsonlite::fromJSON() |>
-    dplyr::as_tibble() |>
+  hud_tibble <- hud_content %>%
+    jsonlite::fromJSON() %>%
+    dplyr::as_tibble() %>%
     tidyr::pivot_longer(cols = !dplyr::all_of(c("geoname", "sumlevel", "year")),
                         names_to = "indicator",
                         values_to = "value")
@@ -121,8 +120,6 @@ chesterfield_cb <- chesterfield_chas %>%
 ## Household type
 ```{r hhtype}
 
-library(tidyverse)
-
 hhtype_chas <- read_csv("data/Table7_2012to2018.csv") %>%
   filter(fips == 51041) %>%
   filter(Line_Type == "Detail") %>%
@@ -145,7 +142,7 @@ hhtype_clean <- hhtype_chas %>%
   )) %>%
   mutate(costburden = case_when(
     costburden == "housing cost burden is less than or equal to 30%" ~ "Not cost-burdened",
-    costburden == "housing cost burden is greater than 30% but less than or equal to 50%" ~ "Cost-burdened"
+    costburden == "housing cost burden is greater than 30% but less than or equal to 50%" ~ "Cost-burdened",
     costburden == "housing cost burden is greater than 50%" ~ "Severely cost-burdened",
     costburden == "housing cost burden not computed (household has no/negative income)" ~ "No or negative income"
   ))
