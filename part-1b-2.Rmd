@@ -15,6 +15,11 @@ knitr::opts_chunk$set(echo=FALSE,
                       warning=FALSE, 
                       include=FALSE,
                       eval=FALSE)
+library(tidyverse)
+library(tidycensus)
+library(readxl)
+library(ggplot2)
+library(plotly)
 
 ```
 
@@ -30,11 +35,6 @@ renter income has been on the rise and homeowner incomes have declined over the 
 the income gap of nearly $40,000 has remained steady.
 
 ```{r tenure, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(tidycensus)
-library(readxl)
-library(ggplot2)
-library(plotly)
 
 years <- 2010:2020
 
@@ -105,8 +105,6 @@ tenure <- ggplot(b25119_cpi, aes(x=year, y=dollars20, group=tenure)) +
 
 ggplotly(tenure)
 
-
-# Reserved for Shiny app
 ```
 
 ## Age
