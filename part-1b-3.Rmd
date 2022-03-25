@@ -20,16 +20,9 @@ library(plotly)
 
 ## Tenure
 
-With the share of renters increasing in Chesterfield County, the share of renter 
-households experiencing cost burden has been in decline in recent years --- dropping 
-from 45 percent in 2013 to 42 percent in 2018. But the actual number of cost-burdened 
-renters has been on the rise --- from 10,495 at the start of the decade to 12,795 
-cost-burdened renters in 2018.
+With the share of renters increasing in Chesterfield County, the share of renter households experiencing cost burden has been in decline in recent years---dropping from 45 percent in 2013 to 42 percent in 2018. But the actual number of cost-burdened renters has been on the rise---from 10,495 at the start of the decade to 12,795 cost-burdened renters in 2018.
 
-For homeowners, cost burden has decreasing across the board. There were 21,305 cost-burdened
-homeowners in 2010, but that number has decreased significantly to 16,945 in 2018 --- a 20 
-percent decrease. The total share of homeowners has shrunk, from nearly one in four 
-homeowners (24 percent) in 2010 to 18 percent in 2018. 
+For homeowners, cost burden has decreased across the board. There were 21,305 cost-burdened homeowners in 2010, but that number decreased significantly to 16,945 in 2018---a 20 percent decrease. The total share of cost-burdened homeowners has shrunk, from nearly one in four (24 percent) in 2010 to 18 percent in 2018. 
 
 ```{r tenure}
 
@@ -38,7 +31,7 @@ my_token <- Sys.getenv("HUD_KEY")
 hud_chas_request <- GET("https://www.huduser.gov/hudapi/public/chas?type=3&year=2012-2016&stateId=51&entityId=59",
                         add_headers(Authorization = glue("Bearer {my_token}")))
 
-hud_chas_request$status_code
+# hud_chas_request$status_code
 
 get_hud_chas <- function(
   type, 
@@ -105,13 +98,29 @@ chesterfield <- map_dfr(years, function(yr){
 labels <- read_excel("data/CHAS_HUD_Dictionary.xlsx")
 
 chesterfield_chas <- chesterfield %>%
-  right_join(labels, by = 'indicator')
+  right_join(labels, by = 'indicator') %>% 
+  mutate(value = as.numeric(value))
 
 chesterfield_cb <- chesterfield_chas %>%
-  subset(type == "Cost burden") %>%
-  mutate(year = str_sub(year,6,9)) %>%
+  filter(type == "Cost burden") %>%
+  mutate(year = as.numeric(str_sub(year,6,9))) %>%
   select(year, cb = income, tenure, value) %>%
-  subset(tenure != "All")
+  filter(tenure != "All") %>% 
+  group_by(year, tenure) %>%
+  mutate(pct = value/sum(value)) %>% 
+  ungroup() %>% 
+  filter(cb != "Cost burden not available")
+
+cb_tenure <- ggplot(chesterfield_cb, aes(x=year, y=pct, group=tenure)) +
+  geom_line(aes(color=tenure)) +
+  facet_grid(cols = vars(cb)) +
+  labs(x=NULL, y=NULL) +
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_x_continuous(breaks = 2010:2020) +
+  theme(axis.text.x = element_text(angle = 90, vjust=0.5))
+
+print(cb_tenure)
+
 
 ```
 
