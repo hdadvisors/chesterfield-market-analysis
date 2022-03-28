@@ -1,7 +1,7 @@
 --- 
 title: "Chesterfield County Rental Market Analysis"
 author: "HDAdvisors"
-date: "2022-03-25"
+date: "2022-03-28"
 site: bookdown::bookdown_site
 documentclass: book
 # url: your book url like https://bookdown.org/yihui/bookdown
@@ -14,7 +14,7 @@ csl: chicago-fullnote-bibliography.csl
 # About {-}
 
 ::: {.rmdcaution}
-This report is currently in development. It was last updated on **2022-03-25**.
+This report is currently in development. It was last updated on **2022-03-28**.
 :::
 
 Chesterfield County community revitalization staff seek additional information about current rental market dynamics, particularly along the county’s major commercial corridors. This report compiles and analyzes data on subsidized, market-affordable, and newly-built rental units to help strategically guide the county’s future community development investments using CDBG and other grant funds. 
@@ -29,12 +29,12 @@ This part summarizes recent and current public planning documents that guide Che
 
 **PART 1-B: DEMOGRAPHIC AND AFFORDABILITY ANALYSIS**
 
-This part...  
+This part provides insight into household incomes, housing cost burden, and housing affordability across Chesterfield County. Where possible, data is disaggregated by tenure, household type, age, and race/ethnicity. Data sources are identified and explained in the first chapter of this part, with special attention paid to reliability for datasets based on survey samples. The final chapter of this part is an affordability analysis for the Route 1 corridor within the county.
 
 **PART 2-A: COUNTYWIDE MARKET ANALYSIS**
 
-This part...  
+*To be completed later.*
 
 **PART 2-B: CORRIDOR CASE STUDIES**
 
-This part...
+*To be completed later.*

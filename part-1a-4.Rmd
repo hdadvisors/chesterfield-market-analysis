@@ -16,7 +16,17 @@ More recent research was conducted in 2020 on the spillover effects of more than
 
 Based on this review, a concentration of affordable housing varies depending on research methods, as well as community context. In most instances, a concentration of affordable housing was described as being multiple properties within a set radius of one another. 
 
-To this end, a concentration of affordable housing in Chesterfield County would look very different from a concentration of affordable housing in Hampton, Virginia or even in the City of Richmond. 
+To this end, a concentration of affordable housing in Chesterfield County would look very different from a concentration of affordable housing in Hampton, Virginia or even in the City of Richmond.
+
+## Distribution of lower-cost rental housing in Chesterfield County
+
+### With public subsidy
+
+[map of affordable rental properties with public assistance (LIHTC, Section 8, etc.)]
+
+### Without public subsidy
+
+[map of NOAH properties]
 
 ## Takeaways
 

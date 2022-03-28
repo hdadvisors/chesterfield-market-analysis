@@ -10,13 +10,11 @@ This section provides an analysis of homeowner and renter incomes versus the act
 
 ## Homeowner affordability
 
+[reserved]
+
 
 
 ## Renter affordability
-
-[reserved]
-
-## Total affordability gap
 
 [reserved]
 

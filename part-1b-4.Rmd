@@ -6,7 +6,7 @@ This section provides an analysis of homeowner and renter incomes versus the act
 
 [reserved]
 
-```{r global, include=FALSE}
+```{r global}
 
 library(tidyverse)
 library(tidycensus)
@@ -17,7 +17,9 @@ library(lubridate)
 
 ## Homeowner affordability
 
-```{r homeowner}
+[reserved]
+
+```{r homeowner, eval=FALSE, include=FALSE}
 
 years <- 2010:2019
 
@@ -101,10 +103,6 @@ income_price <- b25119_cpi %>%
 ```
 
 ## Renter affordability
-
-[reserved]
-
-## Total affordability gap
 
 [reserved]
 

@@ -15,3 +15,11 @@ The PDR’s study also found that stays in affordable housing varied by program 
 PDR notes that stays in affordable housing programs are likely to increase as market forces, such as rising home prices and stagnant wages, continue to negatively impact low-income households. This increased length of stay in affordable housing can prevent new residents from accessing a much needed resource when additional supply is not being generated. It can also be an indication of residents not being able to climb the economic ladder to move out of assisted housing. 
 
 For the private market, it can be beneficial to increase tenant length of stay. Tenant turnover can be costly for landlords who need to clean, repair, and market rental units. Vacancy, for any amount of time, equates to lost rent.
+
+## Length of stay from ACS data
+
+[data from Table B25038 - Tenure by Year Householder Moved into Unit]
+
+## Takeaways
+
+[reserved]

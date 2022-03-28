@@ -34,4 +34,22 @@ CoStar, a commercial real estate and analytics provider with its global research
 
 NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. This includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
 
-[add examples]
+### Amount
+
+[number of properties and units via CoStar]
+
+### Rent levels
+
+[average rents by bedroom via CoStar]
+
+### Age
+
+[year properties built via CoStar]
+
+### Examples
+
+[names, neighborhoods, rent amounts, photos for 2-3 example properties]
+
+## Takeaways
+
+[reserved]
