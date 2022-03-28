@@ -1,6 +1,6 @@
 # Household cost burden {#part-1b-3}
 
-This section provides an analysis of cost burden within Chesterfield County disaggregated by tenure, household type, and race/ethnicity.
+This section provides an analysis of cost burden within Chesterfield County disaggregated by tenure, household type0, and race/ethnicity.
 
 ## Background
 
@@ -12,6 +12,7 @@ library(glue)
 library(httr)
 library(jsonlite)
 library(tidyverse)
+library(tidycensus)
 library(readxl)
 library(ggplot2)
 library(plotly)
@@ -26,101 +27,52 @@ For homeowners, cost burden has decreased across the board. There were 21,305 co
 
 ```{r tenure}
 
-my_token <- Sys.getenv("HUD_KEY")
+table7 <- read_csv("data/Table7_2012to2018.csv") %>%
+  filter(fips == 51041) %>%
+  filter(Line_Type == "Detail") %>%
+  select(year = Year, estimate = Estimate, moe = MOE, tenure = Tenure, income = `Household income`, hhtype = `Household type`, costburden = `Cost burden`)
 
-hud_chas_request <- GET("https://www.huduser.gov/hudapi/public/chas?type=3&year=2012-2016&stateId=51&entityId=59",
-                        add_headers(Authorization = glue("Bearer {my_token}")))
+tenure_income <- table7 %>%
+  mutate(income = case_when(
+    income == "household income is less than or equal to 30% of HAMFI" ~ "30% AMI or less",
+    income == "household income is greater than 30% but less than or equal to 50% of HAMFI" ~ "31% to 50% AMI",
+    income == "household income is greater than 50% but less than or equal to 80% of HAMFI" ~ "51% to 80% AMI",
+    income == "household income is greater than 80% but less than or equal to 100% of HAMFI" ~ "81% to 100% AMI",
+    income == "household income is greater than 100% of HAMFI" ~ "Greater than 100% AMI"
+  )) %>%
+  mutate(hhtype = case_when(
+    hhtype == "household type is elderly family (2 persons, with either or both age 62 or over)" ~ "Elderly family",
+    hhtype == "household type is elderly non-family" ~ "Elderly non-family",
+    hhtype == "household type is large family (5 or more persons)" ~ "Large family",
+    hhtype == "household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)" ~ "Small family",
+    hhtype == "other household type (non-elderly non-family)" ~ "Other family type"
+  )) %>%
+  mutate(costburden = case_when(
+    costburden == "housing cost burden is less than or equal to 30%" ~ "Not cost-burdened",
+    costburden == "housing cost burden is greater than 30% but less than or equal to 50%" ~ "Cost-burdened",
+    costburden == "housing cost burden is greater than 50%" ~ "Severely cost-burdened",
+    costburden == "housing cost burden not computed (household has no/negative income)" ~ "No or negative income"
+  )) %>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied" ~ "Homeowner",
+    tenure == "Renter occupied" ~ "Renter"
+  ))
+  
+tenure <- aggregate(cbind(estimate, moe) ~year+tenure+income+costburden, data = tenure_income, FUN = sum, na.rm = TRUE)
 
-# hud_chas_request$status_code
-
-get_hud_chas <- function(
-  type, 
-  year = NULL, 
-  state_id = NULL, 
-  entity_id = NULL, 
-  token = NULL
-) {
-  
-  # Check to see if a token exists
-  if (is.null(token)) {
-    if (Sys.getenv("HUD_KEY") != "") {
-      token <- Sys.getenv("HUD_KEY")
-    }
-  }
-  
-  # Specify the base URL
-  base_url <- "https://www.huduser.gov/hudapi/public/chas"
-  
-  # Make the query
-  hud_query <- httr::GET(
-    base_url,
-    httr::add_headers(Authorization = glue::glue("Bearer {token}")),
-    query = list(
-      type = type,
-      year = year,
-      stateId = state_id,
-      entityId = entity_id)
-  )
-  
-  # Return the HTTP error message if query failed
-  if (hud_query$status_code != "200") {
-    msg <- httr::content(hud_query, as = "text")
-    return(msg)
-  }
-  
-  # Return the content as text
-  hud_content <- httr::content(hud_query, as = "text")
-  
-  # Convert the data to a long-form tibble
-  hud_tibble <- hud_content %>%
-    jsonlite::fromJSON() %>%
-    dplyr::as_tibble() %>%
-    tidyr::pivot_longer(cols = !dplyr::all_of(c("geoname", "sumlevel", "year")),
-                        names_to = "indicator",
-                        values_to = "value")
-  
-  return(hud_tibble)
-  
-}
-
-years <- c("2014-2018", "2013-2017","2012-2016","2011-2015", "2010-2014", 
-           "2009-2013", "2008-2012","2007-2011", "2006-2010")
-
-chesterfield <- map_dfr(years, function(yr){
-  chesterfield_chas <- get_hud_chas(
-    type = 3, 
-    year = yr, 
-    state_id = 51, 
-    entity_id = 041
-    )
-})
-
-labels <- read_excel("data/CHAS_HUD_Dictionary.xlsx")
-
-chesterfield_chas <- chesterfield %>%
-  right_join(labels, by = 'indicator') %>% 
-  mutate(value = as.numeric(value))
-
-chesterfield_cb <- chesterfield_chas %>%
-  filter(type == "Cost burden") %>%
-  mutate(year = as.numeric(str_sub(year,6,9))) %>%
-  select(year, cb = income, tenure, value) %>%
-  filter(tenure != "All") %>% 
-  group_by(year, tenure) %>%
-  mutate(pct = value/sum(value)) %>% 
+tenure_income_chas <- tenure %>%
+  group_by(year, tenure, income, costburden) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
   ungroup() %>% 
-  filter(cb != "Cost burden not available")
-
-cb_tenure <- ggplot(chesterfield_cb, aes(x=year, y=pct, group=tenure)) +
-  geom_line(aes(color=tenure)) +
-  facet_grid(cols = vars(cb)) +
-  labs(x=NULL, y=NULL) +
-  scale_y_continuous(labels=scales::percent_format()) +
-  scale_x_continuous(breaks = 2010:2020) +
-  theme(axis.text.x = element_text(angle = 90, vjust=0.5))
-
-print(cb_tenure)
-
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
 
 ```
 
@@ -154,6 +106,22 @@ hhtype_clean <- hhtype_chas %>%
     costburden == "housing cost burden is greater than 50%" ~ "Severely cost-burdened",
     costburden == "housing cost burden not computed (household has no/negative income)" ~ "No or negative income"
   ))
+
+hhtype <- aggregate(cbind(estimate, moe) ~year + hhtype + costburden, data = hhtype_clean, FUN = sum, na.rm = TRUE)
+
+hhtype_cb <- hhtype %>%
+ group_by(year, hhtype, costburden) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
 
 ```
 
