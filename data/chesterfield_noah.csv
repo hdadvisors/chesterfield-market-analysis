@@ -1,0 +1,59 @@
+address,county,state,zip,name,status,units,style,star,market,yearbuilt,yearreno,buildings,zoning,stories,vacancyrate,avgsf,avgasking,avgeffective,renttype
+5002 Alan Dr,Chesterfield,VA,23234,Shady Oaks,Existing,16,Garden,2,Richmond,1975,,8,R-7,1,3.91,,762,758,Market
+2507 Alcott Rd,Chesterfield,VA,23237,Huntwood Apartments,Existing,48,Single-Family Home,2,Richmond,1974,,7,C-3,1,3.91,500,623,620,Market
+9111 N Arch Village Ct,Chesterfield,VA,23236,North Arch Village,Existing,128,Garden,2,Richmond,1973,,8,R-7,2,0.74,952,1241,1241,Market
+6533 S Beulah Rd,Chesterfield,VA,23237-1070,,Existing,24,Low-Rise,2,Richmond,1965,,3,A,2,6.58,511,,,Market
+725 Boulder Springs Dr,Chesterfield,VA,23225,Birchwood at Boulders Apartments,Existing,284,Garden,3,Richmond,1986,,22,R7,3,4.98,1104,1599,1589,Market
+500 Bristol Village Dr,Chesterfield,VA,23114,Bristol Village at Charter Colony,Existing,142,Garden,3,Richmond,2005,,11,R9,3,0.47,1132,1522,1522,Market
+1301 Buckingham Station Dr,Chesterfield,VA,23113,Old Buckingham Station,Existing,360,Garden,3,Richmond,1988,,14,R7,3,5.02,1027,1618,1618,Market
+12051 Chestertowne Rd,Chesterfield,VA,23831,Chester Townhomes,Existing,152,Garden,2,Richmond,1969,,18,R7,2,,874,1256,1253,Market
+5201-5223 Collindale Rd,Chesterfield,VA,23234,Collindale Apartments,Existing,20,Garden,2,Richmond,1964,1990,6,R7,2,3.91,950,804,800,Market
+10200 Colony Village Way,Chesterfield,VA,23237-3374,Colony Village II,Existing,166,Low-Rise,3,Richmond,2018,,3,,2,3.4,836,1300,1293,Market
+1500 Concord Ave,Chesterfield,VA,23834-3059,Concord Apartments,Existing,32,Low-Rise,2,Richmond,1985,,1,R4,2,,1000,809,807,Market
+4201 Creek Way,Chesterfield,VA,23831,Ashton Creek,Existing,232,Garden,3,Richmond,1990,,25,RMF,2,3.64,1004,1578,1569,Market
+13504 Evelyn Dr,Chesterfield,VA,23831-5235,Laketree Manor Apartments,Existing,50,Garden,3,Richmond,1973,,7,R7,2,6.01,827,1132,1124,Market
+3524 Festival Park Plz,Chesterfield,VA,23831,Festival Park Apartments,Existing,99,Garden,3,Richmond,2004,,9,C3,2,4.01,1036,1646,1646,Market
+4300-4318 Fountain Square Dr,Chesterfield,VA,23831,Fountain Square,Existing,37,Low-Rise,3,Richmond,2017,,1,C-3,2,,749,1117,1114,Market
+2796 Goolsby Ave,Chesterfield,VA,23234-4436,Heritage Pointe Apartments,Existing,110,Garden,3,Richmond,1968,,6,R7,2,0.73,888,1028,1025,Market
+5520-5620 Handel Ct,Chesterfield,VA,23234,Pocoshock Ridge Apartments,Existing,156,Garden,2,Richmond,1989,,9,,2,3.91,895,,,Market
+5200 Hunt Master Dr,Chesterfield,VA,23112,Hunter's Chase Apartments,Existing,320,Garden,3,Richmond,1986,,12,R9,3,4.38,816,1535,1534,Market
+4223 Hyde Park Dr,Chesterfield,VA,23831,Hyde Park Townhomes,Existing,262,Garden,3,Richmond,1974,,40,R7,3,8.45,1138,1406,1394,Market
+1701 Irondale Rd,Chesterfield,VA,23235-3766,Summit at Bon Air,Existing,296,Garden,2,Richmond,1975,2017,37,R7,2,6.12,1018,1596,1596,Market
+11240 Jefferson Davis Hwy,Chesterfield,VA,23237-4241,,Existing,52,Garden,3,Richmond,1963,,13,C3,1,3.91,,,,Market
+16415 Jefferson Davis Hwy,Chesterfield,VA,23834-5378,,Existing,12,Garden,2,Richmond,1940,,6,A,3,3.91,,,,Market
+11800 Lake Falls Dr,Chesterfield,VA,23831,Waterside at Ironbridge,Existing,265,Garden,2,Richmond,1987,,22,R7,3,3.08,893,1539,1531,Market
+4037 Lamplighter Dr,Chesterfield,VA,23234,Belmont Hills,Existing,647,Garden,3,Richmond,1974,2015,26,R7,2,5.42,929,1578,1578,Market
+3005 Lancers Blvd,Chesterfield,VA,23224,Amber Leaves Apartments,Existing,67,Garden,2,Richmond,1973,,9,R7,2,9.23,750,921,913,Market
+211 Lingstorm Ln,Chesterfield,VA,23225,Chesterfield Village,Existing,694,Garden,3,Richmond,1972,,23,R7,2,8.1,799,1374,1362,Market
+4100 Lonas Pky,Chesterfield,VA,23112,Addison at Swift Creek,Existing,432,Garden,3,Richmond,1999,2015,17,C4,3,2.78,922,1693,1693,Market
+2530 Marina Dr,Chesterfield,VA,23234-5139,Falling Creek,Existing,348,Garden,2,Richmond,1964,2017,31,RMF,2,0.91,568,866,863,Market
+3501 Meadowdale Blvd,Chesterfield,VA,23234,Crystal Lakes,Existing,716,Garden,2,Richmond,1967,2020,95,R7,2,4.11,944,917,912,Market
+10000 Midlothian Tpke,Chesterfield,VA,23235,Suburban Village MHC,Existing,220,Single-Family Home,2,Richmond,,,,MH1,,3.79,,,,Market
+3310 Old Courthouse Rd,Chesterfield,VA,23236-1411,Rockwood Park Apartments,Existing,132,Garden,3,Richmond,1990,,17,R9,2,4.44,865,1199,1192,Market
+2801 Pavilion Pl,Chesterfield,VA,23112,Colonial Village at Waterford,Existing,312,Garden,3,Richmond,1989,,27,RMF,3,3.88,925,1610,1602,Market
+6300 Pewter Ave,Chesterfield,VA,23224,Rollingwood Apartments,Existing,278,Garden,2,Richmond,1978,2006,27,R7,3,0.02,846,1083,1080,Market
+705 Pool Rd,Chesterfield,VA,23236,Aston Ridge,Existing,229,Garden,2,Richmond,1975,2016,24,R7,2,2.93,929,1331,1325,Market
+5403 Remuda Dr,Chesterfield,VA,23234-4470,Remuda Crossing,Existing,86,Garden,2,Richmond,1958,,5,R7,2,,880,922,920,Market
+20900 Riverterrace Rd,Chesterfield,VA,23803-1834,River Road Terrace,Existing,128,Garden,2,Richmond,1973,,16,R7,2,,950,1100,1097,Market
+7300 Southwind Dr,Chesterfield,VA,23832,Sterling Glen,Existing,300,Garden,3,Richmond,1999,,18,C3,3,1.06,951,1385,1381,Market
+6925 Starview Ct,Chesterfield,VA,23225,Cloverleaf Lake Townhouse Apartments,Existing,210,Garden,2,Richmond,1972,,20,R7,2,1.72,1061,1519,1513,Market
+6417 Statute St,Chesterfield,VA,23832-6750,Courthouse Green Apartments,Existing,266,Garden,3,Richmond,1973,,33,R7,2,1.16,944,1251,1251,Market
+6100 Strathmore Rd,Chesterfield,VA,23234,Parkway Gardens,Existing,44,Garden,2,Richmond,1965,,11,,1,3.91,675,634,631,Market
+14701 Swift Ln,Chesterfield,VA,23114-7000,The Grove at Swift Creek Apartments,Existing,240,Garden,3,Richmond,2000,,11,"N/Av, Virginia",3,2.86,1116,1562,1562,Market
+2301 Thoroughbred Cir,Chesterfield,VA,23113,Trophy Club at Bellgrade Apartments,Existing,248,Garden,3,Richmond,1997,,13,RMF,3,2.76,912,1640,1640,Market
+2024 Timbers Hill Rd,Chesterfield,VA,23235,The Timbers Apartments,Existing,240,Garden,3,Richmond,1988,,17,"R7, Virginia",3,2.85,970,1593,1586,Market
+7660 Van Hoy Dr,Chesterfield,VA,23235-6457,Cross Creek Apartments,Existing,225,Garden,3,Richmond,1991,,12,R9,2,,949,1193,1190,Market
+5500 Vinings Dr,Chesterfield,VA,23234,The Vinings at Iron Bridge,Existing,257,Garden,3,Richmond,1999,,13,O2,3,3.17,950,1459,1459,Market
+400 Water Pointe Ln,Chesterfield,VA,23112,Waterpointe,Existing,51,Garden,3,Richmond,2001,,6,C2,3,,1222,1125,1122,Market
+7001 Wentworth St,Chesterfield,VA,23237-1503,Lafayette Townhouse Apartments,Existing,48,Garden,3,Richmond,1956,,7,R7,2,,800,733,731,Market
+5314 Whetstone Rd,Chesterfield,VA,23234,Meadowbrook Apartments,Existing,493,Garden,2,Richmond,1973,,54,,2,5.13,1057,1484,1474,Market
+6500 Woodlake Village Ct,Chesterfield,VA,23112,Woodlake Village,Existing,241,Garden,3,Richmond,1989,,19,O2,3,,1068,1180,1177,Market
+3101 Danzler Cir,Chesterfield,VA,23224,,Existing,18,Garden,2,Richmond,1969,,9,R7,2,3.91,,,,Market
+3524 Festival Park Plz,Chesterfield,VA,23831-4449,Park at Village Green,Existing,65,,3,Richmond,,,4,C3,2,,1047,1337,1337,Market
+6745 Jefferson Davis Hwy,Chesterfield,VA,23237-1218,The Maisonettes Apartments,Existing,47,Garden,3,Richmond,,,20,MH1,2,2.82,678,925,920,Market
+9701 Jefferson Davis Hwy,Chesterfield,VA,23237-4666,Holiday Mobile Home Park,Existing,140,,2,Richmond,1967,,,MH1,1,3.91,498,,,Market
+3201 Lady Marian Ln,Chesterfield,VA,23113,,Existing,1,Low-Rise,2,Richmond,1989,,1,R40,2,3.79,4139,,,Market
+3145 Parkdale Rd,Chesterfield,VA,23234-6357,,Existing,12,Low-Rise,2,Richmond,1956,,3,R7,1,3.91,,,,Market
+5300 Pippin Ln,Chesterfield,VA,23234,Kenswick Apartments,Existing,56,Garden,3,Richmond,,,7,R7,2,3.91,720,,,Market
+5400 Remuda Dr,Chesterfield,VA,23234,,Existing,26,,2,Richmond,1963,,,R7,2,3.91,,,,Market
+12020 Winfree St,Chesterfield,VA,23831-4937,,Existing,4,Low-Rise,2,Richmond,,,1,R7,2,3.91,600,,,Market
