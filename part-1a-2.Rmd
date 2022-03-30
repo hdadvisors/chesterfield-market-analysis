@@ -94,7 +94,7 @@ table_cb <- chesterfield_cb_table %>%
         format.args = list(big.mark = ",")) %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed", "responsive"),
-      fixed_thead = TRUE
+      full_width = TRUE
     )
 
 table_cb
@@ -106,6 +106,70 @@ table_cb
 Comparision of whether a household can afford a a mortgage loan for a typical home
 
 **In Chesterfield County:**
+
+```{r hai, echo=FALSE}
+
+library(formattable)
+
+# 2022 YTD median sales price for single-family homes in Chesterfield
+# CVR MLS (2022-03-30)
+
+msp <- currency(370620, symbol="$", digits=0)
+
+# 30-year fixed rate mortgage (weekly average)
+# Freddie Mac Primary Mortgage Market Survey (2022-03-24)
+
+rate <- percent(4.42/100, digits = 2)
+
+# Calculate monthly payment
+
+monthly_pmt <- currency(msp*0.8*((rate)/12)/(1-(1/(1+(rate)/12)^360)), symbol="$", digits=2)
+
+# Calculate minimum qualifying income
+
+qinc <- currency(monthly_pmt*4*12, symbol="$", digits=0)
+
+# Get median family income from ACS
+
+medinc <- currency((
+  get_acs(
+    geography = "county",
+    state = "VA",
+    county = "Chesterfield County",
+    variables = "B19113_001",
+    year = 2020) %>% 
+  pull(estimate) %>% 
+  .[1]), symbol="$", digits=0)
+
+# Calculate HAI
+
+hai <- digits((medinc/qinc)*100, 2)
+
+# Build table
+
+labels = c("Median sales price", "30-year fixed mortgage rate", "Monthly payment",
+      "Minimum qualifying income", "Median family income", "Housing Affordability Index")
+
+values = c(as.character(msp),
+           as.character(rate),
+           as.character(monthly_pmt),
+           as.character(qinc),
+           as.character(medinc),
+           as.character(hai))
+
+hai_table <- data.frame(x = labels, y = values) %>% 
+ kable(caption = "Housing Affordability Index in Chesterfield County",
+       align = "lr",
+       col.names = NULL) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+      full_width = TRUE
+    ) %>% 
+  kableExtra::row_spec(6, bold=TRUE)
+
+hai_table
+
+```
 
 ### NLIHC's Housing Wage
 
