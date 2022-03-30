@@ -1,5 +1,7 @@
 # Measures of housing affordability {#part-1a-2}
 
+
+
 This section will summarize the common measures of housing affordability that are widely used by researchers and policymakers, as well as credible alternative measures. Comparisons are made of each measure using county-specific data to understand the variations.
 
 ## Background
@@ -14,24 +16,117 @@ The following summarizes select standard and alternative measures and provides a
 
 ### 30 percent standard
 
-No more than 30 percent of household income is spent on housing costs
+A household spending more than 30 percent of their gross income on housing costs is often referred to as *cost-burdened*. This standard (and the term "cost burden") is the most commonly used benchmark for housing affordability. It is simple to understand, and simple to calculate, because only two data points are needed: gross household income and total housing costs.
+
+The 30 percent threshold is used because any income used for housing beyond that share cannot be used for transportation, healthcare, childcare, groceries, and other necessary household expenses. Generally speaking, a cost-burdened household will more commonly have trouble balancing their monthly budget, and will also face significant challenges when attempting to save or invest their income.
+
+This income-to-cost ratio was originally set at 25 percent when the federal government began designing housing assistance programs in the 1960s and 1970s. The threshold was increased to 30 percent in the 1980s. Today, the 30 percent cap is used to set household rent levels for public housing, Housing Choice Vouchers, and many other housing assistance initiatives. 
+
+:::{.rmdinfo}
+Although it has been the go-to measure in housing affordability, the 30 percent standard has several criticisms. Chief among these critiques is that living expenses vary from household to household. A family of four will likely face much higher and additional costs for things like childcare, food, and transportation, when compared to a single adult with the same income. 
+
+Secondly, different income groups don’t spend the same way. Higher income households can have much more flexibility to spend more than 30 percent of their income on housing costs when compared to a low income household. Using the 30 percent standard in this case can sometimes overestimate the share of higher income households experiencing cost burden. 
+
+Other critics also reference the fact that the 30 percent standard does not account for things like location and housing quality. A household living in a very walkable community will spend very differently from a household that has to invest a lot of money in transportation (i.e., gas and car maintenance).
+:::
+
+Cost burden data is available from the U.S. Census Bureau in the American Community Survey. Tables [B25091](https://censusreporter.org/data/table/?table=B25091&geo_ids=04000US51,05000US51041&primary_geo_id=04000US51) and [B25070](https://censusreporter.org/data/table/?table=B25070&geo_ids=04000US51,05000US51041&primary_geo_id=04000US51) break down the share of gross household income dedicated to housing costs for homeowners and renters, respectively.
+
+**In Chesterfield County:**
+
+The table below combines those datasets to show the number of cost burdened households by tenure in Chesterfield County. ^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates.]
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:cost-burden)Cost burden by tenure in Chesterfield County</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Cost burden </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Homeowners </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Renters </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Total </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Not cost burdened </td>
+   <td style="text-align:right;"> 78,661 </td>
+   <td style="text-align:right;"> 15,005 </td>
+   <td style="text-align:right;"> 93,666 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cost burdened </td>
+   <td style="text-align:right;"> 18,502 </td>
+   <td style="text-align:right;"> 13,266 </td>
+   <td style="text-align:right;"> 31,768 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Not computed </td>
+   <td style="text-align:right;"> 427 </td>
+   <td style="text-align:right;"> 1,369 </td>
+   <td style="text-align:right;"> 1,796 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 97,590 </td>
+   <td style="text-align:right;"> 29,640 </td>
+   <td style="text-align:right;"> 127,230 </td>
+  </tr>
+</tbody>
+</table>
 
 ### NAR's Housing Affordability Index (HAI)
 
-Comparision of whether a household can afforda a mortgage loan for a typical home
+Comparision of whether a household can afford a a mortgage loan for a typical home
+
+**In Chesterfield County:**
 
 ### NLIHC's Housing Wage
 
-Hourly wage full-time worker must earn to afford fair market rent without spending more than 30 percent of their income
+The National Low Income Housing Coalition has published its Out of Reach every year since 1989 to bring attention to the widening gap between actual wages and the cost of rental housing in the United States. Within this report, NLIHC calculates its Housing Wage, an affordability measure that estimates the wage a full-time worker must earn to afford rental housing based on the U.S. Department of Housing and Urban Development’s (HUD) fair market rent (FMR) without spending more than 30 percent of their income.
+
+NLIHC utilizes multiple data sources such as the U.S. Census Bureau’s American Community Survey and average wages from the Bureau of Labor Statistics to create an affordability measure that focuses on the economic gap between household incomes and the price of rental housing. Fair market rent is a key statistic that helps NLIHC determine the Housing Wage. FMR is calculated by HUD every fiscal year and is a reflection of the median rent in a given area. FMR is largely used to set rental assistance limits under the Housing Choice Voucher Program (Section 8). 
+
+There have been few, if any, critics of the Housing Wage statistic. But issue can be taken with the fact that FMR is set at the metropolitan level. Therefore, the FMR in Chesterfield County, regardless of location, is the same as the FMR in the City of Richmond. This means that the Housing Wage does not fully account for the nuances that exist across the regional rental market. 
+
+While the Housing Wage is helpful in determining the relationship between jobs and housing prices, it does not help to measure the gap in affordable housing or rather how many households are facing affordability challenges.
+
+**In Chesterfield County:**
+
+NLIHC released their latest Out of Reach report in July 2021. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was \$46,520, or an hourly wage of \$22.37. NLIHC estimates that the typical renter wage in Chesterfield County is \$14.66---nearly $8 short of the wage needed to afford a typical two-bedroom rental in the region. 
 
 ### Residual income approach
 
 Income after non-housing costs determines the price of housing that is affordable to households
 
+**In Chesterfield County:**
+
+...
+
 ### CNT's H+T Affordability Index
 
-No more than 45 percent of household is spent on housing and transportation costs combined
+The Center for Neighborhood Technology (CNT) developed the Housing + Transportation (H+T) Affordability Index in 2006 as a result of a Minneapolis-St. Paul report conducted for the Brookings Institution’s Urban Markets Initiative. This affordability measure is a robust indicator of the role that geographic location has on the two major costs faced by American households: housing and transportation.
+
+CNT expands on the 30 percent standard with the inclusion of transportation costs in an affordability standard. Based on extensive research CNT found that 15 percent was a reasonable standard at which to set affordable transportation costs; subsequently stating that a household should pay no more than 45 percent of their household income on housing and transportation costs combined.
+CNT’s transportation cost model takes into account several factors that influence how much a typical household pays for transportation, including commuting data, public transportation access, housing density, and consumer behavior.
+
+With the H+T Affordability Index, CNT offers detailed data down to the Census Block Group-level (i.e. a neighborhood-level). The index is provided in terms of a regional typical household based on a median income, the average number of commuters per household, and the average household size. This allows the index to consistently measure the impact of neighborhood factors on a typical household’s housing and transportation costs.
+
+The index is expressed as a set percentage of income — in other words, what the typical regional household spends on housing and transportation based on their home’s location.
+
+In spite of the H+T’s comprehensiveness, it has its pitfalls. The nature of the model requires the use of a standard household which only sets a baseline from which to compare other households to. This can make it difficult to make conclusions about households with incomes lower or higher than that baseline. To help with this, CNT offers the index based on a regional moderate income household — 80 percent of the regional median household income, while maintaining the typical regional household size and commuters. 
+
+The index also suffers from outdated data sources. The most recent update of the model took place in 2017 and utilized data that predated this year to calculate the index. Therefore, the index does not capture recent trends in housing and transportation costs that tend to exacerbate cost burden.
+
+**In Chesterfield County:**
+
+The most recent H+T Affordability Index for Chesterfield County stated that the typical regional household, with an income of $59,919, 1.19 commuters per household, and a household size of 2.58 people, spent 53 percent of their income on housing and transportation combined. 
+
+CNT disaggregated housing and transportation to account for 30 percent and 23 percent, respectively. 
+
+These costs increase for the regional moderate income household with an income of $47,935 — increasing to 63 percent, or 38 percent on housing and 25 percent on transportation. 
 
 ## Takeaways
 
-[reserved]
+* There are multiple measures that are being utilized to help practitioners communicate the need to address housing affordability in their communities.
+* Each measure has their pros and cons, ranging from data currency to methodology complexity. But the choice of one over the other is dependent on its ultimate use. For this report, and for most other housing needs assessments, the standard 30 percent (cost burden) methodology is preferred for its ubiquity.
+* If you want to better understand how location impacts costs, then you might want to use the H+T. If you want to focus on the unique challenges that individual households face, then you might want to use the Residual Income Approach.

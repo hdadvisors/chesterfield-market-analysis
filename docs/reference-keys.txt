@@ -1,9 +1,17 @@
+tab:cost-burden
 fig:tenure
 fig:age
 fig:race
 part-1a-1
 background
 summaries-of-housing-elements-in-planning-documents
+hull-street-corridor-revitalization-plan
+route-1-formerly-northern-jefferson-davis-special-area-plan
+route-1-formerly-north-jefferson-davis-highway-real-estate-market-study
+moving-forward-the-comprehensive-plan-for-chesterfield-county
+midlothian-community-special-area-plan
+richmond-regional-housing-framework
+analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region
 takeaways
 part-1a-2
 background-1
