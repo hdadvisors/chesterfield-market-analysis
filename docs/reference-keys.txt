@@ -1,4 +1,7 @@
 tab:cost-burden
+tab:hai
+tab:residual-cost
+tab:residual-summary
 fig:tenure
 fig:age
 fig:race
@@ -17,7 +20,7 @@ part-1a-2
 background-1
 affordability-measure-comparisons
 percent-standard
-nars-housing-affordability-index-hai
+nars-housing-affordability-index
 nlihcs-housing-wage
 residual-income-approach
 cnts-ht-affordability-index

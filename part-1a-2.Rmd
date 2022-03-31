@@ -248,7 +248,7 @@ costs_table <- data.frame(x = costs_labels, y = costs_values) %>%
     ) %>% 
   kableExtra::row_spec(9, bold=TRUE)
 
-residual_table
+costs_table
 
 ```
 
