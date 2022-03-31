@@ -14,37 +14,133 @@ While research around NOAH has been growing over the past several years, an offi
 
 CoStar, a commercial real estate and analytics provider with its global research operations based in Richmond, Virginia, conducted an analysis of NOAH properties in Fall 2016. This analysis was done at the request of Urban Land Institute's Terwilliger Center for Housing and concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **What are Class B and C properties?**                                                                                                                                                                                                                                                                           |
-|                                                                                                                                                                                                                                                                                                                  |
-| The commercial real estate industry utilizes a property classification system to help investors, lenders, and brokers quickly understand and communicate the quality of a property. The system classifies real estate properties as A, B, C, or D.\                                                              |
-|                                                                                                                                                                                                                                                                                                                  |
-| NOAH properties generally fall into either Class B or C.                                                                                                                                                                                                                                                         |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Class B**                                                                                                                                                                                                                                                                                                      |
-|                                                                                                                                                                                                                                                                                                                  |
-| These properties are generally in good condition for being built within the last 20 years, but the exteriors and interiors are generally considered outdated. Amenities are much less than those found in a high end apartment. Renovations may have occurred recently and there is little deferred maintenance. |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Class C**                                                                                                                                                                                                                                                                                                      |
-|                                                                                                                                                                                                                                                                                                                  |
-| These properties were built within the last 30 years or are a much older property that has had recent renovations. Exteriors and interiors are outdated, and amenities are very limited. Improvements to the property show some age and there may be some deferred maintenance.                                  |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+::: {.rmdnote}
+
+**What are Class B and C properties?**                                                                                                                                                                                          The commercial real estate industry utilizes a property classification system to help investors, lenders, and brokers quickly understand and communicate the quality of a property. The system classifies real estate properties as A, B, C, or D.
+
+NOAH properties generally fall into either Class B or C.
+
+**Class B**
+
+These properties are generally in good condition for being built within the last 20 years, but the exteriors and interiors are generally considered outdated. Amenities are much less than those found in a high end apartment. Renovations may have occurred recently and there is little deferred maintenance.
+
+**Class C**
+
+These properties were built within the last 30 years or are a much older property that has had recent renovations. Exteriors and interiors are outdated, and amenities are very limited. Improvements to the property show some age and there may be some deferred maintenance.
+
+:::
 
 ## NOAH in Chesterfield County
 
-NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. This includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
+NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
+
+``` {r setup}
+
+library(tidyverse)
+library(janitor)
+library(knitr)
+library(scales)
+library(zoo)
+library(formattable)
+library(ggthemes)
+
+costar_noah <- read_csv("data/chesterfield_noah_coded.csv")
+costar_noah_rent <- read_csv("data/costar_noah_rent_bedroom.csv")
+
+```
 
 ### Amount
 
 [number of properties and units via CoStar]
 
+```{r noah-amount, echo=FALSE}
+
+amount <- costar_noah %>% 
+  select(style, units) %>% 
+  mutate(properties = 1) %>% 
+  group_by(style) %>% 
+  summarise(properties = sum(properties),
+            units = sum(units)) %>% 
+  arrange(desc(units)) %>% 
+  adorn_totals() %>% 
+  kable(caption = "NOAH properties and units by style",
+       align = "lrr",
+       col.names = c("Style", "Properties", "Units"),
+       format.args = list(big.mark = ",")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+      full_width = TRUE
+    ) %>% 
+  kableExtra::row_spec(5, bold=TRUE)
+
+amount
+
+```
+
 ### Rent levels
 
-[average rents by bedroom via CoStar]
+[plot]
+
+``` {r noah-rent-plot, echo=FALSE, fig.cap="Median asking rent by bedroom for NOAH properties"}
+
+rent <- costar_noah_rent %>% 
+  pivot_longer(cols = 2:5, names_to = "Bedrooms", values_to = "Rent") %>% 
+  mutate(Bedrooms = fct_reorder(Bedrooms, desc(Rent))) %>% 
+  mutate(Period = as.Date(as.yearqtr(Period, format = "%Y Q%q"), frac = 1))
+
+rent_plot <- ggplot(rent, aes(x = Period, y = Rent, group = Bedrooms, color = Bedrooms)) +
+  geom_line() +
+  scale_y_continuous(labels=dollar_format(prefix = "$", big.mark = ",")) +
+  scale_x_date() +
+  theme_gdocs() +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank())
+  
+rent_plot
+  
+```
+
+[table]
+
+```{r noah-rent-table, echo=TRUE}
+
+rent_table <- rent %>% 
+  group_by(Bedrooms) %>% 
+  top_n(1, Period) %>% 
+  mutate(Rent = dollar(Rent)) %>% 
+  select(-Period) %>% 
+  kable(caption = "Current rent by bedroom in NOAH properties",
+       align = "lr") %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+      full_width = TRUE
+    )
+
+rent_table
+
+```
+
 
 ### Age
 
 [year properties built via CoStar]
+
+```{r noah-age, echo=FALSE, fig.cap="NOAH units by year built"}
+
+age_plot <- ggplot(costar_noah, aes(x=yearbuilt, weights=units)) +
+  geom_histogram(binwidth = 5, color="grey", fill="lightgrey") +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_continuous(limits = c(1950, 2020),
+                     breaks = seq(1950, 2020, 10)) +
+  theme_gdocs() +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank())
+
+age_plot
+
+```
 
 ### Examples
 

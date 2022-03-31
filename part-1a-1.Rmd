@@ -8,11 +8,9 @@ This section summarizes recent planning documents related to housing and housing
 
 Chesterfield County has acknowledged the importance of housing availability and affordability throughout many of their planning documents. Planning efforts by the county have sought to address housing at varying scales within county boundaries, while the county has also been involved in multi-jurisdictional planning to address the housing challenges that exist at the regional level.
 
-## Summaries of housing elements in planning documents
+The following sections summarize housing, community development, and revitalization elements in the most recent planning documents created for Chesterfield County. Plans are listed chronologically, ending with the most recently completed documents.
 
-The following summarizes the most recent planning documents related to housing in Chesterfield County. Plans are listed chronologically, ending with the most recently completed documents.
-
-### Hull Street Corridor Revitalization Plan
+## Hull Street Corridor Revitalization Plan
 
 *Completed January 2013.*
 
@@ -28,7 +26,7 @@ Plan highlights:
 * Townhomes and other multifamily options located near amenities were specifically recommended to reduce automobile dependency.
 * The plan calls for future public investment to enhance existing housing stock, add new affordable housing options, and address senior housing needs.
 
-### Route 1 (formerly Northern Jefferson Davis) Special Area Plan
+## Route 1 (formerly Northern Jefferson Davis) Special Area Plan
 
 *Completed April 2018.*
 
@@ -41,7 +39,7 @@ Plan highlights:
 * Accessory dwelling units (ADUs) were recommended as an alternative housing option to promote, as well as transitional housing options for individuals with high needs.
 * An additional emphasis was placed on continued and expanded revitalization efforts to improve housing in older neighborhoods along the corridor.
 
-### Route 1 (formerly North Jefferson Davis Highway) Real Estate Market Study
+## Route 1 (formerly North Jefferson Davis Highway) Real Estate Market Study
 
 *Completed 2019.*
 
@@ -61,7 +59,7 @@ Study highlights:
 * The report estimates that the study area could accommodate 15 to 20 percent of county’s demand for new multifamily stock by 2025 (3-4 new developments); however, acquisition and construction costs would mean these new units are priced at or near County average, which is out of reach for most incomes in the study area.
 * Homeownership is relatively affordable in the study area, but not always for current residents with very low or fixed incomes.
 
-### Moving Forward: The Comprehensive Plan for Chesterfield County
+## Moving Forward: The Comprehensive Plan for Chesterfield County
 
 *Completed May 2019.*
 
@@ -78,8 +76,7 @@ Plan highlights:
   + Outlines goals for using public and private investment to improve the quality of communities experiencing decline, vacancy, and other challenges.
   + Reinforces the “need for a range of well-designed housing choices” that are strategically located and affordably priced.
 
-
-### Midlothian Community Special Area Plan
+## Midlothian Community Special Area Plan
 
 *Completed December 2019.*
 
@@ -94,7 +91,7 @@ Plan highlights:
 * Mixed use opportunities (residential and commercial) were encouraged as part of retail property redevelopment strategies.
 * Accessory dwelling units (ADUs) were also recommended as a solution to increase the supply of low-cost homes, especially for single-person households.
 
-### Richmond Regional Housing Framework
+## Richmond Regional Housing Framework
 
 *Completed January 2020.*
 
@@ -115,7 +112,8 @@ Some of the specific policy solutions for Chesterfield County included:
 * Encourage smaller, denser homeownership opportunities (such as townhomes and condos) to reduce land costs per home.
 * Increase efforts to revitalize manufactured home communities and preserve them as affordable housing options.
 
-### Analysis of Impediments to Fair Housing Choice in the Greater Richmond and Tri-Cities Region 
+## Analysis of Impediments to Fair Housing Choice in the Greater Richmond and Tri-Cities Region 
+
 *Completed March 2021.*
 
 An analysis of impediments (AI) to fair housing is a requirement among jurisdictions receiving entitlement funds from the U.S. Department of Housing and Urban Development. This AI was a collaborative effort by Chesterfield, Henrico, and Cities of Colonial Heights, Hopewell, Petersburg, and Richmond in order to maximize efficiency.
