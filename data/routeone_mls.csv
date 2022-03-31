@@ -1,0 +1,479 @@
+PID,Prop Type,Status,Address,Subdivision,Type,# Bedrooms,Total Baths,# Rooms,Fin SF,List Price,Sales Price,Days On Market,Sales Date,Zip
+786-68-93-10-600-068,Condo/Town,ACT,5220 Castlewood RD Unit#F,Tree Top Condominium,Condominium,2,1,4,859,"$82,000 ",,0,,23234
+788-68-25-39-400-000,Single Family,ACT,2930 Brentwood CIR,Sherbourne Heights,Detached,4,1.1,6,"1,238","$215,000 ",,2,,23237
+791-66-34-64-300-000,Single Family,ACT,10717 Timonium DR,Mineola,Detached,3,2,4,"1,224","$235,000 ",,1,,23831
+793-66-68-11-700-000,Single Family,ACT,10100 Brightwood AVE,Central Park,Detached,3,2,6,"1,800","$268,000 ",,34,,23237
+7.92662E+14,Single Family,ACT,11001 Belvoir Road,Carrisbrook At Mineola,Detached,3,2.1,7,"1,726","$289,000 ",,2,,23831
+793-65-72-25-600-000,Single Family,ACT,11733 Dewberry LN,Thompson Estates,Detached,4,3,7,"2,349","$326,950 ",,3,,23831
+789-65-74-28-500-000,Single Family,ACT,11510 Chester RD,None,Detached,4,2,9,"2,448","$350,000 ",,3,,23831
+786-68-93-10-600-025,Condo/Town,CLOSD,5204 Castlewood RD Unit#A,Tree Top,Condominium,2,1,4,859,"$65,000 ","$65,000 ",2,8/27/2021,23234
+786-68-93-10-600-023,Condo/Town,CLOSD,5202 Castlewood RD Unit#E,Tree Top Condominium,Condominium,2,1,4,859,"$70,000 ","$70,000 ",2,5/15/2020,23234
+786-68-93-10-600-026,Condo/Town,CLOSD,5204 Castlewood RD Unit#B,Tree Top,Condominium,2,1,4,859,"$72,500 ","$72,500 ",0,7/30/2021,23234
+786-68-93-10-600-086,Condo/Town,CLOSD,5226 Castlewood RD Unit#E,Tree Top Condominium,Condominium,2,1,4,858,"$74,950 ","$78,764 ",4,7/8/2021,23234
+787-68-59-21-000-000,Single Family,CLOSD,6209 Strathmore RD,Falling Creek Villa Sites,Detached,2,1,5,888,"$89,000 ","$100,000 ",6,3/5/2021,23234
+792-67-94-07-900-000,Single Family,CLOSD,2529 Elliham AVE,Patterson Park,Detached,3,1,5,"1,440","$99,999 ","$130,000 ",6,5/13/2020,23237
+789-69-11-03-900-000,Single Family,CLOSD,5003 Huband AVE,Redfords Subd,Detached,3,1,6,"1,158","$100,000 ","$95,500 ",54,8/27/2020,23234
+793-66-55-68-600-000,Single Family,CLOSD,10112 Brandywine AVE,Central Park,Detached,2,1,4,"1,084","$110,000 ","$95,000 ",36,5/26/2020,23237
+791-66-73-83-200-000,Single Family,CLOSD,3006 Perlock RD,Quail Oaks,Detached,3,1,5,950,"$114,900 ","$141,950 ",8,5/8/2020,23237
+791-68-07-51-400-000,Single Family,CLOSD,2552 Elliham AVE,Patterson Park,Detached,3,1,6,"1,168","$119,900 ","$119,900 ",41,4/13/2020,23237
+790-67-17-05-000-000,Single Family,CLOSD,8922 Clovis ST,Crescent Park,Detached,2,1,4,648,"$120,000 ","$126,000 ",11,1/21/2021,23237
+791-67-11-56-300-000,Single Family,CLOSD,2807 Normandale AVE,Crescent Park,Detached,2,1,4,780,"$120,000 ","$125,000 ",2,10/8/2020,23237
+787-68-97-50-100-000,Single Family,CLOSD,3000 Freedom LN,None,Detached,3,1,5,"1,170","$120,000 ","$118,000 ",5,7/20/2020,23234
+789-67-72-01-500-000,Single Family,CLOSD,7811 Pioneer ST,Rayon Park,Detached,3,2,6,"1,150","$124,950 ","$124,000 ",107,4/13/2020,23237
+788-69-06-67-000-000,Single Family,CLOSD,2806 Falling Creek AVE,Chase J H,Detached,2,1,4,"1,036","$135,000 ","$148,000 ",2,10/28/2020,23234
+787-69-19-10-800-000,Single Family,CLOSD,5009 Douglas AVE,Falling Creek Court,Detached,4,1,6,"1,152","$135,500 ","$135,000 ",18,9/4/2020,23234
+788-69-16-59-800-000,Single Family,CLOSD,4810 McCarty AVE,Grindall Creek Park,Detached,2,1,5,802,"$139,000 ","$152,000 ",3,3/26/2021,23234
+790-66-81-15-800-000,Single Family,CLOSD,9439 Hilda AVE,None,Detached,4,1.1,9,"1,836","$140,000 ","$110,000 ",150,9/22/2020,23237
+789-69-20-05-600-000,Single Family,CLOSD,4803 Oriole AVE,Grindall Creek Park,Detached,2,1,6,852,"$144,900 ","$140,000 ",27,9/30/2021,23234
+785-69-32-97-200-000,Single Family,CLOSD,4715 Falling Creek CIR,Ampthill Heights,Detached,3,1,6,"1,475","$145,000 ","$165,000 ",3,10/6/2020,23234
+787-68-56-44-600-000,Single Family,CLOSD,6156 Strathmore RD,None,Detached,2,1,4,875,"$147,500 ","$152,000 ",6,12/17/2020,23234
+792-66-72-41-200-000,Single Family,CLOSD,2931 Gaffney RD,Quail Oaks,Detached,3,1,5,"1,040","$149,900 ","$150,000 ",2,7/9/2020,23237
+789-69-13-24-000-000,Single Family,CLOSD,5002 Oriole AVE,Falling Creek Court,Detached,2,1,4,768,"$149,950 ","$150,000 ",29,10/28/2021,23234
+792-68-10-67-200-000,Single Family,CLOSD,2518 Merriewood Ridge CT,Merriewood,Detached,3,1,6,"1,056","$149,950 ","$165,000 ",2,10/9/2020,23237
+789-68-22-17-800-000,Single Family,CLOSD,6811 Strathmore CT,Glen Conner,Detached,3,1,5,"1,092","$149,950 ","$147,950 ",124,6/2/2020,23237
+791-65-99-98-300-000,Single Family,CLOSD,3552 Castlebury DR,Cameron Run,Detached,3,1.1,5,"1,097","$150,000 ","$200,500 ",6,3/30/2022,23831
+788-68-23-38-000-000,Single Family,CLOSD,2923 Brentwood CIR,Sherbourne Heights,Detached,4,1.1,7,"1,238","$150,000 ","$155,000 ",5,10/4/2021,23237
+787-68-97-72-500-000,Single Family,CLOSD,5226 Shady LN,None,Detached,3,2,6,"1,504","$150,000 ","$150,000 ",0,10/8/2021,23234
+787-67-32-62-500-000,Single Family,CLOSD,3603 Firethorne CT,Kingsland Acres,Detached,3,1,5,"1,008","$150,000 ","$155,000 ",5,8/24/2020,23237
+788-68-89-19-800-000,Single Family,CLOSD,2815 Cogbill RD,Ranch Acres,Detached,3,1,5,"1,193","$150,000 ","$170,000 ",3,4/24/2020,23234
+789-67-82-72-700-000,Single Family,CLOSD,2935 Alcott RD,Rayon Park,Detached,3,1,6,"1,344","$155,000 ","$155,000 ",94,7/8/2021,23237
+788-69-01-39-200-000,Single Family,CLOSD,5014 Vayo AVE,Falling Creek Hills,Detached,3,1.1,6,984,"$159,000 ","$155,000 ",52,7/29/2020,23234
+788-69-17-75-800-000,Single Family,CLOSD,2804 Pate AVE,Grindall Creek Park,Detached,2,1,5,732,"$159,950 ","$147,000 ",10,10/1/2021,23234
+787-69-09-13-600-000,Single Family,CLOSD,2913 Falling Creek AVE,None,Detached,3,1,6,"1,350","$159,950 ","$160,000 ",51,7/28/2020,23234
+790-65-86-65-400-000,Single Family,CLOSD,3801 Wood Dale RD,Wood Dale,Detached,3,1,5,960,"$159,950 ","$166,250 ",5,4/17/2020,23831
+793-66-21-37-600-000,Single Family,CLOSD,10709 Surry RD,Mineola,Detached,3,2,6,"1,364","$160,000 ","$160,000 ",0,9/3/2021,23831
+792-66-70-30-300-000,Single Family,CLOSD,2949 Gaffney RD,Quail Oaks,Detached,3,1,5,"1,040","$160,000 ","$160,000 ",11,8/10/2021,23237
+791-66-14-50-200-000,Single Family,CLOSD,3631 Mineola DR,Mineola,Detached,3,1,6,960,"$160,000 ","$185,000 ",7,9/15/2020,23831
+794-66-01-49-500-000,Single Family,CLOSD,3305 Walnut Cove CT,Cameron Run,Detached,3,2,5,"1,170","$162,000 ","$162,000 ",6,11/24/2020,23831
+797-66-15-71-100-000,Single Family,CLOSD,2429 Rio Vista ST,Normandale Terrace,Detached,3,1,5,"1,075","$164,500 ","$165,500 ",3,4/14/2020,23831
+786-68-95-18-000-000,Single Family,CLOSD,5108 Mill Race CIR,Shady Creek,Detached,2,1.1,5,"1,332","$164,950 ","$164,950 ",4,5/7/2020,23234
+791-68-31-44-400-000,Single Family,CLOSD,2422 Sherbourne RD,Wentworth Home Sites,Detached,3,1,5,879,"$164,999 ","$190,000 ",6,6/9/2021,23237
+785-69-24-74-600-000,Single Family,CLOSD,3100 Space RD,Falling Creek Court,Detached,3,1.1,6,"1,222","$165,000 ","$170,000 ",6,12/10/2021,23234
+788-68-20-54-900-000,Single Family,CLOSD,6818 Strathmore RD,Sherbourne Heights,Detached,3,2,7,"1,526","$165,000 ","$165,000 ",10,12/31/2020,23237
+788-69-14-35-200-000,Single Family,CLOSD,4904 Caldwell AVE,Grindall Creek Park,Detached,2,1,6,792,"$167,500 ","$167,000 ",14,10/21/2021,23234
+794-66-72-52-300-000,Single Family,CLOSD,2615 Woodfin DR,Quail Oaks,Detached,4,1,6,"1,176","$167,900 ","$167,500 ",124,5/13/2021,23237
+791-68-37-03-900-000,Single Family,CLOSD,2410 Sherbourne RD,Bensley,Detached,3,2,6,"1,408","$169,900 ","$177,000 ",3,1/5/2021,23237
+788-68-48-01-600-000,Single Family,CLOSD,6500 Wentworth ST,Wentworth Home Sites,Detached,3,1,5,960,"$169,950 ","$170,000 ",65,2/2/2021,23237
+788-68-40-90-600-000,Single Family,CLOSD,3012 Bensley RD,Wentworth Home Sites,Detached,3,1,8,"1,240","$170,000 ","$166,000 ",8,7/28/2020,23237
+796-65-88-60-900-000,Condo/Town,CLOSD,2800 Goyne LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,320","$172,000 ","$170,000 ",24,6/8/2020,23831
+797-66-17-21-400-000,Single Family,CLOSD,2417 Rio Vista ST,Normandale Terrace,Detached,3,1,5,"1,075","$174,500 ","$185,000 ",4,12/22/2020,23831
+786-67-29-35-300-000,Single Family,CLOSD,8506 Firethorne LN,Kingsland Acres,Detached,3,1,5,"1,056","$174,500 ","$169,500 ",3,10/20/2020,23237
+796-65-78-28-700-000,Condo/Town,CLOSD,2848 Goyne LOOP,Westchester Townhouses,Townhouse,2,2.1,5,"1,320","$174,900 ","$179,900 ",3,12/7/2020,23831
+798-66-06-02-800-000,Single Family,CLOSD,2340 Arcadia AVE,Normandale Terrace,Detached,3,1.1,5,"1,125","$174,900 ","$174,000 ",4,4/22/2020,23831
+791-66-24-51-700-000,Single Family,CLOSD,10929 Timonium DR,Mineola,Detached,3,1.1,5,"1,056","$174,950 ","$180,000 ",2,11/12/2020,23831
+788-68-29-41-700-000,Single Family,CLOSD,6930 Wentworth ST,Sherbourne Heights,Detached,3,2,6,"1,008","$174,950 ","$180,000 ",3,4/16/2020,23237
+791-66-68-96-100-000,Single Family,CLOSD,3001 Rushton RD,Quail Oaks,Detached,3,1,6,"1,040","$175,000 ","$160,000 ",3,8/30/2021,23237
+787-69-07-26-100-000,Single Family,CLOSD,3002 Falling Creek AVE,None,Detached,3,1,5,868,"$175,000 ","$195,000 ",6,6/22/2021,23234
+789-67-73-70-400-000,Single Family,CLOSD,3000 Botone AVE,Rayon Park,Detached,3,2,6,"1,188","$175,000 ","$185,000 ",4,6/8/2021,23237
+785-69-03-62-200-000,Single Family,CLOSD,3405 Shady Creek RD,None,Detached,3,1,5,960,"$175,000 ","$200,000 ",4,5/3/2021,23234
+789-69-11-03-900-000,Single Family,CLOSD,5003 Huband AVE,Redfords Subd,Detached,3,1,6,"1,158","$175,000 ","$182,000 ",3,4/23/2021,23234
+787-68-39-07-300-000,Single Family,CLOSD,3024 Sherbourne RD,Wentworth Home Sites,Detached,3,2,4,"1,048","$175,000 ","$175,700 ",3,2/16/2021,23237
+793-66-55-68-600-000,Single Family,CLOSD,10112 Brandywine AVE,Central Park,Detached,3,2,4,"1,084","$175,000 ","$180,000 ",3,1/6/2021,23237
+792-67-94-77-900-000,Single Family,CLOSD,2525 Elliham AVE,Patterson Park,Detached,3,2,7,"1,658","$175,000 ","$189,000 ",0,12/30/2020,23237
+796-65-87-31-700-000,Condo/Town,CLOSD,2823 Goyne TER,Westchester Townhouses,Townhouse,3,3.1,7,"1,706","$175,000 ","$170,000 ",113,4/6/2020,23831
+786-68-91-79-300-000,Single Family,CLOSD,5105 Carryback DR,Shady Creek,Detached,4,2,6,"1,425","$176,000 ","$176,000 ",6,6/15/2020,23234
+786-69-02-52-700-000,Single Family,CLOSD,3300 Mill Race RD,Shady Creek,Detached,3,2,6,"1,356","$176,500 ","$200,000 ",5,4/24/2020,23234
+794-66-01-62-300-000,Single Family,CLOSD,3207 Castlebury DR,Cameron Run,Detached,3,2,5,"1,382","$177,000 ","$181,500 ",3,6/12/2020,23831
+795-66-58-59-000-000,Single Family,CLOSD,2401 Wonderview DR,None,Detached,3,1,6,"1,161","$177,500 ","$175,000 ",18,4/23/2021,23237
+788-68-57-33-700-000,Single Family,CLOSD,6151 Strathcona ST,Falling Creek Hills,Detached,3,1,6,"1,130","$179,900 ","$198,000 ",5,12/29/2020,23234
+787-68-84-59-900-000,Single Family,CLOSD,3024 Freedom LN,None,Detached,3,2,6,"1,260","$179,900 ","$179,900 ",2,5/27/2020,23234
+790-66-64-06-700-000,Single Family,CLOSD,3212 Ransom Hills RD,Proctors Point,Attached,3,2.1,7,"1,584","$179,950 ","$168,000 ",2,5/26/2021,23237
+798-66-08-43-000-000,Single Family,CLOSD,2325 Arcadia AVE,Normandale Terrace,Detached,3,1.1,6,"1,125","$180,000 ","$215,000 ",4,3/30/2022,23831
+787-67-23-83-600-000,Single Family,CLOSD,3513 Springshire DR,Kingsland Acres,Detached,3,1,5,"1,032","$180,000 ","$182,500 ",2,11/19/2021,23237
+791-67-89-49-500-000,Single Family,CLOSD,2528 Troycott PL,Patterson Park,Detached,3,1,5,"1,075","$180,000 ","$210,000 ",6,9/24/2021,23237
+798-66-02-25-500-000,Single Family,CLOSD,2337 Seminole AVE,Normandale Terrace,Detached,3,1,5,"1,075","$180,000 ","$190,000 ",5,8/17/2021,23831
+791-66-73-36-700-000,Single Family,CLOSD,3012 Woodworth RD,Quail Oaks,Detached,3,1,5,975,"$180,000 ","$191,000 ",9,8/6/2021,23237
+786-67-39-21-600-000,Single Family,CLOSD,8408 Firethorne LN,Kingsland Acres,Detached,3,1,5,"1,008","$180,000 ","$175,000 ",4,11/25/2020,23237
+791-68-33-74-100-000,Single Family,CLOSD,2416 Sherbourne RD,Bensley,Detached,3,1,7,"1,420","$180,000 ","$185,000 ",7,8/31/2020,23237
+790-68-30-86-600-000,Single Family,CLOSD,6526 St George ST,Bensley,Detached,3,1.1,7,"1,600","$180,000 ","$180,000 ",10,8/28/2020,23237
+794-66-53-04-400-000,Single Family,CLOSD,10217 Brightwood AVE,Central Park,Detached,3,2,6,"1,242","$184,900 ","$200,000 ",3,3/15/2021,23237
+787-68-39-12-100-000,Single Family,CLOSD,3024 Brentwood CIR,Sherbourne Heights,Detached,3,1,6,"1,308","$184,900 ","$188,500 ",3,4/30/2020,23237
+789-67-71-53-000-000,Single Family,CLOSD,3015 Rycliff AVE,Rayon Park,Detached,3,2,5,"1,597","$185,000 ","$200,000 ",3,5/7/2021,23237
+791-66-65-98-400-000,Single Family,CLOSD,3007 Gaffney RD,Quail Oaks,Detached,3,1,6,"1,040","$185,000 ","$190,000 ",6,5/7/2021,23237
+799-66-00-59-400-000,Single Family,CLOSD,2201 Arcadia CT,Normandale Terrace,Detached,3,1,6,"1,008","$185,000 ","$185,000 ",4,5/12/2021,23831
+792-66-83-73-600-000,Single Family,CLOSD,9467 Kerwin RD,Quail Oaks,Detached,3,1,7,"1,328","$185,000 ","$192,500 ",2,10/8/2020,23237
+791-66-74-29-300-000,Single Family,CLOSD,9518 Proctors RD,Quail Oaks,Detached,3,1.1,7,"1,352","$185,950 ","$185,950 ",9,3/19/2021,23237
+792-66-87-85-500-000,Single Family,CLOSD,2732 Galena AVE,Quail Oaks,Detached,3,1,6,"1,140","$189,000 ","$189,000 ",5,12/2/2021,23237
+787-67-21-48-300-000,Single Family,CLOSD,8417 Firethorne LN,Kingsland Acres,Detached,3,1,5,"1,032","$189,000 ","$200,000 ",2,7/2/2021,23237
+793-66-69-92-800-000,Single Family,CLOSD,10101 Brightwood AVE,Central Park,Detached,3,2,5,"1,196","$189,500 ","$189,500 ",4,1/25/2021,23237
+790-66-06-16-400-000,Single Family,CLOSD,3725 Mineola DR,Mineola,Detached,3,2,6,"1,380","$189,900 ","$210,000 ",6,6/21/2021,23831
+784-69-38-08-200-000,Single Family,CLOSD,4518 Falling Creek CIR,Ampthill Heights,Detached,3,2,7,"1,296","$189,900 ","$220,000 ",3,7/12/2021,23234
+788-68-44-69-000-000,Single Family,CLOSD,2925 Stanwix LN,Falling Creek Hills,Detached,3,1,5,"1,260","$189,900 ","$189,900 ",20,2/5/2021,23234
+796-65-89-81-600-000,Condo/Town,CLOSD,2712 Goyne LOOP,Westchester Townhouses,Townhouse,3,2.1,5,"1,548","$189,900 ","$189,900 ",4,9/21/2020,23831
+788-67-86-21-400-000,Single Family,CLOSD,7512 Senate ST,Rayon Park,Detached,3,2.1,5,"1,400","$189,900 ","$202,000 ",4,7/17/2020,23237
+791-66-64-46-300-000,Single Family,CLOSD,3034 Rushton RD,Quail Oaks,Detached,4,1.1,6,"1,352","$189,900 ","$200,000 ",0,4/15/2020,23237
+791-66-12-29-100-000,Single Family,CLOSD,11016 Timonium DR,Mineola,Detached,2,1,5,"1,029","$189,950 ","$189,950 ",5,5/14/2021,23831
+792-66-84-61-600-000,Single Family,CLOSD,2815 Galena AVE,Quail Oaks,Detached,3,1,6,"1,424","$189,950 ","$194,000 ",3,12/9/2020,23237
+789-68-35-92-600-000,Single Family,CLOSD,6701 Westwood ST,Village Manor,Detached,3,1.1,6,"1,422","$189,950 ","$201,025 ",4,7/30/2020,23237
+785-69-10-87-600-000,Single Family,CLOSD,3023 Grahamwood DR,Falling Creek Court,Detached,3,1.1,6,"1,275","$190,000 ","$200,000 ",5,10/14/2021,23234
+787-68-39-65-100-000,Single Family,CLOSD,3019 Sherbourne RD,Bensley,Detached,3,1,6,"1,273","$190,000 ","$205,500 ",2,4/30/2021,23237
+793-66-64-80-400-000,Single Family,CLOSD,10100 Brandywine AVE,Central Park,Detached,3,2,6,"1,574","$194,950 ","$200,000 ",4,3/26/2021,23237
+787-68-59-21-000-000,Single Family,CLOSD,6209 Strathmore RD,Falling Creek Villa Sites,Detached,2,2,5,888,"$195,000 ","$199,000 ",15,1/5/2022,23234
+789-68-50-75-300-000,Single Family,CLOSD,2748 Gainford CIR,Falling Creek Hills,Attached,3,1.1,6,"1,170","$195,000 ","$200,000 ",4,7/28/2021,23234
+798-66-10-42-200-000,Single Family,CLOSD,2300 Aspen AVE,Normandale Terrace,Detached,3,1,6,"1,075","$195,000 ","$205,000 ",6,7/2/2021,23831
+789-68-53-03-900-000,Single Family,CLOSD,2737 Gainford CIR,Falling Creek Hills,Detached,3,1.1,6,"1,352","$195,000 ","$195,000 ",5,7/9/2021,23234
+791-66-82-92-000-000,Single Family,CLOSD,3001 Galena AVE,Quail Oaks,Detached,3,2,5,"1,136","$195,000 ","$223,000 ",7,6/11/2021,23237
+790-66-61-75-800-000,Single Family,CLOSD,9642 Ransom Hills PL,Proctors Point,Detached,3,2.1,8,"1,721","$195,000 ","$207,000 ",3,10/16/2020,23237
+790-66-09-43-100-000,Single Family,CLOSD,3713 Medora PL,Mineola,Detached,3,2,5,"1,200","$195,000 ","$200,000 ",3,7/30/2020,23831
+787-66-49-10-200-000,Single Family,CLOSD,4036 Hilltop Farms TER,Hilltop Farms,Detached,3,2,6,"1,676","$196,000 ","$200,000 ",17,4/15/2020,23831
+787-67-01-44-800-000,Single Family,CLOSD,8853 Firethorne LN,Squarefield Park,Detached,2,1,4,954,"$196,950 ","$196,000 ",5,10/6/2020,23237
+790-67-14-02-600-000,Single Family,CLOSD,9015 Chester RD,Crescent Park,Detached,2,1,5,962,"$198,000 ","$185,000 ",12,9/27/2021,23237
+799-66-11-81-200-000,Single Family,CLOSD,2200 Arcadia CT,Normandale Terrace Add,Detached,3,1,6,"1,155","$198,000 ","$211,000 ",5,5/14/2021,23831
+7.93669E+14,Single Family,CLOSD,2618 GALENA AVE,Quail Oaks,Detached,3,2,7,"1,425","$199,000 ","$190,000 ",8,12/30/2021,23237
+796-65-65-31-000-000,Single Family,CLOSD,2949 Mount Clair RD,Dalewood Annex,Detached,3,2.1,5,"1,504","$199,000 ","$205,000 ",0,9/14/2020,23831
+796-65-75-24-600-000,Condo/Town,CLOSD,12148 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$199,000 ","$201,000 ",2,7/14/2020,23831
+788-68-33-26-800-000,Single Family,CLOSD,2936 Sherbourne RD,Wentworth Home Sites,Detached,3,1.1,5,"1,390","$199,500 ","$208,000 ",5,9/23/2021,23237
+796-65-73-33-100-000,Condo/Town,CLOSD,12131 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$199,740 ","$200,000 ",37,6/12/2020,23831
+791-66-28-04-400-000,Single Family,CLOSD,10913 Stilton DR,Mineola,Detached,3,1.1,6,"1,288","$199,900 ","$225,000 ",3,8/6/2021,23831
+786-69-36-03-000-000,Single Family,CLOSD,4601 Willesden RD,Falling Creek Court,Detached,3,2,5,"1,720","$199,900 ","$210,000 ",5,7/30/2020,23234
+7.96657E+14,Condo/Town,CLOSD,12143 Perdue Springs Loop LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$199,900 ","$205,000 ",25,7/22/2020,23831
+7.96657E+14,Condo/Town,CLOSD,12107 Perdue Springs Loop,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$199,900 ","$199,900 ",3,6/23/2020,23831
+789-65-70-59-700-000,Single Family,CLOSD,11518 Chester Station DR,Chester Station,Detached,3,2,5,"1,288","$199,900 ","$200,000 ",1,4/29/2020,23831
+788-68-37-89-600-000,Single Family,CLOSD,6518 Wentworth ST,Wentworth Home Sites,Detached,3,1.1,7,"1,260","$199,950 ","$205,000 ",3,10/28/2021,23237
+792-65-92-06-400-000,Single Family,CLOSD,3537 NE Castlebury DR,Cameron Run,Detached,3,1,5,960,"$199,950 ","$199,950 ",14,9/27/2021,23831
+787-67-00-20-400-000,Single Family,CLOSD,8916 Firethorne LN,Squarefield Park,Detached,3,1.1,6,"1,056","$199,950 ","$205,000 ",4,5/28/2021,23237
+794-66-78-95-700-000,Single Family,CLOSD,2501 Reymet RD,None,Detached,4,2,6,"1,568","$199,950 ","$200,000 ",6,7/29/2021,23237
+791-66-12-23-900-000,Single Family,CLOSD,11118 Stilton DR,Mineola,Detached,3,1.1,5,"1,344","$199,950 ","$199,950 ",1,2/25/2021,23831
+796-66-62-33-100-000,Single Family,CLOSD,2228 Wonderview DR,Halfway House Heights,Detached,3,1.1,6,"1,312","$199,950 ","$200,000 ",2,7/23/2020,23237
+786-67-29-17-800-000,Single Family,CLOSD,8418 Firethorne LN,Kingsland Acres,Detached,3,2,7,"1,683","$199,950 ","$199,950 ",9,6/30/2020,23237
+788-68-33-84-700-000,Single Family,CLOSD,2931 Sherbourne RD,Sherbourne Heights,Detached,3,1.1,7,"1,238","$199,999 ","$203,000 ",5,10/26/2021,23237
+789-68-24-05-800-000,Single Family,CLOSD,6906 Westwood ST,Glen Conner,Detached,3,1,5,"1,092","$200,000 ","$225,000 ",7,1/12/2022,23237
+792-67-98-93-400-000,Single Family,CLOSD,2507 Alcott RD,Patterson Park Resub,Detached,3,1.1,6,"1,431","$200,000 ","$200,000 ",10,10/29/2021,23237
+790-65-85-98-500-000,Single Family,CLOSD,11450 Old Centralia RD,Terjo Village,Detached,3,1.1,6,"1,224","$200,000 ","$230,000 ",5,7/8/2021,23831
+791-65-63-84-200-000,Single Family,CLOSD,11810 Old Centralia RD,None,Detached,3,2.1,6,"1,416","$200,000 ","$215,000 ",4,10/22/2020,23831
+789-65-85-19-300-000,Single Family,CLOSD,3914 Terjo LN,Terjo Village,Detached,4,3,8,"2,158","$200,000 ","$188,550 ",8,8/31/2020,23831
+789-65-80-80-600-000,Single Family,CLOSD,11512 Chester Station DR,Chester Station,Detached,3,2,6,"1,284","$200,000 ","$205,000 ",3,4/15/2020,23831
+785-68-97-88-800-000,Single Family,CLOSD,3303 Shady Creek RD,Shady Creek,Detached,3,2,5,"1,232","$203,000 ","$212,500 ",3,2/26/2021,23234
+790-67-74-83-600-000,Single Family,CLOSD,2811 Botone AVE,Rayon Park,Detached,3,2,6,"1,196","$204,950 ","$205,000 ",10,7/8/2021,23237
+791-66-35-93-500-000,Single Family,CLOSD,10806 Stilton DR,Mineola,Detached,3,2,5,"1,244","$205,000 ","$205,000 ",2,1/6/2021,23831
+791-66-14-66-600-000,Single Family,CLOSD,11036 Stilton DR,Mineola,Detached,3,2,5,"1,200","$205,000 ","$215,000 ",4,7/6/2020,23831
+796-65-77-56-200-000,Condo/Town,CLOSD,3012 Perdue Springs LN,Chester,Townhouse,3,1.1,6,"1,395","$205,000 ","$195,000 ",18,10/14/2020,23831
+790-67-70-57-200-000,Single Family,CLOSD,7701 Telbury ST,Rayon Park,Detached,3,2,6,"1,300","$207,500 ","$220,000 ",3,1/19/2021,23237
+796-65-73-52-800-000,Condo/Town,CLOSD,12119 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$207,540 ","$207,540 ",12,8/14/2020,23831
+794-66-71-50-300-000,Single Family,CLOSD,2700 General BLVD,Central Park,Detached,3,2.1,6,"1,456","$208,950 ","$212,000 ",2,8/19/2020,23237
+789-65-88-78-500-000,Single Family,CLOSD,3905 Terjo LN,Terjo Village,Detached,3,2,6,"1,332","$208,995 ","$227,000 ",5,5/25/2021,23831
+7.9466E+14,Single Family,CLOSD,11508 Elmwood Lane LN,Fan Court,Detached,3,2,7,"1,482","$209,000 ","$217,000 ",9,10/20/2021,23831
+788-68-43-55-100-000,Single Family,CLOSD,2945 Parkdale RD,Falling Creek Hills,Detached,3,1,6,"1,118","$210,000 ","$220,000 ",3,11/19/2021,23234
+787-67-10-79-700-000,Single Family,CLOSD,3505 Shaun CT,Kingsland Acres,Detached,3,1,6,"1,032","$210,000 ","$212,000 ",7,11/19/2021,23237
+796-65-77-78-400-000,Condo/Town,CLOSD,2852 Goyne LOOP,Westchester Townhouses,Townhouse,4,3.1,7,"1,712","$210,000 ","$225,000 ",7,7/20/2021,23831
+800-66-10-80-300-000,Single Family,CLOSD,2100 Benhill DR,Coxendale,Detached,3,1.1,6,"1,560","$210,000 ","$215,000 ",5,5/10/2021,23831
+792-67-82-31-200-000,Single Family,CLOSD,2537 Gayland AVE,Patterson Park,Detached,3,2,5,"1,506","$210,000 ","$220,000 ",13,12/15/2020,23237
+790-66-07-06-700-000,Single Family,CLOSD,3719 Mineola DR,Mineola,Detached,3,1.1,6,"1,200","$210,000 ","$215,000 ",2,11/16/2020,23831
+791-68-39-23-800-000,Single Family,CLOSD,2404 Sherbourne RD,Bensley,Detached,6,3,7,"2,394","$210,000 ","$210,000 ",118,5/24/2021,23237
+793-66-05-28-500-000,Single Family,CLOSD,3318 New Found LN,Cameron Run,Detached,3,2,5,"1,330","$210,000 ","$218,000 ",2,7/1/2020,23831
+796-65-74-22-800-000,Condo/Town,CLOSD,12113 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$210,540 ","$210,540 ",0,7/31/2020,23831
+796-65-73-93-600-000,Condo/Town,CLOSD,12137 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$210,540 ","$210,540 ",0,8/17/2020,23831
+796-65-74-13-200-000,Condo/Town,CLOSD,12125 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$211,540 ","$211,540 ",6,7/9/2020,23831
+798-66-04-46-200-000,Single Family,CLOSD,2324 Buena Vista BLVD,Normandale Terrace,Detached,3,1.1,5,"1,000","$214,950 ","$210,000 ",5,4/22/2021,23831
+793-66-65-57-700-000,Single Family,CLOSD,2815 General BLVD,Central Park,Detached,3,2,5,"1,050","$215,000 ","$225,000 ",5,3/16/2022,23237
+793-66-65-73-000-000,Single Family,CLOSD,10025 Brandywine AVE,Central Park,Detached,3,2,6,"1,260","$215,000 ","$225,000 ",3,12/8/2021,23237
+793-66-57-44-700-000,Single Family,CLOSD,10148 Brandywine AVE,Central Park,Detached,3,2,6,"1,218","$215,000 ","$220,000 ",4,9/26/2021,23237
+785-69-20-71-600-000,Single Family,CLOSD,3136 Grahamwood DR,Falling Creek Court,Detached,3,1.1,6,"1,275","$215,000 ","$232,000 ",6,8/6/2021,23234
+793-66-92-00-400-000,Single Family,CLOSD,2633 Kingsdale RD,Quail Oaks,Detached,3,1.1,6,"1,300","$215,000 ","$215,000 ",9,9/20/2021,23237
+788-67-77-87-400-000,Single Family,CLOSD,3040 Libwood AVE,Rayon Park,Detached,3,2,5,"1,273","$215,000 ","$230,000 ",7,12/3/2020,23237
+791-66-09-83-300-000,Single Family,CLOSD,3525 Chagford DR,Mineola,Detached,3,2,6,"1,252","$215,000 ","$225,000 ",3,10/30/2020,23831
+791-67-98-84-900-000,Single Family,CLOSD,2558 Alcott RD,None,Detached,3,2,5,"1,340","$215,000 ","$220,000 ",7,9/10/2020,23237
+796-65-77-26-100-000,Condo/Town,CLOSD,3024 Perdue Springs LN,Westchester Townhouses,Townhouse,3,2.1,7,"1,805","$215,000 ","$218,000 ",13,8/24/2020,23831
+796-65-74-86-000-000,Condo/Town,CLOSD,3136 Perdue Springs LN,Westchester Townhouses,Townhouse,3,2.1,6,"2,434","$215,000 ","$212,000 ",5,6/5/2020,23831
+792-66-12-40-000-000,Single Family,CLOSD,3501 Mineola DR,Chipchase At Mineola,Detached,4,2,7,"1,512","$215,000 ","$220,000 ",6,4/21/2020,23831
+796-65-76-65-900-000,Condo/Town,CLOSD,3036 Perdue Springs LN,Westchester Townhouses,Townhouse,4,1.1,6,"1,920","$215,500 ","$205,000 ",50,1/6/2021,23831
+796-65-72-94-600-000,Condo/Town,CLOSD,3242 Perdue Springs LN,Westchester Townhouses,Townhouse,3,2.1,7,"1,904","$216,500 ","$212,700 ",4,7/3/2020,23831
+787-67-21-59-100-000,Single Family,CLOSD,8415 Firethorne LN,Kingsland Acres,Detached,3,1,5,"1,032","$218,000 ","$221,000 ",5,1/25/2022,23237
+796-65-78-07-700-000,Condo/Town,CLOSD,2864 Goyne LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,320","$218,000 ","$225,000 ",4,1/14/2022,23831
+796-65-74-15-100-000,Condo/Town,CLOSD,3206 Perdue Springs LN,Westchester Townhouses,Townhouse,4,3.1,8,"2,040","$218,000 ","$228,000 ",6,3/2/2021,23831
+792-66-02-21-900-000,Single Family,CLOSD,3516 Hemlock RD,Cameron Run,Detached,3,2,7,"1,536","$219,000 ","$219,000 ",9,9/1/2020,23831
+796-65-73-84-100-000,Condo/Town,CLOSD,12149 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$219,365 ","$215,365 ",71,7/28/2020,23831
+"790-68-41-62-200-000,790-68-40-92-300-000,790-68-4",Single Family,CLOSD,6420 St. George ST,Bensley,Detached,2,1,6,"1,489","$219,500 ","$219,500 ",4,10/22/2021,23234
+796-65-94-80-600-000,Single Family,CLOSD,11701 Perdue TER,Warfield Estates,Detached,3,2,5,"1,400","$219,500 ","$251,000 ",8,7/1/2021,23831
+796-65-74-42-400-000,Condo/Town,CLOSD,12101 Perdue Springs LOOP,Westchester Townhouses,Townhouse,3,2.1,6,"1,360","$219,835 ","$220,000 ",0,7/7/2020,23831
+792-67-77-40-400-000,Single Family,CLOSD,2511 Myron AVE,Bellwood Addition,Detached,3,1,6,"1,445","$219,900 ","$225,000 ",5,5/20/2021,23237
+792-68-08-42-200-000,Single Family,CLOSD,2510 Elliham AVE,Patterson Park,Detached,2,1,6,"1,178","$219,900 ","$225,000 ",7,2/24/2021,23237
+796-65-96-01-700-000,Single Family,CLOSD,2700 Perdue AVE,Warfield Estates,Detached,3,2,5,"1,623","$219,950 ","$230,000 ",7,8/13/2020,23831
+796-65-74-85-300-000,Condo/Town,CLOSD,3142 Perdue Springs LN,Westchester Townhouses,Townhouse,3,3,7,"2,040","$219,999 ","$216,000 ",22,9/24/2020,23831
+787-67-01-36-800-000,Single Family,CLOSD,8841 Firethorne LN,Kingsland Acres,Detached,3,2.2,6,"1,192","$220,000 ","$225,000 ",5,10/5/2021,23237
+798-66-02-66-200-000,Single Family,CLOSD,2331 Seminole AVE,Normandale Terrace,Detached,3,1,5,"1,075","$220,000 ","$220,000 ",6,10/12/2021,23831
+786-69-24-09-100-000,Single Family,CLOSD,4707 Willesden RD,Falling Creek Court,Detached,3,2,5,"1,075","$220,000 ","$215,000 ",13,3/31/2021,23234
+795-66-67-07-400-000,Single Family,CLOSD,9952 Reymet CT,Rachels Way,Detached,3,2,5,"1,641","$220,000 ","$235,000 ",2,1/22/2021,23237
+788-68-45-43-500-000,Single Family,CLOSD,2924 Dundas RD,Bensley,Detached,3,2,7,"1,932","$220,000 ","$220,000 ",22,1/28/2021,23237
+792-67-76-42-500-000,Single Family,CLOSD,2514 Myron AVE,Bellwood Addition,Detached,3,2,6,"1,293","$220,000 ","$220,000 ",46,9/4/2020,23237
+793-66-13-58-200-000,Single Family,CLOSD,10960 Stepney RD,Shady Springs,Detached,4,2.1,8,"2,032","$220,000 ","$213,000 ",24,7/24/2020,23831
+792-66-15-44-500-000,Single Family,CLOSD,11011 Crofton RD,Chipchase At Mineola,Detached,3,2.1,7,"1,682","$220,000 ","$227,500 ",2,4/20/2020,23831
+790-65-91-07-300-000,Single Family,CLOSD,3816 Randall DR,Castlebury Hills,Detached,3,2,8,"1,620","$224,500 ","$240,000 ",6,6/11/2021,23831
+787-66-38-28-300-000,Single Family,CLOSD,4025 Hilltop Farms TER,Hilltop Farms,Detached,3,2.1,6,"1,512","$224,500 ","$235,000 ",8,10/6/2020,23831
+793-66-04-86-400-000,Single Family,CLOSD,3313 New Found LN,Cameron Run,Detached,4,2.1,7,"1,680","$224,500 ","$224,500 ",4,9/14/2020,23831
+791-65-71-90-900-000,Single Family,CLOSD,11700 Old Centralia RD,None,Detached,3,1,6,"1,298","$224,950 ","$224,950 ",4,3/14/2022,23831
+791-66-85-21-100-000,Single Family,CLOSD,9509 Proctors RD,Quail Oaks,Detached,3,1,7,"1,352","$225,000 ","$225,000 ",5,2/23/2022,23237
+794-66-10-00-600-000,Single Family,CLOSD,3306 Walnut Cove CT,Cameron Run,Detached,3,2.2,6,"1,400","$225,000 ","$220,000 ",16,10/4/2021,23831
+789-68-47-74-600-000,Single Family,CLOSD,2731 Parkdale RD,Bensley,Detached,3,2,6,"1,392","$225,000 ","$245,000 ",4,10/6/2021,23234
+794-66-05-64-700-000,Single Family,CLOSD,3111 Castlebury DR,Cameron Run,Detached,3,2,6,"1,476","$225,000 ","$236,000 ",4,7/9/2021,23831
+795-65-65-79-900-000,Single Family,CLOSD,3046 Mount Clair RD,Dalewood,Detached,3,1.1,7,"1,404","$225,000 ","$230,000 ",6,8/6/2020,23831
+795-65-89-47-600-000,Single Family,CLOSD,11701 Cedar LN,None,Detached,3,2,7,"2,338","$225,000 ","$220,000 ",28,7/2/2020,23831
+792-66-00-83-400-000,Single Family,CLOSD,3519 Chagford DR,Mineola,Detached,3,2,5,"1,568","$227,500 ","$228,000 ",5,8/11/2020,23831
+791-66-33-37-300-000,Single Family,CLOSD,10700 Timonium DR,Mineola,Detached,3,2,6,"1,447","$229,500 ","$250,000 ",4,1/4/2022,23831
+792-66-14-56-900-000,Single Family,CLOSD,11029 Drayton RD,Chipchase At Mineola,Detached,3,2,6,"1,610","$229,500 ","$245,000 ",3,7/2/2020,23831
+793-65-90-69-100-000,Single Family,CLOSD,11318 Ludgate PL,Summit Point,Detached,3,2.1,8,"1,868","$229,900 ","$240,500 ",6,12/16/2021,23831
+788-66-45-64-700-000,Single Family,CLOSD,10101 Farm Field CT,Hilltop Farms,Detached,3,2.1,6,"1,540","$229,900 ","$246,000 ",3,2/19/2021,23831
+790-66-63-17-300-000,Single Family,CLOSD,9627 Ransom Hills PL,Proctors Point,Detached,3,2.1,7,"1,584","$229,900 ","$230,000 ",5,3/22/2021,23237
+799-66-07-20-600-000,Single Family,CLOSD,2307 China Cat TER,None,Detached,3,2.1,6,"1,400","$229,900 ","$237,500 ",4,10/22/2020,23831
+789-66-29-14-000-000,Single Family,CLOSD,10749 Old Centralia RD,None,Detached,4,2,6,"1,368","$229,900 ","$232,000 ",3,8/28/2020,23831
+791-66-32-62-400-000,Single Family,CLOSD,10730 Timonium DR,Mineola,Detached,3,2,5,"1,100","$229,950 ","$240,000 ",3,10/28/2021,23831
+795-66-68-44-700-000,Single Family,CLOSD,9968 Reymet CT,Rachels Way,Detached,3,2,6,"1,649","$229,950 ","$247,000 ",2,3/18/2021,23237
+784-69-28-42-800-000,Single Family,CLOSD,3137 Grahamwood DR,Falling Creek Court,Detached,3,2,8,"2,322","$229,950 ","$235,000 ",10,3/19/2021,23234
+793-66-63-63-200-000,Single Family,CLOSD,10014 Brandywine AVE,Central Park,Detached,4,2,9,"2,032","$229,950 ","$240,000 ",3,1/8/2021,23237
+789-68-52-23-700-000,Single Family,CLOSD,2743 Gainford CIR,Falling Creek Hills,Detached,4,2,8,"2,288","$229,950 ","$232,000 ",2,9/25/2020,23234
+792-66-24-74-800-000,Single Family,CLOSD,10900 Drayton RD,Chipchase At Mineola,Detached,3,2.1,7,"1,762","$229,950 ","$245,500 ",3,10/2/2020,23831
+795-65-82-97-100-000,Single Family,CLOSD,11708 Elmwood LN,Shields Property,Detached,3,1.1,7,"1,512","$230,000 ","$240,000 ",5,2/28/2022,23831
+784-69-37-74-600-000,Single Family,CLOSD,4610 Falling Creek CIR,Ampthill Heights,Detached,3,2,6,"1,818","$230,000 ","$220,000 ",19,12/10/2021,23234
+792-66-78-34-400-000,Single Family,CLOSD,9726 Brandywine AVE,Quail Oaks,Detached,5,3,12,"2,648","$230,000 ","$215,000 ",17,11/29/2021,23237
+790-66-65-63-400-000,Single Family,CLOSD,9734 Ransom Hills TER,Proctors Point,Detached,3,2.1,8,"1,920","$230,000 ","$255,000 ",7,5/28/2021,23237
+788-67-88-42-200-000,Single Family,CLOSD,3025 Alcott RD,Rayon Park,Detached,3,2,5,"1,320","$230,000 ","$230,000 ",4,3/17/2021,23237
+786-68-95-94-900-000,Single Family,CLOSD,5115 Mill Race CIR,Shadow Creek,Detached,4,2,6,"1,688","$230,000 ","$228,000 ",20,4/13/2021,23234
+788-66-22-71-100-000,Single Family,CLOSD,10511 Glen Oaks DR,Glen Oaks,Detached,4,2,6,"1,722","$230,000 ","$215,000 ",44,9/8/2020,23831
+793-66-86-35-900-000,Single Family,CLOSD,2619 Galena AVE,Quail Oaks,Detached,3,2,5,"1,448","$230,000 ","$223,000 ",33,6/26/2020,23237
+792-66-21-47-300-000,Single Family,CLOSD,10823 Belvoir RD,Chipchase At Mineola,Detached,3,2.1,6,"1,632","$230,000 ","$237,500 ",7,5/26/2020,23831
+790-65-82-79-000-000,Single Family,CLOSD,3809 Terjo LN,Terjo Village,Detached,4,3,9,"2,511","$232,000 ","$229,400 ",6,11/10/2020,23831
+792-66-11-23-600-000,Single Family,CLOSD,11113 Belvoir RD,Carrisbrook At Mineola,Detached,3,2.1,7,"1,676","$232,000 ","$239,000 ",2,9/16/2020,23831
+795-65-54-19-000-000,Single Family,CLOSD,3151 Mount Clair RD,None,Detached,3,1.1,6,"1,612","$233,000 ","$233,000 ",3,7/9/2021,23831
+791-65-80-42-200-000,Single Family,CLOSD,11541 Old Centralia RD,Trueheart Heights,Detached,4,1.1,9,"2,007","$234,000 ","$225,000 ",51,6/2/2020,23831
+790-67-70-57-200-000,Single Family,CLOSD,7701 Telbury ST,Rayon Park,Detached,3,2,5,"1,300","$234,950 ","$244,000 ",7,11/8/2021,23237
+792-66-26-97-700-000,Single Family,CLOSD,10612 Surry RD,Chipchase At Mineola,Detached,3,1.1,5,"1,252","$235,000 ","$245,000 ",3,11/10/2021,23831
+789-68-44-82-600-000,Single Family,CLOSD,2800 Dundas RD,Bensley,Detached,4,2,7,"1,685","$235,000 ","$235,000 ",5,11/23/2021,23237
+794-66-04-16-500-000,Single Family,CLOSD,3106 Castlebury DR,Cameron Run,Detached,4,2,6,"1,368","$235,000 ","$246,000 ",6,4/26/2021,23831
+791-66-29-58-900-000,Single Family,CLOSD,10812 Belvoir RD,Mineola,Detached,3,2.1,8,"2,084","$235,000 ","$270,000 ",9,6/17/2021,23831
+792-66-31-00-600-000,Single Family,CLOSD,10801 Belvoir RD,Carrisbrook At Mineola,Detached,3,2.1,7,"1,606","$235,000 ","$238,000 ",2,10/30/2020,23831
+790-66-14-21-700-000,Single Family,CLOSD,3706 Dalhart CT,Mineola Heights,Detached,3,2,5,"1,206","$235,000 ","$235,000 ",1,10/15/2020,23831
+792-65-74-55-200-000,Single Family,CLOSD,11732 Malibu ST,Thompson Estates,Detached,3,2,8,"1,853","$235,000 ","$230,000 ",5,5/4/2020,23831
+795-65-85-01-000-000,Single Family,CLOSD,2931 Osborne RD,Goynes,Detached,3,1.1,8,"1,785","$235,000 ","$235,000 ",159,9/30/2020,23831
+800-66-01-28-600-000,Single Family,CLOSD,2101 Benhill DR,Coxendale,Detached,3,2.1,6,"1,400","$235,200 ","$237,008 ",100,12/11/2020,23831
+792-65-95-36-500-000,Single Family,CLOSD,3513 Castlebury DR,Cameron Run,Detached,3,1.1,6,"1,656","$237,500 ","$242,000 ",2,11/30/2020,23831
+791-66-00-63-200-000,Single Family,CLOSD,3707 Medora PL,Mineola,Detached,3,2.1,6,"1,764","$239,000 ","$265,500 ",4,12/1/2021,23831
+794-66-52-47-500-000,Single Family,CLOSD,10191 Brightwood AVE,Central Park,Detached,3,2.1,6,"1,500","$239,000 ","$239,000 ",2,10/15/2021,23237
+794-66-52-47-500-000,Single Family,CLOSD,10171 Brightwood AVE,Central Park,Detached,3,2.1,6,"1,500","$239,000 ","$247,000 ",2,10/14/2021,23237
+789-66-68-94-300-000,Single Family,CLOSD,9706 Ransom Hills Turn,Proctors Point,Detached,3,2.1,8,"1,920","$239,000 ","$256,000 ",4,6/15/2021,23237
+790-66-04-59-700-000,Single Family,CLOSD,3707 Dalhart CT,Mineola Heights,Detached,4,2.1,9,"1,850","$239,000 ","$256,000 ",4,1/15/2021,23831
+789-66-00-96-600-000,Single Family,CLOSD,11012 Royal Mews CT,Ascot Pointe,Detached,3,2.1,7,"2,008","$239,000 ","$235,000 ",3,8/17/2020,23831
+795-65-62-99-300-000,Single Family,CLOSD,12113 Warfield Estates DR,Warfield Estates,Detached,3,2.1,6,"1,726","$239,000 ","$239,000 ",3,4/30/2020,23831
+788-66-56-80-800-000,Single Family,CLOSD,3819 Hamlin Creek PKY,None,Detached,3,2,6,"1,596","$239,500 ","$239,500 ",11,9/11/2020,23831
+791-65-69-13-900-000,Single Family,CLOSD,3710 W Hundred RD,None,Detached,4,2,7,"1,832","$239,900 ","$239,900 ",9,10/8/2020,23831
+790-661-78-66-00000,Single Family,CLOSD,10907 Tuscola DR,Mineola,Detached,3,2,5,"1,456","$239,900 ","$242,000 ",2,8/7/2020,23831
+785-69-23-03-400-000,Single Family,CLOSD,4900 Laudeen DR,Falling Creek Court,Detached,4,1.1,6,"1,275","$239,950 ","$244,000 ",7,12/20/2021,23234
+789-65-70-59-700-000,Single Family,CLOSD,11518 Chester Station DR,Chester Station,Detached,3,2,5,"1,288","$239,950 ","$250,518 ",5,8/18/2021,23831
+793-66-91-10-200-000,Single Family,CLOSD,2701 Kingsdale RD,Quail Oaks,Detached,4,2.1,9,"2,025","$239,950 ","$262,000 ",6,5/24/2021,23237
+795-66-06-58-700-000,Single Family,CLOSD,11324 Canterbury RD,Fan Court,Detached,4,2.1,9,"2,700","$239,950 ","$240,000 ",6,8/28/2020,23831
+792-66-15-03-700-000,Single Family,CLOSD,11101 Crofton RD,Chipchase At Mineola,Detached,3,2,6,"1,256","$240,000 ","$265,000 ",4,3/22/2022,23831
+7.86689E+14,Single Family,CLOSD,5101 Trace CT,Shady Creek,Detached,4,2,6,"1,584","$240,000 ","$245,000 ",18,3/1/2022,23234
+787-66-37-59-100-000,Single Family,CLOSD,10141 Hilltop Farms DR,Hilltop Farms,Detached,3,2,5,"1,313","$240,000 ","$235,000 ",4,8/27/2021,23831
+792-66-07-38-700-000,Single Family,CLOSD,11219 Eagle Point RD,Chipchase At Mineola,Detached,3,2,5,"1,532","$240,000 ","$255,000 ",1,2/19/2021,23831
+791-684-75-06-00000,Single Family,CLOSD,2409 Chester Hill CIR,Bensley,Detached,4,2.1,8,"2,565","$240,000 ","$245,000 ",5,2/22/2021,23234
+794-66-00-62-400-000,Single Family,CLOSD,3213 Castlebury DR,Cameron Run,Detached,3,2,5,"1,408","$240,000 ","$245,000 ",17,1/8/2021,23831
+792-65-76-77-800-000,Single Family,CLOSD,11717 Malibu ST,Thompson Estates,Detached,3,2,9,"1,922","$240,000 ","$245,000 ",18,9/15/2020,23831
+793-66-19-38-200-000,Single Family,CLOSD,10912 Rufford RD,Cameron Run,Detached,3,2.1,7,"1,629","$240,000 ","$255,500 ",3,8/24/2020,23831
+790-66-61-77-500-000,Single Family,CLOSD,9628 Ransom Hills PL,Proctors Point,Detached,3,2,6,"1,284","$242,500 ","$259,750 ",3,3/24/2022,23237
+800-66-02-96-800-000,Single Family,CLOSD,2048 Fortview DR,Coxendale,Detached,3,2,5,"1,944","$244,000 ","$242,000 ",5,2/1/2021,23831
+799-65-90-77-100-000,Single Family,CLOSD,2416 Osborne RD,None,Detached,3,2,7,"1,425","$244,900 ","$250,000 ",5,6/12/2020,23831
+791-66-32-80-500-000,Single Family,CLOSD,10806 Timonium DR,Mineola,Detached,3,2,5,"1,380","$244,950 ","$253,000 ",6,11/30/2021,23831
+787-66-18-68-900-000,Single Family,CLOSD,10618 Hamlin DR,Glen Oaks,Detached,3,2,7,"2,058","$244,950 ","$240,500 ",20,6/16/2020,23831
+791-66-26-47-900-000,Single Family,CLOSD,10842 Stilton DR,Mineola,Detached,4,2,6,"1,320","$245,000 ","$255,000 ",3,12/21/2021,23831
+788-67-86-10-600-000,Single Family,CLOSD,7518 Senate ST,Rayon Park,Detached,3,2.1,5,"1,400","$245,000 ","$245,000 ",7,3/15/2021,23237
+794-66-01-49-500-000,Single Family,CLOSD,3305 Walnut Cove CT,Cameron Run,Detached,3,2,5,"1,170","$245,000 ","$235,000 ",15,4/9/2021,23831
+796-66-44-44-600-000,Single Family,CLOSD,10500 Ramona AVE,Belmeade,Detached,3,2.1,6,"1,400","$246,600 ","$252,000 ",7,8/6/2021,23237
+795-66-00-63-300-000,Single Family,CLOSD,11440 Rolling Brook RD,Fan Court,Detached,3,2.1,6,"1,783","$247,000 ","$243,000 ",48,9/11/2020,23831
+791-67-37-98-000-000,Single Family,CLOSD,8524 Chester RD,None,Detached,7,7,14,"3,863","$249,000 ","$251,000 ",12,9/9/2021,23237
+790-66-03-49-500-000,Single Family,CLOSD,3713 Dalhart CT,Mineola Heights,Detached,3,2,6,"1,452","$249,000 ","$243,000 ",3,11/30/2020,23831
+795-65-99-43-100-000,Single Family,CLOSD,11625 Wilton DR,Fan Court,Detached,3,2,7,"1,586","$249,000 ","$250,000 ",47,4/24/2020,23831
+794-65-64-50-800-000,Single Family,CLOSD,3231 W Grove AVE,Pleasant Dale,Detached,4,2.1,8,"2,588","$249,500 ","$240,000 ",3,1/14/2021,23831
+788-66-07-99-200-000,Single Family,CLOSD,3905 Old Cheshire DR,Cheshire,Detached,4,2,7,"1,740","$249,500 ","$250,000 ",4,9/29/2020,23831
+788-66-34-28-700-000,Single Family,CLOSD,3911 Hilltop Field DR,Hilltop Farms,Detached,4,2,6,"1,788","$249,900 ","$275,000 ",4,4/30/2021,23831
+790-65-82-66-600-000,Single Family,CLOSD,3824 Wood Dale RD,Wood Dale,Detached,3,2,6,"1,306","$249,900 ","$270,000 ",8,4/29/2021,23831
+789-66-18-92-500-000,Single Family,CLOSD,10840 Old Centralia RD,None,Detached,3,3.1,6,"2,232","$249,900 ","$270,000 ",7,9/14/2020,23831
+790-66-25-94-400-000,Single Family,CLOSD,10819 Tuscola DR,Mineola Heights,Detached,3,2.1,7,"1,720","$249,900 ","$255,000 ",23,10/21/2020,23831
+790-66-04-30-500-000,Single Family,CLOSD,11321 Old Centralia RD,Trueheart Heights,Detached,3,2,8,"2,400","$249,900 ","$247,500 ",231,5/8/2020,23831
+794-66-01-98-500-000,Single Family,CLOSD,3106 New Found LN,Cameron Run,Detached,3,2.1,6,"1,358","$249,950 ","$274,000 ",5,11/5/2021,23831
+789-68-23-54-200-000,Single Family,CLOSD,6919 Strathmore CT,Glen Conner,Detached,3,3,7,"2,164","$249,950 ","$260,000 ",5,7/19/2021,23237
+793-66-01-07-500-000,Single Family,CLOSD,11130 Rufford RD,Cameron Run,Detached,3,2,5,"1,256","$249,950 ","$250,000 ",5,6/30/2021,23831
+792-67-75-92-400-000,Single Family,CLOSD,2516 Myron AVE,Bellwood Addition,Detached,3,2.1,7,"1,500","$249,950 ","$249,950 ",7,5/4/2021,23237
+788-66-30-66-300-000,Single Family,CLOSD,4001 Hilltop Farms TER,Hilltop Farms,Detached,3,2.1,6,"2,357","$249,950 ","$254,950 ",26,5/27/2020,23831
+793-66-07-01-600-000,Single Family,CLOSD,3200 Ludgate RD,Summit Point,Detached,4,2.1,7,"1,717","$249,950 ","$252,000 ",10,4/9/2020,23831
+788-66-42-44-000-000,Single Family,CLOSD,4036 Hilltop Field DR,Hilltop Farms,Detached,4,2,6,"1,596","$250,000 ","$239,000 ",66,9/24/2021,23831
+794-66-08-47-800-000,Single Family,CLOSD,3005 Castlebury DR,Cameron Run,Detached,3,2.1,6,"1,616","$250,000 ","$260,000 ",8,7/16/2021,23831
+793-66-09-02-500-000,Single Family,CLOSD,3225 Castlebury DR,Cameron Run,Detached,3,2,6,"1,384","$250,000 ","$268,500 ",6,6/11/2021,23831
+792-65-95-04-800-000,Single Family,CLOSD,3506 Ludgate RD,Summit Point,Detached,3,2,8,"1,912","$250,000 ","$266,000 ",5,5/19/2021,23831
+791-66-19-23-000-000,Single Family,CLOSD,11118 Belvoir RD,Carrisbrook At Mineola,Detached,3,2,6,"1,675","$250,000 ","$276,000 ",5,5/6/2021,23831
+792-66-12-40-000-000,Single Family,CLOSD,3501 Mineola DR,Chipchase At Mineola,Detached,4,2,7,"1,512","$250,000 ","$270,000 ",5,4/23/2021,23831
+793-66-00-32-900-000,Single Family,CLOSD,3421 Castlebury DR,Cameron Run,Detached,4,2,6,"1,488","$250,000 ","$262,000 ",0,3/18/2021,23831
+792-66-06-30-800-000,Single Family,CLOSD,11325 Eagle Point RD,Cameron Run,Detached,3,2,6,"1,674","$250,000 ","$260,000 ",2,8/31/2020,23831
+791-66-01-41-600-000,Single Family,CLOSD,3640 Hemlock RD,Trueheart Heights,Detached,4,2.1,9,"2,090","$250,000 ","$248,000 ",28,4/16/2020,23831
+796-66-43-24-200-000,Single Family,CLOSD,10501 Elokomin AVE,Belmeade,Detached,3,2.1,6,"1,400","$251,000 ","$260,000 ",9,8/10/2021,23237
+792-66-22-99-800-000,Single Family,CLOSD,10518 Surry RD,Carrisbrook At Mineola,Detached,3,2.1,7,"1,676","$253,900 ","$277,000 ",4,10/1/2021,23831
+789-66-03-66-700-000,Single Family,CLOSD,3810 Kingstream Layne,Ascot Forest,Detached,3,2.1,7,"2,100","$254,777 ","$257,000 ",14,10/14/2020,23831
+786-69-23-27-500-000,Single Family,CLOSD,4719 Willesden RD,Falling Creek Court,Detached,3,2,6,"1,536","$254,900 ","$254,900 ",58,9/15/2021,23234
+789-66-04-50-600-000,Single Family,CLOSD,11103 Churchill CT,Ascot Pointe,Detached,3,2.1,7,"1,910","$254,900 ","$261,400 ",3,7/7/2020,23831
+788-66-26-24-700-000,Single Family,CLOSD,10454 Shumark DR,Glen Oaks,Detached,3,2.1,7,"1,840","$254,950 ","$254,950 ",8,4/24/2020,23831
+790-66-60-56-200-000,Single Family,CLOSD,3248 Ransom Hills RD,Proctors Point,Detached,3,2.1,7,"1,758","$255,000 ","$255,000 ",3,9/30/2021,23237
+788-66-43-93-900-000,Single Family,CLOSD,10102 Farm Field CT,Hilltop Farms,Detached,3,2.1,6,"1,440","$255,000 ","$270,000 ",3,2/22/2021,23831
+788-66-17-50-900-000,Single Family,CLOSD,3904 Old Cheshire DR,Cheshire,Detached,3,2,6,"1,404","$257,500 ","$282,000 ",5,7/28/2021,23831
+789-66-29-05-000-000,Single Family,CLOSD,10741 Old Centralia RD,Whispering Pines Chest,Detached,3,2.1,9,"1,880","$259,000 ","$253,000 ",21,10/18/2021,23831
+792-66-23-94-200-000,Single Family,CLOSD,10906 Drayton RD,Chipchase At Mineola,Detached,3,2,6,"1,800","$259,000 ","$260,000 ",3,5/21/2021,23831
+792-66-22-47-000-000,Single Family,CLOSD,10814 Surry CIR,Carrisbrook At Mineola,Detached,3,2,6,"1,714","$259,000 ","$252,000 ",2,7/17/2020,23831
+792-66-12-21-700-000,Single Family,CLOSD,3500 Mineola DR,Mineola,Detached,3,2.1,6,"1,554","$259,900 ","$280,000 ",12,11/10/2021,23831
+789-66-03-81-300-000,Single Family,CLOSD,3909 Paces Ferry RD,Ascot Pointe,Detached,4,2.1,9,"1,848","$259,900 ","$281,000 ",5,4/29/2021,23831
+795-65-87-82-100-000,Single Family,CLOSD,2908 Perdue AVE,Warfield Estates,Detached,3,2.1,6,"1,753","$259,900 ","$259,900 ",3,10/28/2020,23831
+788-68-57-12-400-000,Single Family,CLOSD,6201 Strathcona ST,Falling Creek Hills,Detached,3,2,6,"1,850","$259,950 ","$260,000 ",7,2/22/2022,23234
+788-66-33-17-500-000,Single Family,CLOSD,3912 Hilltop Farms TER,Hilltop Farms,Detached,3,2.1,6,"1,616","$259,950 ","$260,000 ",5,1/28/2021,23831
+787-66-29-67-900-000,Single Family,CLOSD,10431 Hamlin DR,Glen Oaks,Detached,3,2.1,6,"1,920","$259,950 ","$265,000 ",6,12/18/2020,23831
+792-67-64-55-100-000,Single Family,CLOSD,2521 Dwight AVE,Bellwood Addition,Detached,3,2.1,5,"1,400","$259,999 ","$251,000 ",2,10/29/2021,23237
+796-65-85-57-400-000,Single Family,CLOSD,2730 Perdue AVE,Warfield Estates,Detached,3,2,6,"1,413","$259,999 ","$267,000 ",16,10/6/2021,23831
+794-66-71-00-400-000,Single Family,CLOSD,2704 General BLVD,Central Park,Detached,3,2.1,6,"1,400","$260,000 ","$255,000 ",45,9/3/2021,23237
+793-66-08-84-300-000,Single Family,CLOSD,3230 Castlebury DR,Cameron Run,Detached,3,2.1,6,"1,488","$260,000 ","$273,500 ",5,5/26/2021,23831
+789-66-96-02-700-000,Single Family,CLOSD,3324 Kingsdale RD,None,Detached,3,2,7,"1,704","$262,500 ","$268,000 ",2,12/1/2020,23237
+795-66-05-27-200-000,Single Family,CLOSD,11409 Surry RD,Fan Court,Detached,4,1.1,9,"2,584","$263,500 ","$255,000 ",56,4/30/2020,23831
+787-66-46-82-500-000,Single Family,CLOSD,10124 Hilltop Farms DR,Hilltop Farms,Detached,3,2,6,"1,583","$264,900 ","$274,250 ",5,2/15/2022,23831
+793-65-93-69-900-000,Single Family,CLOSD,11305 Ludgate PL,Summit Point,Detached,3,2,6,"1,404","$264,900 ","$280,000 ",5,9/17/2021,23831
+791-67-18-70-600-000,Single Family,CLOSD,9001 Omaha ST,None,Detached,4,2.1,8,"1,812","$264,900 ","$257,500 ",12,12/4/2020,23237
+791-68-39-25-300-000,Single Family,CLOSD,2407 Aberdeen RD,Bensley,Detached,4,2,6,"1,982","$264,950 ","$285,000 ",6,8/13/2021,23237
+790-66-64-06-700-000,Single Family,CLOSD,3212 Ransom Hills RD,Proctors Point,Detached,3,2.1,7,"1,584","$265,000 ","$270,000 ",6,10/22/2021,23237
+787-66-27-51-500-000,Single Family,CLOSD,4102 Walters DR,Glen Oaks,Detached,4,2.1,8,"2,252","$265,000 ","$260,000 ",13,7/17/2020,23831
+796-65-87-67-800-000,Single Family,CLOSD,2725 Perdue AVE,Warfield Estates,Detached,4,2.1,6,"1,978","$265,000 ","$255,000 ",47,6/3/2020,23831
+795-65-97-62-000-000,Single Family,CLOSD,2800 Wilton CT,Fan Court,Detached,3,2,6,"1,734","$268,500 ","$268,500 ",70,9/8/2020,23831
+795-660-61-35-00000,Single Family,CLOSD,11433 Surry RD,Fan Court,Detached,4,2.1,9,"2,608","$269,000 ","$268,700 ",47,7/9/2020,23831
+792-66-24-42-100-000,Single Family,CLOSD,10913 Drayton RD,Chipchase At Mineola,Detached,3,2,6,"1,610","$269,900 ","$272,400 ",2,2/4/2021,23831
+7.95658E+14,Single Family,CLOSD,3031 Warfield Estates PL,Warfield Estates,Detached,3,2.1,6,"1,649","$269,950 ","$274,700 ",6,7/21/2021,23831
+795-65-79-58-500-000,Single Family,CLOSD,3000 Warfield Estates TER,Warfield Estates,Detached,3,2.1,7,"1,842","$269,950 ","$279,000 ",5,1/6/2021,23831
+788-66-26-35-700-000,Single Family,CLOSD,10460 Shumark DR,Glen Oaks,Detached,3,2.1,5,"1,790","$269,950 ","$277,000 ",4,9/24/2020,23831
+790-66-27-16-600-000,Single Family,CLOSD,10806 Tuscola DR,Mineola Heights,Detached,4,2.1,6,"2,206","$269,950 ","$269,950 ",2,4/24/2020,23831
+790-66-15-36-800-000,Single Family,CLOSD,3701 Yantis CT,Mineola,Detached,3,2.1,6,"1,436","$270,000 ","$270,000 ",14,1/18/2022,23831
+788-66-26-49-400-000,Single Family,CLOSD,10323 Hamlin DR,Glen Oaks,Detached,4,2.1,7,"1,778","$270,000 ","$300,000 ",5,9/10/2021,23831
+789-65-99-75-100-000,Single Family,CLOSD,3826 Castlebury DR,Castlebury Hills,Detached,3,2,8,"1,680","$270,000 ","$255,000 ",9,7/29/2021,23831
+789-66-06-12-100-000,Single Family,CLOSD,3901 Paces Ferry RD,Ascot Pointe,Detached,3,2,7,"1,922","$270,000 ","$281,000 ",4,7/9/2021,23831
+793-65-97-57-800-000,Single Family,CLOSD,3219 Ludgate RD,Summit Point,Detached,3,2,6,"1,788","$270,000 ","$265,124 ",31,7/16/2021,23831
+790-66-34-72-500-000,Single Family,CLOSD,9954 Ethens Castle DR,Brooks Chapel,Detached,3,2.1,8,"2,142","$270,000 ","$270,000 ",7,5/26/2020,23831
+796-66-44-73-700-000,Single Family,CLOSD,10504 Ramona AVE,Belmeade,Detached,3,2.1,6,"1,440","$270,660 ","$275,000 ",69,12/30/2021,23237
+796-66-45-03-200-000,Single Family,CLOSD,10508 Ramona AVE,Belmeade,Detached,3,2.1,6,"1,440","$274,470 ","$274,470 ",3,1/11/2022,23237
+789-68-61-60-200-000,Single Family,CLOSD,6040 Gainford RD,Falling Creek Hills,Detached,4,2.1,10,"1,836","$274,500 ","$274,500 ",11,11/2/2020,23234
+793-66-21-37-600-000,Single Family,CLOSD,10709 Surry RD,Mineola,Detached,3,2,6,"1,364","$274,900 ","$290,000 ",6,12/23/2021,23831
+792-66-27-71-400-000,Single Family,CLOSD,10905 Crofton CT,Chipchase At Mineola,Detached,3,2,6,"1,414","$274,900 ","$280,000 ",5,12/16/2021,23831
+792-66-23-03-500-000,Single Family,CLOSD,10910 Drayton RD,Chipchase At Mineola,Detached,4,3,7,"1,972","$274,900 ","$265,000 ",9,4/20/2020,23831
+792-66-17-88-200-000,Single Family,CLOSD,10924 Crofton RD,Chipchase At Mineola,Detached,3,2.1,8,"1,528","$274,950 ","$305,000 ",8,3/2/2022,23831
+795-65-86-49-400-000,Single Family,CLOSD,2809 Wilton CT,Fan Court,Detached,3,2,7,"1,670","$274,950 ","$275,000 ",9,9/10/2021,23831
+7.95658E+14,Single Family,CLOSD,3025 Warfield Estates PL,Warfield Estates,Detached,3,2.1,6,"1,649","$274,950 ","$295,000 ",5,7/19/2021,23831
+794-65-66-10-200-000,Single Family,CLOSD,3221 W Grove AVE,Pleasant Dale,Detached,3,2,9,"2,404","$274,950 ","$265,000 ",50,2/5/2021,23831
+789-66-00-85-300-000,Single Family,CLOSD,3908 Kingstream Layne,Ascot Forest,Detached,3,2.1,8,"2,203","$275,000 ","$285,000 ",5,8/27/2021,23831
+792-67-74-51-800-000,Single Family,CLOSD,2522 MYRON AVE,Bellwood Addition,Detached,3,2.1,6,"1,550","$275,000 ","$270,000 ",2,11/4/2021,23237
+788-66-27-12-400-000,Single Family,CLOSD,10400 Glen Oaks DR,Glen Oaks,Detached,3,2.1,7,"1,850","$275,000 ","$290,000 ",2,7/15/2021,23831
+792-65-87-11-900-000,Single Family,CLOSD,11609 Boyd RD,Thompson Estates,Detached,4,2.1,9,"2,732","$275,000 ","$262,000 ",35,10/22/2020,23831
+796-66-44-64-100-000,Single Family,CLOSD,10502 Ramona AVE,Belmeade,Detached,3,2.1,6,"1,440","$275,720 ","$272,860 ",98,3/10/2022,23237
+791-66-24-63-600-000,Single Family,CLOSD,10917 Timonium DR,Mineola,Detached,3,2,6,"1,548","$278,000 ","$288,000 ",7,3/25/2022,23831
+794-65-75-58-900-000,Single Family,CLOSD,11809 Holly Hill RD,Holly Hills,Detached,3,2,7,"2,160","$278,000 ","$306,000 ",6,7/14/2021,23831
+788-66-13-70-500-000,Single Family,CLOSD,10903 Old Cheshire CT,Cheshire,Detached,4,2,6,"1,404","$279,900 ","$295,717 ",6,12/30/2021,23831
+788-68-42-87-400-000,Single Family,CLOSD,2950 Parkdale RD,Falling Creek Hills,Detached,3,1.1,7,"1,469","$279,900 ","$275,000 ",11,12/1/2021,23234
+788-65-97-35-500-000,Single Family,CLOSD,4107 Heathstead CT,Ascot Pointe,Detached,3,2.1,6,"2,021","$279,900 ","$295,000 ",6,12/29/2020,23831
+788-66-32-47-800-000,Single Family,CLOSD,3918 Hilltop Farms TER,Hilltop Farms,Detached,3,2.1,6,"1,702","$279,950 ","$279,950 ",3,11/5/2021,23831
+788-66-43-66-500-000,Single Family,CLOSD,3912 Farm Field DR,Hilltop Farms,Detached,4,2,6,"1,330","$279,950 ","$279,950 ",7,9/29/2021,23831
+792-66-57-35-700-000,Single Family,CLOSD,10102 S General BLVD,Central Park,Detached,4,2.1,6,"1,740","$279,950 ","$282,000 ",2,10/18/2021,23237
+789-66-14-83-600-000,Single Family,CLOSD,10818 Erin Green CT,Erin Green,Detached,3,2.1,7,"2,221","$279,950 ","$275,000 ",2,11/10/2020,23831
+788-66-43-97-900-000,Single Family,CLOSD,3919 Hamlin Creek CT,Hamlin Estates,Detached,4,2.1,7,"2,068","$279,990 ","$300,000 ",6,6/14/2021,23831
+794-65-71-01-400-000,Single Family,CLOSD,11824 Boyd RD,Chester Heights,Detached,4,3,8,"2,793","$280,000 ","$280,000 ",17,5/17/2021,23831
+789-66-11-56-000-000,Single Family,CLOSD,3901 Hamlin TER,Hamlin Estates,Detached,4,2.1,7,"2,260","$284,000 ","$305,000 ",4,3/10/2021,23831
+795-65-88-32-600-000,Single Family,CLOSD,2904 Perdue AVE,Goynes,Detached,4,2.1,6,"1,946","$284,800 ","$280,000 ",118,7/1/2020,23831
+789-66-14-38-300-000,Single Family,CLOSD,10806 Erin Green CT,Erin Green,Detached,4,2.1,7,"2,064","$284,900 ","$283,000 ",3,8/19/2020,23831
+788-66-44-98-000-000,Single Family,CLOSD,3913 Hamlin Creek CT,Hamlin Estates,Detached,4,2.1,8,"1,950","$285,000 ","$307,000 ",2,11/5/2021,23831
+795-65-77-62-900-000,Single Family,CLOSD,3012 Warfield Estates PL,Warfield Estates,Detached,3,2.1,7,"1,736","$285,000 ","$295,000 ",5,10/21/2021,23831
+788-66-02-95-800-000,Single Family,CLOSD,4100 Kings Gate RD,Hamlins Reach,Detached,4,2,6,"1,438","$285,000 ","$285,000 ",8,7/6/2021,23831
+795-65-78-09-000-000,Single Family,CLOSD,3012 Warfield Estates TER,Warfield Estates,Detached,3,2.1,6,"1,736","$285,000 ","$290,000 ",2,12/22/2020,23831
+793-65-86-18-700-000,Single Family,CLOSD,3249 Wood Dale RD,Trueheart Heights,Detached,4,2.2,9,"3,124","$285,000 ","$315,000 ",8,12/23/2020,23831
+789-66-43-35-200-000,Single Family,CLOSD,10006 Brooks Point TER,Brooks Chapel,Detached,4,2.1,7,"2,304","$287,000 ","$310,000 ",5,3/16/2021,23831
+796-65-80-94-400-000,Single Family,CLOSD,11721 Cedar LN,Warfield Estates,Detached,3,2.1,6,"1,504","$287,500 ","$325,000 ",7,1/31/2022,23831
+790-66-04-58-500-000,Single Family,CLOSD,3718 Mineola DR,Mineola Heights,Detached,3,2.1,6,"1,857","$289,000 ","$279,000 ",7,3/12/2021,23831
+794-66-51-78-700-000,Single Family,CLOSD,10131 Brightwood AVE,Central Park,Detached,3,2,7,"1,456","$289,900 ","$295,000 ",35,2/25/2022,23237
+793-66-05-90-300-000,Single Family,CLOSD,3206 Ludgate RD,Summit Point,Detached,3,2.1,7,"1,902","$289,900 ","$317,500 ",3,8/13/2021,23831
+788-66-12-56-200-000,Single Family,CLOSD,4106 Hamlin TER,Hamlin Estates,Detached,3,2.1,7,"2,216","$289,900 ","$289,900 ",10,9/3/2021,23831
+788-66-28-91-100-000,Single Family,CLOSD,10407 Glen Oaks DR,Glen Oaks,Detached,3,2.1,6,"1,728","$289,950 ","$285,000 ",50,11/15/2021,23831
+793-66-26-10-500-000,Single Family,CLOSD,10910 Stepney RD,Shady Springs,Detached,4,2,8,"2,358","$289,950 ","$308,000 ",7,7/28/2021,23831
+792-65-76-59-600-000,Single Family,CLOSD,11701 Malibu ST,Thompson Estates,Detached,3,2,7,"2,146","$289,950 ","$290,000 ",13,6/10/2021,23831
+792-65-78-53-400-000,Single Family,CLOSD,11757 Dewberry LN,None,Detached,4,3.1,11,"2,744","$289,999 ","$285,000 ",13,9/4/2020,23831
+795-65-89-91-200-000,Single Family,CLOSD,11900 Warfield Ridge DR,Warfield Estates,Detached,3,2.1,6,"1,884","$290,000 ","$320,000 ",3,3/29/2022,23831
+796-65-76-77-800-000,Single Family,CLOSD,2900 Warfield Ridge TER,Warfield Estates,Detached,4,2.1,7,"2,162","$290,000 ","$290,000 ",3,11/30/2020,23831
+790-66-91-17-700-000,Single Family,CLOSD,9318 S Carswell ST,Oak Dale,Detached,3,2.1,6,"1,800","$293,000 ","$305,000 ",2,8/27/2021,23237
+792-66-28-81-400-000,Single Family,CLOSD,10900 Crofton RD,Chipchase At Mineola,Detached,3,2.1,7,"1,968","$295,000 ","$300,000 ",7,1/31/2022,23831
+788-68-85-55-600-000,Single Family,CLOSD,2909 Emblem DR,Ranch Acres,Detached,4,2.1,8,"2,840","$295,000 ","$315,000 ",5,12/14/2021,23234
+796-65-91-53-700-000,Single Family,CLOSD,11628 Hillside RD,Holly Trail,Detached,3,2,7,"1,962","$295,000 ","$295,000 ",2,8/11/2020,23831
+789-66-39-02-800-000,Single Family,CLOSD,3618 Ethens Point LN,Brooks Chapel,Attached,4,2.1,8,"2,389","$295,000 ","$295,000 ",3,7/20/2020,23831
+795-65-77-48-000-000,Single Family,CLOSD,3018 Warfield Estates TER,Warfield Estates,Detached,4,2.1,8,"2,348","$295,500 ","$290,000 ",15,7/31/2020,23831
+789-68-36-39-800-000,Single Family,CLOSD,2741 Dundas RD,Bensley,Detached,4,2,7,"2,174","$297,500 ","$300,000 ",3,3/8/2022,23237
+789-66-43-73-600-000,Single Family,CLOSD,10018 Brooks Point TER,Brooks Chapel,Detached,4,2.1,7,"2,120","$297,999 ","$325,000 ",5,7/22/2021,23831
+792-66-16-68-700-000,Single Family,CLOSD,10913 Crofton CT,Chipchase At Mineola,Detached,3,2.1,6,"1,626","$299,000 ","$326,100 ",4,2/2/2022,23831
+792-66-14-11-100-000,Single Family,CLOSD,11201 Eagle Point RD,Chipchase At Mineola,Detached,3,2.1,6,"2,150","$299,000 ","$299,000 ",3,8/10/2021,23831
+790-66-21-69-000-000,Single Family,CLOSD,10718 Ethens Mill RD,Brooks Chapel,Detached,4,2.1,8,"1,944","$299,000 ","$301,000 ",5,2/10/2021,23831
+790-66-35-87-300-000,Single Family,CLOSD,9925 Ethens Castle DR,Brooks Chapel,Detached,3,2,7,"2,174","$299,100 ","$284,500 ",17,6/26/2020,23831
+788-68-81-06-900-000,Single Family,CLOSD,2941 Emblem DR,Ranch Acres,Detached,3,2,9,"2,138","$299,500 ","$295,500 ",25,1/7/2022,23234
+796-65-91-38-900-000,Single Family,CLOSD,11608 Hillside RD,Holly Trail,Detached,3,2,8,"1,943","$299,500 ","$316,000 ",3,8/14/2020,23831
+794-65-78-92-000-000,Single Family,CLOSD,3201 Osborne RD,Chester,Detached,4,2.1,7,"2,124","$299,500 ","$305,000 ",2,4/13/2020,23831
+795-65-73-42-300-000,Single Family,CLOSD,12100 Warfield Estates DR,Warfield Estates,Detached,3,2.1,7,"1,842","$299,900 ","$310,000 ",0,1/6/2022,23831
+793-66-23-16-600-000,Single Family,CLOSD,10731 Surry RD,None,Detached,4,2.1,7,"2,547","$299,900 ","$299,900 ",28,7/12/2021,23831
+793-66-21-43-300-000,Single Family,CLOSD,10811 Crofton RD,Chipchase At Mineola,Detached,4,2.1,8,"2,130","$299,950 ","$325,000 ",3,12/3/2021,23831
+792-66-05-28-600-000,Single Family,CLOSD,11220 Eagle Point RD,Chipchase At Mineola,Detached,3,3,8,"2,176","$299,950 ","$300,000 ",13,9/7/2021,23831
+789-66-46-90-500-000,Single Family,CLOSD,10001 Williams Mill RD,Brooks Chapel,Detached,4,3,8,"2,344","$299,950 ","$295,000 ",7,5/22/2020,23831
+789-65-83-60-500-000,Single Family,CLOSD,11500 Chester RD,None,Detached,5,3,10,"2,754","$299,999 ","$295,000 ",20,10/15/2020,23831
+788-66-09-62-900-000,Single Family,CLOSD,4001 King Stream LN,Ascot Forest,Detached,3,2.1,7,"2,026","$300,000 ","$341,500 ",6,3/21/2022,23831
+790-66-73-73-500-000,Single Family,CLOSD,9606 Ransom Hills TER,Proctors Point,Detached,3,2.1,7,"2,084","$300,000 ","$320,000 ",6,2/16/2022,23237
+788-66-17-84-200-000,Single Family,CLOSD,10702 Hamlin CIR,Hamlin Estates,Detached,5,2.1,8,"2,128","$300,000 ","$325,000 ",4,1/5/2022,23831
+795-65-93-31-900-000,Single Family,CLOSD,11617 Elmwood LN,Fan Court,Detached,4,2,8,"2,406","$300,000 ","$318,000 ",4,9/1/2021,23831
+795-65-74-16-300-000,Single Family,CLOSD,3036 Warfield Estates TER,Warfield Estates,Detached,3,2.1,8,"2,106","$300,000 ","$325,000 ",2,6/14/2021,23831
+795-66-18-40-600-000,Single Family,CLOSD,11317 Canterbury RD,Fan Court,Detached,4,3,7,"3,060","$300,000 ","$310,000 ",7,5/27/2021,23831
+789-66-39-15-300-000,Single Family,CLOSD,3648 Ethens Point LN,Brooks Chapel,Detached,4,2.1,8,"2,100","$304,500 ","$310,000 ",17,10/22/2020,23831
+789-67-73-76-800-000,Single Family,CLOSD,2941 Libwood AVE,Rayon Park,Detached,4,2.1,7,"1,816","$305,000 ","$305,000 ",6,2/23/2022,23237
+789-66-48-82-100-000,Single Family,CLOSD,3600 Hamlin Creek,Brooks Chapel,Detached,4,2.1,8,"2,356","$305,000 ","$306,000 ",6,2/11/2021,23831
+795-65-74-95-000-000,Single Family,CLOSD,3037 Warfield Estates TER,Warfield Estates,Detached,4,3.1,7,"2,028","$309,900 ","$329,900 ",5,9/22/2021,23831
+796-65-83-96-600-000,Single Family,CLOSD,11709 Perdue TER,Warfield Estates,Detached,3,2.1,8,"2,208","$309,950 ","$320,000 ",4,6/17/2021,23831
+790-66-07-41-400-000,Single Family,CLOSD,3670 Hemlock RD,Trueheart Heights,Detached,4,2.1,8,"2,056","$310,000 ","$315,000 ",3,12/21/2021,23831
+789-66-06-14-000-000,Single Family,CLOSD,3902 Paces Ferry RD,Ascot Pointe,Detached,4,2.1,7,"2,146","$310,000 ","$335,000 ",1,9/3/2021,23831
+791-65-96-54-600-000,Single Family,CLOSD,11410 Marsden RD,Trueheart Heights,Detached,4,2.1,9,"2,236","$310,000 ","$310,000 ",1,12/15/2021,23831
+790-66-26-17-800-000,Single Family,CLOSD,10018 Ethens Castle DR,Brooks Chapel,Detached,4,2.1,8,"2,264","$314,900 ","$340,000 ",5,8/16/2021,23831
+796-65-91-46-800-000,Single Family,CLOSD,11616 Hillside RD,Holly Trail,Detached,3,2,7,"1,759","$314,900 ","$337,000 ",5,7/9/2021,23831
+795-65-60-97-400-000,Single Family,CLOSD,3100 Poinsetta DR,Pleasant Dale,Detached,4,2.1,7,"2,007","$314,990 ","$325,000 ",9,7/29/2021,23831
+789-66-95-32-200-000,Single Family,CLOSD,3328 Kingsdale RD,None,Detached,4,2.1,8,"2,146","$315,000 ","$317,000 ",8,4/16/2021,23237
+7.88662E+13,Single Family,CLOSD,4007 Walters Drive,Glen Oaks,Detached,4,2.1,9,"2,614","$315,000 ","$315,000 ",2,8/28/2020,23831
+788-66-06-56-400-000,Single Family,CLOSD,4000 Kings Gate RD,Hamlins Reach,Detached,3,2.1,10,"2,720","$318,000 ","$310,000 ",3,11/16/2020,23831
+789-65-85-19-300-000,Single Family,CLOSD,3914 Terjo LN,Terjo Village,Detached,4,3,8,"2,158","$319,000 ","$319,000 ",10,3/26/2021,23831
+7.86675E+13,Condo/Town,CLOSD,7837 Vermeil ST,Silverleaf,Townhouse,3,2.1,7,"1,943","$319,500 ","$319,500 ",15,8/31/2021,23237
+789-66-46-17-100-000,Single Family,CLOSD,3636 Hamlin Creek PKY,Brooks Chapel,Detached,5,3.1,9,"2,429","$319,999 ","$331,500 ",5,6/1/2021,23831
+790-66-35-87-300-000,Single Family,CLOSD,9925 Ethens Castle DR,Brooks Chapel,Detached,4,2,7,"2,134","$325,000 ","$330,000 ",2,6/28/2021,23831
+7.91659E+14,Single Family,CLOSD,11410 Driscoll RD,Trueheart Heights,Detached,3,2.1,10,"2,364","$329,900 ","$330,000 ",11,9/30/2021,23831
+790-66-48-60-500-000,Single Family,CLOSD,3412 Midhurst DR,Brooks Chapel,Detached,4,2.1,7,"2,224","$329,950 ","$330,000 ",24,10/21/2020,23831
+7.97662E+14,Single Family,CLOSD,11373 Elokomin AVE,Rolling Ridge,Detached,3,2.1,7,"2,186","$332,675 ","$336,268 ",0,3/25/2021,23831
+7.97662E+14,Single Family,CLOSD,11337 Elokomin AVE,Rolling Ridge,Detached,4,2.1,8,"2,594","$333,385 ","$334,707 ",25,5/10/2021,23831
+795-65-90-08-500-000,Single Family,CLOSD,11516 Elmwood LN,Fan Court,Detached,4,3.1,9,"3,001","$335,000 ","$345,000 ",3,1/24/2022,23831
+TBD,Single Family,CLOSD,11367 Elokomin AVE,Rolling Ridge,Detached,4,2.1,10,"2,373","$337,585 ","$348,695 ",115,2/22/2021,23831
+789-66-98-33-900-000,Single Family,CLOSD,9418 S Carswell ST,Oak Dale,Detached,4,2.1,9,"2,385","$339,000 ","$345,000 ",4,4/23/2021,23237
+788-66-11-89-600-000,Single Family,CLOSD,4030 Walters DR,Glen Oaks,Detached,4,3,8,"2,489","$339,950 ","$330,000 ",64,2/11/2021,23831
+788-67-34-46-100-000,Single Family,CLOSD,3332 Kingsland RD,None,Detached,4,2,9,"2,576","$344,000 ","$338,500 ",44,2/16/2021,23237
+TBD,Single Family,CLOSD,11307 Elokomin,Rolling Ridge,Detached,4,2.2,8,"2,343","$348,270 ","$359,502 ",0,12/18/2020,23831
+790-66-29-86-200-000,Single Family,CLOSD,3819 Bethesda CT,Mineola Heights,Detached,4,2.3,8,"2,064","$349,900 ","$349,900 ",2,11/16/2021,23831
+788-66-05-04-600-000,Single Family,CLOSD,4005 Kings Gate RD,Hamlins Reach,Detached,6,2.1,9,"2,397","$349,950 ","$355,000 ",5,9/30/2021,23831
+793-65-90-69-100-000,Single Family,CLOSD,11318 Ludgate PL,Summit Point,Attached,3,2.1,8,"1,868","$349,999 ","$360,000 ",6,2/25/2022,23831
+789-66-02-50-100-000,Single Family,CLOSD,11102 Churchill CT,Ascot Pointe,Detached,4,2.1,8,"2,232","$350,000 ","$340,000 ",4,3/22/2022,23831
+795-65-80-82-200-000,Single Family,CLOSD,11756 Cliff Lawn DR,Clifflawn,Detached,4,2,8,"2,603","$350,000 ","$358,000 ",30,11/30/2021,23831
+792-65-97-35-900-000,Single Family,CLOSD,11406 Ludgate PL,Summit Point,Detached,5,4,11,"3,300","$350,000 ","$348,000 ",83,3/25/2021,23831
+789-66-36-25-200-000,Single Family,CLOSD,3643 Ethens Point LN,Brooks Chapel,Detached,4,2.1,10,"3,302","$350,000 ","$350,000 ",8,6/17/2020,23831
+7.97662E+14,Single Family,CLOSD,11361 Elokomin AVE,Rolling Ridge,Detached,4,2.1,8,"2,369","$350,695 ","$357,518 ",51,6/8/2021,23831
+TBD,Single Family,CLOSD,11379 Elokomin AVE,Rolling Ridge,Detached,4,3,9,"2,714","$351,210 ","$358,174 ",98,12/31/2020,23831
+791-65-83-83-500-000,Single Family,CLOSD,11601 Rochelle RD,Trueheart Heights,Detached,5,4,9,"2,801","$352,500 ","$380,000 ",9,7/6/2021,23831
+788-66-15-54-400-000,Single Family,CLOSD,4019 Hamlin TER,Hamlin Estates,Detached,4,2.1,11,"2,942","$358,000 ","$347,000 ",13,2/25/2021,23831
+7.98661E+14,Single Family,CLOSD,11313 Ridge Mill CT,Rolling Ridge,Detached,4,2.1,8,"2,369","$358,073 ","$357,073 ",19,4/27/2021,23831
+795-65-80-88-000-000,Single Family,CLOSD,11717 Cliff Lawn DR,Clifflawn,Detached,4,2.1,9,"2,338","$359,000 ","$359,000 ",6,12/17/2021,23831
+793-66-60-93-900-000,Single Family,CLOSD,10015 Beaumont AVE,Central Park,Detached,4,2.1,7,"2,202","$359,900 ","$379,000 ",47,3/3/2022,23237
+790-66-37-82-300-000,Single Family,CLOSD,9955 Ethens Castle DR,Brooks Chapel,Detached,5,3,11,"3,154","$359,900 ","$360,000 ",85,1/5/2021,23831
+790-66-31-35-700-000,Single Family,CLOSD,10601 Ethens Point CT,Brooks Chapel,Detached,5,3,11,"3,362","$360,000 ","$355,000 ",11,8/13/2020,23831
+790-66-30-93-300-000,Single Family,CLOSD,10618 Ethens Point CT,Brooks Chapel,Detached,6,3.1,13,"3,914","$365,000 ","$365,000 ",27,10/9/2020,23831
+794-65-64-50-800-000,Single Family,CLOSD,3231 W Grove AVE,Pleasant Dale,Detached,4,2.1,8,"2,588","$369,900 ","$360,000 ",21,1/27/2022,23831
+790-66-37-53-600-000,Single Family,CLOSD,9949 Ethens Castle DR,Brooks Chapel,Detached,5,2.1,10,"2,792","$369,900 ","$375,000 ",2,11/1/2021,23831
+790-66-37-20-100-000,Single Family,CLOSD,10007 Ethens Castle DR,Brooks Chapel,Detached,4,2.1,9,"2,462","$369,950 ","$370,000 ",3,11/3/2021,23831
+789-66-36-66-100-000,Single Family,CLOSD,3649 Ethens Point LN,Brooks Chapel,Detached,3,2.1,7,"2,528","$375,000 ","$380,000 ",3,7/21/2021,23831
+789-67-24-91-500-000,Single Family,CLOSD,8720 Dorsey RD,None,Detached,4,2,9,"2,696","$379,950 ","$370,000 ",35,3/24/2021,23237
+795-65-91-05-200-000,Single Family,CLOSD,11540 Elmwood LN,None,Detached,4,2.1,10,"3,330","$384,950 ","$385,000 ",2,11/15/2021,23831
+794-65-83-00-500-000,Single Family,CLOSD,3200 Grove AVE,Chester Heights,Detached,5,3,9,"3,564","$399,000 ","$375,000 ",82,11/16/2020,23831
+789-66-39-36-700-000,Single Family,CLOSD,3654 Ethens Point LN,Brooks Chapel,Detached,4,2.1,10,"3,264","$399,950 ","$410,000 ",3,11/15/2021,23831
+794-65-63-63-200-000,Single Family,CLOSD,3300 W Grove AVE,Pleasant Dale,Detached,4,2.2,10,"3,594","$399,950 ","$375,000 ",88,1/28/2021,23831
+794-65-62-53-600-000,Single Family,CLOSD,3310 Grove AVE,Pleasant Dale,Detached,5,3,9,"2,900","$400,000 ","$388,000 ",6,8/31/2021,23831
+7.70675E+14,Single Family,CLOSD,6800 Rouseaux DR,Watermark,Detached,5,5,11,"3,530","$429,300 ","$564,825 ",0,10/29/2020,23234
+788-67-18-25-900-000,Single Family,CLOSD,3430 Hunter LN,None,Detached,5,3,6,"2,900","$465,000 ","$510,000 ",7,11/1/2021,23237
