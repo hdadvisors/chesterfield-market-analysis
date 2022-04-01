@@ -12,6 +12,7 @@ library(tidyverse)
 library(tidycensus)
 library(readxl)
 library(lubridate)
+library(optiRum)
 
 ```
 
@@ -97,7 +98,7 @@ medsales_adjusted <- medsales %>%
 income_price <- b25119_cpi %>%
   left_join(medsales_adjusted, by = 'year') # Missing 2010 and 2011, as well as 2021-2022
 
-# As of 4.1.22 - current rate for Virginia Mortgage is 4.83% via BankRate.com
+
 # Assume $250/month for utilities
 # Closing costs added to loan amount 
 
@@ -106,15 +107,46 @@ intrate <- .0442
 income_price <- income_price %>%
   mutate(third =(dollars20 * .28)) %>%
   mutate(monthly = (third/12)) %>%
+  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) # This is focusing in on 2020 median renter household income and 2020 median home price. 
+
+
+
+chesterfield_jobs <- read_csv("data/chesterfield_wages_may2021.csv")
+
+chesterfield_jobs <- chesterfield_jobs %>% # This is focusing on 2021 wages versus 2021 home price which was $330,000
+  mutate(third =(meanannual * .28)) %>%
+  mutate(monthly = (third/12)) %>%
   mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0))
 
-  
+# Income needed to afford 2021 median sales price: $330,000
 
+downpayment <- 330000 * .05
+closingcosts <- loanamt * .015
+intrate <- .0442
+loanamt <- 330000 - downpayment + closingcosts
+
+payment <- abs(PMT((intrate/12), 360, loanamt)) + 250
+
+inc_needed <- ((payment*10)/2.8)*12
+
+# Need a $78,935 to afford median home price
 
 
 ```
 
 ## Renter affordability
+```{r rents}
+rents <- read_xlsx("data/costar_rent_avg.xlsx")
+
+
+```
+
+```{r renteraffordability}
+chesterfield_jobs <- chesterfield_jobs %>% # 2021 Rent was $1,420 adjusted for inflation already
+  mutate(rent = (third/12))
+
+
+```
 
 [reserved]
 
