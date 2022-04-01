@@ -13,7 +13,7 @@ csl: chicago-fullnote-bibliography.csl
 
 # About {-}
 
-::: {.caution}
+::: {.rmdcaution}
 This report is currently in development. It was last updated on **`r Sys.Date()`**.
 :::
 

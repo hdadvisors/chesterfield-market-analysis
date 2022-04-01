@@ -159,18 +159,29 @@ The median age of the county's NOAH units is 48 years. (Built in 1974.)
 
 ### Examples
 
+<br>
+
 *Falling Creek Apartments*
 
-<img src="images/falling-creek.jpg" width="100%" style="border:none;" />
+<div class="figure">
+<img src="images/falling-creek.jpg" alt="Falling Creek Apartments. Credit: CoStar Group, Inc." width="100%" style="border:none;" />
+<p class="caption">(\#fig:falling-creek)Falling Creek Apartments. Credit: CoStar Group, Inc.</p>
+</div>
 
 * Units: 348
 * Two-bedroom asking rent: $955
 * Style: Garden apartments
 * Neighborhood: Bensley
 
+<br>
+<br>
+
 *Suburban Village Manufactured Home Community*
 
-<img src="images/suburban-village.png" width="100%" style="border:none;" />
+<div class="figure">
+<img src="images/suburban-village.png" alt="Suburban Village Manufactured Home Community. Credit: Google Earth." width="100%" style="border:none;" />
+<p class="caption">(\#fig:suburban-village)Suburban Village Manufactured Home Community. Credit: Google Earth.</p>
+</div>
 
 * Units: 220 units
 * Asking lot rent: Approximately \$500 to \$600

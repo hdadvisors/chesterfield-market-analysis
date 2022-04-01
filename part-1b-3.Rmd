@@ -27,7 +27,7 @@ For homeowners, cost burden has decreased across the board. There were 21,305 co
 
 But cost burden is still substantial among households with lower incomes, especially extremely low- (30% AMI or less) and very low-income (31 to 50% AMI) homeowners, where over half of homeowners at these incomes are cost-burdened, 85 percent and 56 percent, respectively. Worse yet, the majority of cost burdened homeowners at these incomes are spending more than 50 percent of their income on housing costs. 
 
-```{r tenure, eval=FALSE}
+```{r tenure, eval=FALSE, include=FALSE}
 
 # With the share of renters increasing in Chesterfield County, the share of renter households experiencing cost burden has been in decline in recent years---dropping from 45 percent in 2013 to 42 percent in 2018. But the actual number of cost-burdened renters has been on the rise---from 10,495 at the start of the decade to 12,795 cost-burdened renters in 2018.
 # 
@@ -82,7 +82,7 @@ tenure_income_chas <- tenure %>%
 
 ```
 
-```{r tenure-owner}
+```{r tenure-owner-img}
 
 knitr::include_graphics("images/homeownercb_income.png")
 
@@ -92,7 +92,7 @@ With the share of renters increasing in Chesterfield County, the share of renter
 
 Separating out by income group shows that declining cost burden is not a shared experience. Income groups making less than 80 percent AMI have seen an increasing share of cost-burdened renters. Those increases have been greatest among extremely low-income renters (85 percent to 90 percent) and low-income renters (58 percent to 64 percent) between 2012 and 2018. The decrease in higher income renters (80 percent AMI or more) experiencing cost burden shows an increasing number of higher earning renters entering the county rental market, nearly 4,000 higher earning renters without cost burden by 2018.
 
-```{r tenure-renter}
+```{r tenure-renter-img}
 
 knitr::include_graphics("images/rentercb_income.png")
 
@@ -108,7 +108,7 @@ The second household type experiencing a significant amount of cost burden (35 p
 
 Cost burden among these two household types exhibits a growing affordability challenge for single adults regardless of age. Without additional income that comes from other family members in a household, affording a home in the county can be financially difficult.
 
-```{r hhtype, eval=FALSE}
+```{r hhtype, eval=FALSE, include=FALSE}
 
 hhtype_chas <- read_csv("data/Table7_2012to2018.csv") %>%
   filter(fips == 51041) %>%
@@ -155,7 +155,7 @@ hhtype_cb <- hhtype %>%
 
 ```
 
-```{r hhtype}
+```{r hhtype-img}
 
 knitr::include_graphics("images/hhtypecb.png")
 
@@ -169,7 +169,7 @@ In spite of these disparities, the share of cost burdened households of color ha
 
 These decreases in cost burden among households of color may be in large part to the relative affordability and attractiveness of Chesterfield County to growing families.
 
-```{r race, eval=FALSE}
+```{r race, eval=FALSE, include=FALSE}
 
 race_chas <- read_csv("data/Table9_2012to2018.csv") %>%
   filter(fips == 51041) %>%
@@ -192,7 +192,7 @@ race_clean <- race_chas %>%
   
 ```
 
-```{r race}
+```{r race-img}
 
 knitr::include_graphics("images/racecb.png")
 

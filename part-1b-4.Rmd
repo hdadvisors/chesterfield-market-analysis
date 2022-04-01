@@ -33,7 +33,8 @@ b25119_raw <- map_dfr(years, function(yr){
     county = "Chesterfield County",
     state = "VA",
     table = "B25119",
-    year = yr
+    year = yr,
+    cache = TRUE
   ) %>%
     mutate(year = yr)
   })
@@ -109,39 +110,41 @@ income_price <- income_price %>%
   mutate(monthly = (third/12)) %>%
   mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) # This is focusing in on 2020 median renter household income and 2020 median home price. 
 
-
-
 chesterfield_jobs <- read_csv("data/chesterfield_wages_may2021.csv")
 
 chesterfield_jobs <- chesterfield_jobs %>% # This is focusing on 2021 wages versus 2021 home price which was $330,000
-  mutate(third =(meanannual * .28)) %>%
+  mutate(third = (meanannual * .28)) %>%
   mutate(monthly = (third/12)) %>%
   mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0))
 
 # Income needed to afford 2021 median sales price: $330,000
 
-downpayment <- 330000 * .05
-closingcosts <- loanamt * .015
-intrate <- .0442
-loanamt <- 330000 - downpayment + closingcosts
+msp <- 330000
+downpayment <- 0.05
+principal <- msp - msp * downpayment
+closingcosts <- 0.015
+loanamt <- principal/(1 - closingcosts)
+intrate <- 0.0442
 
 payment <- abs(PMT((intrate/12), 360, loanamt)) + 250
 
 inc_needed <- ((payment*10)/2.8)*12
 
-# Need a $78,935 to afford median home price
+# Need a $79,181 to afford median home price
 
 
 ```
 
 ## Renter affordability
-```{r rents}
+```{r rents, eval=FALSE, include=FALSE}
+
 rents <- read_xlsx("data/costar_rent_avg.xlsx")
 
 
 ```
 
-```{r renteraffordability}
+```{r renteraffordability, eval=FALSE, include=FALSE}
+
 chesterfield_jobs <- chesterfield_jobs %>% # 2021 Rent was $1,420 adjusted for inflation already
   mutate(rent = (third/12))
 

@@ -27,7 +27,7 @@ Census tracts 1003, 1004.03, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09 all bor
 
 [reserved]
 
-```{r homeprices}
+```{r homeprices, eval=FALSE, include=FALSE}
 
 r1_sales <- read_csv("data/routeone_mls.csv")
 
@@ -44,7 +44,7 @@ medsales <- r1_sales %>%
   
 ```
 
-```{r homeowneraffordability}
+```{r homeowneraffordability, eval=FALSE, include=FALSE}
 r1_jobs <- read_csv("data/routeone_otm_may2021.csv")
 
 # Compare to $251,000 sales price
@@ -146,7 +146,7 @@ route1_tracts <- b25119_cpi %>%
 
 [reserved]
 
-```{r rents}
+```{r rents, eval=FALSE, include=FALSE}
 r1_rents <- read_csv("data/routeone_avgrent.csv")
 
 avgrent <- ggplot(r1_rents, aes(x=year, y=askingrent)) +
@@ -156,7 +156,7 @@ ggplotly(avgrent)
 
 ```
 
-```{r renteraffordability}
+```{r renteraffordability, eval=FALSE, include=FALSE}
 r1_jobs <- r1_jobs %>% 
   mutate(rent = (third/12))
 

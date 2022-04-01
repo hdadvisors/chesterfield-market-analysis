@@ -18,9 +18,16 @@ Census tracts 1003, 1004.03, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09 all bor
 
 
 
+
+
+
+
 ## Renter affordability
 
 [reserved]
+
+
+
 
 ## Takeaways
 

@@ -14,7 +14,7 @@ While research around NOAH has been growing over the past several years, an offi
 
 CoStar, a commercial real estate and analytics provider with its global research operations based in Richmond, Virginia, conducted an analysis of NOAH properties in Fall 2016. This analysis was done at the request of Urban Land Institute's Terwilliger Center for Housing and concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
 
-::: {.note}
+::: {.rmdnote}
 
 **What are Class B and C properties?**
 
@@ -82,7 +82,7 @@ costar_noah %>%
 
 ```
 
-:::{.caution}
+:::{.rmdcaution}
 
 *Manufactured housing undercounted in CoStar data:*
 
@@ -147,6 +147,7 @@ gg_line_col(rent,
             col_var = Bedrooms,
             alpha_point = 0,
             size_line = 0.75,
+            title = "Median asking rent by bedroom for NOAH properties",
             y_labels = label_dollar(),
             y_title = "Median asking rent",
             x_title = element_blank(),
@@ -186,6 +187,7 @@ gg_histogram(costar_noah,
              x_var = yearbuilt,
              x_title = "Year built",
              x_bins_n = 18,
+             title = "NOAH units by year built",
              x_labels = scales::label_number(accuracy = 1, big.mark = ""),
              y_title = "Number of properties",
              y_labels = scales::label_number(accuracy = 1)) +
@@ -195,8 +197,9 @@ gg_histogram(costar_noah,
 ```
 
 ### Examples
-  
-  
+
+<br>
+
 *Falling Creek Apartments*
 
 ```{r falling-creek, fig.cap="Falling Creek Apartments. Credit: CoStar Group, Inc."}
@@ -209,8 +212,10 @@ knitr::include_graphics("images/falling-creek.jpg")
 * Two-bedroom asking rent: $955
 * Style: Garden apartments
 * Neighborhood: Bensley
-  
-  
+
+<br>
+<br>
+
 *Suburban Village Manufactured Home Community*
 
 ```{r suburban-village, fig.cap="Suburban Village Manufactured Home Community. Credit: Google Earth."}

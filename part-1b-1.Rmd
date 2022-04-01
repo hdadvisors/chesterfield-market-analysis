@@ -24,11 +24,11 @@ As of March 2022, the 2020 Census data available for this report include:
 
 These data are part of the [2020 Census Redistricting Data (P.L. 94-171) Summary Files](https://www.census.gov/programs-surveys/decennial-census/about/rdo/summary-files.html) released in August 2021. Data is available at the state, locality, tract, and block level.
 
-::: {.caution}
+::: {.rmdcaution}
 
 **Important context for 2020 Census data:**
 
-For the first time, Census results were produced using “[differential privacy](https://www.ncsl.org/research/redistricting/differential-privacy-for-census-data-explained.aspx.” This technique adds artificial noise to data at small geographies to reduce the likelihood of respondents being matched with personal information.
+For the first time, Census results were produced using “[differential privacy](https://www.ncsl.org/research/redistricting/differential-privacy-for-census-data-explained.aspx).” This technique adds artificial noise to data at small geographies to reduce the likelihood of respondents being matched with personal information.
 
 Many researchers and Census advocates have pointed out [major flaws](https://www.bloomberg.com/news/articles/2021-08-12/data-scientists-ask-can-we-trust-the-2020-census) in the Bureau’s implementation of differential privacy. For example, that the risk of “unmasking” private data has been [greatly overstated](https://twitter.com/HistDem/status/1428047057219108873), and that the added noise makes neighborhood-level data very [unreliable for research](https://www.pilotonline.com/government/virginia/vp-nw-census-distortion-folo-20210818-b4wf2lalkfb35fkrtkj6xdfp4a-story.html).
 

@@ -31,6 +31,7 @@ The figure below shows this data for Chesterfield County using the latest 2016-2
 library(tidyverse)
 library(tidycensus)
 library(simplevis)
+library(scales)
 
 b25038_vars <- load_variables(2020, "acs5", cache = T) %>% 
   filter(str_detect(name, "B25038")) %>% 
@@ -72,6 +73,7 @@ gg_bar_col(b25038_data,
   y_var = pct,
   col_var = tenure,
   y_labels = label_percent(),
+  title = "Percent of households by tenure by year moved into home",
   y_title = "Percent of households",
   x_title = "Year moved into unit",
 ) +

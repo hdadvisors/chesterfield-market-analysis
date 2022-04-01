@@ -22,23 +22,23 @@ To this end, a concentration of affordable housing in Chesterfield County would 
 
 ### With public subsidy
 
+Based on data from the National Housing Preservation Database (NHPD), affordable housing properties supported by the federal government are spread throughout the suburban parts of the county. There are 32 federally assisted properties in Chesterfield County, compared to 60 in Henrico County and 134 in the City of Richmond. In Chesterfield, the majority of assisted units are supported by the Low Income Housing Tax Credit program, where market-rate units are often included in the development.
+
 ```{r subsidy-map}
 
 knitr::include_graphics("images/assisted_prop_map.png")
 
 ```
 
-Based on data from the National Housing Preservation Database (NHPD), affordable housing properties supported by the federal government are spread throughout the suburban parts of the county. There are 32 federally assisted properties in Chesterfield County, compared to 60 in Henrico County and 134 in the City of Richmond. In Chesterfield, the majority of assisted units are supported by the Low Income Housing Tax Credit program, where market-rate units are often included in the development.
-
 ### Without public subsidy
+
+Naturally-occuring affordable housing (NOAH) is more prevalent across the county, as discussed in [Chapter 3](#part-1a-3). These properties can be found throughout most populated areas, with the highest concentrations within several miles of the border with the City of Richmond, particularly between Hull Street and Route 1.
 
 ```{r noah-map}
 
 knitr::include_graphics("images/noah_map.png")
 
 ```
-
-Naturally-occuring affordable housing (NOAH) is more prevalent across the county, as discussed in [Chapter 3](#part-1a-3). These properties can be found throughout most populated areas, with the highest concentrations within several miles of the border with the City of Richmond, particularly between Hull Street and Route 1.
 
 ## Takeaways
 
