@@ -7,6 +7,11 @@ The northern section of U.S. Route 1 in Chesterfield County has . . .
 library(tidyverse)
 library(tidycensus)
 library(readxl)
+library(optiRum)
+library(lubridate)
+library(stringi)
+library(ggplot2)
+library(plotly)
 
 ```
 
@@ -21,6 +26,53 @@ Census tracts 1003, 1004.03, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09 all bor
 ## Homeowner affordability
 
 [reserved]
+
+```{r homeprices}
+
+r1_sales <- read_csv("data/routeone_mls.csv")
+
+r1_sales$salesdate <- mdy(r1_sales$salesdate)
+
+r1_sales$year <- floor_date(r1_sales$salesdate, "year")
+
+r1_sales$salesprice <- as.numeric(gsub('[\\$|,]','', r1_sales$salesprice))
+
+medsales <- r1_sales %>%
+  filter(status != "ACT") %>%
+  group_by(year) %>%
+  summarise(median = median(salesprice))
+  
+```
+
+```{r homeowneraffordability}
+r1_jobs <- read_csv("data/routeone_otm_may2021.csv")
+
+# Compare to $251,000 sales price
+# As of 4.1.22 - current rate for Virginia Mortgage is 4.83% via BankRate.com
+# Assume $250/month for utilities
+# Closing costs added to loan amount 
+
+downpayment <- 251000 * .05
+closingcosts <- loanamt * .015
+intrate <- .0442
+loanamt <- 251000 - downpayment + closingcosts
+
+payment <- abs(PMT((intrate/12), 360, loanamt)) + 250
+
+inc_needed <- ((payment*10)/2.8)*12
+
+# Route One residents need to make approximately $60,980/year to afford the median sale price.
+
+r1_jobs$meanannual <- as.numeric(gsub('[\\$|,]','', r1_jobs$meanannual))
+
+r1_jobs <- r1_jobs %>% 
+  mutate(third = (meanannual * .28)) %>%
+  mutate(monthly = (third/12) - 250 )
+
+r1_jobs <- r1_jobs %>%
+  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0))
+
+```
 
 ```{r route1, eval=FALSE, include=FALSE}
 
@@ -94,6 +146,22 @@ route1_tracts <- b25119_cpi %>%
 
 [reserved]
 
+```{r rents}
+r1_rents <- read_csv("data/routeone_avgrent.csv")
+
+avgrent <- ggplot(r1_rents, aes(x=year, y=askingrent)) +
+  geom_line()
+
+ggplotly(avgrent)
+
+```
+
+```{r renteraffordability}
+r1_jobs <- r1_jobs %>% 
+  mutate(rent = (third/12))
+
+
+```
 ## Takeaways
 
 [reserved]

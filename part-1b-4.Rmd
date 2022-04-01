@@ -21,7 +21,7 @@ library(lubridate)
 
 ```{r homeowner, eval=FALSE, include=FALSE}
 
-years <- 2010:2019
+years <- 2010:2020
 
 b25119_vars <- load_variables(2010, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25119")
@@ -32,8 +32,7 @@ b25119_raw <- map_dfr(years, function(yr){
     county = "Chesterfield County",
     state = "VA",
     table = "B25119",
-    year = yr,
-    survey = "acs1"
+    year = yr
   ) %>%
     mutate(year = yr)
   })
@@ -71,9 +70,9 @@ cpi <- cpi %>%
 
 b25119_cpi <- b25119_data %>%
     left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
-  select(year, tenure, dollars19, moe, reliability) %>%
-  filter(tenure == "Homeowner")
+  transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
+  select(year, tenure, dollars20, moe, reliability) %>%
+    filter(tenure == "Renter")
 
 medsales <- read_csv("data/cvrmls_medsales.csv")
 
@@ -93,10 +92,23 @@ annual_cpi_less <- cpi_less %>%
 medsales_adjusted <- medsales %>% 
   left_join(annual_cpi_less, by = 'year') %>%
   rename(cpi = mean) %>%
-  mutate(sales19 = ((234.21450/cpi)*medsales)) 
+  mutate(sales20 = ((235.67550/cpi)*medsales)) 
 
 income_price <- b25119_cpi %>%
-  left_join(medsales_adjusted, by = 'year') # Missing 2010 and 2011, as well as 2020-2022
+  left_join(medsales_adjusted, by = 'year') # Missing 2010 and 2011, as well as 2021-2022
+
+# As of 4.1.22 - current rate for Virginia Mortgage is 4.83% via BankRate.com
+# Assume $250/month for utilities
+# Closing costs added to loan amount 
+
+intrate <- .0442
+
+income_price <- income_price %>%
+  mutate(third =(dollars20 * .28)) %>%
+  mutate(monthly = (third/12)) %>%
+  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0))
+
+  
 
 
 
