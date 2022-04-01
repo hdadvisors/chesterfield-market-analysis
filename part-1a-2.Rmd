@@ -83,7 +83,7 @@ chesterfield_cb_table <- chesterfield_cb %>%
   group_by(tenure, cost_burden) %>% 
   summarise(estimate = sum(estimate))
 
-table_cb <- chesterfield_cb_table %>% 
+chesterfield_cb_table %>% 
   arrange(desc(estimate), .by_group = TRUE) %>% 
   pivot_wider(names_from = tenure,
               values_from = estimate) %>% 
@@ -95,8 +95,6 @@ table_cb <- chesterfield_cb_table %>%
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(4, bold=TRUE)
-
-table_cb
 
 ```
 
@@ -164,15 +162,13 @@ values = c(as.character(msp),
            as.character(medinc),
            as.character(hai))
 
-hai_table <- data.frame(x = labels, y = values) %>% 
+data.frame(x = labels, y = values) %>% 
  kable(caption = "Housing Affordability Index in Chesterfield County",
        align = "lr",
        col.names = NULL) %>% 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(6, bold=TRUE)
-
-hai_table
 
 ```
 
@@ -237,15 +233,13 @@ costs_labels = c("Child Care", "Food", "Transportation", "Health Care",
 costs_values = c("$1,086", "$922", "$576", "$775", "$462",
            "$1,092", "($100)", "($333)", "$4,480")
 
-costs_table <- data.frame(x = costs_labels, y = costs_values) %>% 
+data.frame(x = costs_labels, y = costs_values) %>% 
  kable(caption = "Self-Sufficiency Standard monthly costs",
        align = "lr",
        col.names = NULL) %>% 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(9, bold=TRUE)
-
-costs_table
 
 ```
 
@@ -257,15 +251,13 @@ summary_labels = c("Monthly take-home pay", "Monthly expenses (-)", "Residual in
 
 summary_values = c("$4,843", "($4,480)", "$363")
 
-summary_table <- data.frame(x = summary_labels, y = summary_values) %>% 
+data.frame(x = summary_labels, y = summary_values) %>% 
  kable(caption = "Residual income available for housing for family of four at 80 percent AMI",
        align = "lr",
        col.names = NULL) %>% 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(3, bold=TRUE)
-
-summary_table
 
 ```
 

@@ -64,7 +64,7 @@ This NOAH inventory is approximately 34 percent of the county's total number of 
 
 ```{r noah-amount}
 
-amount <- costar_noah %>% 
+costar_noah %>% 
   select(style, units) %>% 
   mutate(properties = 1) %>% 
   group_by(style) %>% 
@@ -79,8 +79,6 @@ amount <- costar_noah %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed")) %>% 
   kableExtra::row_spec(5, bold=TRUE)
-
-amount
 
 ```
 
@@ -115,7 +113,7 @@ rent <- costar_noah_rent %>%
   mutate(Bedrooms = fct_reorder(Bedrooms, desc(Rent))) %>% 
   mutate(Period = as.Date(as.yearqtr(Period, format = "%Y Q%q"), frac = 1))
 
-rent_table <- rent %>% 
+rent %>% 
   group_by(Bedrooms) %>% 
   top_n(1, Period) %>% 
   mutate(Rent = dollar(Rent)) %>% 
@@ -125,23 +123,39 @@ rent_table <- rent %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"))
 
-rent_table
-
 ```
 
 Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,000 per month.
 
 ```{r noah-rent-plot, fig.cap="Median asking rent by bedroom for NOAH properties"}
 
-rent_plot <- ggplot(rent, aes(x = Period, y = Rent, group = Bedrooms, color = Bedrooms)) +
-  geom_line() +
-  scale_y_continuous(labels=dollar_format(prefix = "$", big.mark = ",")) +
-  scale_x_date() +
-  theme(
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank())
-  
-rent_plot
+library(simplevis)
+
+# rent_plot <- ggplot(rent, aes(x = Period, y = Rent, group = Bedrooms, color = Bedrooms)) +
+#   geom_line() +
+#   scale_y_continuous(labels=dollar_format(prefix = "$", big.mark = ",")) +
+#   scale_x_date() +
+#   theme(
+#     axis.title.x = element_blank(),
+#     axis.title.y = element_blank())
+#   
+# rent_plot
+
+gg_line_col(rent,
+            x_var = Period,
+            y_var = Rent,
+            col_var = Bedrooms,
+            alpha_point = 0,
+            size_line = 0.75,
+            y_labels = label_dollar(),
+            y_title = "Median asking rent",
+            x_title = element_blank(),
+            x_labels = scales::date_format(format = "%Y")
+          ) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+    legend.title = element_blank()
+  )
   
 ```
 
@@ -157,24 +171,35 @@ The median age of the county's NOAH units is 48 years. (Built in 1974.)
 
 ```{r noah-age, fig.cap="NOAH units by year built"}
 
-age_plot <- ggplot(costar_noah, aes(x=yearbuilt, weights=units)) +
-  geom_histogram(binwidth = 5, fill="#69b3a2", color="#e9ecef") +
-  scale_y_continuous(labels = scales::comma) +
-  scale_x_continuous(limits = c(1950, 2020),
-                     breaks = seq(1950, 2020, 10)) +
-  theme(
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank())
+# age_plot <- ggplot(costar_noah, aes(x=yearbuilt, weights=units)) +
+#   geom_histogram(binwidth = 5, fill="#69b3a2", color="#e9ecef") +
+#   scale_y_continuous(labels = scales::comma) +
+#   scale_x_continuous(limits = c(1950, 2020),
+#                      breaks = seq(1950, 2020, 10)) +
+#   theme(
+#     axis.title.x = element_blank(),
+#     axis.title.y = element_blank())
+# 
+# age_plot
 
-age_plot
+gg_histogram(costar_noah,
+             x_var = yearbuilt,
+             x_title = "Year built",
+             x_bins_n = 18,
+             x_labels = scales::label_number(accuracy = 1, big.mark = ""),
+             y_title = "Number of properties",
+             y_labels = scales::label_number(accuracy = 1)) +
+  ggplot2::scale_x_continuous(limits = c(1950, 2020),
+                              breaks = seq(1950, 2020, 10))
 
 ```
 
 ### Examples
-
+  
+  
 *Falling Creek Apartments*
 
-```{r falling-creek}
+```{r falling-creek, fig.cap="Falling Creek Apartments. Credit: CoStar Group, Inc."}
 
 knitr::include_graphics("images/falling-creek.jpg")
 
@@ -184,10 +209,11 @@ knitr::include_graphics("images/falling-creek.jpg")
 * Two-bedroom asking rent: $955
 * Style: Garden apartments
 * Neighborhood: Bensley
-
+  
+  
 *Suburban Village Manufactured Home Community*
 
-```{r suburban-village}
+```{r suburban-village, fig.cap="Suburban Village Manufactured Home Community. Credit: Google Earth."}
 
 knitr::include_graphics("images/suburban-village.png")
 
