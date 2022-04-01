@@ -9,13 +9,15 @@ In 2020, housing expenses increased amid the pandemic to account for nearly 35 p
 However, like the rest of the country, households in Chesterfield County have a wide range of incomes and expenditures. The following sections show how household incomes vary by tenure, age, race and ethnicity. Income disparities exist across the county, and have major implications on the need for housing diversity.
 
 
-```{r global, include=FALSE}
+```{r setup}
 
 library(tidyverse)
 library(tidycensus)
 library(readxl)
 library(ggplot2)
 library(plotly)
+library(simplevis)
+library(scales)
 
 ```
 
@@ -86,23 +88,41 @@ b25119_cpi <- b25119_data %>%
   select(year, tenure, dollars20, moe, reliability) %>%
   subset(tenure != "All households")
 
-tenure <- ggplot(b25119_cpi, aes(x=year, y=dollars20, group=tenure)) +
-  geom_line(aes(color=tenure)) +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "Median household income by tenure",
-    subtitle = "From 2010 to 2020 in Chesterfield County",
-    source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
-  ) +
-  scale_y_continuous(labels=scales::dollar_format(),
-                     limits = c(0, NA)) +
-  scale_x_continuous(breaks = 2010:2020)
-  
+# tenure <- ggplot(b25119_cpi, aes(x=year, y=dollars20, group=tenure)) +
+#   geom_line(aes(color=tenure)) +
+#   labs(
+#     x = NULL,
+#     y = NULL,
+#     title = "Median household income by tenure",
+#     subtitle = "From 2010 to 2020 in Chesterfield County",
+#     source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
+#   ) +
+#   scale_y_continuous(labels=scales::dollar_format(),
+#                      limits = c(0, NA)) +
+#   scale_x_continuous(breaks = 2010:2020)
+# 
+# ggplotly(tenure)
 
-ggplotly(tenure)
+tenure_plot <- gg_bar_col_facet(
+  b25119_cpi,
+  x_var = year,
+  y_var = dollars20,
+  col_var = tenure,
+  facet_var = tenure,
+  y_breaks_n = 5,
+  y_labels = label_dollar(),
+  y_title = "Median household income (2020 dollars)",
+  x_labels = label_number(accuracy = 1, big.mark = ""),
+  x_title = element_blank()) +
+    theme(
+      legend.position = "none"
+    )
+
+plotly::ggplotly(tenure_plot) %>% 
+  plotly_camera()
 
 ```
+*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25119.*
 
 ## Age
 
@@ -170,27 +190,48 @@ cpi <- cpi %>%
   transform(year = as.numeric(year))
 
 b19049_cpi <- b19049_data %>%
-    left_join(cpi, by = 'year') %>%
+  left_join(cpi, by = 'year') %>%
   transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
   select(year, age, dollars20, moe, reliability) %>%
-  subset(age != "All")
+  subset(age != "All") %>% 
+  mutate(age = fct_reorder(age, dollars20, .desc = TRUE)) %>% 
+  dplyr::rename(Age = age)
 
-age <- ggplot(b19049_cpi, aes(x=year, y=dollars20, group=age)) +
-  geom_line(aes(color=age)) +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "Median household income by age",
-    subtitle = "From 2010 to 2020 in Chesterfield County",
-    source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
-  ) +
-  scale_y_continuous(labels=scales::dollar_format(),
-                     limits = c(0, NA)) +
-  scale_x_continuous(breaks = 2010:2020)
+# age <- ggplot(b19049_cpi, aes(x=year, y=dollars20, group=age)) +
+#   geom_line(aes(color=age)) +
+#   labs(
+#     x = NULL,
+#     y = NULL,
+#     title = "Median household income by age",
+#     subtitle = "From 2010 to 2020 in Chesterfield County",
+#     source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
+#   ) +
+#   scale_y_continuous(labels=scales::dollar_format(),
+#                      limits = c(0, NA)) +
+#   scale_x_continuous(breaks = 2010:2020)
+# 
+# ggplotly(age)
 
-ggplotly(age)
+age_plot <- gg_line_col(
+  b19049_cpi,
+  x_var = year,
+  y_var = dollars20,
+  col_var = Age,
+  y_breaks_n = 5,
+  y_labels = label_dollar(),
+  y_title = "Median household income (2020 dollars)",
+  x_labels = label_number(accuracy = 1, big.mark = ""),
+  x_title = element_blank(),
+  y_zero = TRUE,
+  x_expand = expansion(add = 1),
+  y_expand = expansion(add = c(0,2000)))
+
+plotly::ggplotly(age_plot) %>% 
+  plotly_camera()
 
 ```
+
+*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B19049.*
 
 ## Race and ethnicity
 
@@ -198,7 +239,13 @@ Like the rest of Virginia and the nation, average household incomes across Chest
 
 Over the last decade, Asian and white non-Hispanic households in Chesterfield have maintained the highest median incomes. As of 2020, the estimated median income for the county's Asian households topped $100,000. White non-Hispanic households also had high incomes, averaging \$90,712.
 
-Multiracial households saw the largest real increase in incomes, growing by over 28 percent from 2010 to 2020. However, this increase occurred almost entirely from 2019 to 2020, which is likely reflective of additional individuals and households choosing to identify with more than one race or ethnicity than they would have in previous years. [ADD REFERENCE TO 2020 CENSUS PATTERNS]
+Multiracial households saw the largest real increase in incomes, growing by over 28 percent from 2010 to 2020. However, this increase occurred almost entirely from 2019 to 2020, which is likely reflective of additional individuals and households choosing to identify with more than one race or ethnicity than they would have in previous years.
+
+:::{.caution}
+
+The significant rise in income for multiracial households is very likely in part because of the [changing ways](https://www.npr.org/2021/08/22/1029609786/2020-census-data-results-white-population-shrinking-decline-non-hispanic-race) Americans are choosing to identify their race and ethnicity.
+
+:::
 
 The lowest average incomes in the county are found among Hispanic and Black households; both groups have also not seen significant changes in real incomes since 2010. Black households had a median income of \$71,962 in 2020, while Hispanic households had a median income of \$60,875. That amount is roughly equal to the annual gross pay for two full-time workers earning \$15 per hour.
 
@@ -279,26 +326,49 @@ b19013_cpi <- b19013_data %>%
   subset(race != "All") %>%
   subset(race != "American Indian And Alaska Native") %>%
   subset(race != "Native Hawaiian And Other Pacific Islander") %>%
-  subset(race != "Some Other Race")
+  subset(race != "Some Other Race") %>% 
+  mutate(race = fct_reorder(race, dollars20, .desc = TRUE)) %>%
+  rename(Race = race)
 
-race <- ggplot(b19013_cpi, aes(x=year, y=dollars20, group=race)) +
-  geom_line(aes(color=race)) +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "Median household income by race and ethnicity",
-    subtitle = "From 2010 to 2020 in Chesterfield County",
-    source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19013B-I."
-  ) +
-  scale_y_continuous(labels=scales::dollar_format(),
-                     limits = c(0, NA)) +
-  scale_x_continuous(breaks = 2010:2020)
-  
+# race <- ggplot(b19013_cpi, aes(x=year, y=dollars20, group=race)) +
+#   geom_line(aes(color=race)) +
+#   labs(
+#     x = NULL,
+#     y = NULL,
+#     title = "Median household income by race and ethnicity",
+#     subtitle = "From 2010 to 2020 in Chesterfield County",
+#     source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19013B-I."
+#   ) +
+#   scale_y_continuous(labels=scales::dollar_format(),
+#                      limits = c(0, NA)) +
+#   scale_x_continuous(breaks = 2010:2020)
+#   
+# ggplotly(race)
 
-ggplotly(race)
+race_plot <-gg_line_col(
+  b19013_cpi,
+  x_var = year,
+  y_var = dollars20,
+  col_var = Race,
+  y_breaks_n = 4,
+  y_labels = label_dollar(),
+  y_title = "Median household income (2020 dollars)",
+  x_labels = label_number(accuracy = 1, big.mark = ""),
+  x_title = element_blank(),
+  y_zero = TRUE,
+  x_expand = expansion(add = 1)) +
+  scale_y_continuous(labels = label_dollar(), limits = c(0,105000))
+
+plotly::ggplotly(race_plot) %>% 
+  plotly_camera()
 
 ```
 
+*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Tables B19013B, B19013C, B19013D, B19013E, B19013F, B19013G, B19013H, B19013I.*
+
 ## Takeaways
 
-[reserved]
+* Average household incomes in Chesterfield County are relatively higher than the region as a whole, but many household types in the county still have lower incomes that make housing affordability challenging.
+* Renters earn just above half that of homeowners in the county.
+* Younger workers are more likely to live on their own and/or have lower wage jobs; householders under 25 have the lowest incomes of all age groups in the county.
+* Income disparities by race and ethnicity have persisted in the county for the past decade.

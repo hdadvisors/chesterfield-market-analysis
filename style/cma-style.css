@@ -1,0 +1,62 @@
+/* Callout boxes */
+
+.note p, .caution p, .data p {
+  font-size: 0.9rem;
+  letter-spacing: 0.1pt;
+  margin-bottom: 0.8rem;
+  color: #696969;
+}
+
+.note li, .caution li, .data li {
+  font-size: 0.9rem;
+  letter-spacing: 0.1pt;
+  color: #696969;
+}
+
+.note {
+  background-color: #011e410d;
+  border-left: 0.25rem solid #011e41cc;
+}
+    
+.note::before {
+  content: "info";
+  font-family: Material Icons Round;
+  color: #011e41cc;
+  font-size: 2.5rem;
+  position: absolute;
+  left: 0.5rem;
+  margin-bottom: 0.5rem;
+  top: -0.25rem;
+}
+
+.caution {
+  background-color: #e0592a0d;
+  border-left: 0.25rem solid #e0592acc;
+}
+    
+.caution::before {
+  content: "warning";
+  font-family: Material Icons Round;
+  color: #e0592acc;
+  font-size: 2.5rem;
+  position: absolute;
+  left: 0.5rem;
+  margin-bottom: 0.5rem;
+  top: -0.25rem;
+}
+
+.data {
+  background-color: #40c0c00d;
+  border-left: 0.25rem solid #40c0c0cc;
+}
+    
+.data::before {
+  content: "assessment";
+  font-family: Material Icons Round;
+  color: #40c0c0cc;
+  font-size: 2.5rem;
+  position: absolute;
+  left: 0.5rem;
+  margin-bottom: 0.5rem;
+  top: -0.25rem;
+}

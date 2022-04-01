@@ -26,7 +26,7 @@ The 30 percent threshold is used because any income used for housing beyond that
 
 This income-to-cost ratio was originally set at 25 percent when the federal government began designing housing assistance programs in the 1960s and 1970s. The threshold was increased to 30 percent in the 1980s. Today, the 30 percent cap is used to set household rent levels for public housing, Housing Choice Vouchers, and many other housing assistance initiatives. 
 
-:::{.rmdnote}
+:::{.note}
 
 Although it has been the go-to measure in housing affordability, the 30 percent standard has several criticisms. Chief among these critiques is that living expenses vary from household to household. A family of four will likely face much higher and additional costs for things like childcare, food, and transportation, when compared to a single adult with the same income. 
 
@@ -190,7 +190,7 @@ NLIHC released their latest Out of Reach report in July 2021. According to NLIHC
 
 The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over ("residual") and available for housing. That residual amount can then be compared to local housing prices to assess affordability.
 
-::: {.rmdnote}
+::: {.note}
 
 The most comprehensive assessment of the residual income approach compared to other housing affordability measures is *Measuring Housing Affordability: Assessing the 30 Percent of Income Standard*, a [research paper](https://www.jchs.harvard.edu/research-areas/working-papers/measuring-housing-affordability-assessing-30-percent-income-standard) published by The Harvard Joint Center for Housing Studies in 2018.
 

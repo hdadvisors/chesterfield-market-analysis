@@ -1,5 +1,5 @@
 bookdown::bs4_book:
-  css: bs4_style.css
+  css: style/cma-style.css
   theme:
     primary: "#3356CC"
   repo: https://github.com/hdadvisors/chesterfield-market-analysis

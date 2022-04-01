@@ -14,7 +14,7 @@ While research around NOAH has been growing over the past several years, an offi
 
 CoStar, a commercial real estate and analytics provider with its global research operations based in Richmond, Virginia, conducted an analysis of NOAH properties in Fall 2016. This analysis was done at the request of Urban Land Institute's Terwilliger Center for Housing and concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
 
-::: {.rmdnote}
+::: {.note}
 
 **What are Class B and C properties?**
 
@@ -82,7 +82,7 @@ costar_noah %>%
 
 ```
 
-:::{.rmdcaution}
+:::{.caution}
 
 *Manufactured housing undercounted in CoStar data:*
 
