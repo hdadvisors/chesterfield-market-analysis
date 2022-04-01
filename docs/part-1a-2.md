@@ -10,11 +10,9 @@ Determining what housing is affordable and to whom is a key challenge many commu
 
 Other measures have gained credibility over time such as the Housing Affordability Index (HAI) from the National Association of REALTORS and the Housing Wage from the National Low Income Housing Coalition (NLIHC). Alternative measures such as the residual income approach and the Housing and Transportation Affordability Index from the Center for Neighborhood Technology have been gaining traction.
 
-## Affordability measure comparisons
+The following sections summarize standard and alternative measures of housing affordability, and provide an understanding of affordability within a Chesterfield-specific context.
 
-The following summarizes select standard and alternative measures and provides an understanding of affordability within a Chesterfield County-specific context.
-
-### 30 percent standard
+## 30 percent standard
 
 A household spending more than 30 percent of their gross income on housing costs is often referred to as *cost-burdened*. This standard (and the term "cost burden") is the most commonly used benchmark for housing affordability. It is simple to understand, and simple to calculate, because only two data points are needed: gross household income and total housing costs.
 
@@ -22,21 +20,23 @@ The 30 percent threshold is used because any income used for housing beyond that
 
 This income-to-cost ratio was originally set at 25 percent when the federal government began designing housing assistance programs in the 1960s and 1970s. The threshold was increased to 30 percent in the 1980s. Today, the 30 percent cap is used to set household rent levels for public housing, Housing Choice Vouchers, and many other housing assistance initiatives. 
 
-:::{.rmdinfo}
+:::{.rmdnote}
+
 Although it has been the go-to measure in housing affordability, the 30 percent standard has several criticisms. Chief among these critiques is that living expenses vary from household to household. A family of four will likely face much higher and additional costs for things like childcare, food, and transportation, when compared to a single adult with the same income. 
 
 Secondly, different income groups don’t spend the same way. Higher income households can have much more flexibility to spend more than 30 percent of their income on housing costs when compared to a low income household. Using the 30 percent standard in this case can sometimes overestimate the share of higher income households experiencing cost burden. 
 
 Other critics also reference the fact that the 30 percent standard does not account for things like location and housing quality. A household living in a very walkable community will spend very differently from a household that has to invest a lot of money in transportation (i.e., gas and car maintenance).
+
 :::
 
 Cost burden data is available from the U.S. Census Bureau in the American Community Survey. Tables [B25091](https://censusreporter.org/data/table/?table=B25091&geo_ids=04000US51,05000US51041&primary_geo_id=04000US51) and [B25070](https://censusreporter.org/data/table/?table=B25070&geo_ids=04000US51,05000US51041&primary_geo_id=04000US51) break down the share of gross household income dedicated to housing costs for homeowners and renters, respectively.
 
 **In Chesterfield County:**
 
-The table below combines those datasets to show the number of cost burdened households by tenure in Chesterfield County. ^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates.]
+The table below combines those datasets to show the number of cost burdened households by tenure in Chesterfield County.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25091 and B25070.]
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:cost-burden)Cost burden by tenure in Chesterfield County</caption>
  <thead>
   <tr>
@@ -66,15 +66,15 @@ The table below combines those datasets to show the number of cost burdened hous
    <td style="text-align:right;"> 1,796 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:right;"> 97,590 </td>
-   <td style="text-align:right;"> 29,640 </td>
-   <td style="text-align:right;"> 127,230 </td>
+   <td style="text-align:left;font-weight: bold;"> Total </td>
+   <td style="text-align:right;font-weight: bold;"> 97,590 </td>
+   <td style="text-align:right;font-weight: bold;"> 29,640 </td>
+   <td style="text-align:right;font-weight: bold;"> 127,230 </td>
   </tr>
 </tbody>
 </table>
 
-### NAR's Housing Affordability Index
+## NAR's Housing Affordability Index
 
 The NATIONAL ASSOCIATION OF REALTORS® (NAR) publishes a [Housing Affordability Index](https://www.nar.realtor/research-and-statistics/housing-statistics/housing-affordability-index) (HAI) to show the difference between the average family income for an area versus the minimum income required to afford the median priced single-family home in that community.
 
@@ -86,9 +86,9 @@ The HAI has steadily decreased as housing prices continue to rise across the nat
 
 The table below shows the inputs and calculated HAI for Chesterfield County as of March 2022. The median sales price is collected from all 2022 year-to-date single-family home sales accessed from the Central Virginia Regional Multiple Listing Service (CVR MLS).^[Through March 30, 2022.] The 30-year fixed mortgage is sourced from the national weekly average published by the Freddie Mac Primary Mortgage Market Survey for the week ending March 24, 2022. The median family income is the latest value published by the U.S. Census Bureau.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B19113.]
 
-The current HAI for Chesterfield County is `hai`. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
+The current HAI for Chesterfield County is 137.1. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:hai)Housing Affordability Index in Chesterfield County</caption>
 <tbody>
   <tr>
@@ -113,12 +113,12 @@ The current HAI for Chesterfield County is `hai`. This is lower than the latest 
   </tr>
   <tr>
    <td style="text-align:left;font-weight: bold;"> Housing Affordability Index </td>
-   <td style="text-align:right;font-weight: bold;"> 137.10 </td>
+   <td style="text-align:right;font-weight: bold;"> 137.1 </td>
   </tr>
 </tbody>
 </table>
 
-### NLIHC's Housing Wage
+## NLIHC's Housing Wage
 
 The National Low Income Housing Coalition has published its Out of Reach every year since 1989 to bring attention to the widening gap between actual wages and the cost of rental housing in the United States. Within this report, NLIHC calculates its Housing Wage, an affordability measure that estimates the wage a full-time worker must earn to afford rental housing based on the U.S. Department of Housing and Urban Development’s (HUD) fair market rent (FMR) without spending more than 30 percent of their income.
 
@@ -132,12 +132,14 @@ While the Housing Wage is helpful in determining the relationship between jobs a
 
 NLIHC released their latest Out of Reach report in July 2021. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was \$46,520, or an hourly wage of \$22.37. NLIHC estimates that the typical renter wage in Chesterfield County is \$14.66---nearly $8 short of the wage needed to afford a typical two-bedroom rental in the region. 
 
-### Residual income approach
+## Residual income approach
 
 The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over ("residual") and available for housing. That residual amount can then be compared to local housing prices to assess affordability.
 
-::: {.rmdinfo}
+::: {.rmdnote}
+
 The most comprehensive assessment of the residual income approach compared to other housing affordability measures is *Measuring Housing Affordability: Assessing the 30 Percent of Income Standard*, a [research paper](https://www.jchs.harvard.edu/research-areas/working-papers/measuring-housing-affordability-assessing-30-percent-income-standard) published by The Harvard Joint Center for Housing Studies in 2018.
+
 :::
 
 Benefits of the residual income approach include the ability to:
@@ -168,7 +170,7 @@ First, we calculate the gross and take-home household incomes. According to HUD'
 
 Next, we determine the 2021 SSS monthly cost estimates for a four-person household with two working adults and two elementary school-age children in Chesterfield County. These total costs (housing excluded) are \$4,480.
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:residual-cost)Self-Sufficiency Standard monthly costs</caption>
 <tbody>
   <tr>
@@ -212,7 +214,7 @@ Next, we determine the 2021 SSS monthly cost estimates for a four-person househo
 
 Finally, we subtract these costs from the monthly take home pay.
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:residual-summary)Residual income available for housing for family of four at 80 percent AMI</caption>
 <tbody>
   <tr>
@@ -234,7 +236,7 @@ This $363 available for housing is far below than the required monthly payment t
 
 As a result, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs. 
 
-### CNT's H+T Affordability Index
+## CNT's H+T Affordability Index
 
 The Center for Neighborhood Technology (CNT) developed the [Housing + Transportation (H+T) Affordability Index](https://htaindex.cnt.org/) in 2006 as a result of a Minneapolis-St. Paul report conducted for the Brookings Institution’s Urban Markets Initiative. This affordability measure is a robust indicator of the role that geographic location has on the two major costs faced by American households: housing and transportation.
 

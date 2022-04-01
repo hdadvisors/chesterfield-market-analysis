@@ -40,9 +40,9 @@ Cost burden data is available from the U.S. Census Bureau in the American Commun
 
 **In Chesterfield County:**
 
-The table below combines those datasets to show the number of cost burdened households by tenure in Chesterfield County. ^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates.]
+The table below combines those datasets to show the number of cost burdened households by tenure in Chesterfield County.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25091 and B25070.]
 
-```{r cost-burden, echo=FALSE}
+```{r cost-burden}
 
 library(tidycensus)
 
@@ -93,9 +93,8 @@ table_cb <- chesterfield_cb_table %>%
   kable(caption = "Cost burden by tenure in Chesterfield County",
         format.args = list(big.mark = ",")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
-      full_width = TRUE
-    )
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(4, bold=TRUE)
 
 table_cb
 
@@ -113,9 +112,9 @@ The HAI has steadily decreased as housing prices continue to rise across the nat
 
 The table below shows the inputs and calculated HAI for Chesterfield County as of March 2022. The median sales price is collected from all 2022 year-to-date single-family home sales accessed from the Central Virginia Regional Multiple Listing Service (CVR MLS).^[Through March 30, 2022.] The 30-year fixed mortgage is sourced from the national weekly average published by the Freddie Mac Primary Mortgage Market Survey for the week ending March 24, 2022. The median family income is the latest value published by the U.S. Census Bureau.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B19113.]
 
-The current HAI for Chesterfield County is `r hai`. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
+The current HAI for Chesterfield County is 137.1. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
 
-```{r hai, echo=FALSE}
+```{r hai}
 
 library(formattable)
 
@@ -151,7 +150,7 @@ medinc <- currency((
 
 # Calculate HAI
 
-hai <- digits((medinc/qinc)*100, 2)
+hai <- digits((medinc/qinc)*100, 1)
 
 # Build table
 
@@ -170,9 +169,7 @@ hai_table <- data.frame(x = labels, y = values) %>%
        align = "lr",
        col.names = NULL) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
-      full_width = TRUE
-    ) %>% 
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(6, bold=TRUE)
 
 hai_table
@@ -193,7 +190,7 @@ While the Housing Wage is helpful in determining the relationship between jobs a
 
 NLIHC released their latest Out of Reach report in July 2021. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was \$46,520, or an hourly wage of \$22.37. NLIHC estimates that the typical renter wage in Chesterfield County is \$14.66---nearly $8 short of the wage needed to afford a typical two-bedroom rental in the region. 
 
-### Residual income approach
+## Residual income approach
 
 The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over ("residual") and available for housing. That residual amount can then be compared to local housing prices to assess affordability.
 
@@ -231,7 +228,7 @@ First, we calculate the gross and take-home household incomes. According to HUD'
 
 Next, we determine the 2021 SSS monthly cost estimates for a four-person household with two working adults and two elementary school-age children in Chesterfield County. These total costs (housing excluded) are \$4,480.
 
-``` {r residual-cost, echo=FALSE}
+``` {r residual-cost}
 
 costs_labels = c("Child Care", "Food", "Transportation", "Health Care",
            "Miscellaneous", "Taxes", "Child Care Tax Credit (-)",
@@ -245,9 +242,7 @@ costs_table <- data.frame(x = costs_labels, y = costs_values) %>%
        align = "lr",
        col.names = NULL) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
-      full_width = TRUE
-    ) %>% 
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(9, bold=TRUE)
 
 costs_table
@@ -256,7 +251,7 @@ costs_table
 
 Finally, we subtract these costs from the monthly take home pay.
 
-``` {r residual-summary, echo=FALSE}
+``` {r residual-summary}
 
 summary_labels = c("Monthly take-home pay", "Monthly expenses (-)", "Residual income")
 
@@ -267,9 +262,7 @@ summary_table <- data.frame(x = summary_labels, y = summary_values) %>%
        align = "lr",
        col.names = NULL) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed", "responsive"),
-      full_width = TRUE
-    ) %>% 
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(3, bold=TRUE)
 
 summary_table
