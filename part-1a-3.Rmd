@@ -42,11 +42,11 @@ These properties were built within the last 30 years or are a much older propert
 
 library(tidyverse)
 library(janitor)
-library(knitr)
 library(scales)
 library(zoo)
 library(formattable)
-library(ggthemes)
+library(simplevis)
+library(knitr)
 
 costar_noah <- read_csv("data/chesterfield_noah_coded.csv")
 costar_noah_rent <- read_csv("data/costar_noah_rent_bedroom.csv")
@@ -137,8 +137,6 @@ rent %>%
 Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,000 per month.
 
 ```{r noah-rent-plot, fig.cap="Median asking rent by bedroom for NOAH properties"}
-
-library(simplevis)
 
 # rent_plot <- ggplot(rent, aes(x = Period, y = Rent, group = Bedrooms, color = Bedrooms)) +
 #   geom_line() +

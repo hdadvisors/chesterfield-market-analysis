@@ -1,26 +1,151 @@
 # Ability-to-pay {#part-1b-4}
 
-This section provides an analysis of homeowner and renter incomes versus the actual housing costs in Chesterfield County. This analysis seeks to determine the surplus and deficit of housing units by price. 
-
-## Background
-
-[reserved]
+This section compares common wages for workers across Chesterfield County to actual housing costs for both homeownership and renting. The analysis reflects the ability for Chesterfield workforce to pay for current housing costs.
 
 ```{r global}
 
 library(tidyverse)
 library(tidycensus)
 library(readxl)
-library(lubridate)
 library(optiRum)
+library(scales)
+library(formattable)
+library(simplevis)
+library(lubridate)
+library(patchwork)
 
 ```
 
+## Background
+
+Affording a home in Chesterfield County—whether to own or rent— is directly tied to the incomes that households earn. There are diverse job opportunities across the region, and while some common jobs do pay well-above minimum wage, housing costs are rising faster.
+
+```{r top-occupations}
+
+cf_wages <- read_csv("data/chesterfield_wages_may2021.csv")
+
+cf_wages %>% 
+  slice_max(order_by = employment, n = 5) %>% 
+  select(2,4,6, 7) %>% 
+  mutate(employment = comma(employment, 0),
+         meanwage = dollar(meanwage),
+         meanannual = dollar(meanannual)) %>% 
+  kable(caption = "Top five most common occupations in Chesterfield County",
+       align = "lrrr",
+       col.names = c("Occupation", "Jobs", "Mean hourly wage", "Mean annual wage")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
+  
+
+
+```
+
+*Source: Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
+A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies.
+
+Understanding the ability of a range of job types to afford housing in a county contributes to economic development goals and helps ensure that workers that live in the county can continue to live in the county.
+
 ## Homeowner affordability
 
-[reserved]
+Homeownership is more difficult to achieve in Chesterfield County The COVID-19 pandemic further tightened the housing market across America, and the Richmond region was no exception. The low supply of homes-for-sale coupled with record low mortgage interest rates placed pressure on local housing markets, especially in the suburbs.
 
-```{r homeowner, eval=FALSE, include=FALSE}
+The median home sale price in Chesterfield County has increased by 23 percent since before the pandemic in 2019---from $269,000 to $330,000 in 2021.
+
+``` {r med-sales, fig.cap="Median single-family home sales price in Chesterfield County"}
+
+medsales <- read_csv("data/cvrmls_medsales.csv")
+
+cpi_less <- read_csv("data/CUUR0000SA0L2.csv")
+
+cpi_less$year <- floor_date(cpi_less$DATE, "year")
+
+cpi_less <- cpi_less %>%
+  rename(cpi_value = CUUR0000SA0L2) %>%
+  transform(cpi_value = as.numeric(cpi_value))
+
+annual_cpi_less <- cpi_less %>%
+  group_by(year) %>%
+  summarize(mean = mean(cpi_value))%>%
+  mutate(year = as.integer(substring(year, 1,4)))
+
+medsales_adjusted <- medsales %>% 
+  left_join(annual_cpi_less, by = 'year') %>%
+  rename(cpi = mean) %>%
+  mutate(sales20 = ((235.67550/cpi)*medsales))
+
+gg_line(medsales,
+        x_var = year,
+        y_var = medsales,
+        alpha_point = 0,
+        size_line = 0.75,
+        title = "Median single-family home sales price in Chesterfield County",
+        y_labels = label_dollar(),
+        y_title = "Median sales price",
+        x_title = element_blank(),
+        y_zero = TRUE,
+        x_labels = label_number(accuracy = 1, big.mark = "")
+      ) +
+  ggplot2::scale_x_continuous(limits = c(2011.5, 2022.5),
+                              breaks = seq(2012, 2022, 1))
+
+```
+
+*Source: CVR MLS. 2022 includes all sales through March.*
+
+In order to afford a home at this price, a household would need to make **\$79,181**. The table below shows the assumptions made to calculate this figure.
+
+``` {r home-price}
+
+msp <- 330000
+downpayment <- 0.05 # 5% downpayment
+principal <- msp - (msp * downpayment)
+closingcosts <- 0.015 # 1.5% closing costs
+loanamt <- principal/(1 - closingcosts) # Closing costs added to loan amount 
+intrate <- 0.0442 # Current interest rate from Freddie Mac
+utilities <- 250 # Assume $250/month for utilities
+
+# Calculate monthly payment
+
+payment <- abs(PMT((intrate/12), 360, loanamt)) + 250
+
+# Calculate income needed to afford payment
+
+inc_needed <- ((payment*10)/2.8)*12
+
+labels <- c("Median sales price",
+            "Downpayment",
+            "Closing costs",
+            "Loan amount",
+            "Interest rate",
+            "Monthly utilities",
+            "Monthly payment",
+            "Income needed to buy home")
+
+values <- c("$330,000",
+            "5.0%",
+            "1.5%",
+            "$318,274",
+            "4.42%",
+            "$250",
+            "$1,847.55",
+            "$79,181")
+
+data.frame(x = labels, y = values) %>% 
+  kable(caption = "Calculated income needed to buy median-priced home in Chesterfield County",
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(8, bold=TRUE)
+
+```
+
+*Sources: CVR MLS and Freddie Mac Primary Mortgage Market Survey.*
+
+This minimum income is about \$25,000 more than the 2020 median household income for renters in Chesterfield. In fact, through 2020, the average renter household income is unable to support a home sales price above $250,000.
+
+```{r renter-income}
 
 years <- 2010:2020
 
@@ -64,8 +189,7 @@ b25119_data <- b25119_raw %>%
     cv > 30 ~ "Low reliability")
   )
 
-cpi <- read_excel("data/CPI_U_RS.xlsx")
-cpi <- cpi %>% 
+cpi <- read_excel("data/CPI_U_RS.xlsx") %>% 
   rename(year = Year,
          priceindex = Index) %>%
   transform(year = as.numeric(year))
@@ -76,66 +200,82 @@ b25119_cpi <- b25119_data %>%
   select(year, tenure, dollars20, moe, reliability) %>%
     filter(tenure == "Renter")
 
-medsales <- read_csv("data/cvrmls_medsales.csv")
+```
 
-cpi_less <- read_csv("data/CUUR0000SA0L2.csv")
+``` {r renter-income-afford, fig.cap="Median household income and affordable home sales price for renters in Chesterfield County"}
 
-cpi_less$year <- floor_date(cpi_less$DATE, "year")
-
-cpi_less <- cpi_less %>%
-  rename(cpi_value = CUUR0000SA0L2) %>%
-  transform(cpi_value = as.numeric(cpi_value))
-
-annual_cpi_less <- cpi_less %>%
-  group_by(year) %>%
-  summarize(mean = mean(cpi_value))%>%
-  mutate(year = as.integer(substring(year, 1,4)))
-
-medsales_adjusted <- medsales %>% 
-  left_join(annual_cpi_less, by = 'year') %>%
-  rename(cpi = mean) %>%
-  mutate(sales20 = ((235.67550/cpi)*medsales)) 
+# This is focusing in on 2020 median renter household income and 2020 median home price. 
 
 income_price <- b25119_cpi %>%
-  left_join(medsales_adjusted, by = 'year') # Missing 2010 and 2011, as well as 2021-2022
-
-
-# Assume $250/month for utilities
-# Closing costs added to loan amount 
-
-intrate <- .0442
-
-income_price <- income_price %>%
+  left_join(medsales_adjusted, by = 'year') %>% 
   mutate(third =(dollars20 * .28)) %>%
   mutate(monthly = (third/12)) %>%
-  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) # This is focusing in on 2020 median renter household income and 2020 median home price. 
+  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) %>% 
+  filter(!is.na(medsales)) # Missing 2010 and 2011, as well as 2021-2022
 
-chesterfield_jobs <- read_csv("data/chesterfield_wages_may2021.csv")
+plot_inc <- gg_bar(
+  income_price,
+  x_var = year,
+  y_var = dollars20,
+  pal = "#2C728EFF",
+  alpha_fill = 0.75,
+  title = "Median renter income",
+  x_title = "",
+  x_labels = scales::label_number(accuracy = 1, big.mark = ""),
+  y_title = "Median household income (2020 dollars)",
+  y_labels = scales::label_dollar()
+  )
 
-chesterfield_jobs <- chesterfield_jobs %>% # This is focusing on 2021 wages versus 2021 home price which was $330,000
+plot_afford <- gg_bar(
+  income_price,
+  x_var = year,
+  y_var = canafford,
+  pal = "#472D7BFF",
+  alpha_fill = 0.75,
+  title = "Maximum home price for renters",
+  x_title = "",
+  x_labels = scales::label_number(accuracy = 1, big.mark = ""),
+  y_title = "Sales price (2020 dollars)",
+  y_labels = scales::label_dollar()
+  )
+
+
+plot_inc + plot_afford
+
+```
+
+*Sources: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119 and Freddie Mac Primary Mortgage Market Survey.*
+
+Compared to 2021 average wages, several common occupations in the county would also struggle to afford the typical home price in the county in 2021. For example, customer service representatives average hourly wage of \$17.51 could only afford a monthly mortgage payment for a home priced below \$170,000. Even with an hourly wage that is three times that of the Virginia minimum wage (\$11.00 per hour), households in the county would still struggle to afford a home.
+
+The table below shows the maximum home sales price affordable at the current average wages for the five most common occupations in Chesterfield County.
+
+``` {r jobs-price}
+
+# This is focusing on 2021 wages versus 2021 home price which was $330,000
+
+cf_wages %>% 
   mutate(third = (meanannual * .28)) %>%
   mutate(monthly = (third/12)) %>%
-  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0))
-
-# Income needed to afford 2021 median sales price: $330,000
-
-msp <- 330000
-downpayment <- 0.05
-principal <- msp - msp * downpayment
-closingcosts <- 0.015
-loanamt <- principal/(1 - closingcosts)
-intrate <- 0.0442
-
-payment <- abs(PMT((intrate/12), 360, loanamt)) + 250
-
-inc_needed <- ((payment*10)/2.8)*12
-
-# Need a $79,181 to afford median home price
+  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) %>% 
+  slice_max(order_by = employment, n = 5) %>% 
+  mutate(employment = comma(employment, 0),
+         canafford = dollar(canafford)) %>% 
+  select(2,4,10) %>% 
+  kable(caption = "Maximum home sales price for five most common occupations in Chesterfield County",
+       align = "lrr",
+       col.names = c("Occupation", "Jobs", "Maximum home sales price")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
 
 
 ```
 
+*Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
 ## Renter affordability
+
+
 ```{r rents, eval=FALSE, include=FALSE}
 
 rents <- read_xlsx("data/costar_rent_avg.xlsx")
