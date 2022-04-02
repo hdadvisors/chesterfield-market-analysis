@@ -4,6 +4,19 @@
 
 This section summarizes recent planning documents related to housing and housing affordability in Chesterfield County. This includes county and regional planning documents. Documents post-2008 will be favored for currency.
 
+```{r setup}
+
+knitr::opts_chunk$set(
+  include = FALSE,
+  eval = FALSE,
+  out.width='50%',
+  fig.align='center',
+  out.extra = 'style="border:none;"'
+)
+
+```
+
+
 ## Background
 
 Chesterfield County has acknowledged the importance of housing availability and affordability throughout many of their planning documents. Planning efforts by the county have sought to address housing at varying scales within county boundaries, while the county has also been involved in multijurisdictional planning to address the housing challenges that exist at the regional level.
@@ -12,7 +25,7 @@ The following sections summarize housing, community development, and revitalizat
 
 ## Hull Street Corridor Revitalization Plan
 
-```{r img-hull-street}
+```{r img-hull-street, fig.align='center'}
 
 knitr::include_graphics("images/plan-hull-street.png")
 
@@ -79,7 +92,7 @@ Study highlights:
 
 ## Moving Forward: The Comprehensive Plan for Chesterfield County
 
-```{r img-comp, out.height="400px"}
+```{r img-comp}
 
 knitr::include_graphics("images/plan-comp.png")
 

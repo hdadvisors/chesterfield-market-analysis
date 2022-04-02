@@ -13,6 +13,7 @@ library(formattable)
 library(simplevis)
 library(lubridate)
 library(patchwork)
+library(knitr)
 
 ```
 

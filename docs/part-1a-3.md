@@ -1,6 +1,6 @@
 # Market-affordable housing {#part-1a-3}
 
-This section will summarize research on market affordable housing, or what is commonly referred to as naturally occurring affordable housing (NOAH). Particular focus will be given to determining a common and accepted definition of NOAH.
+This section summarizes research on market affordable housing, or what is commonly referred to as naturally occurring affordable housing (NOAH). Particular focus will be given to determining a common and accepted definition of NOAH.
 
 ## Background
 
@@ -10,9 +10,13 @@ The preservation of NOAH properties has been a growing strategy to support affor
 
 ## Defining NOAH
 
-While research around NOAH has been growing over the past several years, an official definition still does not exist. But general agreement among advocates and practitioners is that NOAH is older, outmoded, and in less desirable locations. When these characteristics are placed into the context of a community's rental market, rents are generally lower than the typical rental unit because NOAH units are of comparably lower quality than newer units on the market.
+While research around NOAH has been growing over the past several years, an universally-accepted definition still does not exist. But general agreement among advocates and practitioners is that NOAH units are older, outmoded, and in less desirable locations.
 
-CoStar, a commercial real estate and analytics provider with its global research operations based in Richmond, Virginia, conducted an analysis of NOAH properties in Fall 2016. This analysis was done at the request of Urban Land Institute's Terwilliger Center for Housing and concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
+When these characteristics are placed into the context of a community's rental market, rents are generally lower than the typical rental unit because NOAH units are of comparably lower quality than newer units on the market.
+
+CoStar, a commercial real estate and analytics provider with its global research operations based in Richmond, Virginia, conducted an [analysis of NOAH properties](https://americas.uli.org/new-costar-data-identifies-5-5-million-units-naturally-occurring-affordable-housing-markets-across-united-states/) in Fall 2016 at the request of Urban Land Institute's Terwilliger Center for Housing.
+
+This analysis concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
 
 ::: {.rmdnote}
 
@@ -46,8 +50,6 @@ The following analysis on NOAH inventory in Chesterfield County uses data from C
 ### Amount
 
 Chesterfield County is home to 10,784 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A much smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings. One rental property (Huntwood Apartments) is a collection of 48 single-family homes.
-
-This NOAH inventory is approximately 34 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield. NOAH units account for a much larger share (72 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.]
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:noah-amount)NOAH properties and units by style</caption>
@@ -86,6 +88,11 @@ This NOAH inventory is approximately 34 percent of the county's total number of 
   </tr>
 </tbody>
 </table>
+*Source: CoStar Group, Inc.*
+
+This NOAH inventory is approximately 34 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
+
+NOAH units account for a much larger share (72 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
 
 :::{.rmdcaution}
 
@@ -93,7 +100,7 @@ This NOAH inventory is approximately 34 percent of the county's total number of 
 
 Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County’s major corridors. However, the CoStar database does not fully capture all of these communities.
 
-In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a study of mobile home parks in Central Virginia and found that Chesterfield County was home to 1,543 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
+In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a [study of mobile home parks in Central Virginia](https://mhccv.org/resources/central-virginia-study/) and found that Chesterfield County was home to 1,543 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
 
 :::
 
@@ -101,7 +108,10 @@ In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted
 
 NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
 
-<img src="images/noah_map.png" width="100%" style="border:none;" />
+<div class="figure">
+<img src="images/noah_map.png" alt="Location and type of NOAH" width="100%" style="border:none;" />
+<p class="caption">(\#fig:noah-map)Location and type of NOAH</p>
+</div>
 
 ### Rent levels
 
@@ -135,12 +145,15 @@ As of early 2022, average rents in Chesterfield's NOAH units range from \$862 to
 </tbody>
 </table>
 
+*Source: CoStar Group, Inc.*
+
 Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,000 per month.
 
 <div class="figure">
 <img src="part-1a-3_files/figure-html/noah-rent-plot-1.png" alt="Median asking rent by bedroom for NOAH properties" width="100%" style="border:none;" />
 <p class="caption">(\#fig:noah-rent-plot)Median asking rent by bedroom for NOAH properties</p>
 </div>
+*Source: CoStar Group, Inc.*
 
 ### Age
 
@@ -156,6 +169,7 @@ The median age of the county's NOAH units is 48 years. (Built in 1974.)
 <img src="part-1a-3_files/figure-html/noah-age-1.png" alt="NOAH units by year built" width="100%" style="border:none;" />
 <p class="caption">(\#fig:noah-age)NOAH units by year built</p>
 </div>
+*Source: CoStar Group, Inc.*
 
 ### Examples
 
