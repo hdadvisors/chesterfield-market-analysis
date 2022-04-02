@@ -37,8 +37,6 @@ cf_wages %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"))
   
-
-
 ```
 
 *Source: Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
@@ -53,7 +51,7 @@ Homeownership is more difficult to achieve in Chesterfield County The COVID-19 p
 
 The median home sale price in Chesterfield County has increased by 23 percent since before the pandemic in 2019---from $269,000 to $330,000 in 2021.
 
-``` {r med-sales, fig.cap="Median single-family home sales price in Chesterfield County"}
+``` {r cf-med-sales, fig.cap="Median single-family home sales price in Chesterfield County"}
 
 medsales <- read_csv("data/cvrmls_medsales.csv")
 
@@ -96,7 +94,7 @@ gg_line(medsales,
 
 In order to afford a home at this price, a household would need to make **\$79,181**. The table below shows the assumptions made to calculate this figure.
 
-``` {r home-price}
+``` {r cf-home-price}
 
 msp <- 330000
 downpayment <- 0.05 # 5% downpayment
@@ -146,7 +144,7 @@ data.frame(x = labels, y = values) %>%
 
 This minimum income is about \$25,000 more than the 2020 median household income for renters in Chesterfield. In fact, through 2020, the average renter household income is unable to support a home sales price above $250,000.
 
-```{r renter-income}
+```{r cf-renter-income}
 
 years <- 2010:2020
 
@@ -203,7 +201,7 @@ b25119_cpi <- b25119_data %>%
 
 ```
 
-``` {r renter-income-afford, fig.cap="Median household income and affordable home sales price for renters in Chesterfield County"}
+``` {r cf-renter-income-afford, fig.cap="Median household income and affordable home sales price for renters in Chesterfield County"}
 
 # This is focusing in on 2020 median renter household income and 2020 median home price. 
 
@@ -240,7 +238,6 @@ plot_afford <- gg_bar(
   y_labels = scales::label_dollar()
   )
 
-
 plot_inc + plot_afford
 
 ```
@@ -251,7 +248,7 @@ Compared to 2021 average wages, several common occupations in the county would a
 
 The table below shows the maximum home sales price affordable at the current average wages for the five most common occupations in Chesterfield County.
 
-``` {r jobs-price}
+``` {r cf-jobs-price}
 
 # This is focusing on 2021 wages versus 2021 home price which was $330,000
 
@@ -276,24 +273,70 @@ cf_wages %>%
 
 ## Renter affordability
 
+The housing supply shortage is also being felt in the rental housing market. Small landlords exiting the rental market and low supply are exacerbating the challenges renters were facing even before the pandemic.  For many renters in low paying jobs, the pandemic impacts were heightened for those that could not work-from-home and depended on shuttered service industry jobs. Slow wage growth and increasing rental prices combined to put pressure on the housing stability of essential workers.
 
-```{r rents, eval=FALSE, include=FALSE}
+Post-recession average asking rent in the county hit a low of \$1,150 in 2012 (adjusted to current dollars), but has been on the rise ever since. From 2012 to 2019, average rents rose an average of 2 percent each year until 2020, the year of the pandemic. Between 2019 and 2020, average rent in the county rose by 5 percent (\$69)---from \$1,290 to \$1,359, a substantial increase for individuals and families on tight budgets. In 2021, average rent continued to rise to over \$1,400. 
 
-rents <- read_xlsx("data/costar_rent_avg.xlsx")
+```{r cf-rents, fig.cap="Median asking rent in Chesterfield County"}
+
+cf_rents <- read_csv("data/costar_rent_avg.csv") %>% 
+  pivot_longer(cols = 2:3, names_to = "type", values_to = "value") %>% 
+  mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) %>% 
+  mutate(type = str_replace_all(type, c("rent" = "Asking rent",
+                                        "rent_adj" = "rent (inflation-adjusted)")))
+
+gg_line_col(
+  cf_rents,
+  x_var = period,
+  y_var = value,
+  col_var = type,
+  alpha_point = 0,
+  size_line = 0.75,
+  title = "Median asking rent in Chesterfield County",
+  y_labels = label_dollar(),
+  y_title = "Median asking rent",
+  x_title = element_blank(),
+  y_zero = TRUE,
+  x_labels = scales::date_format(format = "%Y")
+  ) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+    legend.title = element_blank(),
+    legend.position = "top",
+    legend.direction = "horizontal",
+    legend.justification = "center"
+  )
 
 
 ```
 
-```{r renteraffordability, eval=FALSE, include=FALSE}
+*Source: CoStar Group, Inc.*
 
-chesterfield_jobs <- chesterfield_jobs %>% # 2021 Rent was $1,420 adjusted for inflation already
-  mutate(rent = (third/12))
+This rent is increasingly unaffordable to some of the most common occupations in the county, like retail salespersons and home health aides. For a retail salesperson with an average hourly wage of \$13.85, a rent on a single income would be more affordable at \$672 to \$748 cheaper than the typical rent in the county. 
 
+Elementary school teachers with an average salary of \$53,840 would also be hard pressed to afford the typical rent. For an essential part of the workforce there would need to be rental units priced lower cheaper at \$1,256.
+
+```{r cf-renter-affordability}
+
+cf_wages %>% 
+  mutate(third = (meanannual * .3)) %>%
+  mutate(rent = (third/12)) %>% 
+  slice_max(order_by = employment, n = 5) %>% 
+  mutate(employment = comma(employment, 0),
+         rent = dollar(rent)) %>% 
+  select(2,4,9) %>% 
+  kable(caption = "Maximum monthly rent for five most common occupations in Chesterfield County",
+       align = "lrr",
+       col.names = c("Occupation", "Jobs", "Maximum monthly rent")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
 
 ```
 
-[reserved]
+*Source: CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
 
 ## Takeaways
 
-[reserved]
+* Although Chesterfield has a relatively high median household income in the region, many of the county's essential workers are not earning enough to keep up with the housing market.
+* Homeownership will be increasingly out-of-reach for many workers if current supply and demand trends continue, and especially if interest rates begin rising.
+* The average monthly rent in Chesterfield is approaching $1,500. This will be very unaffordable to most of the county's retail, service, and healthcare service workers.
