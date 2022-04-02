@@ -106,7 +106,7 @@ The HAI has steadily decreased as housing prices continue to rise across the nat
 
 The table below shows the inputs and calculated HAI for Chesterfield County as of March 2022. The median sales price is collected from all 2022 year-to-date single-family home sales accessed from the Central Virginia Regional Multiple Listing Service (CVR MLS).^[Through March 30, 2022.] The 30-year fixed mortgage is sourced from the national weekly average published by the Freddie Mac [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms) for the week ending March 24, 2022. The median family income is the latest value published by the U.S. Census Bureau.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B19113.]
 
-The current HAI for Chesterfield County is ***137.1**. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
+The current HAI for Chesterfield County is **137.1**. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
 
 <table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:hai)Housing Affordability Index in Chesterfield County</caption>

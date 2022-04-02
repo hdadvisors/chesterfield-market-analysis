@@ -14,6 +14,13 @@ library(ggplot2)
 library(plotly)
 library(formattable)
 library(scales)
+library(knitr)
+library(simplevis)
+library(zoo)
+library(sf)
+library(tigris)
+library(mapboxapi)
+library(tmap)
 
 ```
 
@@ -29,34 +36,36 @@ A growing Hispanic population along the corridor has helped reignite commercial 
 
 For the purposes of this analysis, the study area is defined as the Census tracts 1003, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09. These tracts all border Route 1 from Northern Chesterfield to Route 10.
 
-```{r r1-base-map, fig.cap="Route 1 study area", out.width="60%"}
+```{r r1-base-map, fig.cap="Route 1 study area", out.width="300px", fig.align="center"}
 
-library(sf)
-library(tigris)
-library(mapboxapi)
-library(tmap)
+# r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
+# 
+# r1_tracts <- tracts("VA", "Chesterfield") %>% 
+#   filter(TRACTCE %in% r1_tracts_list)
+# 
+# r1_tiles <- get_static_tiles(
+#   location = r1_tracts,
+#   zoom = 11,
+#   buffer_dist = 1000,
+#   username = "jtknopf",
+#   style_id = "ckjitm9ru101e19o7f5pfzwvx",
+#   access_token = "pk.eyJ1IjoianRrbm9wZiIsImEiOiJjaXQwN2VybnEwbDFjMnVxcGE0djF4OGV3In0.V78HHJmSNpptsR-bAE2Adw"
+# )
+# 
+# base_map <- tm_shape(r1_tiles) +
+#   tm_rgb() +
+#   tm_shape(r1_tracts) +
+#   tm_polygons(alpha = 0.7) +
+#   tm_text("NAME",
+#           size = 0.5) +
+#   tm_layout(legend.outside = T) +
+#   tm_credits("(c) Mapbox, OSM    ", 
+#            bg.color = "white",
+#            position = c("RIGHT", "BOTTOM"))
+# 
+# tmap_save(base_map, "images/r1-base-map.png", width=800)
 
-r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
-
-r1_tracts <- tracts("VA", "Chesterfield") %>% 
-  filter(TRACTCE %in% r1_tracts_list)
-
-r1_tiles <- get_static_tiles(
-  location = r1_tracts,
-  zoom = 11,
-  buffer_dist = 1000,
-  username = "jtknopf",
-  style_id = "ckjitm9ru101e19o7f5pfzwvx",
-  access_token = "pk.eyJ1IjoianRrbm9wZiIsImEiOiJjaXQwN2VybnEwbDFjMnVxcGE0djF4OGV3In0.V78HHJmSNpptsR-bAE2Adw"
-)
-
-tm_shape(r1_tiles) +
-  tm_rgb() +
-  tm_shape(r1_tracts) +
-  tm_polygons(alpha = 0.7) +
-  tm_text("NAME",
-          size = 0.5)
-  tm_layout(legend.outside = T)
+knitr::include_graphics("images/r1-base-map.png")
 
 ```
 
@@ -90,13 +99,12 @@ While specific wages for each industry and occupation are not available for the 
 
 r1_otm %>% 
   filter(level == "Earnings") %>% 
-  select(2,3) %>% 
-  mutate(jobs = comma(jobs, 0),
-         name = str_remove_all(name, "\\$"),
-         pct = percent(jobs/sum(jobs), digits=0)) %>% 
+  mutate(name = str_remove_all(name, "\\$"),
+         pct = percent((jobs/sum(jobs)), digits=0)) %>% 
+  select(2,6) %>% 
   kable(caption = "Monthly earnings for residents in the study area",
-       align = "lrr",
-       col.names = c("Monthly earnings (dollars)", "Jobs", "Percent")) %>% 
+       align = "lr",
+       col.names = c("Monthly earnings (dollars)", "Percent")) %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"))
 
@@ -127,7 +135,7 @@ r1_otm %>%
 
 Along the Route 1 corridor, there have been about 56 home sales each quarter between 2015 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$288,000, a 95 percent increase from 2015 when the median home sale price was \$148,000.
 
-```{r r1-med-sales, fig.cap=Median single-family home sales price in study area"}
+```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
 
 r1_sales <- read_csv("data/routeone_mls.csv")
 
@@ -152,7 +160,7 @@ gg_line(r1_sales_med,
         y_zero = TRUE,
         x_labels = scales::date_format(format = "%Y")
       ) +
-  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date())),
+  ggplot2::scale_x_date(limits = c(as.Date("2015-01-01"), as.Date("2022-01-01")),
                         breaks = "1 year",
                         date_labels = "%Y")
   

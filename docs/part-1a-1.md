@@ -15,7 +15,7 @@ The following sections summarize housing, community development, and revitalizat
 
 ## Hull Street Corridor Revitalization Plan
 
-
+<img src="images/plan-hull-street.png" width="100%" style="border:none;" style="display: block; margin: auto;" />
 
 *Completed January 2013.*
 
@@ -33,7 +33,7 @@ Plan highlights:
 
 ## Route 1 (formerly Northern Jefferson Davis) Special Area Plan
 
-
+<img src="images/plan-r1.png" width="100%" style="border:none;" />
 
 *Completed April 2018.*
 
@@ -48,7 +48,7 @@ Plan highlights:
 
 ## Route 1 (formerly North Jefferson Davis Highway) Real Estate Market Study
 
-
+<img src="images/plan-njd.png" width="100%" style="border:none;" />
 
 *Completed 2019.*
 
@@ -70,7 +70,7 @@ Study highlights:
 
 ## Moving Forward: The Comprehensive Plan for Chesterfield County
 
-
+<img src="images/plan-comp.png" width="100%" style="border:none;" />
 
 *Completed May 2019.*
 
@@ -89,7 +89,7 @@ Plan highlights:
 
 ## Midlothian Community Special Area Plan
 
-
+<img src="images/plan-midlo.png" width="100%" style="border:none;" />
 
 *Completed December 2019.*
 
@@ -106,7 +106,7 @@ Plan highlights:
 
 ## Richmond Regional Housing Framework
 
-
+<img src="images/plan-rrhf.png" width="100%" style="border:none;" />
 
 *Completed January 2020.*
 
@@ -129,7 +129,7 @@ Some of the specific policy solutions for Chesterfield County included:
 
 ## Analysis of Impediments to Fair Housing Choice in the Greater Richmond and Tri-Cities Region 
 
-
+<img src="images/plan-ai.png" width="100%" style="border:none;" />
 
 *Completed March 2021.*
 
