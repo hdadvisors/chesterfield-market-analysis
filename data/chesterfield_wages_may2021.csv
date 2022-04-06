@@ -1,16 +1,20 @@
-﻿occ_code,occupation,level,employment,medhourlywage,meanwage,meanannual
-31-1120,Home health and personal care aides,broad,9390,11.06,11.51,23930
-35-3023,Fast food and counter workers,detail,16930,11.02,11.29,23490
-41-2031,Retail salespersons,detail,18770,11.52,13.85,28800
-47-2061,Construction laborers,detail,3880,14.93,16.5,34310
-39-9011,Childcare workers,detail,1640,11.18,11.81,24560
-37-3011,Landscaping and groundskeeping workers,detail,4060,14.4,15,31200
-47-2111,Electricians,detail,3610,24.23,27.26,56710
-29-1141,Registered nurses,detail,12910,37.24,36.99,76940
-25-2021,"Elementary school teachers, except special education",detail,"4,670",,,53840
-29-2052,Pharmacy technicians,detail,2090,17.62,17.4,36190
-41-3021,Insurance sales agents,detail,"2,100",28.64,38.25,79550
-13-2011,Accountants and auditors,detail,"8,250",36.89,38.86,80830
-15-1252,Software developers,detail,"6,560",51.41,54.61,113580
-17-2051,Civil Engineers,detail,"1,900",38.72,43.75,90990
-43-4051,Customer service representatives,detail,"13,560",17.47,17.51,36410
+﻿occ_code,occupation,level,employment,medhourlywage,meanwage,meanannual,notes
+31-1120,Home health and personal care aides,broad,9390,11.06,11.51,23930,
+35-3023,Fast food and counter workers,detail,16930,11.02,11.29,23490,
+41-2031,Retail salespersons,detail,18770,11.52,13.85,28800,
+47-2061,Construction laborers,detail,3880,14.93,16.5,34310,
+39-9011,Childcare workers,detail,1640,11.18,11.81,24560,
+37-3011,Landscaping and groundskeeping workers,detail,4060,14.4,15,31200,
+47-2111,Electricians,detail,3610,24.23,27.26,56710,
+29-1141,Registered nurses,detail,12910,37.24,36.99,76940,
+25-2021,"Elementary school teachers, except special education",detail,"4,670",,,53840,
+29-2052,Pharmacy technicians,detail,2090,17.62,17.4,36190,
+41-3021,Insurance sales agents,detail,"2,100",28.64,38.25,79550,
+13-2011,Accountants and auditors,detail,"8,250",36.89,38.86,80830,
+15-1252,Software developers,detail,"6,560",51.41,54.61,113580,
+17-2051,Civil Engineers,detail,"1,900",38.72,43.75,90990,
+43-4051,Customer service representatives,detail,"13,560",17.47,17.51,36410,
+county,Police officers,detail,,,,59470,"This is the median for all full-time Police Officers from Recruits through Career Officers. It does not include Corporals, Sergeants, Lieutenants, Captains, Major or Chiefs."
+county,Firefighters,detail,,,,53428,"This is the median for all full-time Firefighters from Recruits through Firefighter V.  It does not include Lieutenants, Captains or Chiefs."
+county,Emergency communications officers,detail,,,,44166,"This is the median for all full-time Emergency Communications Officers.  It does not include administrative positions, supervisors, managers or directors."
+county,Administrative workers,detail,,,,44115,"This is the median for all full-time county Administrative Analysts, Administrative Assistants, Executive Assistants, Legal Secretaries, Administrative Secretaries, Senior Administrative Analysts, Senior Executive Assistants and Senior Office Assistants."
