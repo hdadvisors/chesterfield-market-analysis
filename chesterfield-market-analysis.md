@@ -1,3 +1,77 @@
+--- 
+title: "Chesterfield County Rental Market Analysis"
+author: "HDAdvisors"
+date: "2022-04-02"
+site: bookdown::bookdown_site
+documentclass: book
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+# description: add description
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# url: your book url like https://bookdown.org/yihui/bookdown
+
+Placeholder
+
+
+## Report outline {-}
+
+<!--chapter:end:index.Rmd-->
+
+
+# (PART) LITERATURE REVIEW {.unnumbered}
+
+Placeholder
+
+
+## Background
+## Hull Street Corridor Revitalization Plan
+## Route 1 (formerly Northern Jefferson Davis) Special Area Plan
+## Route 1 (formerly North Jefferson Davis Highway) Real Estate Market Study
+## Moving Forward: The Comprehensive Plan for Chesterfield County
+## Midlothian Community Special Area Plan
+## Richmond Regional Housing Framework
+## Analysis of Impediments to Fair Housing Choice in the Greater Richmond and Tri-Cities Region 
+## Takeaways
+
+<!--chapter:end:part-1a-1.Rmd-->
+
+
+# Measures of housing affordability {#part-1a-2}
+
+Placeholder
+
+
+## Background
+## 30 percent standard
+## NAR's Housing Affordability Index
+## NLIHC's Housing Wage
+## Residual income approach
+## CNT's H+T Affordability Index
+## Takeaways
+
+<!--chapter:end:part-1a-2.Rmd-->
+
+
+# Market-affordable housing {#part-1a-3}
+
+Placeholder
+
+
+## Background
+## Defining NOAH
+## NOAH in Chesterfield County
+### Amount
+### Location
+### Rent levels
+### Age
+### Examples
+## Takeaways
+
+<!--chapter:end:part-1a-3.Rmd-->
+
 # Concentrations of affordable housing {#part-1a-4}
 
 ## Background
@@ -76,3 +150,91 @@ For county residents, HCVs are administered through the county's Department of S
 * The current body of research shows that LIHTC properties have no detrimental impact on nearby property values.
 * Income-restricted rental housing in Chesterfield County is not tightly concentrated in one neighborhood or along one corridor.
 * A significant share of the county’s unsubsidized affordable housing is located in northern neighborhoods adjacent to the City of Richmond.
+
+<!--chapter:end:part-1a-4.Rmd-->
+
+
+# Renter tenancy {#part-1a-5}
+
+Placeholder
+
+
+## Research analysis
+## Length of stay by tenure in Chesterfield
+## Takeaways
+
+<!--chapter:end:part-1a-5.Rmd-->
+
+
+# (PART) DEMOGRAPHIC AND AFFORDABILITY ANALYSIS {-}
+# Data sources and reliability {#part-1b-1}
+
+Placeholder
+
+
+## Background
+## Decennial Census
+## American Community Survey
+## Comprehensive Housing Affordability Strategy
+## Center for Neighborhood Technology
+## Central Virginia Regional Multiple Listing Service
+## CoStar
+## Takeaways
+
+<!--chapter:end:part-1b-1.Rmd-->
+
+
+# Household income {#part-1b-2}
+
+Placeholder
+
+
+## Background
+## Tenure
+## Age
+## Race and ethnicity
+## Takeaways
+
+<!--chapter:end:part-1b-2.Rmd-->
+
+
+# Household cost burden {#part-1b-3}
+
+Placeholder
+
+
+## Background
+## Tenure and income
+## Household type
+## Race and ethnicity
+## Takeaways
+
+<!--chapter:end:part-1b-3.Rmd-->
+
+
+# Ability-to-pay {#part-1b-4}
+
+Placeholder
+
+
+## Background
+## Homeowner affordability
+## Renter affordability
+## Takeaways
+
+<!--chapter:end:part-1b-4.Rmd-->
+
+
+# Route 1 affordability analysis  {#part-1b-5}
+
+Placeholder
+
+
+## Background
+## Study area
+## Homeowner affordability
+## Renter affordability
+## Takeaways
+
+<!--chapter:end:part-1b-5.Rmd-->
+

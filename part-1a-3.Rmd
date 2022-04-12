@@ -205,6 +205,10 @@ gg_histogram(costar_noah,
 ```
 *Source: CoStar Group, Inc.*
 
+### HUD insured multifamily properties
+
+
+
 ### Examples
 
 <br>
