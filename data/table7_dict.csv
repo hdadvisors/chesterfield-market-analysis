@@ -1,0 +1,214 @@
+﻿code,type,tenure,income,household,costburden
+T7_est1,Total,Total: Occupied housing units,All,All,All
+T7_est2,Subtotal,Owner occupied,All,All,All
+T7_est3,Subtotal,Owner occupied,household income is less than or equal to 30% of HAMFI,All,All
+T7_est4,Subtotal,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est5,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est6,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est7,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est8,Subtotal,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est9,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est10,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est11,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est12,Subtotal,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),All
+T7_est13,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est14,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est15,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est16,Subtotal,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,All
+T7_est17,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est18,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est19,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est20,Subtotal,Owner occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),All
+T7_est21,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est22,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est23,Detail,Owner occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est24,Subtotal,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,All,All
+T7_est25,Subtotal,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est26,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est27,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est28,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est29,Subtotal,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est30,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est31,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est32,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est33,Subtotal,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),All
+T7_est34,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est35,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est36,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est37,Subtotal,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,All
+T7_est38,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est39,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est40,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est41,Subtotal,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),All
+T7_est42,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est43,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est44,Detail,Owner occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est45,Subtotal,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,All,All
+T7_est46,Subtotal,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est47,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est48,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est49,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est50,Subtotal,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est51,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est52,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est53,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est54,Subtotal,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),All
+T7_est55,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est56,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est57,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est58,Subtotal,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,All
+T7_est59,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est60,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est61,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est62,Subtotal,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),All
+T7_est63,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est64,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est65,Detail,Owner occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est66,Subtotal,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,All,All
+T7_est67,Subtotal,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est68,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est69,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est70,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est71,Subtotal,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est72,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est73,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est74,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est75,Subtotal,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),All
+T7_est76,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est77,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est78,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est79,Subtotal,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,All
+T7_est80,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est81,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est82,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est83,Subtotal,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),All
+T7_est84,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est85,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est86,Detail,Owner occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est87,Subtotal,Owner occupied,household income is greater than 100% of HAMFI,All,All
+T7_est88,Subtotal,Owner occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est89,Detail,Owner occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est90,Detail,Owner occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est91,Detail,Owner occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est92,Subtotal,Owner occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est93,Detail,Owner occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est94,Detail,Owner occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est95,Detail,Owner occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est96,Subtotal,Owner occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),All
+T7_est97,Detail,Owner occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est98,Detail,Owner occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est99,Detail,Owner occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est100,Subtotal,Owner occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,All
+T7_est101,Detail,Owner occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est102,Detail,Owner occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est103,Detail,Owner occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est104,Subtotal,Owner occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),All
+T7_est105,Detail,Owner occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est106,Detail,Owner occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est107,Detail,Owner occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est108,Subtotal,Renter occupied,All,All,All
+T7_est109,Subtotal,Renter occupied,household income is less than or equal to 30% of HAMFI,All,All
+T7_est110,Subtotal,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est111,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est112,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est113,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est114,Subtotal,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est115,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est116,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est117,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est118,Subtotal,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),All
+T7_est119,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est120,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est121,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est122,Subtotal,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,All
+T7_est123,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est124,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est125,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est126,Subtotal,Renter occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),All
+T7_est127,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est128,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est129,Detail,Renter occupied,household income is less than or equal to 30% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est130,Subtotal,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,All,All
+T7_est131,Subtotal,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est132,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est133,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est134,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est135,Subtotal,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est136,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est137,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est138,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est139,Subtotal,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),All
+T7_est140,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est141,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est142,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est143,Subtotal,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,All
+T7_est144,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est145,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est146,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est147,Subtotal,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),All
+T7_est148,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est149,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est150,Detail,Renter occupied,household income is greater than 30% but less than or equal to 50% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est151,Subtotal,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,All,All
+T7_est152,Subtotal,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est153,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est154,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est155,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est156,Subtotal,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est157,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est158,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est159,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est160,Subtotal,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),All
+T7_est161,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est162,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est163,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est164,Subtotal,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,All
+T7_est165,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est166,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est167,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est168,Subtotal,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),All
+T7_est169,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est170,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est171,Detail,Renter occupied,household income is greater than 50% but less than or equal to 80% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est172,Subtotal,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,All,All
+T7_est173,Subtotal,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est174,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est175,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est176,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est177,Subtotal,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est178,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est179,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est180,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est181,Subtotal,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),All
+T7_est182,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est183,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est184,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est185,Subtotal,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,All
+T7_est186,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est187,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est188,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est189,Subtotal,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),All
+T7_est190,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est191,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est192,Detail,Renter occupied,household income is greater than 80% but less than or equal to 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
+T7_est193,Subtotal,Renter occupied,household income is greater than 100% of HAMFI,All,All
+T7_est194,Subtotal,Renter occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",All
+T7_est195,Detail,Renter occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is less than or equal to 30%
+T7_est196,Detail,Renter occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est197,Detail,Renter occupied,household income is greater than 100% of HAMFI,"household type is elderly family (2 persons, with either or both age 62 or over)",housing cost burden is greater than 50%
+T7_est198,Subtotal,Renter occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",All
+T7_est199,Detail,Renter occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is less than or equal to 30%
+T7_est200,Detail,Renter occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 30% but less than or equal to 50%
+T7_est201,Detail,Renter occupied,household income is greater than 100% of HAMFI,"household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)",housing cost burden is greater than 50%
+T7_est202,Subtotal,Renter occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),All
+T7_est203,Detail,Renter occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is less than or equal to 30%
+T7_est204,Detail,Renter occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est205,Detail,Renter occupied,household income is greater than 100% of HAMFI,household type is large family (5 or more persons),housing cost burden is greater than 50%
+T7_est206,Subtotal,Renter occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,All
+T7_est207,Detail,Renter occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,housing cost burden is less than or equal to 30%
+T7_est208,Detail,Renter occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 30% but less than or equal to 50%
+T7_est209,Detail,Renter occupied,household income is greater than 100% of HAMFI,household type is elderly non-family,housing cost burden is greater than 50%
+T7_est210,Subtotal,Renter occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),
+T7_est211,Detail,Renter occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is less than or equal to 30%
+T7_est212,Detail,Renter occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 30% but less than or equal to 50%
+T7_est213,Detail,Renter occupied,household income is greater than 100% of HAMFI,other household type (non-elderly non-family),housing cost burden is greater than 50%
