@@ -133,7 +133,7 @@ r1_otm %>%
 
 ## Homeowner affordability
 
-Along the Route 1 corridor, there have been about 56 home sales each quarter between 2015 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$288,000, a 95 percent increase from 2015 when the median home sale price was \$148,000.
+Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$220,000, a 83 percent increase from 2012 when the median home sale price was \$120,250.
 
 ```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
 
@@ -160,19 +160,19 @@ gg_line(r1_sales_med,
         y_zero = TRUE,
         x_labels = scales::date_format(format = "%Y")
       ) +
-  ggplot2::scale_x_date(limits = c(as.Date("2015-01-01"), as.Date("2022-01-01")),
+  ggplot2::scale_x_date(limits = c(as.Date("2012-01-01"), as.Date("2022-01-01")),
                         breaks = "1 year",
                         date_labels = "%Y")
   
 ```
 
-*Source: CVR MLS. 2022 includes all sales through March.*
+*Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
 
-In order to afford a home at this price, a household would need to make **\$70,467**. While this is 11 percent less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at this price, a household would need to make **\$56,358**. While this is 29 percent less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 ```{r r1-home-price}
 
-r1_msp <- 288000
+r1_msp <- 220000
 downpayment <- 0.05 # 5% downpayment
 r1_principal <- r1_msp - (r1_msp * downpayment)
 closingcosts <- 0.015 # 1.5% closing costs
@@ -193,7 +193,7 @@ r1_labels <- c("Median sales price",
             "Monthly payment",
             "Income needed to buy home")
 
-r1_values <- c("$288,000",
+r1_values <- c("$220,000",
             "5.0%",
             "1.5%",
             "$277,766",
