@@ -18,6 +18,9 @@ library(tidycensus)
 library(readxl)
 library(ggplot2)
 library(plotly)
+library(sf)
+library(formattable)
+library(esquisse)
 
 ```
 
@@ -270,6 +273,7 @@ b25106_raw <- get_acs(
     table = "B25106",
     year = 2020,
     survey = "acs5",
+    geometry = TRUE,
     cache_table = TRUE
   )
 
@@ -293,7 +297,7 @@ b25106_vars_cleaned <- b25106_vars %>%
 acs <- b25106_raw %>%
   right_join(b25106_vars_cleaned, by = "variable") %>%
   select(tract = NAME, GEOID, tenure, income, costburden, estimate, moe) %>%
-   group_by(tract, tenure, costburden) %>%
+   group_by(tract, costburden) %>%
   summarise(
     estimate = sum(estimate),
     moe = moe_sum(moe, estimate)
@@ -307,7 +311,16 @@ acs <- b25106_raw %>%
   ) %>%
   filter(tenure != "All") %>%
   filter(costburden != "All")
+
+acs_perc <- acs %>%
+  group_by(tract, costburden) %>%
+  summarise(
+    estimate = sum(estimate))
     
+acs_perc <- acs_perc %>%
+  group_by(tract) %>%
+  mutate(percentage = percent(estimate/sum(estimate)))
+  
 ```
 ## Takeaways
 
