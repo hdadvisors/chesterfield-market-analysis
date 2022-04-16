@@ -5,6 +5,8 @@
 library(tidyverse)
 library(janitor)
 library(knitr)
+library(scales)
+library(formattable)
 
 ```
 
@@ -93,17 +95,19 @@ chesterfield_cb_table <- chesterfield_cb %>%
     TRUE ~ "Cost burdened"
   )) %>% 
   group_by(tenure, cost_burden) %>% 
-  summarise(estimate = sum(estimate))
-
-chesterfield_cb_table %>% 
+  summarise(estimate = sum(estimate)) %>% 
   arrange(desc(estimate), .by_group = TRUE) %>% 
   pivot_wider(names_from = tenure,
               values_from = estimate) %>% 
-  mutate(Total = Renters + Homeowners) %>% 
-  adorn_totals() %>% 
+  mutate(Total = Renters + Homeowners,
+         Percent = Total / sum(Total)) %>% 
+  mutate(across(2:4, ~ comma(.x, format = "d"))) %>% 
+  mutate(Percent = percent(Percent, 1)) %>% 
+  adorn_totals()
+
+chesterfield_cb_table %>% 
   rename('Cost burden' = 1) %>% 
-  kable(caption = "Cost burden by tenure in Chesterfield County",
-        format.args = list(big.mark = ",")) %>% 
+  kable(caption = "Cost burden by tenure in Chesterfield County") %>% 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(4, bold=TRUE)
