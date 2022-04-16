@@ -60,9 +60,21 @@ The following analysis on NOAH inventory in Chesterfield County uses data from C
 * No public subsidy, rent caps, or other income-based restrictions, and
 * *CoStar Building Rating* of three or fewer stars out of five.^[Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.]
 
+:::{.rmdcaution}
+
+*Manufactured housing undercounted in CoStar data:*
+
+Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County’s major corridors. However, the CoStar database does not fully capture all of these communities.
+
+In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a [study of mobile home parks in Central Virginia](https://mhccv.org/resources/central-virginia-study/) and found that Chesterfield County was home to roughly 1,500 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
+
+The analysis below _includes_ all manufactured home communities in Chesterfield County identified in the MHCCV report. They are appended to the CoStar records to create a fuller NOAH dataset. However, the only known variables are property location and number of units within each park. Accurate rent levels for most of these communities are *not* known at this time.
+
+:::
+
 ### Amount
 
-Chesterfield County is home to 10,784 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A much smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings. One rental property (Huntwood Apartments) is a collection of 48 single-family homes.
+Chesterfield County is home to 11,915 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
 
 ```{r noah-amount}
 
@@ -80,24 +92,14 @@ costar_noah %>%
        format.args = list(big.mark = ",")) %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed")) %>% 
-  kableExtra::row_spec(5, bold=TRUE)
+  kableExtra::row_spec(4, bold=TRUE)
 
 ```
 *Source: CoStar Group, Inc.*
 
 This NOAH inventory is approximately 34 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
 
-NOAH units account for a much larger share (72 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
-
-:::{.rmdcaution}
-
-*Manufactured housing undercounted in CoStar data:*
-
-Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County’s major corridors. However, the CoStar database does not fully capture all of these communities.
-
-In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a [study of mobile home parks in Central Virginia](https://mhccv.org/resources/central-virginia-study/) and found that Chesterfield County was home to 1,543 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
-
-:::
+NOAH units account for a much larger share (80 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
 
 ### Location
 
@@ -138,16 +140,6 @@ Market rents in Chesterfield's NOAH units have increased significantly as demand
 
 ```{r noah-rent-plot, fig.cap="Median asking rent by bedroom for NOAH properties"}
 
-# rent_plot <- ggplot(rent, aes(x = Period, y = Rent, group = Bedrooms, color = Bedrooms)) +
-#   geom_line() +
-#   scale_y_continuous(labels=dollar_format(prefix = "$", big.mark = ",")) +
-#   scale_x_date() +
-#   theme(
-#     axis.title.x = element_blank(),
-#     axis.title.y = element_blank())
-#   
-# rent_plot
-
 gg_line_col(rent,
             x_var = Period,
             y_var = Rent,
@@ -180,17 +172,6 @@ The median age of the county's NOAH units is 48 years. (Built in 1974.)
 
 ```{r noah-age, fig.cap="NOAH units by year built"}
 
-# age_plot <- ggplot(costar_noah, aes(x=yearbuilt, weights=units)) +
-#   geom_histogram(binwidth = 5, fill="#69b3a2", color="#e9ecef") +
-#   scale_y_continuous(labels = scales::comma) +
-#   scale_x_continuous(limits = c(1950, 2020),
-#                      breaks = seq(1950, 2020, 10)) +
-#   theme(
-#     axis.title.x = element_blank(),
-#     axis.title.y = element_blank())
-# 
-# age_plot
-
 gg_histogram(costar_noah,
              x_var = yearbuilt,
              x_title = "Year built",
@@ -204,10 +185,6 @@ gg_histogram(costar_noah,
 
 ```
 *Source: CoStar Group, Inc.*
-
-### HUD insured multifamily properties
-
-
 
 ### Examples
 
@@ -241,6 +218,75 @@ knitr::include_graphics("images/suburban-village.png")
 * Asking lot rent: Approximately \$500 to \$600
 * Style: Manufactured home community
 * Neighborhood: Bon Air
+
+## HUD insured multifamily properties
+
+Chesterfield County also contains 19 multifamily properties with mortgages insured by various HUD programs. These complexes are *not* necessarily NOAH, *nor* are they required to restrict rents or incomes. In fact, only one of these properties has active rental assistance through the Section 8 program. In all, there are 2,280 active units across these communities.
+
+HUD mortgage insurance programs offer certain financing benefits to developers (e.g. longer terms, lower or fixed rates, nonrecourse loans) in exchange for additional due diligence, federal wage standards, and other considerations to guarantee a high-quality and successful development. Both for profit and nonprofit builders can be eligible in most circumstances. HUD issues hundreds of these mortgages across the nation each year.
+
+::: {.rmdnote}
+
+More details about these [multifamily mortgage insurance programs](https://www.hud.gov/program_offices/housing/mfh/progdesc) is available on the HUD website.
+
+:::
+
+
+```{r hud-insured-map, fig.cap="HUD insured multifamily properties in Chesterfield County"}
+
+library(mapview)
+library(sf)
+
+# Load in data (manually downloaded from HUD eGIS site) and select only relevant columns
+
+hud_insured <- read_csv("data/chesterfield_hud_insured.csv") %>% 
+  select(1,2,9,10,15,16,18,57,60,74,111,133,140,141)
+
+# Create spatial object using the lat/long coordinate fields
+
+hud_insured_map <- hud_insured %>% 
+  st_as_sf(coords = c("X", "Y"),
+           crs = 4326) %>%
+  st_transform(6440)
+
+# Render map
+
+mapview(
+  hud_insured_map,
+  label = "PROPERTY_NAME_TEXT",
+  legend = F,
+  popup = F,
+  burst = F,
+  layer.name = "HUD insured multifamily properties"
+)
+
+```
+
+*Source: U.S. Department of Housing and Urban Development.*
+
+Of these 19 properties, CoStar has active rent levels for 12. The average asking rent for these units is $1,600, which is above the range for most NOAH across the county.
+
+```{r hud-insured-costar, fig.cap="Average asking rents for HUD insured multifamily properties in Chesterfield County"}
+
+# Load in specific CoStar data (manually selected using names/addresses from HUD list)
+
+hud_insured_costar <- read_csv("data/costar_hud_insured.csv")
+
+# Create histogram to show distribution of average asking rents
+
+gg_histogram(hud_insured_costar,
+             title = "Average asking rents for HUD insured multifamily properties",
+             x_var = `Avg Asking/Unit`,
+             x_labels = scales::label_dollar(accuracy = 1, prefix = "$"),
+             x_bins_n = 4,
+             x_breaks_n = 4,
+             x_expand = c(0.1,0.1),
+             x_title = "Average asking rent per unit",
+             y_title = "Properties"
+             )
+
+```
+*Source: CoStar Group, Inc.*
 
 ## Takeaways
 
