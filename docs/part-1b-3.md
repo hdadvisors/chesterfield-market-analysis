@@ -64,6 +64,9 @@ These decreases in cost burden among households of color may be in large part to
 <p class="caption">(\#fig:race-img)Race and ethnicity cost burden</p>
 </div>
 
+## Spatial distribution
+
+
 ## Takeaways
 
 * Cost burden is not felt equally among Chesterfield County residents. Lower income households, especially renters, adults living alone, seniors and non-seniors, and households of color experience cost burden at disproportionate rates in the county.

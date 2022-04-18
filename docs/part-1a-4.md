@@ -54,11 +54,11 @@ Naturally-occuring affordable housing (NOAH) is much more prevalent across the c
 
 The Section 8 Housing Choice Voucher (HCV) program is the federal government's main program for assisting very low-income families, elderly, and disabled persons afford housing. Vouchers provide rental assistance to help individuals and families that make no more than 50 percent AMI find housing in the private market. Voucher holders are able to choose where they want to live, but the property must meet Section 8 requirements (i.e. meet health, safety, and proper maintenance requirements).
 
-Tenants are required to 30 percent of their monthly adjusted gross income on rent and utilities, while the voucher will cover the remaining amount up to a payment standard set by HUD. This payment standard is referred to as Fair Market Rent (FMR), a measure of the average cost of affordable housing in a metropolitan area. 
+Tenants are required to 30 percent of their monthly adjusted gross income on rent and utilities, while the voucher will cover the remaining amount up to a payment standard set by HUD. This payment standard is referred to as Fair Market Rent (FMR), a measure of the average cost of affordable housing in a metropolitan area. For county residents, HCVs are administered through the county's Department of Social Services (as a local housing agency on behalf of Virginia Housing). HCV recipients from other agencies in the region, such as Richmond Redevelopment and Housing Authority, are able to utilize their vouchers in Chesterfield County.
 
 ::: {.rmdnote}
 
-In Chesterfield County, the FMR for a two-bedroom rental in 2021 was $1,189. 
+In the Richmond region, the FMR for a two-bedroom rental in 2021 was $1,189. 
 
 :::
 
@@ -67,7 +67,7 @@ In Chesterfield County, the FMR for a two-bedroom rental in 2021 was $1,189.
 <p class="caption">(\#fig:hcvs)HCV utilization in Chesterfield County</p>
 </div>
 
-For county residents, HCVs are administered through the county's Department of Social Services (as a local housing agency on behalf of Virginia Housing). HCV recipients from other agencies in the region, such as Richmond Redevelopment and Housing Authority, are able to utilize their vouchers in Chesterfield County.
+In the county, there were 930 HCVs in use as of February 15, 2022. The map above shows the spatial concentration of HCVs as a percentage of total renter-occupied housing units. HCVs are largely concentrated in the county's more densely populated areas where there are multifamily housing options. Areas wherein at least one in four renter households utilize vouchers are located in the northern section of Route 1, along the Chippenham Parkway, and south towards Ettrick. 
 
 ## Takeaways
 

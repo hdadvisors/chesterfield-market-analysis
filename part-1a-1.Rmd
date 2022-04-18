@@ -4,19 +4,6 @@
 
 This section summarizes recent planning documents related to housing and housing affordability in Chesterfield County. This includes county and regional planning documents. Documents post-2008 will be favored for currency.
 
-```{r setup}
-
-knitr::opts_chunk$set(
-  include = FALSE,
-  eval = FALSE,
-  out.width='50%',
-  fig.align='center',
-  out.extra = 'style="border:none;"'
-)
-
-```
-
-
 ## Background
 
 Chesterfield County has acknowledged the importance of housing availability and affordability throughout many of their planning documents. Planning efforts by the county have sought to address housing at varying scales within county boundaries, while the county has also been involved in multijurisdictional planning to address the housing challenges that exist at the regional level.

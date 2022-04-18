@@ -47,9 +47,21 @@ The following analysis on NOAH inventory in Chesterfield County uses data from C
 * No public subsidy, rent caps, or other income-based restrictions, and
 * *CoStar Building Rating* of three or fewer stars out of five.^[Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.]
 
+:::{.rmdcaution}
+
+*Manufactured housing undercounted in CoStar data:*
+
+Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County’s major corridors. However, the CoStar database does not fully capture all of these communities.
+
+In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a [study of mobile home parks in Central Virginia](https://mhccv.org/resources/central-virginia-study/) and found that Chesterfield County was home to roughly 1,500 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
+
+The analysis below _includes_ all manufactured home communities in Chesterfield County identified in the MHCCV report. They are appended to the CoStar records to create a fuller NOAH dataset. However, the only known variables are property location and number of units within each park. Accurate rent levels for most of these communities are *not* known at this time.
+
+:::
+
 ### Amount
 
-Chesterfield County is home to 10,784 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A much smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings. One rental property (Huntwood Apartments) is a collection of 48 single-family homes.
+Chesterfield County is home to 11,915 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:noah-amount)NOAH properties and units by style</caption>
@@ -68,23 +80,18 @@ Chesterfield County is home to 10,784 market-affordable rental units as of March
   </tr>
   <tr>
    <td style="text-align:left;"> Manufactured Home Park </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 360 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1,491 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Low-Rise </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 341 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Single-Family Home </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 48 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 389 </td>
   </tr>
   <tr>
    <td style="text-align:left;font-weight: bold;"> Total </td>
-   <td style="text-align:right;font-weight: bold;"> 58 </td>
-   <td style="text-align:right;font-weight: bold;"> 10,784 </td>
+   <td style="text-align:right;font-weight: bold;"> 69 </td>
+   <td style="text-align:right;font-weight: bold;"> 11,915 </td>
   </tr>
 </tbody>
 </table>
@@ -92,17 +99,7 @@ Chesterfield County is home to 10,784 market-affordable rental units as of March
 
 This NOAH inventory is approximately 34 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
 
-NOAH units account for a much larger share (72 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
-
-:::{.rmdcaution}
-
-*Manufactured housing undercounted in CoStar data:*
-
-Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County’s major corridors. However, the CoStar database does not fully capture all of these communities.
-
-In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a [study of mobile home parks in Central Virginia](https://mhccv.org/resources/central-virginia-study/) and found that Chesterfield County was home to 1,543 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
-
-:::
+NOAH units account for a much larger share (80 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
 
 ### Location
 
@@ -201,6 +198,34 @@ The median age of the county's NOAH units is 48 years. (Built in 1974.)
 * Asking lot rent: Approximately \$500 to \$600
 * Style: Manufactured home community
 * Neighborhood: Bon Air
+
+## HUD insured multifamily properties
+
+Chesterfield County also contains 19 multifamily properties with mortgages insured by various HUD programs. These complexes are *not* necessarily NOAH, *nor* are they required to restrict rents or incomes. In fact, only one of these properties has active rental assistance through the Section 8 program. In all, there are 2,280 active units across these communities.
+
+HUD mortgage insurance programs offer certain financing benefits to developers (e.g. longer terms, lower or fixed rates, nonrecourse loans) in exchange for additional due diligence, federal wage standards, and other considerations to guarantee a high-quality and successful development. Both for profit and nonprofit builders can be eligible in most circumstances. HUD issues hundreds of these mortgages across the nation each year.
+
+::: {.rmdnote}
+
+More details about these [multifamily mortgage insurance programs](https://www.hud.gov/program_offices/housing/mfh/progdesc) is available on the HUD website.
+
+:::
+
+
+<div class="figure">
+<iframe src="maps/hud_insured_map.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
+<p class="caption">(\#fig:hud-insured-map)HUD insured multifamily properties in Chesterfield County</p>
+</div>
+
+*Source: U.S. Department of Housing and Urban Development.*
+
+Of these 19 properties, CoStar has active rent levels for 12. The average asking rent for these units is $1,600, which is above the range for most NOAH across the county.
+
+<div class="figure">
+<img src="part-1a-3_files/figure-html/hud-insured-costar-1.png" alt="Average asking rents for HUD insured multifamily properties in Chesterfield County" width="100%" style="border:none;" />
+<p class="caption">(\#fig:hud-insured-costar)Average asking rents for HUD insured multifamily properties in Chesterfield County</p>
+</div>
+*Source: CoStar Group, Inc.*
 
 ## Takeaways
 

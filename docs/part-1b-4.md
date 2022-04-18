@@ -147,27 +147,27 @@ The table below shows the maximum home sales price affordable at the current ave
   <tr>
    <td style="text-align:left;"> Retail salespersons </td>
    <td style="text-align:right;"> 18,770 </td>
-   <td style="text-align:right;"> $133,880 </td>
+   <td style="text-align:right;"> 672.0000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Fast food and counter workers </td>
    <td style="text-align:right;"> 16,930 </td>
-   <td style="text-align:right;"> $109,196 </td>
+   <td style="text-align:right;"> 548.1000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Customer service representatives </td>
    <td style="text-align:right;"> 13,560 </td>
-   <td style="text-align:right;"> $169,256 </td>
+   <td style="text-align:right;"> 849.5667 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Registered nurses </td>
    <td style="text-align:right;"> 12,910 </td>
-   <td style="text-align:right;"> $357,663 </td>
+   <td style="text-align:right;"> 1795.2667 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Home health and personal care aides </td>
    <td style="text-align:right;"> 9,390 </td>
-   <td style="text-align:right;"> $111,241 </td>
+   <td style="text-align:right;"> 558.3667 </td>
   </tr>
 </tbody>
 </table>
@@ -204,27 +204,27 @@ Elementary school teachers with an average salary of \$53,840 would also be hard
   <tr>
    <td style="text-align:left;"> Retail salespersons </td>
    <td style="text-align:right;"> 18,770 </td>
-   <td style="text-align:right;"> $720.00 </td>
+   <td style="text-align:right;"> 8640 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Fast food and counter workers </td>
    <td style="text-align:right;"> 16,930 </td>
-   <td style="text-align:right;"> $587.25 </td>
+   <td style="text-align:right;"> 7047 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Customer service representatives </td>
    <td style="text-align:right;"> 13,560 </td>
-   <td style="text-align:right;"> $910.25 </td>
+   <td style="text-align:right;"> 10923 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Registered nurses </td>
    <td style="text-align:right;"> 12,910 </td>
-   <td style="text-align:right;"> $1,923.50 </td>
+   <td style="text-align:right;"> 23082 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Home health and personal care aides </td>
    <td style="text-align:right;"> 9,390 </td>
-   <td style="text-align:right;"> $598.25 </td>
+   <td style="text-align:right;"> 7179 </td>
   </tr>
 </tbody>
 </table>

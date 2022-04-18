@@ -9,7 +9,10 @@ fig:noah-rent-plot
 fig:noah-age
 fig:falling-creek
 fig:suburban-village
+fig:hud-insured-map
+fig:hud-insured-costar
 fig:subsidy-map
+fig:hcvs
 fig:length-of-stay
 fig:tenure
 fig:age
@@ -62,6 +65,7 @@ location
 rent-levels
 age
 examples
+hud-insured-multifamily-properties
 takeaways-2
 part-1a-4
 background-3
@@ -69,6 +73,7 @@ research-analysis
 distribution-of-lower-cost-rental-housing-in-chesterfield-county
 with-public-subsidy
 without-public-subsidy
+housing-choice-vouchers
 takeaways-3
 part-1a-5
 research-analysis-1
@@ -94,6 +99,7 @@ background-6
 tenure-and-income
 household-type
 race-and-ethnicity-1
+spatial-distribution
 takeaways-7
 part-1b-4
 background-7

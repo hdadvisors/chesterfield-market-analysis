@@ -56,6 +56,7 @@ The table below combines those datasets to show the number of cost burdened hous
    <th style="text-align:right;"> Homeowners </th>
    <th style="text-align:right;"> Renters </th>
    <th style="text-align:right;"> Total </th>
+   <th style="text-align:right;"> Percent </th>
   </tr>
  </thead>
 <tbody>
@@ -64,24 +65,28 @@ The table below combines those datasets to show the number of cost burdened hous
    <td style="text-align:right;"> 78,661 </td>
    <td style="text-align:right;"> 15,005 </td>
    <td style="text-align:right;"> 93,666 </td>
+   <td style="text-align:right;"> 73.6% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Cost burdened </td>
    <td style="text-align:right;"> 18,502 </td>
    <td style="text-align:right;"> 13,266 </td>
    <td style="text-align:right;"> 31,768 </td>
+   <td style="text-align:right;"> 25.0% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Not computed </td>
    <td style="text-align:right;"> 427 </td>
    <td style="text-align:right;"> 1,369 </td>
    <td style="text-align:right;"> 1,796 </td>
+   <td style="text-align:right;"> 1.4% </td>
   </tr>
   <tr>
    <td style="text-align:left;font-weight: bold;"> Total </td>
    <td style="text-align:right;font-weight: bold;"> 97,590 </td>
    <td style="text-align:right;font-weight: bold;"> 29,640 </td>
    <td style="text-align:right;font-weight: bold;"> 127,230 </td>
+   <td style="text-align:right;font-weight: bold;"> 100.0% </td>
   </tr>
 </tbody>
 </table>

@@ -130,16 +130,16 @@ The LEHD does not tabulate jobs by specific occupation, but based on the most co
 
 ## Homeowner affordability
 
-Along the Route 1 corridor, there have been about 56 home sales each quarter between 2015 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$288,000, a 95 percent increase from 2015 when the median home sale price was \$148,000.
+Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$251,000, a 109 percent increase from 2012 when the median home sale price was \$120,250.
 
 <div class="figure">
 <img src="part-1b-5_files/figure-html/r1-med-sales-1.png" alt="Median single-family home sales price in study area" width="100%" style="border:none;" />
 <p class="caption">(\#fig:r1-med-sales)Median single-family home sales price in study area</p>
 </div>
 
-*Source: CVR MLS. 2022 includes all sales through March.*
+*Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
 
-In order to afford a home at this price, a household would need to make **\$70,467**. While this is 11 percent less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at this price, a household would need to make **\$62,790**. While this is 21 percent less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 <table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:r1-home-price)Calculated income needed to buy median-priced home in the study area</caption>
@@ -152,7 +152,7 @@ In order to afford a home at this price, a household would need to make **\$70,4
 <tbody>
   <tr>
    <td style="text-align:left;"> Median sales price </td>
-   <td style="text-align:right;"> $288,000 </td>
+   <td style="text-align:right;"> $251,000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Downpayment </td>

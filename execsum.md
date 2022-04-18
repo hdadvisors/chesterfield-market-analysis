@@ -1,3 +1,0 @@
-# Executive summary {-}
-
-[reserved]

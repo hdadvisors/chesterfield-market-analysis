@@ -232,10 +232,13 @@ More details about these [multifamily mortgage insurance programs](https://www.h
 :::
 
 
-```{r hud-insured-map, fig.cap="HUD insured multifamily properties in Chesterfield County"}
+```{r hud-insured-map, cache=FALSE, fig.cap="HUD insured multifamily properties in Chesterfield County"}
 
 library(mapview)
 library(sf)
+library(tidyverse)
+library(htmltools)
+library(htmlwidgets)
 
 # Load in data (manually downloaded from HUD eGIS site) and select only relevant columns
 
@@ -244,21 +247,27 @@ hud_insured <- read_csv("data/chesterfield_hud_insured.csv") %>%
 
 # Create spatial object using the lat/long coordinate fields
 
-hud_insured_map <- hud_insured %>% 
+hud_insured_pts <- hud_insured %>% 
   st_as_sf(coords = c("X", "Y"),
            crs = 4326) %>%
   st_transform(6440)
 
-# Render map
+# Create and save map
 
-mapview(
-  hud_insured_map,
+hud_insured_map <-  mapview(
+  hud_insured_pts,
   label = "PROPERTY_NAME_TEXT",
   legend = F,
   popup = F,
   burst = F,
   layer.name = "HUD insured multifamily properties"
 )
+
+htmlwidgets::saveWidget(hud_insured_map@map, "maps/hud_insured_map.html")
+
+# Render map as html widget
+
+knitr::include_url("maps/hud_insured_map.html", height = "500px")
 
 ```
 
