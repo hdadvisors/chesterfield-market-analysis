@@ -100,10 +100,11 @@ chesterfield_cb_table <- chesterfield_cb %>%
   pivot_wider(names_from = tenure,
               values_from = estimate) %>% 
   mutate(Total = Renters + Homeowners,
-         Percent = Total / sum(Total)) %>% 
+         Percent = Total / sum(Total)) %>%
+  adorn_totals() %>% 
   mutate(across(2:4, ~ comma(.x, format = "d"))) %>% 
-  mutate(Percent = percent(Percent, 1)) %>% 
-  adorn_totals()
+  mutate(Percent = percent(Percent, 1))
+
 
 chesterfield_cb_table %>% 
   rename('Cost burden' = 1) %>% 

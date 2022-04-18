@@ -203,7 +203,7 @@ knitr::include_graphics("images/racecb.png")
 
 ## Spatial distribution
 
-``` {r tract. eval=FALSE, include=FALSE}
+``` {r tract, eval=FALSE, include=FALSE}
 chas_041 <- read_csv("data/table7_chesterfield.csv")
 
 table_labels <- read_csv("data/table7_dict.csv")

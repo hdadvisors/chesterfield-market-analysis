@@ -3,9 +3,9 @@ bookdown::bs4_book:
   theme:
     primary: "#3356CC"
   repo: https://github.com/hdadvisors/chesterfield-market-analysis
-bookdown::pdf_book:
-  includes:
-    in_header: preamble.tex
-  latex_engine: xelatex
-  citation_package: natbib
-  keep_tex: yes
+# bookdown::pdf_book:
+#   includes:
+#     in_header: preamble.tex
+#   latex_engine: xelatex
+#   citation_package: natbib
+#   keep_tex: yes
