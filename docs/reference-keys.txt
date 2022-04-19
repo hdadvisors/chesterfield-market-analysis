@@ -21,6 +21,10 @@ fig:tenure-owner-img
 fig:tenure-renter-img
 fig:hhtype-img
 fig:race-img
+fig:structure
+fig:structure-sf
+fig:cb-owner
+fig:cb-renter
 tab:top-occupations
 fig:cf-med-sales
 tab:cf-home-price
@@ -99,7 +103,10 @@ background-6
 tenure-and-income
 household-type
 race-and-ethnicity-1
+structure-type
 spatial-distribution
+homeowners
+renters
 takeaways-7
 part-1b-4
 background-7

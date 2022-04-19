@@ -1,7 +1,7 @@
 --- 
 title: "Chesterfield County Rental Market Analysis"
 author: "HDAdvisors"
-date: "2022-04-18"
+date: "2022-04-19"
 site: bookdown::bookdown_site
 documentclass: book
 # url: your book url like https://bookdown.org/yihui/bookdown
@@ -14,7 +14,7 @@ csl: chicago-fullnote-bibliography.csl
 # About {-}
 
 ::: {.rmdcaution}
-This report is currently in development. It was last updated on **2022-04-18**.
+This report is currently in development. It was last updated on **2022-04-19**.
 :::
 
 Chesterfield County community revitalization staff seek additional information about current rental market dynamics, particularly along the county’s major commercial corridors. This report compiles and analyzes data on subsidized, market-affordable, and newly-built rental units to help strategically guide the county’s future community development investments using CDBG and other grant funds. 

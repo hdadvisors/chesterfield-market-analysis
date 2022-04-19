@@ -20,7 +20,13 @@ library(ggplot2)
 library(plotly)
 library(sf)
 library(formattable)
-library(esquisse)
+library(tigris)
+library(srvyr)
+library(simplevis)
+library(mapview)
+library(htmltools)
+library(htmlwidgets)
+library(leaflet)
 
 ```
 
@@ -201,81 +207,206 @@ knitr::include_graphics("images/racecb.png")
 
 ```
 
+## Structure type
+
+Cost burden also varies across the types of buildings Chesterfield residents call home. The highest levels of cost burden (above 40 percent) are found in the county's multifamily stock, which are occupied almost exclusively by renters. Manufactured homes and single-family attached homes have cost burden rates closer to the countywide average of 25 percent.
+
+Caution should be exercised when interpreting these results. The horizontal lines in the figure below represent 90 percent confidence intervals for each estimated percent. Building types that make up a smaller share of the county's housing stock have fewer samples, resulting in lower data reliability. For example, the actual percent of cost-burdened households in manufactured homes may fall between 6 and 44 percent---a very wide range.
+
+```{r structure, fig.cap="Percent of households with cost burden by structure type"}
+
+# options(tigris_use_cache = TRUE)
+# 
+# cf_pumas <- pumas(state = "VA", cb = TRUE, year = 2019) %>% 
+#   filter(str_detect(NAME10, "Chesterfield"))
+# 
+# cf_pumas_list <- cf_pumas$PUMACE10
+# 
+# View(pums_variables)
+# 
+# vars <- c("PUMA", "TEN", "BLD", "GRPIP", "OCPIP", "HHT")
+# 
+# pums <- get_pums(
+#   variables = vars,
+#   state = "VA",
+#   year = 2020,
+#   survey = "acs5",
+#   variables_filter = list(
+#     SPORDER = 1
+#   ),
+#   rep_weights = "housing"
+# )
+# 
+# cf_pums <- pums %>% 
+#   filter(str_detect(PUMA, cf_pumas_list)) %>% 
+#   mutate(cost_burden =
+#            case_when(
+#              (GRPIP+OCPIP)>30 ~ "Cost burdened",
+#              TRUE ~ "Not cost burdened"
+#            ),
+#          .before = 1)
+# 
+# write_rds(cf_pums, "data/cf_pums.rds")
+
+cf_pums <- readRDS("data/cf_pums.rds")
+
+cf_pums_svy <- to_survey(cf_pums, type = "housing")
+
+cf_pums_summary <- cf_pums_svy %>% 
+  mutate(
+    building = case_when(
+      BLD == "01" ~ "Manufactured home",
+      BLD == "02" ~ "Single-family detached",
+      BLD == "03" ~ "Single-family attached",
+      BLD %in% c("04", "05", "06") ~ "2 to 9 apartments",
+      TRUE ~ "10 or more apartments"
+    )
+  ) %>% 
+  group_by(building, cost_burden) %>% 
+  summarize(pct = survey_prop()) %>% 
+  mutate(pct_moe = pct_se * 1.645,
+         pct_up = pct + pct_moe,
+         pct_low = pct - pct_moe) %>% 
+  filter(cost_burden == "Cost burdened") %>% 
+  arrange(desc(pct))
+
+gg_hpointrange(cf_pums_summary,
+              y_var = building,
+              xmiddle_var = pct,
+              xmin_var = pct_low,
+              xmax_var = pct_up,
+              size_line = 0.75,
+              size_point = 3,
+              y_title = "",
+              caption = "Lines show 90% confidence interval.",
+              x_labels = scales::percent_format()
+              )
+
+```
+
+*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Public Use Microdata Sample.*
+
+Single-family detached homes, while the most expensive housing type, have the lowest rate of cost burden for a number of related factors. These include homeowners having relatively high incomes, and (for long-term homeowners) relatively low mortgage payments.
+
+However, roughly 10 percent of single-family homes in the county are renter-occupied. These households have cost burden rates much higher then their homeowner counterparts
+
+```{r structure-sf, fig.cap="Percent of households in single-family detached homes with cost burden by tenure"}
+
+cf_pums_sf <- cf_pums_svy %>% 
+  filter(BLD == "02") %>% 
+  mutate(
+    tenure = case_when(
+      TEN == "1" ~ "Owned with mortgage or loan",
+      TEN == "2" ~ "Owned free and clear",
+      TEN == "3" ~ "Rented"
+    )
+  ) %>% 
+  group_by(tenure, cost_burden) %>% 
+  summarize(pct = survey_prop()) %>% 
+  mutate(pct_moe = pct_se * 1.645,
+         pct_up = pct + pct_moe,
+         pct_low = pct - pct_moe) %>% 
+  filter(cost_burden == "Cost burdened") %>% 
+  arrange(desc(pct))
+
+gg_hpointrange(cf_pums_sf,
+              y_var = tenure,
+              xmiddle_var = pct,
+              xmin_var = pct_low,
+              xmax_var = pct_up,
+              size_line = 0.75,
+              size_point = 3,
+              y_title = "",
+              caption = "Lines show 90% confidence interval.",
+              x_labels = scales::percent_format()
+              )
+
+
+```
+
+*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Public Use Microdata Sample.*
+
 ## Spatial distribution
 
-``` {r tract, eval=FALSE, include=FALSE}
-chas_041 <- read_csv("data/table7_chesterfield.csv")
+Levels of cost burden also vary across different areas of the county, generally following existing socioeconomic patterns. While the share of homeowners experiencing cost burden is distributed relatively evenly among Chesterfield's census tracts, there is greater spatial contrast among renters. The highest levels of rent burden are found in neighborhoods along the Route 1 and eastern Hull Street Road corridors.
 
-table_labels <- read_csv("data/table7_dict.csv")
+```{r chas-tract, eval=FALSE, include=FALSE}
 
-chas_041 <- chas_041 %>% pivot_longer(starts_with("T7"), 
-                   names_to = "code",
-                   values_to = "value")  %>%
-      mutate(id = str_extract(code, "\\d+$"),
-             type = str_extract(code, "est|moe")) %>%
-      select(-code) %>%
-      pivot_wider(names_from = type, values_from = value) %>%
-      rename(Estimate = est, MOE = moe)
+# chas_041 <- read_csv("data/table7_chesterfield.csv")
+# 
+# table_labels <- read_csv("data/table7_dict.csv")
+# 
+# chas_041 <- chas_041 %>% pivot_longer(starts_with("T7"), 
+#                    names_to = "code",
+#                    values_to = "value")  %>%
+#       mutate(id = str_extract(code, "\\d+$"),
+#              type = str_extract(code, "est|moe")) %>%
+#       select(-code) %>%
+#       pivot_wider(names_from = type, values_from = value) %>%
+#       rename(Estimate = est, MOE = moe)
+# 
+# table_labels <- table_labels %>%
+#   mutate(id = str_extract(code, "\\d+$"))
+# 
+# labeled_041 <- chas_041 %>%
+#   left_join(table_labels, by = "id") %>%
+#   mutate(tenure = case_when(
+#     tenure == "Owner occupied" ~ "Homeowner",
+#     tenure == "Renter occupied" ~ "Renter"
+#   )) %>%
+#   mutate(income = case_when(
+#     income == "household income is less than or equal to 30% of HAMFI" ~ "30% AMI or less",
+#     income == "household income is greater than 30% but less than or equal to 50% of HAMFI" ~ "31% to 50% AMI",
+#     income == "household income is greater than 50% but less than or equal to 80% of HAMFI" ~ "51% to 80% AMI",
+#     income == "household income is greater than 80% but less than or equal to 100% of HAMFI" ~ "81% to 100% AMI",
+#     income == "household income is greater than 100% of HAMFI" ~ "Greater than 100% AMI"
+#   )) %>%
+#   mutate(household = case_when(
+#     household == "household type is elderly family (2 persons, with either or both age 62 or over)" ~ "Elderly family",
+#     household == "household type is elderly non-family" ~ "Elderly non-family",
+#     household == "household type is large family (5 or more persons)" ~ "Large family",
+#     household == "household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)" ~ "Small family",
+#     household == "other household type (non-elderly non-family)" ~ "Other family type"
+#   )) %>%
+#   mutate(costburden = case_when(
+#     costburden == "housing cost burden is less than or equal to 30%" ~ "Not cost-burdened",
+#     costburden == "housing cost burden is greater than 30% but less than or equal to 50%" ~ "Cost-burdened",
+#     costburden == "housing cost burden is greater than 50%" ~ "Severely cost-burdened",
+#     costburden == "housing cost burden not computed (household has no/negative income)" ~ "No or negative income"
+#   )) %>%
+#   filter(type == "Detail")
+# 
+# chas <- labeled_041 %>%
+#   group_by(tract, tenure, costburden) %>%
+#   summarise(
+#     estimate = sum(Estimate),
+#     moe = moe_sum(MOE, Estimate)
+#   ) %>% 
+#   ungroup() %>% 
+#   mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+#   mutate(reliability = case_when(
+#     cv < 15 ~ "High reliability",
+#     cv >= 15 & cv <= 30 ~ "Medium reliability",
+#     cv > 30 ~ "Low reliability")
+#   )
 
-table_labels <- table_labels %>%
-  mutate(id = str_extract(code, "\\d+$"))
+```
 
-labeled_041 <- chas_041 %>%
-  left_join(table_labels, by = "id") %>%
-  mutate(tenure = case_when(
-    tenure == "Owner occupied" ~ "Homeowner",
-    tenure == "Renter occupied" ~ "Renter"
-  )) %>%
-  mutate(income = case_when(
-    income == "household income is less than or equal to 30% of HAMFI" ~ "30% AMI or less",
-    income == "household income is greater than 30% but less than or equal to 50% of HAMFI" ~ "31% to 50% AMI",
-    income == "household income is greater than 50% but less than or equal to 80% of HAMFI" ~ "51% to 80% AMI",
-    income == "household income is greater than 80% but less than or equal to 100% of HAMFI" ~ "81% to 100% AMI",
-    income == "household income is greater than 100% of HAMFI" ~ "Greater than 100% AMI"
-  )) %>%
-  mutate(household = case_when(
-    household == "household type is elderly family (2 persons, with either or both age 62 or over)" ~ "Elderly family",
-    household == "household type is elderly non-family" ~ "Elderly non-family",
-    household == "household type is large family (5 or more persons)" ~ "Large family",
-    household == "household type is small family (2 persons, neither person 62 years or over, or 3 or 4 persons)" ~ "Small family",
-    household == "other household type (non-elderly non-family)" ~ "Other family type"
-  )) %>%
-  mutate(costburden = case_when(
-    costburden == "housing cost burden is less than or equal to 30%" ~ "Not cost-burdened",
-    costburden == "housing cost burden is greater than 30% but less than or equal to 50%" ~ "Cost-burdened",
-    costburden == "housing cost burden is greater than 50%" ~ "Severely cost-burdened",
-    costburden == "housing cost burden not computed (household has no/negative income)" ~ "No or negative income"
-  )) %>%
-  filter(type == "Detail")
-
-chas <- labeled_041 %>%
-  group_by(tract, tenure, costburden) %>%
-  summarise(
-    estimate = sum(Estimate),
-    moe = moe_sum(MOE, Estimate)
-  ) %>% 
-  ungroup() %>% 
-  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
-  mutate(reliability = case_when(
-    cv < 15 ~ "High reliability",
-    cv >= 15 & cv <= 30 ~ "Medium reliability",
-    cv > 30 ~ "Low reliability")
-  )
-
+```{r cb-tract, eval=FALSE, include=FALSE}
 
 b25106_vars <- load_variables(2020, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25106")
 
 b25106_raw <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25106",
-    year = 2020,
-    survey = "acs5",
-    geometry = TRUE,
-    cache_table = TRUE
-  )
+  geography = "tract",
+  county = "Chesterfield County",
+  state = "VA",
+  table = "B25106",
+  year = 2020,
+  survey = "acs5",
+  geometry = TRUE,
+  cache_table = TRUE
+)
 
 b25106_vars_cleaned <- b25106_vars %>%
   separate(label, into = c("est", "total", "tenure", "income", "costburden"), sep = "!!") %>%
@@ -283,45 +414,120 @@ b25106_vars_cleaned <- b25106_vars %>%
   mutate(tenure = case_when(
     tenure == "Owner-occupied housing units:" ~ "Homeowner",
     tenure == "Renter-occupied housing units:" ~ "Renter",
-    TRUE ~ "All"
+    TRUE ~ "all"
   )) %>%
   mutate(across(.fns = ~str_remove_all(.x, ":")),
          across(.fns = ~replace_na(.x, "All"))) %>%
   mutate(costburden = case_when(
-    costburden == "Less than 20 percent" ~ "Not cost-burdened",
-    costburden == "20 to 29 percent" ~ "Not cost-burdened",
-    costburden == "30 percent or more" ~ "Cost-burdened",
-    TRUE ~ "All"
+    costburden == "Less than 20 percent" ~ "not_cb",
+    costburden == "20 to 29 percent" ~ "not_cb",
+    costburden == "30 percent or more" ~ "cb",
+    TRUE ~ "all"
   ))
-           
-acs <- b25106_raw %>%
+
+b25106_data <- b25106_raw %>%
   right_join(b25106_vars_cleaned, by = "variable") %>%
   select(tract = NAME, GEOID, tenure, income, costburden, estimate, moe) %>%
-   group_by(tract, costburden) %>%
+  group_by(tract, GEOID, tenure, costburden) %>%
   summarise(
     estimate = sum(estimate),
     moe = moe_sum(moe, estimate)
   ) %>% 
   ungroup() %>% 
-  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  filter(costburden != "not_cb",
+         tenure != "all")
+
+b25106_clean <- b25106_data %>% 
+  st_drop_geometry() %>% 
+  pivot_wider(names_from = costburden,
+              values_from = c(estimate, moe)) %>% 
+  mutate(pct = estimate_cb/estimate_all,
+         pct_moe = moe_prop(
+           estimate_cb,
+           estimate_all,
+           moe_cb,
+           moe_all
+         )) %>% 
+  mutate(cv = ((pct_moe/1.645)/pct)*100) %>% 
   mutate(reliability = case_when(
     cv < 15 ~ "High reliability",
     cv >= 15 & cv <= 30 ~ "Medium reliability",
-    cv > 30 ~ "Low reliability")
-  ) %>%
-  filter(tenure != "All") %>%
-  filter(costburden != "All")
+    cv > 30 ~ "Low reliability")) %>% 
+  mutate(pct_fmt = pct*100)
 
-acs_perc <- acs %>%
-  group_by(tract, costburden) %>%
-  summarise(
-    estimate = sum(estimate))
-    
-acs_perc <- acs_perc %>%
-  group_by(tract) %>%
-  mutate(percentage = percent(estimate/sum(estimate)))
-  
+cf_tracts <- tracts(state = "VA",
+                    county = "Chesterfield",
+                    year = 2020,
+                    cb = TRUE)
+
 ```
+
+### Homeowners
+
+```{r cb-owner, fig.cap="Percent of homeowners with cost burden by tract"}
+
+# cf_cb_owner <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%  
+#   filter(tenure == "Homeowner") %>% 
+#   st_transform(4326)
+# 
+# owner_pal <- colorNumeric(palette = "magma", domain = cf_cb_owner$pct_fmt, reverse = TRUE)
+# 
+# leaflet_owner <- leaflet(cf_cb_owner) %>% 
+#   addProviderTiles(providers$CartoDB.PositronNoLabels) %>% 
+#   addPolygons(data = cf_cb_owner,
+#               fillColor = ~owner_pal(pct_fmt),
+#               weight = 0.5,
+#               fillOpacity = 0.5,
+#               smoothFactor = 0.2,
+#               label = ~pct_fmt) %>% 
+#       addLegend(
+#         position = "topright",
+#         pal = owner_pal,
+#         values = ~pct_fmt,
+#         title = "Percent cost-burdened",
+#         labFormat = labelFormat(suffix = "%")
+#       )
+# 
+# saveWidget(leaflet_owner, "maps/leaflet_owner.html")
+
+knitr::include_url("maps/leaflet_owner.html", height = "500px")
+
+```
+
+### Renters
+
+```{r cb-renter, fig.cap="Percent of renters with cost burden by tract"}
+
+# cf_cb_renter <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%  
+#   filter(tenure == "Renter") %>% 
+#   st_transform(4326)
+# 
+# renter_pal <- colorNumeric(palette = "magma", domain = cf_cb_renter$pct_fmt, reverse = TRUE)
+# 
+# leaflet_renter <- leaflet(cf_cb_renter) %>% 
+#   addProviderTiles(providers$CartoDB.PositronNoLabels) %>% 
+#   addPolygons(data = cf_cb_renter,
+#               fillColor = ~renter_pal(pct_fmt),
+#               weight = 0.5,
+#               fillOpacity = 0.5,
+#               smoothFactor = 0.2,
+#               label = ~pct_fmt) %>% 
+#       addLegend(
+#         position = "topright",
+#         pal = renter_pal,
+#         values = ~pct_fmt,
+#         title = "Percent cost-burdened",
+#         labFormat = labelFormat(suffix = "%")
+#       )
+# 
+# saveWidget(leaflet_renter, "maps/leaflet_renter.html")
+
+knitr::include_url("maps/leaflet_renter.html", height = "500px")
+
+```
+
+*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25106.*
+
 ## Takeaways
 
 * Cost burden is not felt equally among Chesterfield County residents. Lower income households, especially renters, adults living alone, seniors and non-seniors, and households of color experience cost burden at disproportionate rates in the county.

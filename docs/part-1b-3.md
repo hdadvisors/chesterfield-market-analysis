@@ -64,8 +64,53 @@ These decreases in cost burden among households of color may be in large part to
 <p class="caption">(\#fig:race-img)Race and ethnicity cost burden</p>
 </div>
 
+## Structure type
+
+Cost burden also varies across the types of buildings Chesterfield residents call home. The highest levels of cost burden (above 40 percent) are found in the county's multifamily stock, which are occupied almost exclusively by renters. Manufactured homes and single-family attached homes have cost burden rates closer to the countywide average of 25 percent.
+
+Caution should be exercised when interpreting these results. The horizontal lines in the figure below represent 90 percent confidence intervals for each estimated percent. Building types that make up a smaller share of the county's housing stock have fewer samples, resulting in lower data reliability. For example, the actual percent of cost-burdened households in manufactured homes may fall between 6 and 44 percent---a very wide range.
+
+<div class="figure">
+<img src="part-1b-3_files/figure-html/structure-1.png" alt="Percent of households with cost burden by structure type" width="100%" style="border:none;" />
+<p class="caption">(\#fig:structure)Percent of households with cost burden by structure type</p>
+</div>
+
+*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Public Use Microdata Sample.*
+
+Single-family detached homes, while the most expensive housing type, have the lowest rate of cost burden for a number of related factors. These include homeowners having relatively high incomes, and (for long-term homeowners) relatively low mortgage payments.
+
+However, roughly 10 percent of single-family homes in the county are renter-occupied. These households have cost burden rates much higher then their homeowner counterparts
+
+<div class="figure">
+<img src="part-1b-3_files/figure-html/structure-sf-1.png" alt="Percent of households in single-family detached homes with cost burden by tenure" width="100%" style="border:none;" />
+<p class="caption">(\#fig:structure-sf)Percent of households in single-family detached homes with cost burden by tenure</p>
+</div>
+
+*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Public Use Microdata Sample.*
+
 ## Spatial distribution
 
+Levels of cost burden also vary across different areas of the county, generally following existing socioeconomic patterns. While the share of homeowners experiencing cost burden is distributed relatively evenly among Chesterfield's census tracts, there is greater spatial contrast among renters. The highest levels of rent burden are found in neighborhoods along the Route 1 and eastern Hull Street Road corridors.
+
+
+
+
+
+### Homeowners
+
+<div class="figure">
+<iframe src="maps/leaflet_owner.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
+<p class="caption">(\#fig:cb-owner)Percent of homeowners with cost burden by tract</p>
+</div>
+
+### Renters
+
+<div class="figure">
+<iframe src="maps/leaflet_renter.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
+<p class="caption">(\#fig:cb-renter)Percent of renters with cost burden by tract</p>
+</div>
+
+*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25106.*
 
 ## Takeaways
 
