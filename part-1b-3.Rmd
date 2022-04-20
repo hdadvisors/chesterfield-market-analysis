@@ -425,6 +425,10 @@ b25106_vars_cleaned <- b25106_vars %>%
     TRUE ~ "all"
   ))
 
+b25106_join <- b25106_raw %>% 
+  right_join(b25106_vars_cleaned, by = "variable") %>%
+  select(tract = NAME, GEOID, tenure, income, costburden, estimate, moe)
+
 b25106_data <- b25106_raw %>%
   right_join(b25106_vars_cleaned, by = "variable") %>%
   select(tract = NAME, GEOID, tenure, income, costburden, estimate, moe) %>%
@@ -439,33 +443,35 @@ b25106_data <- b25106_raw %>%
 
 # Alternative data export for Route 1 cost burden section
 
-b25106_r1 <- b25106_raw %>% 
-  right_join(b25106_vars_cleaned, by = "variable") %>%
-  select(tract = NAME, GEOID, tenure, income, costburden, estimate, moe) %>% 
-  filter(costburden != "not_cb",
-         income != "All",
-         tenure != "all") %>%
-  group_by(tract, GEOID, costburden) %>%
-  summarise(
-    estimate = sum(estimate),
-    moe = moe_sum(moe, estimate)
-  ) %>% 
-  ungroup() %>% 
-  pivot_wider(names_from = costburden,
-              values_from = c(estimate, moe)) %>% 
-  mutate(pct = estimate_cb/estimate_all,
-         pct_moe = moe_prop(
-           estimate_cb,
-           estimate_all,
-           moe_cb,
-           moe_all
-         )) %>% 
-  mutate(cv = ((pct_moe/1.645)/pct)*100) %>% 
-  mutate(reliability = case_when(
-    cv < 15 ~ "High reliability",
-    cv >= 15 & cv <= 30 ~ "Medium reliability",
-    cv > 30 ~ "Low reliability")) %>% 
-  mutate(pct_fmt = pct*100)
+saveRDS(b25106_join, "data/b25106_r1.rds")
+
+# b25106_r1 <- b25106_raw %>% 
+#   right_join(b25106_vars_cleaned, by = "variable") %>%
+#   select(tract = NAME, GEOID, tenure, income, costburden, estimate, moe) %>% 
+#   filter(costburden != "not_cb",
+#          income != "All",
+#          tenure != "all") %>%
+#   group_by(tract, GEOID, costburden) %>%
+#   summarise(
+#     estimate = sum(estimate),
+#     moe = moe_sum(moe, estimate)
+#   ) %>% 
+#   ungroup() %>% 
+#   pivot_wider(names_from = costburden,
+#               values_from = c(estimate, moe)) %>% 
+#   mutate(pct = estimate_cb/estimate_all,
+#          pct_moe = moe_prop(
+#            estimate_cb,
+#            estimate_all,
+#            moe_cb,
+#            moe_all
+#          )) %>% 
+#   mutate(cv = ((pct_moe/1.645)/pct)*100) %>% 
+#   mutate(reliability = case_when(
+#     cv < 15 ~ "High reliability",
+#     cv >= 15 & cv <= 30 ~ "Medium reliability",
+#     cv > 30 ~ "Low reliability")) %>% 
+#   mutate(pct_fmt = pct*100)
 
 saveRDS(b25106_r1, "data/b25106_r1.rds")
   
