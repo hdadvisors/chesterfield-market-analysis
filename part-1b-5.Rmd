@@ -20,8 +20,7 @@ library(zoo)
 library(sf)
 library(tigris)
 library(mapboxapi)
-library(tmap)
-library(esquisse)
+library(mapview)
 ```
 
 ## Background
@@ -36,36 +35,24 @@ A growing Hispanic population along the corridor has helped reignite commercial 
 
 For the purposes of this analysis, the study area is defined as the Census tracts 1003, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09. These tracts all border Route 1 from Northern Chesterfield to Route 10.
 
-```{r r1-base-map, fig.cap="Route 1 study area", out.width="300px", fig.align="center"}
+```{r r1-base-map, fig.cap="Route 1 study area"}
 
-# r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
-# 
-# r1_tracts <- tracts("VA", "Chesterfield") %>% 
-#   filter(TRACTCE %in% r1_tracts_list)
-# 
-# r1_tiles <- get_static_tiles(
-#   location = r1_tracts,
-#   zoom = 11,
-#   buffer_dist = 1000,
-#   username = "jtknopf",
-#   style_id = "ckjitm9ru101e19o7f5pfzwvx",
-#   access_token = "pk.eyJ1IjoianRrbm9wZiIsImEiOiJjaXQwN2VybnEwbDFjMnVxcGE0djF4OGV3In0.V78HHJmSNpptsR-bAE2Adw"
-# )
-# 
-# base_map <- tm_shape(r1_tiles) +
-#   tm_rgb() +
-#   tm_shape(r1_tracts) +
-#   tm_polygons(alpha = 0.7) +
-#   tm_text("NAME",
-#           size = 0.5) +
-#   tm_layout(legend.outside = T) +
-#   tm_credits("(c) Mapbox, OSM    ", 
-#            bg.color = "white",
-#            position = c("RIGHT", "BOTTOM"))
-# 
-# tmap_save(base_map, "images/r1-base-map.png", width=800)
+r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
-knitr::include_graphics("images/r1-base-map.png")
+r1_tracts <- tracts("VA", "Chesterfield") %>%
+  filter(TRACTCE %in% r1_tracts_list)
+
+r1_map <- mapview(r1_tracts,
+          alpha = 0.5,
+          col.regions = "cornflowerblue",
+          legend = F,
+          popup = F,
+          label = "NAMELSAD",
+          layer.name = "Study area census tracts")
+
+htmlwidgets::saveWidget(r1_map@map, "maps/r1_map.html")
+
+knitr::include_url("maps/r1_map.html", height = "500px")
 
 ```
 
@@ -131,6 +118,18 @@ r1_otm %>%
 
 ```
 
+## Cost burden
+
+here is some text
+
+```{r r1-cb}
+
+r1_cb <- readRDS("data/b25106_r1.rds")
+
+
+```
+
+
 ## Homeowner affordability
 
 Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$251,000, a 109 percent increase from 2012 when the median home sale price was \$120,250.
@@ -168,7 +167,7 @@ gg_line(r1_sales_med,
 
 *Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
 
-In order to afford a home at this price, a household would need to make **\$62,790**. While this is 21 percent less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at this price, a household would need to make **\$62,790**. While this is /$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 ```{r r1-home-price}
 
@@ -200,7 +199,7 @@ r1_values <- c("$251,000",
             "4.42%",
             "$250",
             "$1,644.23",
-            "$70,467")
+            "$62,790")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
   kable(caption = "Calculated income needed to buy median-priced home in the study area",
