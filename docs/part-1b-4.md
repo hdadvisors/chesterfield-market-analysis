@@ -54,7 +54,11 @@ Affording a home in Chesterfield County—whether to own or rent— is directly 
 
 *Source: Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
 
-A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies. An important part of a diverse workforce are public sector jobs like teachers and police officers. Affordable housing to these households can be the deciding factor for attracting an adequate and talented pool of public service workers that educate our children and keep our neighborhoods safe.
+A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies.
+
+Another important part of a diverse workforce are public sector jobs, like teachers and police officers. Affordable housing to these households can be the deciding factor for attracting an adequate and talented pool of public service workers that educate our children and keep our neighborhoods safe.
+
+The table below shows the median annual wage for six common occupations with Chesterfield County government. These positions generally pay higher than the county's most prevelant private-sector jobs.
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:public-sector)Public sector occupations in Chesterfield County</caption>
@@ -92,11 +96,9 @@ A diverse workforce also requires diverse housing for those workers. When worker
 </tbody>
 </table>
 
-*Sources: Chesterfield County.*
+*Source: Chesterfield County.*
 
 Understanding the ability of a range of job types to afford housing in a county contributes to economic development goals and helps ensure that workers that live in the county can continue to live in the county. When people both live and work in a community, they are able to spend less time on the road and more time with their families and investing in their neighborhoods.
-
-
 
 ## Homeowner affordability
 
@@ -213,6 +215,8 @@ The table below shows the maximum home sales price affordable at the current ave
 </table>
 
 *Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
+Among public sector employees working for the county, maximum home sales prices are higher, reflecting the stronger wages they command. However, most of these prices are at or below \$300,000, still well under the county's current median sales price of $330,000.
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:cf-public-price)Maximum home sales price for public sector occupations in Chesterfield County</caption>

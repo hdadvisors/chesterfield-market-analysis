@@ -224,7 +224,7 @@ gg_line(r1_sales_med,
 
 *Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
 
-In order to afford a home at this price, a household would need to make **\$62,790**. While this is /$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at this price, a household would need to make **\$62,790**. While this is \$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 ```{r r1-home-price}
 
