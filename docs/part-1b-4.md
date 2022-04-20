@@ -280,27 +280,27 @@ This rent is increasingly unaffordable to some of the most common occupations in
   <tr>
    <td style="text-align:left;"> Retail salespersons </td>
    <td style="text-align:right;"> 18,770 </td>
-   <td style="text-align:right;"> 8640 </td>
+   <td style="text-align:right;"> $720.00 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Fast food and counter workers </td>
    <td style="text-align:right;"> 16,930 </td>
-   <td style="text-align:right;"> 7047 </td>
+   <td style="text-align:right;"> $587.25 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Customer service representatives </td>
    <td style="text-align:right;"> 13,560 </td>
-   <td style="text-align:right;"> 10923 </td>
+   <td style="text-align:right;"> $910.25 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Registered nurses </td>
    <td style="text-align:right;"> 12,910 </td>
-   <td style="text-align:right;"> 23082 </td>
+   <td style="text-align:right;"> $1,923.50 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Home health and personal care aides </td>
    <td style="text-align:right;"> 9,390 </td>
-   <td style="text-align:right;"> 7179 </td>
+   <td style="text-align:right;"> $598.25 </td>
   </tr>
 </tbody>
 </table>

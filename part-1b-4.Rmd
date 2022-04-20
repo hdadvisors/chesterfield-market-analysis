@@ -364,7 +364,7 @@ cf_wages %>%
   slice_max(order_by = employment, n = 5) %>% 
   mutate(employment = comma(employment, 0),
          rent = dollar(rent)) %>% 
-  select(2,4,9) %>% 
+  select(2,4,10) %>% 
   kable(caption = "Maximum monthly rent for five most common occupations in Chesterfield County",
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum monthly rent")) %>% 
