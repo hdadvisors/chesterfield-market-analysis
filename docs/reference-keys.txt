@@ -26,12 +26,15 @@ fig:structure-sf
 fig:cb-owner
 fig:cb-renter
 tab:top-occupations
+tab:public-sector
 fig:cf-med-sales
 tab:cf-home-price
 fig:cf-renter-income-afford
 tab:cf-jobs-price
+tab:cf-public-price
 fig:cf-rents
 tab:cf-renter-affordability
+tab:cf-renter-public-affordability
 fig:r1-base-map
 tab:r1-industry
 tab:r1-earnings
@@ -116,6 +119,7 @@ takeaways-8
 part-1b-5
 background-8
 study-area
+cost-burden
 homeowner-affordability-1
 renter-affordability-1
 takeaways-9

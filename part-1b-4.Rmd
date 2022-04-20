@@ -42,9 +42,27 @@ cf_wages %>%
 
 *Source: Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
 
-A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies.
+A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies. An important part of a diverse workforce are public sector jobs like teachers and police officers. Affordable housing to these households can be the deciding factor for attracting an adequate and talented pool of public service workers that educate our children and keep our neighborhoods safe.
 
-Understanding the ability of a range of job types to afford housing in a county contributes to economic development goals and helps ensure that workers that live in the county can continue to live in the county.
+```{r public-sector}
+cf_wages %>% 
+  filter(occ_code == "county") %>%
+  select(2,7) %>% 
+  arrange(desc(meanannual))%>%
+  mutate(meanannual = dollar(meanannual)) %>% 
+  kable(caption = "Public sector occupations in Chesterfield County",
+       align = "lr",
+       col.names = c("Occupation", "Median annual wage")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+*Sources: Chesterfield County.*
+
+Understanding the ability of a range of job types to afford housing in a county contributes to economic development goals and helps ensure that workers that live in the county can continue to live in the county. When people both live and work in a community, they are able to spend less time on the road and more time with their families and investing in their neighborhoods.
+
+
 
 ## Homeowner affordability
 
@@ -260,7 +278,7 @@ cf_wages %>%
   slice_max(order_by = employment, n = 5) %>% 
   mutate(employment = comma(employment, 0),
          canafford = dollar(canafford)) %>% 
-  select(2,4,10) %>% 
+  select(2,4,11) %>% 
   kable(caption = "Maximum home sales price for five most common occupations in Chesterfield County",
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum home sales price")) %>% 
@@ -271,6 +289,29 @@ cf_wages %>%
 ```
 
 *Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
+``` {r cf-public-price}
+
+# This is focusing on 2021 wages versus 2021 home price which was $330,000
+
+cf_wages %>%
+  filter(occ_code == "county") %>%
+  arrange(desc(meanannual)) %>%
+  mutate(third = (meanannual * .28)) %>%
+  mutate(monthly = (third/12)) %>%
+  mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) %>% 
+  mutate(canafford = dollar(canafford)) %>% 
+  select(2,11) %>% 
+  kable(caption = "Maximum home sales price for public sector occupations in Chesterfield County",
+       align = "lr",
+       col.names = c("Occupation", "Maximum home sales price")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
+
+
+```
+
+*Sources: Freddie Mac Primary Mortgage Market Survey and Chesterfield County.*
 
 ## Renter affordability
 
@@ -315,8 +356,6 @@ gg_line_col(
 
 This rent is increasingly unaffordable to some of the most common occupations in the county, like retail salespersons and home health aides. For a retail salesperson with an average hourly wage of \$13.85, a rent on a single income would be more affordable at \$672 to \$748 cheaper than the typical rent in the county. 
 
-Elementary school teachers with an average salary of \$53,840 would also be hard pressed to afford the typical rent. For an essential part of the workforce there would need to be rental units priced lower cheaper at \$1,256.
-
 ```{r cf-renter-affordability}
 
 cf_wages %>% 
@@ -335,6 +374,27 @@ cf_wages %>%
 ```
 
 *Source: CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
+CCPS teachers with a median salary of \$54,937 would also be hard pressed to afford the typical rent. For an essential part of the workforce there would need to be rental units priced lower at \$1,373. Other public sector workers like firefighters, emergency communication officers, and government administrative workers would find it increasingly difficult to find affordable rental housing in the county's high demand areas.
+
+```{r cf-renter-public-affordability}
+
+cf_wages %>% 
+  filter(occ_code == "county") %>%
+  arrange(desc(meanannual)) %>%
+  mutate(third = (meanannual * .3)) %>%
+  mutate(rent = (third/12)) %>% 
+  mutate(rent = dollar(rent)) %>% 
+  select(2, 10) %>% 
+  kable(caption = "Maximum monthly rent for public sector occupations in Chesterfield County",
+       align = "lr",
+       col.names = c("Occupation", "Maximum monthly rent")) %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+*Source: CoStar Group, Inc. and Chesterfield County.*
 
 ## Takeaways
 

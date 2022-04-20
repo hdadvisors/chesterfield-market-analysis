@@ -54,9 +54,49 @@ Affording a home in Chesterfield County—whether to own or rent— is directly 
 
 *Source: Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
 
-A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies.
+A diverse workforce also requires diverse housing for those workers. When workers can’t find housing in a community, they either have to commute in or they search for work elsewhere. More in-commuters can exacerbate traffic congestion and increase the amount of spending on transportation costs, while the loss of workers can put strain on local economies. An important part of a diverse workforce are public sector jobs like teachers and police officers. Affordable housing to these households can be the deciding factor for attracting an adequate and talented pool of public service workers that educate our children and keep our neighborhoods safe.
 
-Understanding the ability of a range of job types to afford housing in a county contributes to economic development goals and helps ensure that workers that live in the county can continue to live in the county.
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:public-sector)Public sector occupations in Chesterfield County</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Occupation </th>
+   <th style="text-align:right;"> Median annual wage </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Planners </td>
+   <td style="text-align:right;"> $66,202 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Police officers </td>
+   <td style="text-align:right;"> $59,470 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCPS teachers </td>
+   <td style="text-align:right;"> $54,937 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Firefighters </td>
+   <td style="text-align:right;"> $53,428 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Emergency communications officers </td>
+   <td style="text-align:right;"> $44,166 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Administrative workers </td>
+   <td style="text-align:right;"> $44,115 </td>
+  </tr>
+</tbody>
+</table>
+
+*Sources: Chesterfield County.*
+
+Understanding the ability of a range of job types to afford housing in a county contributes to economic development goals and helps ensure that workers that live in the county can continue to live in the county. When people both live and work in a community, they are able to spend less time on the road and more time with their families and investing in their neighborhoods.
+
+
 
 ## Homeowner affordability
 
@@ -147,32 +187,70 @@ The table below shows the maximum home sales price affordable at the current ave
   <tr>
    <td style="text-align:left;"> Retail salespersons </td>
    <td style="text-align:right;"> 18,770 </td>
-   <td style="text-align:right;"> 672.0000 </td>
+   <td style="text-align:right;"> $133,880 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Fast food and counter workers </td>
    <td style="text-align:right;"> 16,930 </td>
-   <td style="text-align:right;"> 548.1000 </td>
+   <td style="text-align:right;"> $109,196 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Customer service representatives </td>
    <td style="text-align:right;"> 13,560 </td>
-   <td style="text-align:right;"> 849.5667 </td>
+   <td style="text-align:right;"> $169,256 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Registered nurses </td>
    <td style="text-align:right;"> 12,910 </td>
-   <td style="text-align:right;"> 1795.2667 </td>
+   <td style="text-align:right;"> $357,663 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Home health and personal care aides </td>
    <td style="text-align:right;"> 9,390 </td>
-   <td style="text-align:right;"> 558.3667 </td>
+   <td style="text-align:right;"> $111,241 </td>
   </tr>
 </tbody>
 </table>
 
 *Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:cf-public-price)Maximum home sales price for public sector occupations in Chesterfield County</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Occupation </th>
+   <th style="text-align:right;"> Maximum home sales price </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Planners </td>
+   <td style="text-align:right;"> $307,747 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Police officers </td>
+   <td style="text-align:right;"> $276,452 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCPS teachers </td>
+   <td style="text-align:right;"> $255,380 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Firefighters </td>
+   <td style="text-align:right;"> $248,366 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Emergency communications officers </td>
+   <td style="text-align:right;"> $205,310 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Administrative workers </td>
+   <td style="text-align:right;"> $205,073 </td>
+  </tr>
+</tbody>
+</table>
+
+*Sources: Freddie Mac Primary Mortgage Market Survey and Chesterfield County.*
 
 ## Renter affordability
 
@@ -188,8 +266,6 @@ Post-recession average asking rent in the county hit a low of \$1,150 in 2012 (a
 *Source: CoStar Group, Inc.*
 
 This rent is increasingly unaffordable to some of the most common occupations in the county, like retail salespersons and home health aides. For a retail salesperson with an average hourly wage of \$13.85, a rent on a single income would be more affordable at \$672 to \$748 cheaper than the typical rent in the county. 
-
-Elementary school teachers with an average salary of \$53,840 would also be hard pressed to afford the typical rent. For an essential part of the workforce there would need to be rental units priced lower cheaper at \$1,256.
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:cf-renter-affordability)Maximum monthly rent for five most common occupations in Chesterfield County</caption>
@@ -230,6 +306,46 @@ Elementary school teachers with an average salary of \$53,840 would also be hard
 </table>
 
 *Source: CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
+
+CCPS teachers with a median salary of \$54,937 would also be hard pressed to afford the typical rent. For an essential part of the workforce there would need to be rental units priced lower at \$1,373. Other public sector workers like firefighters, emergency communication officers, and government administrative workers would find it increasingly difficult to find affordable rental housing in the county's high demand areas.
+
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:cf-renter-public-affordability)Maximum monthly rent for public sector occupations in Chesterfield County</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Occupation </th>
+   <th style="text-align:right;"> Maximum monthly rent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Planners </td>
+   <td style="text-align:right;"> $1,655.05 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Police officers </td>
+   <td style="text-align:right;"> $1,486.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCPS teachers </td>
+   <td style="text-align:right;"> $1,373.42 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Firefighters </td>
+   <td style="text-align:right;"> $1,335.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Emergency communications officers </td>
+   <td style="text-align:right;"> $1,104.15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Administrative workers </td>
+   <td style="text-align:right;"> $1,102.88 </td>
+  </tr>
+</tbody>
+</table>
+
+*Source: CoStar Group, Inc. and Chesterfield County.*
 
 ## Takeaways
 
