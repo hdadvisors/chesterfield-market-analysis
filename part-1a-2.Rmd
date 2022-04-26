@@ -360,10 +360,14 @@ common_sss <- sss %>%
     )) %>%
   rowwise() %>%
   mutate(costsum = sum(c_across(`Child Care Costs`:`Child Tax Credit (-)`))) %>%
-  mutate(monthly = hhincome/12) %>%
+  mutate(takehome = case_when(
+    `Family Type` == "a2i0p0s0t0" ~ 50378,
+    `Family Type` == "a2i0p0s2t0" ~ 103135,
+    `Family Type` == "a1i0p0s0t0" ~ 43072,
+    `Family Type` == "a1i1p1s0t0" ~ 20231
+    )) %>%
+  mutate(monthly = takehome/12) %>%
   mutate(residual = monthly - costsum)
-
-
 
 
 ```
