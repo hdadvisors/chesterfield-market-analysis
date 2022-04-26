@@ -18,6 +18,8 @@ library(ggplot2)
 library(plotly)
 library(simplevis)
 library(scales)
+library(lubridate)
+library(esquisse)
 
 ```
 
@@ -169,8 +171,6 @@ b25118_data <- b25118_raw %>%
     cv >= 15 & cv <= 30 ~ "Medium reliability",
     cv > 30 ~ "Low reliability")
   )
-
-
 
 
 ```

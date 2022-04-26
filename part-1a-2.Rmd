@@ -257,6 +257,117 @@ First, we calculate the gross and take-home household incomes. According to HUD'
 
 Next, we determine the 2021 SSS monthly cost estimates for a four-person household with two working adults and two elementary school-age children in Chesterfield County. These total costs (housing excluded) are \$4,480.
 
+```{r common-households}
+
+b25115_vars <- load_variables(2020, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25115")
+
+b25115_raw <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25115",
+    year = 2020,
+    survey = "acs5", 
+    cache_table = TRUE
+  ) %>%
+    mutate(year = 2020)
+
+
+b25115_vars_cleaned <- b25115_vars %>%
+  separate(label, into = c("est", "total", "tenure", "family", "married", "hhsex", "children" ), sep = "!!") %>% 
+  select(variable = name, tenure, family, married, hhsex, children) %>%
+  filter(variable != "B25115_001") %>%
+  filter(variable != "B25115_002") %>%
+  filter(variable != "B25115_003") %>%
+  filter(variable != "B25115_004") %>%
+  filter(variable != "B25115_007") %>%
+  filter(variable != "B25115_008") %>%
+  filter(variable != "B25115_011") %>%
+  filter(variable != "B25115_015") %>%
+  filter(variable != "B25115_016") %>%
+  filter(variable != "B25115_017") %>%
+  filter(variable != "B25115_020") %>%
+  filter(variable != "B25115_021") %>%
+  filter(variable != "B25115_024") %>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied:" ~ "Homeowner",
+    tenure == "Renter occupied:" ~ "Renter"
+  )) %>%
+  mutate(family = case_when(
+    family == "Family households:" ~ "Family",
+    family == "Nonfamily households" ~ "Nonfamily"
+  )) %>%
+  mutate(married = case_when(
+    married == "Married-couple family:" ~ "Married-couple",
+    married == "Other family:" ~ "Other family",
+    family == "Nonfamily" ~ "Nonfamily"
+  )) %>%
+  mutate(hhsex = case_when(
+    hhsex == "With own children of the householder under 18 years" ~ "Married-couple",
+    hhsex == "No own children of the householder under 18 years" ~ "Married-couple",
+    hhsex == "Male householder, no spouse present:" ~ "Single male",
+    hhsex == "Female householder, no spouse present:" ~ "Single female",
+    family == "Nonfamily" ~ "Nonfamily"
+  )) %>%
+  mutate(children = case_when(
+    variable == "B25115_005" ~ "With children",
+    variable == "B25115_006" ~ "No children",
+    variable == "B25115_018" ~ "With children",
+    variable == "B25115_019" ~ "No children",
+    children == "With own children of the householder under 18 years" ~ "With children",
+    children == "No own children of the householder under 18 years" ~ "No children",
+    TRUE ~ "Nonfamily"
+    ))
+
+b25115_data <- b25115_raw %>%
+  right_join(b25115_vars_cleaned, by = "variable") %>%
+  select(NAME, year, tenure, family, married, hhsex, children, estimate, moe) %>%
+  group_by(year, tenure, family, married, hhsex, children) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
+
+```
+
+```{r residual-households}
+
+sss <- read_csv("data/chesterfield_self-sufficiency-standard.csv")
+
+common <- c("a2i0p0s0t0", "a2i0p0s2t0", "a1i0p0s0t0", "a1i1p1s0t0")
+
+common_sss <- sss %>% 
+  filter(`Family Type` %in% common) %>%
+  mutate(hhincome = case_when(
+    `Family Type` == "a2i0p0s0t0" ~ 61777,
+    `Family Type` == "a2i0p0s2t0" ~ 136410,
+    `Family Type` == "a1i0p0s0t0" ~ 54937,
+    `Family Type` == "a1i1p1s0t0" ~ 23930
+  )) %>%
+  mutate(label = case_when(
+    `Family Type` == "a2i0p0s0t0" ~ "Senior household",
+    `Family Type` == "a2i0p0s2t0" ~ "Registered nurse + police officer",
+    `Family Type` == "a1i0p0s0t0" ~ "CCPS teacher",
+    `Family Type` == "a1i1p1s0t0" ~ "Home health aide"
+    )) %>%
+  rowwise() %>%
+  mutate(costsum = sum(c_across(`Child Care Costs`:`Child Tax Credit (-)`))) %>%
+  mutate(monthly = hhincome/12) %>%
+  mutate(residual = monthly - costsum)
+
+
+
+
+```
+
 ``` {r residual-cost}
 
 costs_labels = c("Child Care", "Food", "Transportation", "Health Care",
