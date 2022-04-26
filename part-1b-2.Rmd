@@ -125,6 +125,56 @@ plotly::ggplotly(tenure_plot) %>%
 ```
 *Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25119.*
 
+```{r tenure-revised, fig.cap="Income distribution by tenure"}
+
+years <- 2010:2020
+
+b25118_vars <- load_variables(2010, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25118")
+
+b25118_raw <- map_dfr(years, function(yr){
+  b25118_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25118",
+    year = yr,
+    survey = "acs5", 
+    cache_table = TRUE
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25118_vars_cleaned <- b25118_vars %>%
+  separate(label, into = c("est", "total", "tenure", "income"), sep = "!!") %>% 
+  select(variable = name, tenure, income) %>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied" ~ "Homeowner",
+    tenure == "Renter occupied" ~ "Renter"
+  )) %>%
+  mutate(across(.fns = ~replace_na(.x, "All households")))
+
+b25118_data <- b25118_raw %>%
+  right_join(b25118_vars_cleaned, by = "variable") %>%
+  select(NAME, year, tenure, income, estimate, moe) %>%
+  group_by(year, tenure, income) %>%
+  summarise(
+    estimate = sum(estimate),
+    moe = moe_sum(moe, estimate)
+  ) %>% 
+  ungroup() %>% 
+  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+  mutate(reliability = case_when(
+    cv < 15 ~ "High reliability",
+    cv >= 15 & cv <= 30 ~ "Medium reliability",
+    cv > 30 ~ "Low reliability")
+  )
+
+
+
+
+```
+
 ## Age
 
 While younger households generally have less income because they are typically getting started in their careers, senior households can face similar challenges as they approach retirement age and transition to fixed incomes. This is evident in Chesterfield County, where households both under 25 and 65 and older have substantially lower average incomes.
