@@ -290,11 +290,9 @@ As an example, we will estimate residual income for some of the most common hous
 * Single CCPS teacher, with no kids, and a household income of \$54,937
 * Single female home health aide, with an infant and preschooler, and a household income of \$23,930
 
+Based on current federal and state effective tax rates, the estimated total household income after taxes for these households will decrease slightly.^[Tax expenditures were calculated using the [Smart Asset Federal Income Tax Calculator](https://smartasset.com/taxes/income-taxes), setting location to Chesterfield County, and adjusting personal exemptions based on household size.]
 
-
-First, we calculate the gross and take-home household incomes. According to HUD's [FY 2021 Income Limits](https://www.huduser.gov/portal/datasets/il/il2021/2021summary.odn?states=%24states%24&data=2021&inputname=METRO40060M40060*Richmond%2C+VA+MSA&stname=%24stname%24&statefp=99&year=2021&selection_type=hmfa), the income for a four-person family at 80 percent AMI is \$72,000. Based on current federal and state effective tax rates, the estimated total household income after taxes for this family would be \$58,111. This amounts to a monthly take-home wage of $4,843.
-
-Next, we determine the 2021 SSS monthly cost estimates for a four-person household with two working adults and two elementary school-age children in Chesterfield County. These total costs (housing excluded) are \$4,480.
+Next, we determine the 2021 SSS monthly cost estimates depending on each household type utilizing the SSS dataset. The total monthly expenditures used exclude housing costs and tax expenditures as calculated by the Center for Women's Welfare at the University of Washington.^[We utilize a the Smart Asset Federal Income Tax Calculator rather than using the given tax expenditures because it does not account for the varying household incomes that determine tax rates.]
 
 ```{r common-households}
 
@@ -431,7 +429,7 @@ data.frame(x = costs_labels, y = costs_values) %>%
 
 ```
 
-Finally, we subtract these costs from the monthly take home pay.
+We then subtract these costs from the total take home pay of each household to determine what is left to be spent on housing costs. 
 
 ``` {r residual-summary}
 
