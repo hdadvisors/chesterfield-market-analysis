@@ -1,0 +1,206 @@
+# Rental market summary 
+
+This section summarizes the existing stock of rental units within the county and provides an analysis of recent price and production trends in the rental market.
+
+```{r setup}
+
+library(tidyverse)
+library(tidycensus)
+library(glue)
+
+```
+## Rental housing stock
+
+
+### Total renters
+Over the past decade, the number of renter households in the county has steadily been increasing.
+
+```{r tenure}
+
+years <- 2010:2020
+
+b25003_vars <- load_variables(2010, "acs5") |> 
+  filter(str_sub(name, end = 7) %in% "B25003_")
+
+b25003_raw <- map_dfr(years, function(yr){
+  b25003_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25003",
+    year = yr,
+    survey = "acs5",
+    cache_table = TRUE
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25003_vars_cleaned <- b25003_vars |> 
+  separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
+  select(variable = name, tenure) |> 
+  drop_na() |> 
+  mutate(tenure = case_when(
+    tenure == "Owner occupied" ~ "Homeowner",
+    tenure == "Renter occupied" ~ "Renter"
+  )) |> 
+  filter(tenure == "Renter")
+
+b25003_data <- b25003_raw |> 
+  right_join(b25003_vars_cleaned, by = "variable") |> 
+  select(NAME, fips = GEOID, year, tenure, estimate, moe)
+
+```
+
+### Housing type
+
+Just over a third of rental housing is located in detached single-family homes.
+
+```{r structure}
+
+years <- 2010:2020
+
+b25032_vars <- load_variables(2010, "acs5") |> 
+  filter(str_sub(name, end = 7) %in% "B25032_")
+
+b25032_raw <- map_dfr(years, function(yr){
+  b25032_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25032",
+    year = yr,
+    survey = "acs5",
+    cache_table = TRUE
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25032_vars_cleaned <- b25032_vars |> 
+  separate(label, into = c("est", "total", "tenure", "structure"), sep = "!!") |> 
+  select(variable = name, tenure, structure) |> 
+  drop_na() |> 
+  filter(tenure == "Renter-occupied housing units")
+
+b25032_data <- b25032_raw |> 
+  right_join(b25032_vars_cleaned, by = "variable") |> 
+  select(NAME, fips = GEOID, year, structure, estimate, moe)
+  
+
+
+```
+
+Most rental housing in the county are two-bedroom homes.
+```{r bedrooms}
+
+years <- 2010:2020
+
+b25042_vars <- load_variables(2010, "acs5") |> 
+  filter(str_sub(name, end = 6) %in% "B25042")
+
+b25042_raw <- map_dfr(years, function(yr){
+  b25042_pull <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25042",
+    year = yr,
+    survey = "acs5",
+    cache_table = TRUE
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25042_vars_cleaned <- b25042_vars |> 
+  separate(label, into = c("est", "total", "tenure", "bedrooms"), sep = "!!") |> 
+  select(variable = name, tenure, bedrooms) |> 
+  drop_na() |> 
+  filter(tenure == "Renter occupied")
+
+b25042_data <- b25042_raw |> 
+  right_join(b25042_vars_cleaned, by = "variable") |> 
+  select(NAME, fips = GEOID, year, bedrooms, estimate, moe)
+
+```
+
+CoStar does not collect data on single-family rentals, therefore it is difficult to understand the single-family rental, or SFR, market in the county. 
+
+Across CoStar's multifamily database, however, there are 118 existing and 19 proposed or under construction rental properties in the county.
+
+There are 22,057 individual units across these 118 existing properties - much of which are located in garden-style apartments.
+
+
+```{r costar-buildings}
+
+
+```
+
+## Rental housing costs
+
+```{r costar-rents}
+
+```
+
+
+```{r bedroom-rents}
+
+```
+
+## Rental housing construction
+
+-Outline proposed and under construction multifamily based on CoStar data.
+
+```{r costar-construction}
+
+```
+
+-Outline multifamily building permit trends in county.
+
+```{r permits}
+
+years <- 2000:2020
+
+header_rows <- read_csv("https://www2.census.gov/econ/bps/County/co2020a.txt", 
+                        col_names = FALSE,
+                        n_max = 2)
+
+column_names <- header_rows %>%
+  select(X1:X18) %>%
+  t() %>%
+  as_tibble() %>%
+  mutate(group = rep(1:6, each = 3)) %>%
+  group_by(group) %>%
+  fill(V1, .direction = "updown") %>%
+  mutate(names = paste0(V1, ": ", V2)) %>%
+  pull(names)
+
+cbps_raw <- map_df(years, ~{
+  raw <- read_csv(glue("https://www2.census.gov/econ/bps/County/co{.x}a.txt"), skip = 2, 
+                    col_names = FALSE) %>%
+    select(X1:X18) %>%
+    set_names(column_names)
+  
+  raw
+  
+})
+
+cbps_data <- cbps_raw %>% 
+  mutate(year = `Survey: Date`,
+         GEOID = paste0(`FIPS: State`, `FIPS: County`)) %>%
+  select(`1-unit: Bldgs`:GEOID) %>%
+  filter(GEOID == "51041") %>%
+  pivot_longer(`1-unit: Bldgs`:`5+ units: Value`,
+               names_to = "type",
+               values_to = "value") %>%
+  separate(type, into = c("Type", "col"), sep = ": ") %>%
+  pivot_wider(names_from = col,
+              values_from = value) %>%
+  rename_with(tolower, Type:Value) %>% 
+  select(GEOID, year, type:value)
+
+
+```
+
+
+
+
+## 
