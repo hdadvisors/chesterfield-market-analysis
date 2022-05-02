@@ -124,9 +124,9 @@ b25042_data <- b25042_raw |>
 
 CoStar does not collect data on single-family rentals, therefore it is difficult to understand the single-family rental, or SFR, market in the county. 
 
-Across CoStar's multifamily database, however, there are 107 existing multifamily properties. This excludes a 
+Across CoStar's multifamily database, however, there are 118 existing rental properties. This excludes nine manufactured home parks identified by the Manufactured Housing Community Coalition of Virginia in their 2016 Central Virginia study.
 
-There are 22,057 individual units across these 118 existing properties - much of which are located in garden-style apartments.
+There are at least 23,377 homes across these 127 properties.
 
 
 ```{r costar-buildings}
