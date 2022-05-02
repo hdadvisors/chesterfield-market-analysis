@@ -1,0 +1,31 @@
+# Rental spatial analysis
+
+This section presents an analysis of the county’s existing rental supply, focusing on the amount and location of rental housing units. 
+
+# Recent multifamily developments
+
+Spatial analysis of recent multifamily developments; summarize general physical traits and location; talk about price points and contextualize with amenities or no amenities
+
+
+```{r recent}
+
+```
+
+# Market affordable rental
+
+Spatial analysis of market affordable housing; summarize general physical traits and location; previously covered age and price point; pull in some information from previous but expand
+
+```{r noah}
+
+```
+
+
+# Affordable rental
+
+Spatial analysis of affordable housing projects; describe projects, developer, subsidy, unit mix; status of subsidy; ask Jessica for list of state-funded projects in county
+
+
+```{r affordable}
+
+```
+
