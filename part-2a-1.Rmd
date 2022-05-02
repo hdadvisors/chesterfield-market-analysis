@@ -124,7 +124,7 @@ b25042_data <- b25042_raw |>
 
 CoStar does not collect data on single-family rentals, therefore it is difficult to understand the single-family rental, or SFR, market in the county. 
 
-Across CoStar's multifamily database, however, there are 118 existing and 19 proposed or under construction rental properties in the county.
+Across CoStar's multifamily database, however, there are 107 existing multifamily properties. This excludes a 
 
 There are 22,057 individual units across these 118 existing properties - much of which are located in garden-style apartments.
 
@@ -147,11 +147,14 @@ There are 22,057 individual units across these 118 existing properties - much of
 
 ## Rental housing construction
 
--Outline proposed and under construction multifamily based on CoStar data.
+There are currently 19 proposed or under construction multifamily 
 
 ```{r costar-construction}
 
 ```
+
+
+
 
 -Outline multifamily building permit trends in county.
 
@@ -200,7 +203,3 @@ cbps_data <- cbps_raw %>%
 
 ```
 
-
-
-
-## 
