@@ -89,6 +89,12 @@ b25032_data <- b25032_raw |>
 
 ```
 
+SFRs
+```{r sfr}
+
+```
+
+
 Most rental housing in the county are two-bedroom homes.
 ```{r bedrooms}
 
@@ -136,6 +142,8 @@ There are at least 23,377 homes across these 127 properties.
 
 ## Rental housing costs
 
+-Focus on CoStar data. Maybe look at ACS 1-year rents - which includes single family rental with MOE.
+ Use PUMS for single-family/townhomes - below 5 units - best estimate. 
 ```{r costar-rents}
 
 ```

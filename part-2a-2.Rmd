@@ -4,7 +4,7 @@ This section presents an analysis of the county’s existing rental supply, focu
 
 # Recent multifamily developments
 
-Spatial analysis of recent multifamily developments; summarize general physical traits and location; talk about price points and contextualize with amenities or no amenities
+Spatial analysis of recent multifamily developments; summarize general physical traits and location; talk about price points and contextualize with amenities or no amenities.
 
 
 ```{r recent}
@@ -29,3 +29,6 @@ Spatial analysis of affordable housing projects; describe projects, developer, s
 
 ```
 
+# LIHTC
+
+Add information 
