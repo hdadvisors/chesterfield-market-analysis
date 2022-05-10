@@ -7,6 +7,9 @@ This section summarizes the existing stock of rental units within the county and
 library(tidyverse)
 library(tidycensus)
 library(glue)
+library(esquisse)
+library(plotly)
+library(lubridate)
 
 ```
 ## Rental housing stock
@@ -48,6 +51,10 @@ b25003_vars_cleaned <- b25003_vars |>
 b25003_data <- b25003_raw |> 
   right_join(b25003_vars_cleaned, by = "variable") |> 
   select(NAME, fips = GEOID, year, tenure, estimate, moe)
+  
+
+esquisser(b25003_data)
+
 
 ```
 
