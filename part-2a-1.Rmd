@@ -10,13 +10,16 @@ library(glue)
 library(esquisse)
 library(plotly)
 library(lubridate)
+library(simplevis)
 
 ```
 ## Rental housing stock
 
 
 ### Total renters
-Over the past decade, the number of renter households in the county has steadily been increasing.
+Over the past decade, the number of renter households in the county has steadily been increasing. From 2010 to 2019, the number of renters in the county has gone from 24,312 to 30,273 --- a 24 percent increase. 
+
+In 2020, there was a two percent decrease in renters. But this decrease of 633 renters can be attributed to the pitfalls of the 2020 Census count.
 
 ```{r tenure}
 
@@ -53,14 +56,24 @@ b25003_data <- b25003_raw |>
   select(NAME, fips = GEOID, year, tenure, estimate, moe)
   
 
-esquisser(b25003_data)
+renters_plot <- gg_line(
+  b25003_data,
+  x_var = year,
+  y_var = estimate,
+  y_breaks_n = 5,
+  title = "Renter households",
+  x_title = element_blank())
 
+plotly::ggplotly(renters_plot) %>% 
+  plotly_camera()
 
 ```
 
 ### Housing type
 
-Just over a third of rental housing is located in detached single-family homes.
+Single-family home rentals in the county have been on the rise. In 2010, 8,482 single-family detached homes were being used as rentals. By 2020, that number had increased to 10,894 --- just over a third of all rental housing in the county. This equates to a 28 percent increase.
+
+While single-family homes saw a major increase in rentals, manufactured homes experienced a significant decrease. From 791 in 2010 to 527 in 2020, the reported number of manufactured homes in the county has been cut down by a third.
 
 ```{r structure}
 
@@ -91,7 +104,22 @@ b25032_vars_cleaned <- b25032_vars |>
 b25032_data <- b25032_raw |> 
   right_join(b25032_vars_cleaned, by = "variable") |> 
   select(NAME, fips = GEOID, year, structure, estimate, moe)
-  
+
+structure_plot <- gg_bar_col(
+  b25032_data,
+  stack = TRUE,
+  x_var = year,
+  y_var = estimate,
+  col_var = structure,
+  y_breaks_n = 5,
+  title = "Rental housing by structure type",
+  x_title = element_blank()) +
+    theme(
+      legend.position = "none"
+    )
+
+plotly::ggplotly(structure_plot) %>% 
+  plotly_camera()
 
 
 ```
@@ -102,7 +130,10 @@ SFRs
 ```
 
 
-Most rental housing in the county are two-bedroom homes.
+Most rental housing in the county are two-bedroom and three-bedroom homes. This accounts for nearly half of all rental housing in the county (68 percent). 
+
+The number of four-bedroom rental homes has been on a steady increase since 2010 --- from 1,995 to 3,453 in 2020, a 73 percent increase. Although the increasing number of families in search of larger homes has led to a corresponding demand in larger rental homes, the impact can be felt among single adults, especially low-income adults, needing affordable rental opportunities. 
+
 ```{r bedrooms}
 
 years <- 2010:2020
@@ -133,6 +164,23 @@ b25042_data <- b25042_raw |>
   right_join(b25042_vars_cleaned, by = "variable") |> 
   select(NAME, fips = GEOID, year, bedrooms, estimate, moe)
 
+bedroom_plot <- gg_bar_col_facet(
+  b25042_data,
+  stack = TRUE,
+  x_var = year,
+  y_var = estimate,
+  col_var = bedrooms,
+  facet_var = bedrooms,
+  y_breaks_n = 5,
+  title = "Rental housing by bedrooms",
+  x_title = element_blank()) +
+    theme(
+      legend.position = "none"
+    )
+
+plotly::ggplotly(bedroom_plot) %>% 
+  plotly_camera()
+
 ```
 
 CoStar does not collect data on single-family rentals, therefore it is difficult to understand the single-family rental, or SFR, market in the county. 
@@ -144,6 +192,7 @@ There are at least 23,377 homes across these 127 properties.
 
 ```{r costar-buildings}
 
+existing <- 
 
 ```
 

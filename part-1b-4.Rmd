@@ -331,7 +331,7 @@ cf_rents <- read_csv("data/costar_rent_avg.csv") %>%
   mutate(type = str_replace_all(type, c("rent" = "Asking rent",
                                         "rent_adj" = "rent (inflation-adjusted)")))
 
-gg_line_col(
+costar_rents <-gg_line_col(
   cf_rents,
   x_var = period,
   y_var = value,
@@ -352,6 +352,9 @@ gg_line_col(
     legend.direction = "horizontal",
     legend.justification = "center"
   )
+
+plotly::ggplotly(costar_rents) %>% 
+  plotly_camera()
 
 
 ```
