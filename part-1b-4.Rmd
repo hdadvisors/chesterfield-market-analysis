@@ -323,7 +323,9 @@ The housing supply shortage is also being felt in the rental housing market. Sma
 
 Post-recession average asking rent in the county hit a low of \$1,150 in 2012 (adjusted to current dollars), but has been on the rise ever since. From 2012 to 2019, average rents rose an average of 2 percent each year until 2020, the year of the pandemic. Between 2019 and 2020, average rent in the county rose by 5 percent (\$69)---from \$1,290 to \$1,359, a substantial increase for individuals and families on tight budgets. In 2021, average rent continued to rise to over \$1,400. 
 
-```{r cf-rents, fig.cap="Median asking rent in Chesterfield County"}
+```{r cf-rents, fig.cap="Average asking rent in Chesterfield County"}
+
+#CoStar calculated average and not median. Amended to reflect these changes. May need to consider changing this to match Part 2a-1.
 
 cf_rents <- read_csv("data/costar_rent_avg.csv") %>% 
   pivot_longer(cols = 2:3, names_to = "type", values_to = "value") %>% 
@@ -338,9 +340,9 @@ costar_rents <-gg_line_col(
   col_var = type,
   alpha_point = 0,
   size_line = 0.75,
-  title = "Median asking rent in Chesterfield County",
+  title = "Average asking rent in Chesterfield County",
   y_labels = label_dollar(),
-  y_title = "Median asking rent",
+  y_title = "Average asking rent",
   x_title = element_blank(),
   y_zero = TRUE,
   x_labels = scales::date_format(format = "%Y")

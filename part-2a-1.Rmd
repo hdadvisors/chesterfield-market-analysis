@@ -197,7 +197,7 @@ There are at least 23,377 homes across these 127 properties.
 
 ```{r costar-buildings}
 
-existing <- 
+existing <- read_csv("data/costar_existing.csv")
 
 ```
 
@@ -216,6 +216,31 @@ rent <- read_csv("data/costar_rent_existing_may_12.csv") |>
   mutate(type = str_replace_all(type, c("rent" = "Asking rent",
                                         "rent_adj" = "rent (inflation-adjusted)")))
 
+
+costar_rent <-gg_line_col(
+  rent,
+  x_var = period,
+  y_var = value,
+  col_var = type,
+  alpha_point = 0,
+  size_line = 0.75,
+  title = "Average asking rent in Chesterfield County",
+  y_labels = label_dollar(),
+  y_title = "Average asking rent",
+  x_title = element_blank(),
+  y_zero = TRUE,
+  x_labels = scales::date_format(format = "%Y")
+  ) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+    legend.title = element_blank(),
+    legend.position = "top",
+    legend.direction = "horizontal",
+    legend.justification = "center"
+  )
+
+plotly::ggplotly(costar_rent) %>% 
+  plotly_camera()
 
 
 
