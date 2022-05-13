@@ -9,8 +9,13 @@ library(tidycensus)
 library(glue)
 library(esquisse)
 library(plotly)
-library(lubridate)
+library(scales)
+library(formattable)
 library(simplevis)
+library(lubridate)
+library(patchwork)
+library(knitr)
+library(zoo)
 
 ```
 ## Rental housing stock
@@ -202,11 +207,29 @@ existing <-
  Use PUMS for single-family/townhomes - below 5 units - best estimate. 
 ```{r costar-rents}
 
+# This is pulling in average rents for all existing multifamily properties in the county. For some reson, this differs from the previous average rent calculations for some reason. I'd resolve this by updating the previous visualization in Part-1B-4.
+
+
+rent <- read_csv("data/costar_rent_existing_may_12.csv") |>
+  pivot_longer(cols = 2:3, names_to = "type", values_to = "value") |> 
+  mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) |> 
+  mutate(type = str_replace_all(type, c("rent" = "Asking rent",
+                                        "rent_adj" = "rent (inflation-adjusted)")))
+
+
+
+
 ```
 
 
 ```{r bedroom-rents}
 
+bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
+  pivot_longer(cols = 2:9, names_to = "type", values_to = "value") |>
+  mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) |> 
+  mutate(rent = sub(".*_", "", type)) |> 
+  mutate(rent = str_replace_all(rent, c("rent" = "Asking rent",
+                                        "adj" = "rent (inflation-adjusted)")))
 ```
 
 ## Rental housing construction
