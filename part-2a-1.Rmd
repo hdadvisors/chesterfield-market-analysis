@@ -255,6 +255,7 @@ bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
   mutate(rent = sub(".*_", "", type)) |> 
   mutate(rent = str_replace_all(rent, c("rent" = "Asking rent",
                                         "adj" = "rent (inflation-adjusted)")))
+
 ```
 
 ## Rental housing construction
@@ -262,6 +263,8 @@ bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
 There are currently 19 proposed or under construction multifamily 
 
 ```{r costar-construction}
+
+
 
 ```
 
