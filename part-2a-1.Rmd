@@ -16,6 +16,7 @@ library(lubridate)
 library(patchwork)
 library(knitr)
 library(zoo)
+library(janitor)
 
 ```
 ## Rental housing stock
@@ -255,15 +256,47 @@ bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
   mutate(rent = sub(".*_", "", type)) |> 
   mutate(rent = str_replace_all(rent, c("rent" = "Asking rent",
                                         "adj" = "rent (inflation-adjusted)")))
+bedroom_rent <- bedroom_rent |> 
+  filter(rent != "Asking rent") |> 
+  mutate(type = substr(type,1,1))
+
+costar_br_rent <-gg_line_col(
+  bedroom_rent,
+  x_var = period,
+  y_var = value,
+  col_var = type,
+  alpha_point = 0,
+  size_line = 0.75,
+  title = "Average asking rent in Chesterfield County by bedroom",
+  y_labels = label_dollar(),
+  y_title = "Average asking rent",
+  x_title = element_blank(),
+  y_zero = TRUE,
+  x_labels = scales::date_format(format = "%Y")
+  ) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+    legend.title = element_blank(),
+    legend.position = "top",
+    legend.direction = "horizontal",
+    legend.justification = "center"
+  )
+
+plotly::ggplotly(costar_br_rent) %>% 
+  plotly_camera()
 
 ```
 
 ## Rental housing construction
 
-There are currently 19 proposed or under construction multifamily 
+There are currently 19 proposed or under construction multifamily developments in the county --- an estimated total of 5,039 rental homes. 
 
 ```{r costar-construction}
 
+under_con <- read_csv("data/costar_under_con_may_13.csv") |> 
+  clean_names()
+
+sum(under_con$number_of_units, na.rm = TRUE)
 
 
 ```
@@ -271,7 +304,11 @@ There are currently 19 proposed or under construction multifamily
 
 
 
--Outline multifamily building permit trends in county.
+Like most of the country, the Great Recession negatively impacted home building in the county --- both in terms of single-family and multifamily housing. That impact was most felt among single-family home construction, however. Pre-recession, the average single-family residential construction permits numbered 2,050 and post-recession single-family home starts have been slow to recover to that pre-recession era. It was not until 2020 that the county exceeded that pre-recession average. 
+
+Multifamily (five or more units) home starts were not as impacted by the recession due to the generally low number of multifamily construction permits. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466. 
+
+Duplexes and smaller multifamily homes like tri-plexes and quads have not seen substantial construction in the county. These types of properties often make up what is called "[Missing Middle](https://missingmiddlehousing.com/)" housing, a term used to describe smaller multifamily and clustered single-family housing that often offers affordability by design (i.e. smaller homes typically mean lower price).
 
 ```{r permits}
 
@@ -313,8 +350,17 @@ cbps_data <- cbps_raw %>%
   pivot_wider(names_from = col,
               values_from = value) %>%
   rename_with(tolower, Type:Value) %>% 
-  select(GEOID, year, type:value)
+  select(GEOID, year, type:units)
 
+permits <- gg_bar_col_facet(
+  cbps_data,
+  x_var = year,
+  y_var = units,
+  col_var = type,
+  facet_var = type)
+
+plotly::ggplotly(permits) |>  
+  plotly_camera()
 
 ```
 
