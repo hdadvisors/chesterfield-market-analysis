@@ -21,6 +21,8 @@ library(janitor)
 ```
 ## Rental housing stock
 
+The proliferation of rental housing throughout Chesterfield County has been the result of affordability challenges across the region, as well as an increasing preference for [young professionals and baby boomers] (https://www.freddiemac.com/research/consumer-research/20180404-preference-for-renting)
+
 
 ### Total renters
 Over the past decade, the number of renter households in the county has steadily been increasing. From 2010 to 2019, the number of renters in the county has gone from 24,312 to 30,273 --- a 24 percent increase. 
