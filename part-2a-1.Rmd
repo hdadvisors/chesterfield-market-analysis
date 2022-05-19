@@ -79,9 +79,7 @@ plotly::ggplotly(renters_plot) %>%
 
 ### Housing type
 
-Single-family home rentals in the county have been on the rise. In 2010, 8,482 single-family detached homes were being used as rentals. By 2020, that number had increased to 10,894 --- just over a third of all rental housing in the county. This equates to a 28 percent increase.
-
-While single-family homes saw a major increase in rentals, manufactured homes experienced a significant decrease. From 791 in 2010 to 527 in 2020, the reported number of manufactured homes in the county has been cut down by a third.
+Single-family home rentals (SFR) in the county have been on the rise. In 2010, 8,482 single-family detached homes were being used as rentals. By 2020, that number had increased to 10,894 --- just over a third of all rental housing in the county. This equates to a 28 percent increase.
 
 ```{r structure}
 
@@ -132,11 +130,24 @@ plotly::ggplotly(structure_plot) %>%
 
 ```
 
-SFRs
+SFRs are a growing trend in the rental market as lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked avoid higher density apartments and had the ability to work and learn remotely.
+
+(https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/)
+
 ```{r sfr}
 
 ```
 
+
+While single-family homes saw a major increase in rentals, manufactured homes experienced a significant decrease. From 791 in 2010 to 527 in 2020, the reported number of manufactured homes in the county has been cut down by a third.
+
+```
+CALL OUT BOX ON MANUFACTURED HOUSING COMMUNITIES
+
+Manufactured home communities are a valuable source of affordable housing across Virginia. Chesterfield County is home to a significant amount of MHCs --- x in total. However, a significant issue faces manufactured home community residents. MHCs often give residents two options, 1) a resident may rent both their home and the lot on which that home is placed, or 2) a resident may own their home and rent the lot on which that home is placed.
+
+In both cases, a resident is renting, but those residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. 
+```
 
 Most rental housing in the county are two-bedroom and three-bedroom homes. This accounts for nearly half of all rental housing in the county (68 percent). 
 
@@ -206,11 +217,10 @@ existing <- read_csv("data/costar_existing.csv")
 
 ## Rental housing costs
 
--Focus on CoStar data. Maybe look at ACS 1-year rents - which includes single family rental with MOE.
- Use PUMS for single-family/townhomes - below 5 units - best estimate. 
+From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q3 2021, average asking rent in the county reached a two decade high of $1,510. 
 ```{r costar-rents}
 
-# This is pulling in average rents for all existing multifamily properties in the county. For some reson, this differs from the previous average rent calculations for some reason. I'd resolve this by updating the previous visualization in Part-1B-4.
+# This is pulling in average rents for all existing multifamily properties in the county. For some reason, this differs from the previous average rent calculations for some reason. I'd resolve this by updating the previous visualization in Part-1B-4.
 
 
 rent <- read_csv("data/costar_rent_existing_may_12.csv") |>
@@ -291,21 +301,6 @@ plotly::ggplotly(costar_br_rent) %>%
 
 ## Rental housing construction
 
-There are currently 19 proposed or under construction multifamily developments in the county --- an estimated total of 5,039 rental homes. 
-
-```{r costar-construction}
-
-under_con <- read_csv("data/costar_under_con_may_13.csv") |> 
-  clean_names()
-
-sum(under_con$number_of_units, na.rm = TRUE)
-
-
-```
-
-
-
-
 Like most of the country, the Great Recession negatively impacted home building in the county --- both in terms of single-family and multifamily housing. That impact was most felt among single-family home construction, however. Pre-recession, the average single-family residential construction permits numbered 2,050 and post-recession single-family home starts have been slow to recover to that pre-recession era. It was not until 2020 that the county exceeded that pre-recession average. 
 
 Multifamily (five or more units) home starts were not as impacted by the recession due to the generally low number of multifamily construction permits. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466. 
@@ -363,6 +358,18 @@ permits <- gg_bar_col_facet(
 
 plotly::ggplotly(permits) |>  
   plotly_camera()
+
+```
+
+There are currently 19 proposed or under construction multifamily developments in the county --- an estimated total of 5,039 rental homes^[Three properties do not have number of units listed and are slated for a 2027 completion date]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
+
+```{r costar-construction}
+
+under_con <- read_csv("data/costar_under_con_may_13.csv") |> 
+  clean_names()
+
+sum(under_con$number_of_units, na.rm = TRUE)
+
 
 ```
 

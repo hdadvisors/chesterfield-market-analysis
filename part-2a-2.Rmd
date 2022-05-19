@@ -31,4 +31,4 @@ Spatial analysis of affordable housing projects; describe projects, developer, s
 
 # LIHTC
 
-Add information 
+Low-income Housing Tax Credit projects are currently one of the major ways in which affordable housing is developed across the country. This program utilizes a tax incentive to 
