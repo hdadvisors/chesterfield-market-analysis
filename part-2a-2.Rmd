@@ -9,6 +9,13 @@ Spatial analysis of recent multifamily developments; summarize general physical 
 
 ```{r recent}
 
+#CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing; Rent Type: Market; Year Built Min: 2000
+
+#Included Lat/Long in export
+
+recent <- read_csv("data/costar_market_recent.csv") |> 
+  clean_names()
+
 ```
 
 # Market affordable rental
@@ -16,6 +23,9 @@ Spatial analysis of recent multifamily developments; summarize general physical 
 Spatial analysis of market affordable housing; summarize general physical traits and location; previously covered age and price point; pull in some information from previous but expand
 
 ```{r noah}
+
+noah <- read_csv("data/chesterfield_noah_coded.csv") |> 
+  clean_names()
 
 ```
 
@@ -27,8 +37,23 @@ Spatial analysis of affordable housing projects; describe projects, developer, s
 
 ```{r affordable}
 
+affordable <- read_csv("data/nhpd_chesterfield.csv") |> 
+  clean_names() |> 
+  filter(subsidy_status != "Inactive") |> 
+  select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address)
+
 ```
 
 # LIHTC
 
 Low-income Housing Tax Credit projects are currently one of the major ways in which affordable housing is developed across the country. This program utilizes a tax incentive to 
+
+```{r lihtc}
+
+lihtc <- read_csv("data/nhpd_chesterfield.csv") |> 
+  clean_names() |> 
+  filter(subsidy_status != "Inactive") |> 
+  select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address) |> 
+  filter(subsidy_name == "LIHTC")
+
+```

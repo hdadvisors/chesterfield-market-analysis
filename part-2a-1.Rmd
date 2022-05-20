@@ -202,6 +202,64 @@ plotly::ggplotly(bedroom_plot) %>%
 
 ```
 
+The majority of existing rental housing (11,229 rental homes) in the county was built between 1960 and 1999. This represents a significant portion of rental housing that is at least 20 years of age. Aging rental homes often mean increasing maintenance costs or the need for significant renovations that get passed down to tenants. 
+
+```{r yearbuilt}
+
+b25036_vars <- load_variables(2020, "acs5") |> 
+  filter(str_sub(name, end = 6) %in% "B25036")
+
+b25036_raw <- get_acs(
+    geography = "county",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25036",
+    year = 2020,
+    survey = "acs5",
+    cache_table = TRUE
+  )
+
+b25036_vars_cleaned <- b25036_vars |> 
+  separate(label, into = c("est", "total", "tenure", "yrbuilt"), sep = "!!") |> 
+  select(variable = name, tenure, yrbuilt)
+
+b25036_data <- b25036_raw |> 
+  right_join(b25036_vars_cleaned, by = "variable") |> 
+  select(NAME, fips = GEOID, yrbuilt, tenure, estimate, moe) |> 
+  drop_na() |> 
+  filter(tenure == "Renter occupied:") |> 
+  mutate(yrbuilt = case_when(
+    yrbuilt == "Built 2014 or later" ~ "2010 or later",
+    yrbuilt == "Built 2010 to 2013" ~ "2010 or later",
+    yrbuilt == "Built 2000 to 2009" ~ "2000 to 2009",
+    yrbuilt == "Built 1990 to 1999" ~ "1980 to 1999",
+    yrbuilt == "Built 1980 to 1989" ~ "1980 to 1999",
+    yrbuilt == "Built 1970 to 1979" ~ "1960 to 1979",
+    yrbuilt == "Built 1960 to 1969" ~ "1960 to 1979",
+    yrbuilt == "Built 1950 to 1959" ~ "1940 to 1959",
+    yrbuilt == "Built 1940 to 1949" ~ "1940 to 1959",
+    yrbuilt == "Built 1939 or earlier" ~ "1939 or earlier"
+  ))
+
+built_plot <- gg_bar(
+  b25036_data,
+  x_var = yrbuilt,
+  y_var = estimate,
+  y_breaks_n = 5,
+  title = "Rental housing by year built",
+  x_title = element_blank()) +
+    theme(
+      legend.position = "none"
+    )
+
+plotly::ggplotly(built_plot) %>% 
+  plotly_camera()
+
+```
+
+
+
+
 CoStar does not collect data on single-family rentals, therefore it is difficult to understand the single-family rental, or SFR, market in the county. 
 
 Across CoStar's multifamily database, however, there are 118 existing rental properties. This excludes nine manufactured home parks identified by the Manufactured Housing Community Coalition of Virginia in their 2016 Central Virginia study.
@@ -259,6 +317,12 @@ plotly::ggplotly(costar_rent) %>%
 
 ```
 
+The number of bedrooms often impacts rental housing costs --- simply put, more bedrooms equals higher rent. But in Chesterfield County, studio apartments command a higher average asking rent than housing with more bedrooms. In Q1 2022, the average asking rent for a studio apartment was \$2,300, roughly \$600 more than a three-bedroom apartment. 
+
+```
+I question using the studio rent. I think the sample is probably flawed here. But may be an important thing to highlight
+
+```
 
 ```{r bedroom-rents}
 
