@@ -3,6 +3,7 @@
 ```{r setup}
 
 library(tidyverse)
+library(tidycensus)
 library(janitor)
 library(knitr)
 library(scales)
@@ -243,13 +244,6 @@ CNT disaggregated housing and transportation to account for 30 percent and 23 pe
 
 These costs increase for the regional moderate income household with an income of $47,935---increasing to 63 percent, or 38 percent on housing and 25 percent on transportation. 
 
-## Takeaways
-
-* There are multiple measures that are being utilized to help practitioners communicate the need to address housing affordability in their communities.
-* Each measure has their pros and cons, ranging from data currency to methodology complexity. But the choice of one over the other is dependent on its ultimate use.
-* For this report, and for most other housing needs assessments, the standard 30 percent (cost burden) methodology is preferred for its ubiquity.
-* If you want to better understand how location impacts costs, the CNT H+T may be the most useful. If you want to focus on the unique challenges that individual households face, the residual income approach may be worth the additional analysis required.
-
 ## Residual income approach
 
 The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over ("residual") and available for housing. That residual amount can then be compared to local housing prices to assess affordability.
@@ -278,11 +272,71 @@ A full calculation of housing affordability in Chesterfield County using the res
 
 > ...defines the income working families need to meet a minimum yet adequate level, taking into account family composition, ages of children, and geographic differences in costs. The Standard is an affordability and living wage economic security measure that provides an alternative to the official poverty measure.
 
-As an example, we will estimate residual income for some of the most common household types and incomes^[Based on ACS 2020 5-year estimates, regional mean annual wages, and Chesterfield County wage data.]  :
+As an example, we will estimate residual income for a household with the following characteristics:
+
+* Two full-time working adults (married) and two elementary school-age children,
+* A total household income equal to 80 percent of the Richmond, Virginia Area Median Income (AMI), and
+* Full-time residency in Chesterfield County.
+
+First, we calculate the gross and take-home household incomes. According to HUD's [FY 2021 Income Limits](https://www.huduser.gov/portal/datasets/il/il2021/2021summary.odn?states=%24states%24&data=2021&inputname=METRO40060M40060*Richmond%2C+VA+MSA&stname=%24stname%24&statefp=99&year=2021&selection_type=hmfa), the income for a four-person family at 80 percent AMI is \$72,000. Based on current federal and state effective tax rates, the estimated total household income after taxes for this family would be \$58,111. This amounts to a monthly take-home wage of $4,843.
+
+Next, we determine the 2021 SSS monthly cost estimates for a four-person household with two working adults and two elementary school-age children in Chesterfield County. These total costs (housing excluded) are \$4,480.
+
+``` {r residual-cost}
+
+costs_labels = c("Child Care", "Food", "Transportation", "Health Care",
+           "Miscellaneous", "Taxes", "Child Care Tax Credit (-)",
+           "Child Tax Credit (-)", "Total")
+
+costs_values = c("$1,086", "$922", "$576", "$775", "$462",
+           "$1,092", "($100)", "($333)", "$4,480")
+
+data.frame(x = costs_labels, y = costs_values) %>% 
+ kable(caption = "Self-Sufficiency Standard monthly costs",
+       align = "lr",
+       col.names = c("Expense", "Amount")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(9, bold=TRUE)
+
+```
+
+We then subtract these costs from the total take home pay of each household to determine what is left to be spent on housing costs. 
+
+``` {r residual-summary}
+
+summary_labels = c("Monthly take-home pay", "Monthly expenses (-)", "Residual income")
+
+summary_values = c("$4,843", "($4,480)", "$363")
+
+data.frame(x = summary_labels, y = summary_values) %>% 
+ kable(caption = "Residual income available for housing for family of four at 80 percent AMI",
+       align = "lr",
+       col.names = c("Pay, expenses, and residual income", "Amount")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(3, bold=TRUE)
+
+```
+
+This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home (\$1,488, from HAI section above) and the market rent for apartments with three or more bedrooms (\$1,463, via CoStar^[Current as of March 31, 2022.]) in Chesterfield County.
+
+As a result, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs.
+
+
+
+
+
+
+
+
+
+
+For additional examples, we can estimate residual income for some of the county's most common household types and incomes^[Based on 2016-2020 American Community Survey 5-year estimates, regional mean annual wages, Social Security benefit data, and Chesterfield County wage data.]:
 
 *Homeowners*
 
-* Married couple, aged 65 and over, with no kids, and a household income of \$61,777
+* Married couple, aged 65 and over, with no kids, and a monthly Social Security benefit of \$2,739.10 (average amount for retired worker and aged spouse)
 * Married registered nurse and police officer, with two school-age kids, and a household income of \$136,410
 
 *Renters*
@@ -290,11 +344,9 @@ As an example, we will estimate residual income for some of the most common hous
 * Single CCPS teacher, with no kids, and a household income of \$54,937
 * Single female home health aide, with an infant and preschooler, and a household income of \$23,930
 
-Based on current federal and state effective tax rates, the estimated total household income after taxes for these households will decrease slightly.^[Tax expenditures were calculated using the [Smart Asset Federal Income Tax Calculator](https://smartasset.com/taxes/income-taxes), setting location to Chesterfield County, and adjusting personal exemptions based on household size.]
-
-Next, we determine the 2021 SSS monthly cost estimates depending on each household type utilizing the SSS dataset. The total monthly expenditures used exclude housing costs and tax expenditures as calculated by the Center for Women's Welfare at the University of Washington.^[We utilize a the Smart Asset Federal Income Tax Calculator rather than using the given tax expenditures because it does not account for the varying household incomes that determine tax rates.]
-
 ```{r common-households}
+
+# Find the most common household types by tenure
 
 b25115_vars <- load_variables(2020, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25115")
@@ -377,6 +429,8 @@ b25115_data <- b25115_raw %>%
 
 ```{r residual-households}
 
+# Customize SSS data with county-specific income info
+
 sss <- read_csv("data/chesterfield_self-sufficiency-standard.csv")
 
 common <- c("a2i0p0s0t0", "a2i0p0s2t0", "a1i0p0s0t0", "a1i1p1s0t0")
@@ -384,21 +438,21 @@ common <- c("a2i0p0s0t0", "a2i0p0s2t0", "a1i0p0s0t0", "a1i1p1s0t0")
 common_sss <- sss %>% 
   filter(`Family Type` %in% common) %>%
   mutate(hhincome = case_when(
-    `Family Type` == "a2i0p0s0t0" ~ 61777,
+    `Family Type` == "a2i0p0s0t0" ~ 32869.2,
     `Family Type` == "a2i0p0s2t0" ~ 136410,
     `Family Type` == "a1i0p0s0t0" ~ 54937,
     `Family Type` == "a1i1p1s0t0" ~ 23930
   )) %>%
   mutate(label = case_when(
-    `Family Type` == "a2i0p0s0t0" ~ "Senior household",
-    `Family Type` == "a2i0p0s2t0" ~ "Registered nurse + police officer",
+    `Family Type` == "a2i0p0s0t0" ~ "Retired senior and spouse",
+    `Family Type` == "a2i0p0s2t0" ~ "Registered nurse and  police officer",
     `Family Type` == "a1i0p0s0t0" ~ "CCPS teacher",
     `Family Type` == "a1i1p1s0t0" ~ "Home health aide"
     )) %>%
   rowwise() %>%
   mutate(costsum = sum(c_across(`Child Care Costs`:`Child Tax Credit (-)`))) %>%
   mutate(takehome = case_when(
-    `Family Type` == "a2i0p0s0t0" ~ 50378,
+    `Family Type` == "a2i0p0s0t0" ~ 27938.82,
     `Family Type` == "a2i0p0s2t0" ~ 103135,
     `Family Type` == "a1i0p0s0t0" ~ 43072,
     `Family Type` == "a1i1p1s0t0" ~ 20231
@@ -410,43 +464,11 @@ common_sss <- sss %>%
 
 ```
 
-``` {r residual-cost}
 
-costs_labels = c("Child Care", "Food", "Transportation", "Health Care",
-           "Miscellaneous", "Taxes", "Child Care Tax Credit (-)",
-           "Child Tax Credit (-)", "Total")
 
-costs_values = c("$1,086", "$922", "$576", "$775", "$462",
-           "$1,092", "($100)", "($333)", "$4,480")
+## Takeaways
 
-data.frame(x = costs_labels, y = costs_values) %>% 
- kable(caption = "Self-Sufficiency Standard monthly costs",
-       align = "lr",
-       col.names = c("Expense", "Amount")) %>% 
-  kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(9, bold=TRUE)
-
-```
-
-We then subtract these costs from the total take home pay of each household to determine what is left to be spent on housing costs. 
-
-``` {r residual-summary}
-
-summary_labels = c("Monthly take-home pay", "Monthly expenses (-)", "Residual income")
-
-summary_values = c("$4,843", "($4,480)", "$363")
-
-data.frame(x = summary_labels, y = summary_values) %>% 
- kable(caption = "Residual income available for housing for family of four at 80 percent AMI",
-       align = "lr",
-       col.names = c("Pay, expenses, and residual income", "Amount")) %>% 
-  kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(3, bold=TRUE)
-
-```
-
-This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home (\$1,488, from HAI section above) and the market rent for apartments with three or more bedrooms (\$1,463, via CoStar^[Current as of March 31, 2022.]) in Chesterfield County.
-
-As a result, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs. 
+* There are multiple measures that are being utilized to help practitioners communicate the need to address housing affordability in their communities.
+* Each measure has their pros and cons, ranging from data currency to methodology complexity. But the choice of one over the other is dependent on its ultimate use.
+* For this report, and for most other housing needs assessments, the standard 30 percent (cost burden) methodology is preferred for its ubiquity.
+* If you want to better understand how location impacts costs, the CNT H+T may be the most useful. If you want to focus on the unique challenges that individual households face, the residual income approach may be worth the additional analysis required.
