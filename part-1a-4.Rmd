@@ -6,11 +6,15 @@ Concerns over the concentration of affordable housing have been largely born out
 
 ## Research analysis
 
+### Defining "concentration"
+
 Most relevant research on affordable housing concentration focused on the economic impacts that an affordable housing development has on a community---mainly in terms of surrounding property value. According to recent research, the spillover effects of affordable housing developments have largely been conducted without regard to the presence or absence of other nearby developments.^[Voith, Richard et al. (2020). "Is More Affordable Housing Better? The Housing Price Effects of Concentrating LIHTC Developments in Los Angeles." Journal of Housing Economics, forthcoming. Available at SSRN: https://dx.doi.org/10.2139/ssrn.3740758] Therefore, there is little to no consensus on what constitutes a *concentration* of affordable housing.
 
 Research conducted in 2008 on the spatial distribution of LIHTC properties determined that “clustering” of LIHTC properties does occur across metropolitan areas.^[O'Neill, Tara. (2008). "Subsidized Housing, Private Developers and Place: A Spatial Analysis of the Clustering of Low Income Housing Tax Credit Properties in the 25 Largest U.S. Cities." University of New Orleans Theses and Dissertations. 852. https://scholarworks.uno.edu/td/852/] However, the scale of clustering varied among metropolitan areas included in the study---none of which included the Richmond metropolitan area. This clustering was found to primarily the result of program design (i.e. Qualified Allocation Plans in many states favor the development of LIHTC properties in Qualified Census Tracts (QCT) or Difficult Development Areas (DDA)).
 
-In the same year, a report from the National Association of REALTORS® defined concentrations of assisted rental properties differently across metro areas.^[Galster, George C. (2008). "A Review of Existing Research on the Effects of Federally Assisted Housing Programs on Neighboring Residential Property Values." https://www.nar.realtor/ncrer.nsf/files/galsterexsum2.pdf/$FILE/galsterexsum2.pdf] For example, five or more properties within 1,000 to 2,000 feet of one another is a concentration in Denver, compared to or three or more properties within 500 feet in Baltimore County. Attempting to determine any effect these concentrations had on property values, the author finds:
+### Community impacts from affordable housing
+
+In 2008, a report from the National Association of REALTORS® defined concentrations of assisted rental properties differently across metro areas.^[Galster, George C. (2008). "A Review of Existing Research on the Effects of Federally Assisted Housing Programs on Neighboring Residential Property Values." https://www.nar.realtor/ncrer.nsf/files/galsterexsum2.pdf/$FILE/galsterexsum2.pdf] For example, five or more properties within 1,000 to 2,000 feet of one another is a concentration in Denver, compared to or three or more properties within 500 feet in Baltimore County. Attempting to determine any effect these concentrations had on property values, the author finds:
 
 > [That there] appears to be no consistent impact of federally assisted housing on nearby residential property values; impacts are contingent on context, concentration, and scale.
 
@@ -26,7 +30,11 @@ The analysis, which included two properties in Chesterfield County (one subsidiz
 
 :::
 
+### Summary
+
 Based on this review, a concentration of affordable housing varies depending on research methods, as well as community context. In most instances, a concentration of affordable housing was described as being multiple properties within a set radius of one another. To this end, a concentration of affordable housing in Chesterfield County would look very different from a concentration of affordable housing in Hampton, Virginia or even in the City of Richmond.
+
+Furthermore, research shows that the most common concerns about affordable housing's impact to the nearby community are not substantiated. Any claims that a new affordable housing development would have significant negative consequences on its surroundings (measured in particular by property values and crime rates) are generally unfounded.
 
 ## Distribution of lower-cost rental housing in Chesterfield County
 

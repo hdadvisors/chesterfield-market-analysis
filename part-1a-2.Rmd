@@ -321,27 +321,16 @@ data.frame(x = summary_labels, y = summary_values) %>%
 
 This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home (\$1,488, from HAI section above) and the market rent for apartments with three or more bedrooms (\$1,463, via CoStar^[Current as of March 31, 2022.]) in Chesterfield County.
 
-As a result, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs.
-
-
-
-
-
-
-
-
-
-
 For additional examples, we can estimate residual income for some of the county's most common household types and incomes^[Based on 2016-2020 American Community Survey 5-year estimates, regional mean annual wages, Social Security benefit data, and Chesterfield County wage data.]:
 
 *Homeowners*
 
+* Married registered nurse and Chesterfield County police officer, with two school-age kids, and a household income of \$136,410
 * Married couple, aged 65 and over, with no kids, and a monthly Social Security benefit of \$2,739.10 (average amount for retired worker and aged spouse)
-* Married registered nurse and police officer, with two school-age kids, and a household income of \$136,410
 
 *Renters*
 
-* Single CCPS teacher, with no kids, and a household income of \$54,937
+* Single Chesterfield County Public Schools teacher, with no kids, and a household income of \$54,937
 * Single female home health aide, with an infant and preschooler, and a household income of \$23,930
 
 ```{r common-households}
@@ -445,9 +434,9 @@ common_sss <- sss %>%
   )) %>%
   mutate(label = case_when(
     `Family Type` == "a2i0p0s0t0" ~ "Retired senior and spouse",
-    `Family Type` == "a2i0p0s2t0" ~ "Registered nurse and  police officer",
+    `Family Type` == "a2i0p0s2t0" ~ "Registered nurse, police officer, 2 kids",
     `Family Type` == "a1i0p0s0t0" ~ "CCPS teacher",
-    `Family Type` == "a1i1p1s0t0" ~ "Home health aide"
+    `Family Type` == "a1i1p1s0t0" ~ "Home health aide, 2 kids"
     )) %>%
   rowwise() %>%
   mutate(costsum = sum(c_across(`Child Care Costs`:`Child Tax Credit (-)`))) %>%
@@ -461,9 +450,27 @@ common_sss <- sss %>%
   mutate(residual = monthly - costsum + Taxes) %>%
   mutate(taxexpend = hhincome - takehome)
 
+```
+
+The table below shows the monthly take home pay for each of these households, along with their calculated residual incomes based on SSS cost estimates.
+
+```{r residual-takehome}
+
+common_sss %>%
+  select(label, monthly, residual) %>% 
+  mutate(across(2:3, ~ dollar(.x, accuracy = 0.01))) %>%
+  arrange(desc(monthly)) %>% 
+  kable(caption = "Monthly take home pay and residual income for selected households",
+       align = "lrr",
+       col.names = c("Household", "Take home pay", "Residual income")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped"))
 
 ```
 
+These cases show a wide range of housing affordability depended on income and assumed households expenses. For two-earner families with above-average salaries, finding a home to buy in the county is likely not a major challenge. For single workers with strong wages, finding an affordable apartment in Chesterfield may not be difficult. However, student loans, car payments, and other possible debt---not included in this analysis---would change this outcome.
+
+On the other hand, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs. Other forms of public assistance, such as EBT, would also help.
 
 
 ## Takeaways
