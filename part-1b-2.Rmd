@@ -128,7 +128,7 @@ plotly::ggplotly(tenure_plot) %>%
 
 *Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25119.*
 
-```{r tenure-revised, fig.cap="Income distribution by tenure"}
+```{r tenure-revised}
 
 years <- 2010:2020
 
@@ -177,23 +177,41 @@ b25118_data <- b25118_raw %>%
 
 ```
 
-```{r tenure-dist}
+The following graph shows the distribution of households incomes by tenure, for both 2010 and 2020. The Census Bureau does not adjust these income ranges for inflation, so 2010 incomes are in 2010 dollars. Both homeowners and renters experienced upward shifts in their nominal incomes, with significant growth in households earning \$100,000 or more annually. The share of renter households earning between \$50,000 and \$99,999 also increased.
+
+```{r tenure-dist, fig.cap="Income distribution by tenure"}
 
 b25118_viz <-  b25118_data %>% 
   filter(year %in% c(2010, 2020)) %>% 
+  mutate(year = as.character(year)) %>% 
   mutate(income = fct_relevel(income,
-                              levels = c()))
-  
+                              levels = c("Less than $5,000",
+                                         "$5,000 to $9,999",
+                                         "$10,000 to $14,999",
+                                         "$15,000 to $19,999",
+                                         "$20,000 to $24,999",
+                                         "$25,000 to $34,999",
+                                         "$35,000 to $49,999",
+                                         "$50,000 to $74,999",
+                                         "$75,000 to $99,999",
+                                         "$100,000 to $149,999",
+                                         "$150,000 or more")))
 
-gg_hbar_col_facet(b25118_viz,
+tenure_dist_plot <- gg_hbar_col_facet(b25118_viz,
                  x_var = pct,
                  y_var = income,
                  col_var = year,
-                 facet_var = tenure)
-  
+                 facet_var = tenure,
+                 x_labels = scales::label_percent(accuracy = 1),
+                 x_title = "Percent of households",
+                 y_title = "Household income ($)")
+
+plotly::ggplotly(tenure_dist_plot) %>% 
+  plotly_camera()
 
 ```
 
+*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25118.*
 
 ## Age
 
