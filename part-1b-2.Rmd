@@ -90,21 +90,6 @@ b25119_cpi <- b25119_data %>%
   select(year, tenure, dollars20, moe, reliability) %>%
   subset(tenure != "All households")
 
-# tenure <- ggplot(b25119_cpi, aes(x=year, y=dollars20, group=tenure)) +
-#   geom_line(aes(color=tenure)) +
-#   labs(
-#     x = NULL,
-#     y = NULL,
-#     title = "Median household income by tenure",
-#     subtitle = "From 2010 to 2020 in Chesterfield County",
-#     source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
-#   ) +
-#   scale_y_continuous(labels=scales::dollar_format(),
-#                      limits = c(0, NA)) +
-#   scale_x_continuous(breaks = 2010:2020)
-# 
-# ggplotly(tenure)
-
 tenure_plot <- gg_bar_col_facet(
   b25119_cpi,
   x_var = year,
@@ -179,7 +164,7 @@ b25118_data <- b25118_raw %>%
 
 The following graph shows the distribution of households incomes by tenure, for both 2010 and 2020. The Census Bureau does not adjust these income ranges for inflation, so 2010 incomes are in 2010 dollars. Both homeowners and renters experienced upward shifts in their nominal incomes, with significant growth in households earning \$100,000 or more annually. The share of renter households earning between \$50,000 and \$99,999 also increased.
 
-```{r tenure-dist, fig.cap="Income distribution by tenure"}
+```{r tenure-dist, fig.cap="Household income distribution by tenure"}
 
 b25118_viz <-  b25118_data %>% 
   filter(year %in% c(2010, 2020)) %>% 
@@ -202,6 +187,7 @@ tenure_dist_plot <- gg_hbar_col_facet(b25118_viz,
                  y_var = income,
                  col_var = year,
                  facet_var = tenure,
+                 title = "Household income distribution by tenure",
                  x_labels = scales::label_percent(accuracy = 1),
                  x_title = "Percent of households",
                  y_title = "Household income ($)")

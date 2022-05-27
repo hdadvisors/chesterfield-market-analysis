@@ -80,7 +80,8 @@ library(mapview)
 library(stars)
 library(tigris)
 
-chesterfield_tracts <- tracts(state = 51, county = 041)
+chesterfield_tracts <- tracts(state = 51, county = 041,
+                              progress_bar = FALSE)
 
 hcv <- read_csv("data/hcv_by_tract.csv")
 

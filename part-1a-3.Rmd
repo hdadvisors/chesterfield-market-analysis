@@ -254,16 +254,16 @@ hud_insured_pts <- hud_insured %>%
 
 # Create and save map
 
-hud_insured_map <-  mapview(
-  hud_insured_pts,
-  label = "PROPERTY_NAME_TEXT",
-  legend = F,
-  popup = F,
-  burst = F,
-  layer.name = "HUD insured multifamily properties"
-)
-
-htmlwidgets::saveWidget(hud_insured_map@map, "maps/hud_insured_map.html")
+# hud_insured_map <-  mapview(
+#   hud_insured_pts,
+#   label = "PROPERTY_NAME_TEXT",
+#   legend = F,
+#   popup = F,
+#   burst = F,
+#   layer.name = "HUD insured multifamily properties"
+# )
+# 
+# htmlwidgets::saveWidget(hud_insured_map@map, "maps/hud_insured_map.html")
 
 # Render map as html widget
 

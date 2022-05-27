@@ -23,6 +23,7 @@ library(mapboxapi)
 library(mapview)
 library(tidygeocoder)
 library(tmap)
+library(sp)
 ```
 
 ## Background
@@ -41,7 +42,8 @@ For the purposes of this analysis, the study area is defined as the Census tract
 
 r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
-r1_tracts <- tracts("VA", "Chesterfield") %>% 
+r1_tracts <- tracts("VA", "Chesterfield",
+                    progress_bar = FALSE) %>% 
   filter(TRACTCE %in% r1_tracts_list) %>% 
   st_transform(4326)
 
@@ -507,7 +509,7 @@ r1_rentals <- read_csv("data/routeone_costar.csv") %>%
 #   popup = T,
 #   burst = F,
 #   layer.name = "Rental property asking rent ($)")
-#
+# 
 # htmlwidgets::saveWidget(r1_rentals_map@map, "maps/r1_rentals_map.html")
 
 # Render map as html widget
