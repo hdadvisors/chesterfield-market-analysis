@@ -171,6 +171,30 @@ While the Housing Wage is helpful in determining the relationship between jobs a
 
 NLIHC released their latest Out of Reach report in July 2021. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was **\$46,520**, or an hourly wage of **\$22.37**. NLIHC estimates that the typical renter wage in Chesterfield County is \$14.66---nearly $8 short of the wage needed to afford a typical two-bedroom rental in the region. 
 
+## CNT's H+T Affordability Index
+
+The Center for Neighborhood Technology (CNT) developed the [Housing + Transportation (H+T) Affordability Index](https://htaindex.cnt.org/) in 2006 as a result of a Minneapolis-St. Paul report conducted for the Brookings Institution’s Urban Markets Initiative. This affordability measure is a robust indicator of the role that geographic location has on the two major costs faced by American households: housing and transportation.
+
+CNT expands on the 30 percent standard with the inclusion of transportation costs in an affordability standard. Based on extensive research CNT found that 15 percent was a reasonable standard at which to set affordable transportation costs; it follows that a household should pay no more than 45 percent of their household income on housing and transportation costs combined.
+
+CNT’s transportation cost model takes into account several factors that influence how much a typical household pays for transportation, including commuting data, public transportation access, housing density, and consumer behavior.
+
+With the H+T Affordability Index, CNT offers detailed data down to the Census Block Group-level (i.e. a neighborhood-level). The index is provided in terms of a regional typical household based on a median income, the average number of commuters per household, and the average household size. This allows the index to consistently measure the impact of neighborhood factors on a typical household’s housing and transportation costs.
+
+The index is expressed as a set percentage of income---in other words, what the typical regional household spends on housing and transportation based on their home’s location.
+
+In spite of the H+T’s comprehensiveness, it has its pitfalls. The nature of the model requires the use of a standard household which only sets a baseline from which to compare other households to. This can make it difficult to make conclusions about households with incomes lower or higher than that baseline. To help with this, CNT offers the index based on a regional moderate income household---80 percent of the regional median household income, while maintaining the typical regional household size and commuters. 
+
+The index also suffers from outdated data sources. The most recent update of the model took place in 2017 and utilized data that predated this year to calculate the index. Therefore, the index does not capture recent trends in housing and transportation costs that tend to exacerbate cost burden.
+
+**In Chesterfield County:**
+
+The most recent H+T Affordability Index for [Chesterfield County](https://htaindex.cnt.org/fact-sheets/?lat=37.3673217&lng=-77.6077865&focus=county&gid=3038#fs) stated that the typical regional household, with an income of $59,919, 1.19 commuters per household, and a household size of 2.58 people, spent 53 percent of their income on housing and transportation combined. 
+
+CNT disaggregated housing and transportation to account for 30 percent and 23 percent, respectively. 
+
+These costs increase for the regional moderate income household with an income of $47,935---increasing to 63 percent, or 38 percent on housing and 25 percent on transportation. 
+
 ## Residual income approach
 
 The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over ("residual") and available for housing. That residual amount can then be compared to local housing prices to assess affordability.
@@ -257,7 +281,7 @@ Next, we determine the 2021 SSS monthly cost estimates for a four-person househo
 </tbody>
 </table>
 
-Finally, we subtract these costs from the monthly take home pay.
+We then subtract these costs from the total take home pay of each household to determine what is left to be spent on housing costs. 
 
 <table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:residual-summary)Residual income available for housing for family of four at 80 percent AMI</caption>
@@ -285,31 +309,61 @@ Finally, we subtract these costs from the monthly take home pay.
 
 This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home (\$1,488, from HAI section above) and the market rent for apartments with three or more bedrooms (\$1,463, via CoStar^[Current as of March 31, 2022.]) in Chesterfield County.
 
-As a result, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs. 
+For additional examples, we can estimate residual income for some of the county's most common household types and incomes^[Based on 2016-2020 American Community Survey 5-year estimates, regional mean annual wages, Social Security benefit data, and Chesterfield County wage data.]:
 
-## CNT's H+T Affordability Index
+*Homeowners*
 
-The Center for Neighborhood Technology (CNT) developed the [Housing + Transportation (H+T) Affordability Index](https://htaindex.cnt.org/) in 2006 as a result of a Minneapolis-St. Paul report conducted for the Brookings Institution’s Urban Markets Initiative. This affordability measure is a robust indicator of the role that geographic location has on the two major costs faced by American households: housing and transportation.
+* Married registered nurse and Chesterfield County police officer, with two school-age kids, and a household income of \$136,410
+* Married couple, aged 65 and over, with no kids, and a monthly Social Security benefit of \$2,739.10 (average amount for retired worker and aged spouse)
 
-CNT expands on the 30 percent standard with the inclusion of transportation costs in an affordability standard. Based on extensive research CNT found that 15 percent was a reasonable standard at which to set affordable transportation costs; it follows that a household should pay no more than 45 percent of their household income on housing and transportation costs combined.
+*Renters*
 
-CNT’s transportation cost model takes into account several factors that influence how much a typical household pays for transportation, including commuting data, public transportation access, housing density, and consumer behavior.
+* Single Chesterfield County Public Schools teacher, with no kids, and a household income of \$54,937
+* Single female home health aide, with an infant and preschooler, and a household income of \$23,930
 
-With the H+T Affordability Index, CNT offers detailed data down to the Census Block Group-level (i.e. a neighborhood-level). The index is provided in terms of a regional typical household based on a median income, the average number of commuters per household, and the average household size. This allows the index to consistently measure the impact of neighborhood factors on a typical household’s housing and transportation costs.
 
-The index is expressed as a set percentage of income---in other words, what the typical regional household spends on housing and transportation based on their home’s location.
 
-In spite of the H+T’s comprehensiveness, it has its pitfalls. The nature of the model requires the use of a standard household which only sets a baseline from which to compare other households to. This can make it difficult to make conclusions about households with incomes lower or higher than that baseline. To help with this, CNT offers the index based on a regional moderate income household---80 percent of the regional median household income, while maintaining the typical regional household size and commuters. 
 
-The index also suffers from outdated data sources. The most recent update of the model took place in 2017 and utilized data that predated this year to calculate the index. Therefore, the index does not capture recent trends in housing and transportation costs that tend to exacerbate cost burden.
 
-**In Chesterfield County:**
+The table below shows the monthly take home pay for each of these households, along with their calculated residual incomes based on SSS cost estimates.
 
-The most recent H+T Affordability Index for [Chesterfield County](https://htaindex.cnt.org/fact-sheets/?lat=37.3673217&lng=-77.6077865&focus=county&gid=3038#fs) stated that the typical regional household, with an income of $59,919, 1.19 commuters per household, and a household size of 2.58 people, spent 53 percent of their income on housing and transportation combined. 
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:residual-takehome)Monthly take home pay and residual income for selected households</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Household </th>
+   <th style="text-align:right;"> Take home pay </th>
+   <th style="text-align:right;"> Residual income </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Registered nurse, police officer, 2 kids </td>
+   <td style="text-align:right;"> $8,594.58 </td>
+   <td style="text-align:right;"> $5,206.02 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCPS teacher </td>
+   <td style="text-align:right;"> $3,589.33 </td>
+   <td style="text-align:right;"> $2,618.01 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Retired senior and spouse </td>
+   <td style="text-align:right;"> $2,328.24 </td>
+   <td style="text-align:right;"> $250.94 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Home health aide, 2 kids </td>
+   <td style="text-align:right;"> $1,685.92 </td>
+   <td style="text-align:right;"> -$2,000.74 </td>
+  </tr>
+</tbody>
+</table>
 
-CNT disaggregated housing and transportation to account for 30 percent and 23 percent, respectively. 
+These cases show a wide range of housing affordability depended on income and assumed households expenses. For two-earner families with above-average salaries, finding a home to buy in the county is likely not a major challenge. For single workers with strong wages, finding an affordable apartment in Chesterfield may not be difficult. However, student loans, car payments, and other possible debt---not included in this analysis---would change this outcome.
 
-These costs increase for the regional moderate income household with an income of $47,935---increasing to 63 percent, or 38 percent on housing and 25 percent on transportation. 
+On the other hand, lower income families---especially those with greater expenses associated with young children---must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs. Other forms of public assistance, such as EBT, would also help.
+
 
 ## Takeaways
 

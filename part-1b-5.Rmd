@@ -22,6 +22,7 @@ library(tigris)
 library(mapboxapi)
 library(mapview)
 library(tidygeocoder)
+library(tmap)
 ```
 
 ## Background
@@ -36,13 +37,14 @@ A growing Hispanic population along the corridor has helped reignite commercial 
 
 For the purposes of this analysis, the study area is defined as the Census tracts 1003, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09. These tracts all border Route 1 from Northern Chesterfield to Route 10.
 
-```{r r1-base-map, fig.cap="Route 1 study area"}
+```{r r1-base-map, fig.cap="Route 1 study area", message=FALSE}
 
 r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
-# r1_tracts <- tracts("VA", "Chesterfield") %>%
-#   filter(TRACTCE %in% r1_tracts_list)
-# 
+r1_tracts <- tracts("VA", "Chesterfield") %>% 
+  filter(TRACTCE %in% r1_tracts_list) %>% 
+  st_transform(4326)
+
 # r1_map <- mapview(r1_tracts,
 #           alpha = 0.5,
 #           col.regions = "cornflowerblue",
@@ -229,29 +231,33 @@ Sales prices have risen in every part of the study area. The graph below shows m
 
 Some of the highest price growth occurred in tract 1003, which covers the Bensley area between the city line and Chippenham Parkway. Since 2012, the median sales price in that tract rose four-fold, from \$63,100 to \$270,250. To the south, tract 1004.09---bewteen Route 288 and Route 10---had the highest sales price in both 2012 (\$160,170) and 2022 (\$307,500). It is the first tract to exceed the \$300,000 sales price. However, tracts 1004.06 and 1004.07 (which contain much of Bellwood) are on track to also break that ceiling within a year if current market conditions continue.
 
-```{r r1-sales-tract}
+```{r r1-sales-tract, fig.cap="Median single-family home sales price by Census tract", cache=TRUE}
 
-Sys.getenv('GEOCODIO_API_KEY')
+# Sys.getenv('GEOCODIO_API_KEY')
+# 
+# r1_geocode <- r1_sales %>%
+#   mutate(city = "Richmond",
+#          state = "VA") %>%
+#   mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
+#   geocode(address = fulladdress,
+#           method = 'geocodio',
+#           lat = latitude,
+#           long = longitude)
+# 
+# write_rds(r1_geocode, "r1_geocode.rds")
 
-r1_geocode <- r1_sales %>% 
-  mutate(city = "Richmond",
-         state = "VA") %>%
-  mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>% 
-  geocode(address = fulladdress,
-          method = 'geocodio',
-          lat = latitude,
-          long = longitude)
+r1_geocode <- read_rds("r1_geocode.rds")
 
-r1_sf <- r1_geocode %>% 
+r1_sf <- r1_geocode %>%
   st_as_sf(coords = c("longitude", "latitude"),
            crs = 4326)
 
 r1_sales_tract <- st_join(
   r1_tracts,
-  r1_sf) %>% 
+  r1_sf) %>%
   mutate(salesdate = mdy(salesdate),
          year = floor_date(salesdate, "year"),
-         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>% 
+         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>%
   group_by(year, NAME) %>%
   summarise(median = median(salesprice))
   

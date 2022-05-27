@@ -73,9 +73,12 @@ In the Richmond region, the FMR for a two-bedroom rental in 2021 was $1,189.
 :::
 
 ```{r hcvs, fig.cap="HCV utilization in Chesterfield County"}
+
+library(tidyverse)
 library(simplevis)
 library(leaflet)
 library(stars)
+library(tigris)
 
 chesterfield_tracts <- tracts(state = 51, county = 041)
 
@@ -89,7 +92,6 @@ chesterfield_hcv <- chesterfield_tracts %>%
 leaf_sf_col(chesterfield_hcv,
                col_var = HCV_PCT_RENTER_OCC_UNITS
 )
-
 
 knitr::include_graphics("images/hcv_utilization.png")
 
