@@ -477,6 +477,42 @@ gg_line_col(
 
 The rise in rental demand---and subsequently, prices---along the corridor is putting significant pressure on workers who live in the area. In order to afford the average rent of \$1,083 in 2021, a single individual would need to make \$43,320 a year, or $20.83 an hour.
 
+Like the single-family market, the rental market in the study area varies by neighborhood. The map below shows the average asking rent for 17 multifamily properties for which data is available. Rents range from roughly \$700 to \$1,400. However, the only communities with rents well above \$1,000 are the two Colony Village properties just north of Route 288, at the far southern end of the study area.
+
+```{r rents-tract, fig.cap="Asking rent by rental property"}
+
+r1_rentals <- read_csv("data/routeone_costar.csv") %>% 
+  mutate(city = "Richmond", .before = 2) %>%
+  mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
+  geocode(address = fulladdress,
+          method = 'geocodio',
+          lat = latitude,
+          long = longitude) %>% 
+  select(propertyname, units, askingrent, rent, latitude, longitude) %>% 
+  drop_na(askingrent) %>% 
+  st_as_sf(coords = c("longitude", "latitude"),
+           crs = 4326)
+
+r1_rentals_map <- mapview(
+  r1_rentals,
+  label = "propertyname",
+  zcol = "askingrent",
+  legend = T,
+  popup = T,
+  burst = F,
+  layer.name = "Rental property asking rent ($)")
+
+htmlwidgets::saveWidget(r1_rentals_map@map, "maps/r1_rentals_map.html")
+
+# Render map as html widget
+
+knitr::include_url("maps/r1_rentals_map.html", height = "500px")
+
+
+```
+
+*Source: CoStar Group, Inc. Data as of March 31, 2022.*
+
 Some of the most common jobs occupied by corridor residents pay an hourly wage that is nearly half that needed to afford the typical rent. Fast wood workers, home health aides, and childcare workers all have an average hourly wage less than \$12.00. In order to afford a rental on a single income, they would need a monthly rent closer to \$600---a rent that is becoming harder and harder to find even in older properties like the Bellwood Maisonettes that now list their one bedroom apartments at $1,000 a month.
 
 ```{r r1-renter-affordability}
