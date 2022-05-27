@@ -90,7 +90,7 @@ While specific wages for each industry and occupation are not available for the 
 r1_otm %>% 
   filter(level == "Earnings") %>% 
   mutate(name = str_remove_all(name, "\\$"),
-         pct = percent((jobs/sum(jobs)), digits=0)) %>% 
+         pct = formattable::percent((jobs/sum(jobs)), digits=0)) %>% 
   select(2,6) %>% 
   kable(caption = "Monthly earnings for residents in the study area",
        align = "lr",
@@ -499,16 +499,16 @@ r1_rentals <- read_csv("data/routeone_costar.csv") %>%
   st_as_sf(coords = c("longitude", "latitude"),
            crs = 4326)
 
-r1_rentals_map <- mapview(
-  r1_rentals,
-  label = "propertyname",
-  zcol = "askingrent",
-  legend = T,
-  popup = T,
-  burst = F,
-  layer.name = "Rental property asking rent ($)")
-
-htmlwidgets::saveWidget(r1_rentals_map@map, "maps/r1_rentals_map.html")
+# r1_rentals_map <- mapview(
+#   r1_rentals,
+#   label = "propertyname",
+#   zcol = "askingrent",
+#   legend = T,
+#   popup = T,
+#   burst = F,
+#   layer.name = "Rental property asking rent ($)")
+#
+# htmlwidgets::saveWidget(r1_rentals_map@map, "maps/r1_rentals_map.html")
 
 # Render map as html widget
 

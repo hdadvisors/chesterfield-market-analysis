@@ -76,7 +76,7 @@ In the Richmond region, the FMR for a two-bedroom rental in 2021 was $1,189.
 
 library(tidyverse)
 library(simplevis)
-library(leaflet)
+library(mapview)
 library(stars)
 library(tigris)
 
@@ -89,11 +89,18 @@ chesterfield_hcv <- chesterfield_tracts %>%
   left_join(hcv, by = "GEOID") %>%
   select(GEOID,NAME, NAMELSAD, HCV_PUBLIC, HCV_PCT_RENTER_OCC_UNITS, INTPTLAT, INTPTLON, SHAPE_Length, SHAPE_Area, geometry)
 
-leaf_sf_col(chesterfield_hcv,
-               col_var = HCV_PCT_RENTER_OCC_UNITS
-)
+# hcv_map <- mapview(
+#   chesterfield_hcv,
+#   zcol = "HCV_PCT_RENTER_OCC_UNITS",
+#   legend = T,
+#   layer.name = "Percent of occupied rental units with HCVs"
+# )
+# 
+# htmlwidgets::saveWidget(hcv_map@map, "maps/hcv_map.html")
 
-knitr::include_graphics("images/hcv_utilization.png")
+# Render map as html widget
+
+knitr::include_url("maps/hcv_map.html", height = "500px")
 
 ```
 
