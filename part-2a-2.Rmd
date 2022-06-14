@@ -6,15 +6,35 @@ This section presents an analysis of the county’s existing rental supply, focu
 
 Spatial analysis of recent multifamily developments; summarize general physical traits and location; talk about price points and contextualize with amenities or no amenities.
 
+```{r setup}
+
+library(sf)
+```
 
 ```{r recent}
 
-#CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing; Rent Type: Market; Year Built Min: 2000
+#CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing, Proposed, Under Construction; Rent Type: Market; Year Built Min: 2017
 
 #Included Lat/Long in export
 
 recent <- read_csv("data/costar_market_recent.csv") |> 
   clean_names()
+
+#Bring in magisterial districts
+
+districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
+
+districts <- read_sf(districts_geojson)
+
+plot(districts$geometry)
+
+recent <- as.data.frame(recent) |> 
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+
+newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
+
+leaf_sf_col(newbuilds_by_district,
+            col_var = MagDistName)
 
 ```
 
@@ -24,8 +44,22 @@ Spatial analysis of market affordable housing; summarize general physical traits
 
 ```{r noah}
 
+#Costar filter - Chesterfield County, VA, Property type: Multi-family; Construction status: Existing; Rent Type: Market; Class: B or C; CoStar Building Rating: three or fewer stars
+
+#Include manufactured home communities identified by 2016 MHCCV study
+
+
 noah <- read_csv("data/chesterfield_noah_coded.csv") |> 
   clean_names()
+
+noah <- as.data.frame(noah) |> 
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+
+noah_by_district <- st_join(noah, left = FALSE, districts["MagDistName"])
+
+leaf_sf_col(noah_by_district,
+            col_var = MagDistName)
+
 
 ```
 
@@ -42,6 +76,15 @@ affordable <- read_csv("data/nhpd_chesterfield.csv") |>
   filter(subsidy_status != "Inactive") |> 
   select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address)
 
+affordable <- as.data.frame(affordable) |> 
+  st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
+
+affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistName"])
+
+
+leaf_sf_col(affordable_by_district,
+            col_var = MagDistName)
+
 ```
 
 # LIHTC
@@ -55,5 +98,13 @@ lihtc <- read_csv("data/nhpd_chesterfield.csv") |>
   filter(subsidy_status != "Inactive") |> 
   select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address) |> 
   filter(subsidy_name == "LIHTC")
+
+lihtc <- as.data.frame(lihtc) |> 
+  st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
+
+lihtc_by_district <- st_join(lihtc, left = FALSE, districts["MagDistName"])
+
+leaf_sf_col(lihtc_by_district,
+            col_var = MagDistName)
 
 ```
