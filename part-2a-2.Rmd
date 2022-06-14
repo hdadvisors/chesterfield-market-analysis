@@ -36,6 +36,8 @@ newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
 leaf_sf_col(newbuilds_by_district,
             col_var = MagDistName)
 
+
+
 ```
 
 # Market affordable rental
