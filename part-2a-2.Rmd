@@ -9,6 +9,8 @@ Spatial analysis of recent multifamily developments; summarize general physical 
 ```{r setup}
 
 library(sf)
+library(sp)
+
 ```
 
 ```{r recent}
@@ -36,6 +38,27 @@ newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
 leaf_sf_col(newbuilds_by_district,
             col_var = MagDistName)
 
+recentunits <- newbuilds_by_district |> 
+  st_drop_geometry() |> 
+  select("District" = MagDistName, number_of_units)|> 
+  group_by(District) |> 
+  summarise(Units = sum(number_of_units)) |> 
+  mutate(District = str_to_sentence(District))
+
+recent <- gg_bar_col(recentunits,
+               x_var = District,
+               y_var = Units,
+               col_var = District)
+
+plotly::ggplotly(recent) |> 
+  plotly_camera()
+
+districts |> plot_mapbox() |> 
+  add_sf(
+    data = newbuilds_by_district,
+    y = ~latitude,
+    x = ~longitude,
+  )
 
 
 ```
