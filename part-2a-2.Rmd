@@ -4,25 +4,36 @@ This section presents an analysis of the county’s existing rental supply, focu
 
 # Recent multifamily developments
 
-Spatial analysis of recent multifamily developments; summarize general physical traits and location; talk about price points and contextualize with amenities or no amenities.
+As of June 2022, there were 34 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. Thirty-two percent of these recent developments have been constructed or will be constructed in the Midlothian District. Over 56 percent of these properties are under construction or proposed --- with most of this development once again occurring mostly in the Midlothian District.
+
+In 2023, 2,057 new rental homes are expected to be completed --- the most new multifamily homes completed in the last five years. Most recent development consists of low-rise buildings and offer luxury amenities such as a clubhouse, pool, and fitness center.
+
 
 ```{r setup}
 
 library(sf)
 library(sp)
+library(janitor)
+library(tidyverse)
+library(leaflet)
+library(ggplot2)
+library(plotly)
+library(simplevis)
 
 ```
 
 ```{r recent}
 
-#CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing, Proposed, Under Construction; Rent Type: Market; Year Built Min: 2017
+#CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing, Proposed, Under Construction; Year Built Min: 2017
 
 #Included Lat/Long in export
+
+#Might want to consider adding in additional BHC developments into this list of properties. Winchester Forest (160 units), Colbrook (152 units), and Horner Run (49 units). Swift Creek Station should be condensed into a single entry? Different buildings of different stories but same development. I emailed Jessica for information about this development. Would be nice to have that information included. Should probably email Lee about those BHC projects and get addresses and expected year built.
 
 recent <- read_csv("data/costar_market_recent.csv") |> 
   clean_names()
 
-#Bring in magisterial districts
+#Bring in magisterial districts from Chesterfield County Geospace.
 
 districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
 
@@ -33,18 +44,25 @@ plot(districts$geometry)
 recent <- as.data.frame(recent) |> 
   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
+
+#Spatial join of recent developments to magisterial districts.
 newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
 
+#Leaflet map of new builds. Would like to mask to just Chesterfield County.
 leaf_sf_col(newbuilds_by_district,
             col_var = MagDistName)
 
+#Summarize number of units by magisterial districts.
 recentunits <- newbuilds_by_district |> 
   st_drop_geometry() |> 
   select("District" = MagDistName, number_of_units)|> 
+  mutate_at(vars("number_of_units"),
+                 ~replace_na(.,0)) |> 
   group_by(District) |> 
   summarise(Units = sum(number_of_units)) |> 
   mutate(District = str_to_sentence(District))
 
+#Create bar chart of number of units by magisterial districts.
 recent <- gg_bar_col(recentunits,
                x_var = District,
                y_var = Units,
@@ -53,19 +71,44 @@ recent <- gg_bar_col(recentunits,
 plotly::ggplotly(recent) |> 
   plotly_camera()
 
+#Summarize number of units by year to show future development timeline.
+status_units <- newbuilds_by_district |> 
+  st_drop_geometry() |> 
+  select("Status" = building_status, number_of_units, "Year" = year_built)|> 
+  mutate_at(vars("number_of_units"),
+                 ~replace_na(.,0)) |> 
+  group_by(Year) |> 
+  summarise(Units = sum(number_of_units)) |> 
+  filter(Year != 2027)
+
+status_timeline <- gg_bar(status_units,
+                              x_var = Year,
+                              y_var = Units)
+
+plotly::ggplotly(status_timeline) |> 
+  plotly_camera()
+
+#It might be helpful to size dots by number of units. Colors need to be changed to be more visible. 
 districts |> plot_mapbox() |> 
   add_sf(
     data = newbuilds_by_district,
     y = ~latitude,
     x = ~longitude,
+    color = ~ MagDistName
   )
+
+#Determining average number of units by property. Remove NA values.
+average_units <- mean(newbuilds_by_district$number_of_units, na.rm = TRUE)
 
 
 ```
 
 # Market affordable rental
 
-Spatial analysis of market affordable housing; summarize general physical traits and location; previously covered age and price point; pull in some information from previous but expand
+Market affordable rental housing is spread throughout each district of Chesterfield County. However, the majority of market affordable rentals lie along the city-county border. This is a typical trend in most metropolitan areas, wherein early suburban development in the mid- to late 20th century led to small garden apartment development.
+
+
+
 
 ```{r noah}
 
@@ -73,6 +116,7 @@ Spatial analysis of market affordable housing; summarize general physical traits
 
 #Include manufactured home communities identified by 2016 MHCCV study
 
+#I still have some concerns about the filters chosen because they include some newer builds like Colony Village II. I think there should be an additional filter for year built. I would want to exclude anything built after 1999. I would also remove 3201 Lady Marian Ln which is an over 4,000 SF single-family home. These changes would need to be reflected in previous Part 1 section on NOAH. 
 
 noah <- read_csv("data/chesterfield_noah_coded.csv") |> 
   clean_names()
@@ -80,14 +124,38 @@ noah <- read_csv("data/chesterfield_noah_coded.csv") |>
 noah <- as.data.frame(noah) |> 
   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
+#Spatial join NOAH properties to magisterial districts.
 noah_by_district <- st_join(noah, left = FALSE, districts["MagDistName"])
+
+noah_by_district <- noah_by_district |> 
+  filter(is.na(yearbuilt)|yearbuilt<2000) |> 
+  filter(address != "3201 Lady Marian Ln")
 
 leaf_sf_col(noah_by_district,
             col_var = MagDistName)
 
+#Summarize number of NOAH units by magisterial districts. Add in a note about NA values
+noahunits <- noah_by_district |> 
+  st_drop_geometry() |> 
+  select("District" = MagDistName, units)|> 
+  mutate_at(vars("units"),
+                 ~replace_na(.,0)) |> 
+  group_by(District) |> 
+  summarise(Units = sum(units)) |> 
+  mutate(District = str_to_sentence(District))
+
+#Create bar chart for NOAH units by magisterial districts.
+noah_count <- gg_bar_col(noahunits,
+               x_var = District,
+               y_var = Units,
+               col_var = District)
+
+plotly::ggplotly(noah_count) |> 
+  plotly_camera()
+
+
 
 ```
-
 
 # Affordable rental
 
@@ -104,11 +172,34 @@ affordable <- read_csv("data/nhpd_chesterfield.csv") |>
 affordable <- as.data.frame(affordable) |> 
   st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
 
+
+#Spatial join NHPD properties to magisterial districts.
 affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistName"])
 
 
 leaf_sf_col(affordable_by_district,
             col_var = MagDistName)
+
+#Summarize number of NOAH units by magisterial districts. Add in a note about NA values
+affunits <- affordable_by_district |> 
+  st_drop_geometry() |> 
+  select("District" = MagDistName, "Units" = assisted_units)|> 
+  group_by(District) |> 
+  summarise(sum(Units)) |> 
+  mutate(District = str_to_sentence(District))
+
+#Create bar chart for NOAH units by magisterial districts.
+affcount <- gg_bar_col(affunits,
+               x_var = District,
+               y_var = Units,
+               col_var = District)
+
+plotly::ggplotly(affcount) |> 
+  plotly_camera()
+
+
+
+
 
 ```
 
