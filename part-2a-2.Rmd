@@ -4,9 +4,14 @@ This section presents an analysis of the county’s existing rental supply, focu
 
 # Recent multifamily developments
 
-As of June 2022, there were 34 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. Thirty-two percent of these recent developments have been constructed or will be constructed in the Midlothian District. Over 56 percent of these properties are under construction or proposed --- with most of this development once again occurring mostly in the Midlothian District.
+The last five years have shown fluctuating multifamily development completions based on CoStar's proprietary commercial real estate database. From zero completed units in 2018 to a five year high of 1,569 units in 2020, development has been sporadic but is expected to grow significantly in the coming years. Most recent development has consisted of low-rise buildings, offering luxury amenities such as clubhouses, pools, and fitness centers.
 
-In 2023, 2,057 new rental homes are expected to be completed --- the most new multifamily homes completed in the last five years. Most recent development consists of low-rise buildings and offer luxury amenities such as a clubhouse, pool, and fitness center.
+As of June 2022, there were 34 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
+
+Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. The overwhelming majority of these developments will be completed in the Midlothian District.
+
+This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers.
+
 
 
 ```{r setup}
@@ -74,16 +79,15 @@ plotly::ggplotly(recent) |>
 #Summarize number of units by year to show future development timeline.
 status_units <- newbuilds_by_district |> 
   st_drop_geometry() |> 
-  select("Status" = building_status, number_of_units, "Year" = year_built)|> 
-  mutate_at(vars("number_of_units"),
+  select("Status" = building_status, "Units" = number_of_units, "Year" = year_built, "District" = MagDistName)|> 
+  mutate_at(vars("Units"),
                  ~replace_na(.,0)) |> 
-  group_by(Year) |> 
-  summarise(Units = sum(number_of_units)) |> 
   filter(Year != 2027)
 
-status_timeline <- gg_bar(status_units,
-                              x_var = Year,
-                              y_var = Units)
+status_timeline <- gg_bar_col(status_units,
+                          x_var = Year,
+                          y_var = Units,
+                          col_var = District)
 
 plotly::ggplotly(status_timeline) |> 
   plotly_camera()
@@ -107,7 +111,7 @@ average_units <- mean(newbuilds_by_district$number_of_units, na.rm = TRUE)
 
 Market affordable rental housing is spread throughout each district of Chesterfield County. However, the majority of market affordable rentals lie along the city-county border. This is a typical trend in most metropolitan areas, wherein early suburban development in the mid- to late 20th century led to small garden apartment development.
 
-
+The Bermuda District, which includes the entirety of the Route One corridor, contains the largest number of market affordable rental properties
 
 
 ```{r noah}
@@ -151,6 +155,16 @@ noah_count <- gg_bar_col(noahunits,
                col_var = District)
 
 plotly::ggplotly(noah_count) |> 
+  plotly_camera()
+
+#Create bar chart showing type by magisterial district.
+
+noah_t_district <- gg_bar_col(noah_by_district,
+                              x_var = MagDistName,
+                              y_var = units,
+                              col_var = style)
+
+plotly::ggplotly(noah_t_district) |> 
   plotly_camera()
 
 
