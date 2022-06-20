@@ -1,16 +1,108 @@
 # Market comparison
 
-This section will make comparisons between recent multifamily developments and existing rental supply in the county. 
-
-## Location
-
-Compare location of new multifamily development versus older multifamily. Where is new being built most? Is what's being built close to employment opportunities? Is it clost to grocery and healthcare?
+This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, "recent" developers are those built in the past five years, are under construction, or are proposed.
 
 ## Price
 
-Is most new multifamily luxury? Describe within the context of rental price, as well as amenities.
+Compare average asking rent prices (also by bedroom)
 
-##  Unit mix
+```{r price}
 
-What's being built? More studios and one-bedrooms? Is the market responding to the demand?
+# Load in costar_rent_recent.csv
+# csv contains rent and inflation-adjusted rent for all units and by bedrooms
+# Average rents for properties built in 2017 and after, under construction, and proposed
 
+# Load in costar_rent_past.csv
+# csv contains rent and inflation-adjusted rent for all units and by bedrooms
+# Average rents for properties built in 2016 or earlier
+
+# Both files cover 2017 Q1 -> 2022 Q2
+
+# Filter "studio" out for both
+
+
+```
+
+- LINE CHART OF AVERAGE ASKING RENT FOR RECENT DEVELOPMENTS VS PAST DEVELOPMENTS
+- LINE CHART OF AVERAGE ASKING RENT BY BEDROOM FOR RECENT DEVELOPMENTS VS PAST DEVELOPMENTS (FACETED BY BEDROOM)
+
+## Unit mix
+
+Compare physical characterists of units
+
+``` {r unit-mix}
+
+# Need list of existing, proposed, or under construction properties with... 
+# - Number of units
+# - Style (mid-rise, garden, etc)
+# - Number of 1, 2, 3, and 4 bedroom units
+# - Avg sqft for 1, 2, and 3 bedroom units
+
+```
+
+- BAR CHART: PERCENT OF UNITS BY STYLE (COLORED OR FACETED BY RECENT/EXISTING)
+- BAR CHART: PERCENT OF TOTAL UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING)
+- BAR CHART: AVERAGE SIZE (SQFT) OF UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING)
+
+## Amenities
+
+Compare presence of common amenities:
+- "Clubhouse"
+- "Property Manager on Site"
+- "Pool"
+- "Fitness Center"
+
+``` {r amenities}
+
+# Need list of existing, proposed, or under construction properties with "Amenities" field
+# Create new columns for each amenity that will show T/F
+# If amenity is listed in original CoStar field, its respective column will be TRUE
+# Use stringr::str_detect()
+# Example: mutate(pool = str_detect(amenities, "Pool"))
+
+```
+
+- BAR CHART: PERCENT OF UNITS BY PRESENCE OF AMENITY (COLORED OR FACETED BY RECENT/EXISTING)
+
+## Location
+
+Copy / re-state what is already done in 2a-2?
+
+Describe locations/neighborhoods where newer development is most common
+
+``` {r location}
+
+
+
+```
+
+- MAP OF RECENT DEVELOPMENTS (COLORED BY EXISTING, UNDER CONSTRUCTION, AND PROPOSED)
+- BAR CHART: PERCENT OF UNITS BY MAGISTERIAL DISTRICT (COLORED OR FACETED BY RECENT/EXISTING)
+
+### Proximity to public transportation
+
+Compare location of new multifamily development versus older multifamily relative to access to public transportation
+
+- Within or outside of 1/2 mile buffer from GRTC stop
+
+### Proximity to schools
+
+Compare location of new multifamily development versus older multifamily relative to access to public schools
+
+- Within or outside of 30 minute drive time
+
+### Proximity to grocery stores
+
+Compare location of new multifamily development versus older multifamily relative to access to grocery stores
+
+- Within or outside of 1/2 mile buffer from grocery store
+
+### Proximity to healthcare
+
+Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
+
+- Within or outside of 15 minute drive time
+
+### Proximity to job centers
+
+TBD, waiting for feedback from county staff
