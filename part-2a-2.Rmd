@@ -2,18 +2,6 @@
 
 This section presents an analysis of the county’s existing rental supply, focusing on the amount and location of rental housing units. 
 
-# Recent multifamily developments
-
-The last five years have shown fluctuating multifamily development completions based on CoStar's proprietary commercial real estate database. From zero completed units in 2018 to a five year high of 1,569 units in 2020, development has been sporadic but is expected to grow significantly in the coming years. Most recent development has consisted of low-rise buildings, offering luxury amenities such as clubhouses, pools, and fitness centers.
-
-As of June 2022, there were 34 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
-
-Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. The overwhelming majority of these developments will be completed in the Midlothian District.
-
-This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers.
-
-
-
 ```{r setup}
 
 library(sf)
@@ -26,6 +14,16 @@ library(plotly)
 library(simplevis)
 
 ```
+
+## Recent multifamily developments
+
+The last five years have shown fluctuating multifamily development completions based on CoStar's proprietary commercial real estate database. From zero completed units in 2018 to a five year high of 1,569 units in 2020, development has been sporadic but is expected to grow significantly in the coming years. Most recent development has consisted of low-rise buildings, offering luxury amenities such as clubhouses, pools, and fitness centers.
+
+As of June 2022, there were 34 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
+
+Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. The overwhelming majority of these developments will be completed in the Midlothian District.
+
+This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers.
 
 ```{r recent}
 
@@ -107,7 +105,10 @@ average_units <- mean(newbuilds_by_district$number_of_units, na.rm = TRUE)
 
 ```
 
-# Market affordable rental
+- MAP OF RECENT DEVELOPMENTS
+- BAR CHART OF UNITS BY MAGISTERIAL DISTRICT
+
+## Market affordable rental
 
 Market affordable rental housing is spread throughout each district of Chesterfield County. However, the majority of market affordable rentals lie along the city-county border. This is a typical trend in most metropolitan areas, wherein early suburban development in the mid- to late 20th century led to small garden apartment development.
 
@@ -171,9 +172,17 @@ plotly::ggplotly(noah_t_district) |>
 
 ```
 
-# Affordable rental
+- MAP OF MARKET AFFORDABLE (TWO COLORS FOR MULTIFAMILY AND MHCs)
+- STACKED BAR CHART OF UNITS BY MAGISTERIAL DISTRICT (TWO COLORS FOR MULTIFAMILY AND MHCs)
 
-Spatial analysis of affordable housing projects; describe projects, developer, subsidy, unit mix; status of subsidy; ask Jessica for list of state-funded projects in county
+## Affordable rental
+
+Spatial analysis of affordable housing projects. Generally describe:
+- Project types,
+- Developer types (nonprofit or for profit)
+- Unit mix
+- Subsidy types (focus on LIHTC)
+- Status of subsidy (when expire?)
 
 
 ```{r affordable}
@@ -194,7 +203,7 @@ affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistNa
 leaf_sf_col(affordable_by_district,
             col_var = MagDistName)
 
-#Summarize number of NOAH units by magisterial districts. Add in a note about NA values
+#Summarize number of NHPD units by magisterial districts. Add in a note about NA values
 affunits <- affordable_by_district |> 
   st_drop_geometry() |> 
   select("District" = MagDistName, "Units" = assisted_units)|> 
@@ -202,7 +211,7 @@ affunits <- affordable_by_district |>
   summarise(sum(Units)) |> 
   mutate(District = str_to_sentence(District))
 
-#Create bar chart for NOAH units by magisterial districts.
+#Create bar chart for NHPD units by magisterial districts.
 affcount <- gg_bar_col(affunits,
                x_var = District,
                y_var = Units,
@@ -212,29 +221,17 @@ plotly::ggplotly(affcount) |>
   plotly_camera()
 
 
-
-
-
 ```
 
-# LIHTC
+- MAP OF AFFORDABLE PROPERTIES (COLOR BY SUBSIDY TYPE)
+- STACKED BAR CHART OF UNITS BY MAGISTERIAL DISTRICT (COLOR BY SUBSIDY TYPE)
 
-Low-income Housing Tax Credit projects are currently one of the major ways in which affordable housing is developed across the country. This program utilizes a tax incentive to 
+### Price comparison
 
-```{r lihtc}
+- Compare affordable (rent-restricted) rents to market-rate (non-affordable) rents
+- For market-rate, include ALL other CoStar properties, not just NOAH
+- Show at county level and magisterial district
+- Since CoStar is showing average rent by property, don't want to average the averages
+- Could do colored box plot where color is affordable vs non-affordable, each column is magisterial district
 
-lihtc <- read_csv("data/nhpd_chesterfield.csv") |> 
-  clean_names() |> 
-  filter(subsidy_status != "Inactive") |> 
-  select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address) |> 
-  filter(subsidy_name == "LIHTC")
-
-lihtc <- as.data.frame(lihtc) |> 
-  st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
-
-lihtc_by_district <- st_join(lihtc, left = FALSE, districts["MagDistName"])
-
-leaf_sf_col(lihtc_by_district,
-            col_var = MagDistName)
-
-```
+https://statisticsnz.github.io/simplevis/reference/gg_boxplot_col.html
