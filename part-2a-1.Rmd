@@ -19,15 +19,16 @@ library(zoo)
 library(janitor)
 
 ```
+
 ## Rental housing stock
 
 The proliferation of rental housing throughout Chesterfield County has been the result of affordability challenges across the region, as well as an increasing preference for [young professionals and baby boomers] (https://www.freddiemac.com/research/consumer-research/20180404-preference-for-renting)
 
-
 ### Total renters
+
 Over the past decade, the number of renter households in the county has steadily been increasing. From 2010 to 2019, the number of renters in the county has gone from 24,312 to 30,273 --- a 24 percent increase. 
 
-In 2020, there was a two percent decrease in renters. But this decrease of 633 renters can be attributed to the pitfalls of the 2020 Census count.
+In 2020, there was a two percent decrease in renters. But this decrease of 633 renters may be attributed to the collection challenges of the 2020 Census count.
 
 ```{r tenure}
 
@@ -77,9 +78,9 @@ plotly::ggplotly(renters_plot) %>%
 
 ```
 
-### Housing type
+### Rental housing type
 
-Single-family home rentals (SFR) in the county have been on the rise. In 2010, 8,482 single-family detached homes were being used as rentals. By 2020, that number had increased to 10,894 --- just over a third of all rental housing in the county. This equates to a 28 percent increase.
+[general description of rental housing type trends]
 
 ```{r structure}
 
@@ -130,6 +131,10 @@ plotly::ggplotly(structure_plot) %>%
 
 ```
 
+#### Single-family rentals
+
+Single-family home rentals (SFR) in the county have been on the rise. In 2010, 8,482 single-family detached homes were being used as rentals. By 2020, that number had increased to 10,894 --- just over a third of all rental housing in the county. This equates to a 28 percent increase.
+
 SFRs are a growing trend in the rental market as lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked avoid higher density apartments and had the ability to work and learn remotely.
 
 (https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/)
@@ -139,15 +144,17 @@ SFRs are a growing trend in the rental market as lifestyle changes and affordabi
 ```
 
 
+#### Manufactured homes
+
 While single-family homes saw a major increase in rentals, manufactured homes experienced a significant decrease. From 791 in 2010 to 527 in 2020, the reported number of manufactured homes in the county has been cut down by a third.
 
-```
-CALL OUT BOX ON MANUFACTURED HOUSING COMMUNITIES
+[explanation of why MHs are undercounted in ACS data because most of the county's MH are concentrated in MHCs]
 
 Manufactured home communities are a valuable source of affordable housing across Virginia. Chesterfield County is home to a significant amount of MHCs --- x in total. However, a significant issue faces manufactured home community residents. MHCs often give residents two options, 1) a resident may rent both their home and the lot on which that home is placed, or 2) a resident may own their home and rent the lot on which that home is placed.
 
 In both cases, a resident is renting, but those residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. 
-```
+
+### Number of bedrooms
 
 Most rental housing in the county are two-bedroom and three-bedroom homes. This accounts for nearly half of all rental housing in the county (68 percent). 
 
@@ -201,6 +208,8 @@ plotly::ggplotly(bedroom_plot) %>%
   plotly_camera()
 
 ```
+
+### Rental housing age
 
 The majority of existing rental housing (11,229 rental homes) in the county was built between 1960 and 1999. This represents a significant portion of rental housing that is at least 20 years of age. Aging rental homes often mean increasing maintenance costs or the need for significant renovations that get passed down to tenants. 
 
@@ -257,25 +266,14 @@ plotly::ggplotly(built_plot) %>%
 
 ```
 
-
-
-
-CoStar does not collect data on single-family rentals, therefore it is difficult to understand the single-family rental, or SFR, market in the county. 
-
-Across CoStar's multifamily database, however, there are 118 existing rental properties. This excludes nine manufactured home parks identified by the Manufactured Housing Community Coalition of Virginia in their 2016 Central Virginia study.
-
-There are at least 23,377 homes across these 127 properties.
-
-
-```{r costar-buildings}
-
-existing <- read_csv("data/costar_existing.csv")
-
-```
-
 ## Rental housing costs
 
-From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q3 2021, average asking rent in the county reached a two decade high of $1,510. 
+The following data are from CoStar's multifamily database, which includes 118 existing rental properties in the county. Nine manufactured home communities are not found in this database; therefore, accurate and recent rent amounts for those properties are not available. Similarly, the single-family rental market is not tracked by CoStar, so these data do not include standalone homes for rent.
+
+### Average asking rent
+
+From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q3 2021, average asking rent in the county reached a two decade high of $1,510.
+
 ```{r costar-rents}
 
 # This is pulling in average rents for all existing multifamily properties in the county. For some reason, this differs from the previous average rent calculations for some reason. I'd resolve this by updating the previous visualization in Part-1B-4.
@@ -316,6 +314,8 @@ plotly::ggplotly(costar_rent) %>%
 
 
 ```
+
+### Rent by bedrooms
 
 The number of bedrooms often impacts rental housing costs --- simply put, more bedrooms equals higher rent. But in Chesterfield County, studio apartments command a higher average asking rent than housing with more bedrooms. In Q1 2022, the average asking rent for a studio apartment was \$2,300, roughly \$600 more than a three-bedroom apartment. 
 
@@ -365,11 +365,13 @@ plotly::ggplotly(costar_br_rent) %>%
 
 ## Rental housing construction
 
-Like most of the country, the Great Recession negatively impacted home building in the county --- both in terms of single-family and multifamily housing. That impact was most felt among single-family home construction, however. Pre-recession, the average single-family residential construction permits numbered 2,050 and post-recession single-family home starts have been slow to recover to that pre-recession era. It was not until 2020 that the county exceeded that pre-recession average. 
+Like most of the country, the Great Recession negatively impacted home building in the county --- both in terms of single-family and multifamily housing. That impact was most felt among single-family home construction, however. Pre-recession, the average single-family residential construction permits numbered 2,050 and post-recession single-family home starts have been slow to recover to that pre-recession era. It was not until 2020 that the county exceeded that pre-recession average.
+
+### Multifamily building permits
 
 Multifamily (five or more units) home starts were not as impacted by the recession due to the generally low number of multifamily construction permits. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466. 
 
-Duplexes and smaller multifamily homes like tri-plexes and quads have not seen substantial construction in the county. These types of properties often make up what is called "[Missing Middle](https://missingmiddlehousing.com/)" housing, a term used to describe smaller multifamily and clustered single-family housing that often offers affordability by design (i.e. smaller homes typically mean lower price).
+Duplexes and smaller multifamily homes like tri-plexes and quads have not seen substantial construction in the county. These types of properties often make up what is called "[Missing Middle](https://missingmiddlehousing.com/)" housing, a term used to describe smaller multifamily and clustered single-family housing that often offers affordability by design (i.e., smaller homes typically mean lower price).
 
 ```{r permits}
 
@@ -424,6 +426,8 @@ plotly::ggplotly(permits) |>
   plotly_camera()
 
 ```
+
+### Proposed and in-progress developments
 
 There are currently 19 proposed or under construction multifamily developments in the county --- an estimated total of 5,039 rental homes^[Three properties do not have number of units listed and are slated for a 2027 completion date]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
 
