@@ -4,7 +4,7 @@ This section summarizes interviews and additional outreach with non-profit and f
 
 ## Process
 
-To gather additional details on the state of Chesterfield County's rental market, a total of ___ persons from ___ organizations were interviewed in early June 2022. These interviews collected views from:
+To gather additional details on the state of Chesterfield County's rental market, a total of ___ persons from ___ organizations were interviewed in early June 2022. These interviews collected input from:
 
 * For-profit multifamily and mixed use developers,
 * Nonprofit multifamily developers and property managers, and
@@ -14,37 +14,37 @@ Specific interview topics and questions varied, but were organized around the pr
 
 ## Trends
 
-- County will only get more expensive -- but acceleration may slow as interest rates rise
-- Market has "shot straight up"
-- Far more demand than supply
-- Class A, B, and C apartment properties are all performing very well
-- Increasing demand for family-sized apartments
-- Quality of schools can drive migration of families with young children from Richmond and Tri-Cities
-- Class A demand is from WFH persons/households and long-term county residents downsizing
+All interviewees strongly agreed that the demand for rental housing in the county far exceeds the current supply. One individual stated that the market has "shot straight up"---and that the county will only get more expensive in the near future. Recent interest rate increases may cool the pace of new development, along with pricing out homebuyers with marginal incomes. Together, these symptoms would place additional rental demand on an already limited supply.
 
-NOAH
-- Not as many property sales as higher class assets
-- Long-term owners are tax averse and don't want to deal with selling process and capital gains tax
+The growing demand for rental homes can be attributed to many different household types, but respondents noted several important groups. First, families with one or more children, but with incomes too low to purchase a home, are looking for apartments with three or more bedrooms. County schools are often a motivator, as interviewees noted anecdotal increases in households moving from the City of Richmond and the Tri-Cities areas. Due to their higher childcare and other household costs, these families need an affordable rent to balance their budgets.
 
-Affordable
-- Long waiting lists for affordable apartments
-- Demand for affordable senior housing will grow as life expectancy continues to rise
+::: {.rmdnote}
+
+Property managers of affordable rental communities stated that current waitlists for apartments range from 30 to more than 100 applicants. 
+
+:::
+
+Second, there is an acute need for more senior and age-restricted homes, particularly options that are affordable to those on low and/or fixed incomes. These residents have aged out of their previous home due to maintenance or accessibility issues. Finally, among renters who are currently being served by new Class A development, most are one- or two-person households moving into the area to work from home, or are long-term county residents willingly downsizing from a larger home.
 
 ## Challenges
 
-- Expectation for first-floor commerical component can make financing difficult (standalone multifamily is easier)
+Interviewees described a range of obstacles preventing the creation of new rental homes to meet demand. These challenges focus on market conditions, development regulations, and changing attitudes about rental housing.
+
+First, respondents shared that new development has gotten more difficult due to increasing acquisition, material, and labor costs. These trends are currently found in nearly every part of the nation, as well. Among existing properties, Class A, B, and C multifamily assets are all "performing very well," which demonstrates demand from a wide range of incomes.
+
+However, owners of lower cost, market-affordable rental properties (NOAH) have been less willing to sell their assets, which could lead to revitalization in certain areas, as well as continued preservation of attainable housing options. These long-term, local owners are hesitant to deal with the selling process, and are tax averse with respect to capital gains.
+
+In areas where property values may be lower, prevailing market and community conditions can make development unfavorable. The northern Route 1 corridor was noted as an important example: despite its proximity to downtown Richmond and I-95, crime issues were repeatedly noted as a turn-off for developers. Furthermore, several interviewees stated that the low incomes found along that corridor would not support new market-rate development.
+
+Second, various development regulations were listed as challenges imposed by the county.
+
 - 8 out of 10 calls (to broker) are from pure multifamily developers who don't do mixed use
-
-Affordable
-- Increasing political obstructions for affordable rental housing development, especially along Route 1 ("victim of its own success" following some successful developments)
-- Limited opportunities to purchase existing NOAH to preserve as affordable (too expensive)
+- Expectation for first-floor commerical component can make financing difficult (standalone multifamily is easier)
 - Utility connection and permit fees can be high relative to other localities, along with road proffers
-- High acquisition costs overall
 
-Corridors
-- Route 1 associated with crime, whether reality reflects scale of problem or not
-- "Afraid" to build above Willis Rd
-- Market study would probably not be favorable for market-rate development along northern areas of Route 1
+Finally, nearly all respondents mentioned increasing public and political concern about new rental housing, particularly focused on apartments using public subsidy to serve lower incomes.
+
+- Increasing political obstructions for affordable rental housing development, especially along Route 1 ("victim of its own success" following some successful developments)
 
 ## Opportunities
 
