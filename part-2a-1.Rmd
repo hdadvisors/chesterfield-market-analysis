@@ -268,7 +268,9 @@ This estimate from the U.S. Census Bureau's American Community Survey severely u
 
 Manufactured home communities are a valuable source of affordable housing across Virginia. Chesterfield County is home to a significant amount of MHCs --- about 1,500 in total. However, a significant issue faces manufactured home community residents. MHCs often give residents two options, 1) a resident may rent both their home and the lot on which that home is placed, or 2) a resident may own their home and rent the lot on which that home is placed.
 
-In both cases, a resident is renting, but those residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. 
+In both cases, a resident is renting, but those residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. MHCs are increasingly at-risk of redevelopment. In 2021, Suburban Village, along the Midlothian Turnpike, entered the news after a Maryland-based investment firm purchased the community for $23 million. As the county's third largest MHC with nearly 220 households, residents and advocates fear for substantial lot rent increases or displacement.
+
+In contrast to growing investment firm interest in MHCs, local affordable housing nonprofit, project:HOMES, purchased a 52-unit MHC in 2021. Since the purchase, project:HOMES has made significant improvements to community infrastructure and has been working to replace distressed homes with new high-quality and energy efficient manufactured homes (with support from Virginia Tech's Virginia Center for Housing Research and Virginia Housing). project:HOMES's ultimate goal is to empower residents to take ownership of the community.
 
 
 ### Number of bedrooms

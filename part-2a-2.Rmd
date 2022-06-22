@@ -112,7 +112,7 @@ average_units <- mean(newbuilds_by_district$number_of_units, na.rm = TRUE)
 
 Market affordable rental housing is spread throughout each district of Chesterfield County. However, the majority of market affordable rentals lie along the city-county border. This is a typical trend in most metropolitan areas, wherein early suburban development in the mid- to late 20th century led to small garden apartment development.
 
-The Bermuda District, which includes the entirety of the Route One corridor, contains the largest number of market affordable rental properties
+The Bermuda District, which includes the entirety of the Route One corridor, contains the largest number of market affordable rental properties, specifically manufactured home communities (8 from the city border down to Route 10). 
 
 
 ```{r noah}
@@ -134,7 +134,12 @@ noah_by_district <- st_join(noah, left = FALSE, districts["MagDistName"])
 
 noah_by_district <- noah_by_district |> 
   filter(is.na(yearbuilt)|yearbuilt<2000) |> 
-  filter(address != "3201 Lady Marian Ln")
+  filter(address != "3201 Lady Marian Ln") |> 
+  mutate(type = case_when(
+    style == "Garden" ~ "Multifamily",
+    style == "Low-Rise" ~ "Multifamily",
+    TRUE ~ style
+  ))
 
 leaf_sf_col(noah_by_district,
             col_var = MagDistName)
@@ -149,7 +154,7 @@ noahunits <- noah_by_district |>
   summarise(Units = sum(units)) |> 
   mutate(District = str_to_sentence(District))
 
-#Create bar chart for NOAH units by magisterial districts.
+#Create bar chart for total NOAH units by magisterial districts.
 noah_count <- gg_bar_col(noahunits,
                x_var = District,
                y_var = Units,
@@ -160,13 +165,23 @@ plotly::ggplotly(noah_count) |>
 
 #Create bar chart showing type by magisterial district.
 
-noah_t_district <- gg_bar_col(noah_by_district,
+noah_sum_district <- noah_by_district |> 
+  group_by(MagDistName, type) |> 
+  summarise(Units = sum(units))
+
+noah_t_district <- gg_bar_col(noah_sum_district,
                               x_var = MagDistName,
-                              y_var = units,
-                              col_var = style)
+                              y_var = Units,
+                              stack = TRUE,
+                              col_var = type)
 
 plotly::ggplotly(noah_t_district) |> 
   plotly_camera()
+
+#Create map showing NOAH by type.
+
+leaf_sf_col(noah_by_district,
+            col_var = type)
 
 
 
@@ -183,7 +198,7 @@ Spatial analysis of affordable housing projects. Generally describe:
 - Unit mix
 - Subsidy types (focus on LIHTC)
 - Status of subsidy (when expire?)
-
+```
 
 ```{r affordable}
 
