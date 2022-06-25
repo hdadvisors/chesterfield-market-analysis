@@ -23,8 +23,7 @@ As of June 2022, there were 34 existing market-rate multifamily developments tha
 
 Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. The overwhelming majority of these developments will be completed in the Midlothian District.
 
-This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers.
-
+This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers --- providing less risk when compared to redevelopment of brownfield sites. 
 ```{r recent}
 
 #CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing, Proposed, Under Construction; Year Built Min: 2017
@@ -114,6 +113,13 @@ Market affordable rental housing is spread throughout each district of Chesterfi
 
 The Bermuda District, which includes the entirety of the Route One corridor, contains the largest number of market affordable rental properties, specifically manufactured home communities (8 from the city border down to Route 10). 
 
+However, market affordable rentals are largely located in garden style apartments. Garden style apartments are communities made up of small buildings that are at least two stories high, but no higher than four stories. 
+
+The largest of these communities is Crystal Lakes Apartments is located along Chippenham Parkway --- with 716 apartment homes. Built in 1967, the property recently underwent renovations in 2020. Subsequently, the property saw a 6 percent increase in average market rent per unit from 2019 to 2020. 
+
+These older garden style communities may have some amenities like a clubhouse, playgrounds, or fitness centers, but they are often outdated. Twenty-six of the 61 market affordable properties were built in the 1960s and 1970s. Only eight of these properties have reported a renovation; most of them having been completed in the last seven years.
+
+
 
 ```{r noah}
 
@@ -183,6 +189,17 @@ plotly::ggplotly(noah_t_district) |>
 leaf_sf_col(noah_by_district,
             col_var = type)
 
+#Create chart showing NOAH by year built.
+
+noah_built <- noah_by_district |> 
+  st_drop_geometry() |> 
+  group_by(yearbuilt) |> 
+  summarise(unique_count = n_distinct(address)) |> 
+  na.omit()
+
+gg_line(noah_built,
+           x_var = yearbuilt,
+           y_var = unique_count)
 
 
 ```
@@ -192,15 +209,25 @@ leaf_sf_col(noah_by_district,
 
 ## Affordable rental
 
+Rental housing supported by federal affordable housing programs is located in each Chesterfield County district. As of early 2022, the Bermuda District contains the most affordable housing units --- with roughly 1,622 homes across 14 different properties. 
+
+The bulk of affordable rental housing is supported by the Low-Income Housing Tax Credit program --- 2,312 rental homes. 
+
 Spatial analysis of affordable housing projects. Generally describe:
 - Project types,
 - Developer types (nonprofit or for profit)
 - Unit mix
 - Subsidy types (focus on LIHTC)
 - Status of subsidy (when expire?)
-```
 
 ```{r affordable}
+
+#Data is from a Feb 2022 pull of NHPD for Chesterfield County. 
+
+#As a supplement, the following properties are listed as Market/Affordable in CoStar:
+# PARK AT RIDGEDALE; BROADWATER TOWNHOMES; MERIDIAN WATERMARK; CHESTER VILLAGE; BELLWOOD TERRACE; MARKET WOODS
+
+# Not all of the above are captured by NHPD, so there is a gap in data here. Requested from Virginia Housing a listing of LIHTC properties.
 
 affordable <- read_csv("data/nhpd_chesterfield.csv") |> 
   clean_names() |> 
@@ -214,7 +241,7 @@ affordable <- as.data.frame(affordable) |>
 #Spatial join NHPD properties to magisterial districts.
 affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistName"])
 
-
+#Create map of affordable units by district.
 leaf_sf_col(affordable_by_district,
             col_var = MagDistName)
 
@@ -223,7 +250,7 @@ affunits <- affordable_by_district |>
   st_drop_geometry() |> 
   select("District" = MagDistName, "Units" = assisted_units)|> 
   group_by(District) |> 
-  summarise(sum(Units)) |> 
+  summarise(Units = sum(Units)) |> 
   mutate(District = str_to_sentence(District))
 
 #Create bar chart for NHPD units by magisterial districts.
@@ -235,6 +262,18 @@ affcount <- gg_bar_col(affunits,
 plotly::ggplotly(affcount) |> 
   plotly_camera()
 
+#Create bar chart showing subsidy type by district.Need help with reordering
+
+afftype <- ggplot(affordable_by_district,
+       aes(x = MagDistName,
+           y = assisted_units,
+           fill = subsidy_name)) + 
+         geom_bar(stat = "identity")
+
+plotly::ggplotly(afftype) |> 
+  plotly_camera()
+  
+
 
 ```
 
@@ -242,6 +281,18 @@ plotly::ggplotly(affcount) |>
 - STACKED BAR CHART OF UNITS BY MAGISTERIAL DISTRICT (COLOR BY SUBSIDY TYPE)
 
 ### Price comparison
+
+```{r price-comparison}
+#CoStar filters: Chesterfield County, Virginia; Multi-family; Construction status: Existing
+
+#Results in 119 records. Some have values missing for Rent Type and Affordable Type - which would require us to remove them from the analysis.
+
+p_comp <- read_csv("data/costar_price_comparison.csv") |> 
+  clean_names()
+
+
+
+```
 
 - Compare affordable (rent-restricted) rents to market-rate (non-affordable) rents
 - For market-rate, include ALL other CoStar properties, not just NOAH

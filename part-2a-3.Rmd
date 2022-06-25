@@ -6,21 +6,67 @@ This section will make comparisons between recent multifamily developments and e
 
 Compare average asking rent prices (also by bedroom)
 
+
+
 ```{r price}
+# CoStar Recent Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Min Year Built: 2017
 
-# Load in costar_rent_recent.csv
-# csv contains rent and inflation-adjusted rent for all units and by bedrooms
-# Average rents for properties built in 2017 and after, under construction, and proposed
+# Load in costar_rent_recent.csv; Average rents for all units and by bedrooms
 
-# Load in costar_rent_past.csv
-# csv contains rent and inflation-adjusted rent for all units and by bedrooms
-# Average rents for properties built in 2016 or earlier
+recent_price <- read_csv("data/costar_rent_recent.csv") |> 
+  mutate(market = "recent")
+
+# CoStar Past Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Max Year Built: 2016
+
+# Manually remove: 7626 Sandler Dr; 3201 Lady Marian Ln; 21203 Orange Hill Ave --- before conducting analytics
+
+# Load in costar_rent_past.csv; Average rents for all units and by bedrooms
+
+past_price <- read_csv("data/costar_rent_past.csv") |> 
+  mutate(market = "past")
 
 # Both files cover 2017 Q1 -> 2022 Q2
 
 # Filter "studio" out for both
 
+library(zoo)
 
+price_comp <- rbind(recent_price, past_price)
+
+avg_rent_all <- price_comp |> 
+  filter(bedrooms == "All") |> 
+  mutate(rent_adj = parse_number(rent_adj),
+         rent = parse_number(rent),
+         period = as.yearqtr(period))
+
+avg_rent_br <- price_comp |> 
+  filter(bedrooms != "Studio") |> 
+  filter(bedrooms != "All") |> 
+  mutate(rent_adj = parse_number(rent_adj),
+         rent = parse_number(rent),
+         period = as.yearqtr(period))
+
+library(simplevis)
+
+total_avg_rent <- gg_line_col(
+  avg_rent_all,
+  x_var = period,
+  y_var = rent_adj,
+  col_var = market)
+
+br_avg_rent <- gg_line_col_facet(
+  avg_rent_br,
+  x_var = period,
+  y_var = rent_adj,
+  col_var = market,
+  facet_var = bedrooms)
+
+plotly::ggplotly(total_avg_rent) |> 
+  plotly_camera()
+
+plotly::ggplotly(br_avg_rent) |> 
+  plotly_camera()
+  
 ```
 
 - LINE CHART OF AVERAGE ASKING RENT FOR RECENT DEVELOPMENTS VS PAST DEVELOPMENTS
@@ -28,21 +74,129 @@ Compare average asking rent prices (also by bedroom)
 
 ## Unit mix
 
-Compare physical characterists of units
+Compare physical characteristics of units
 
 ``` {r unit-mix}
 
+library(tidyverse)
+library(janitor)
+library(simplevis)
+
 # Need list of existing, proposed, or under construction properties with... 
+
+#CoStar Filters: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise
+
+#Updated 7420 Ashlake Pky with Name; Updated Maisonettes Apartments with 1966 Year Built; Updated Kenswick Apartments with 1984 Year Built; Updated 3101 Danzler Cir with Name
+
 # - Number of units
 # - Style (mid-rise, garden, etc)
 # - Number of 1, 2, 3, and 4 bedroom units
 # - Avg sqft for 1, 2, and 3 bedroom units
 
+unit_mix <- read_csv("data/costar_unit_mix.csv") |> 
+  clean_names()
+
+#Remove single-family homes incorrectly categorized as Low-Rise; select variables needed
+unit_mix_clean <- unit_mix  |> 
+  filter(property_address != "3201 Lady Marian Ln") |> 
+  filter(property_address != "7626 Sandler Dr") |> 
+  filter(property_address != "21203 Orange Hill Ave") |>
+  filter(property_address != "12020 Winfree St") |> 
+  select("address" = property_address, "name" = property_name, "status" = building_status, year_built, style, "units" = number_of_units, avg_unit_sf, rent_type, "units0" = number_of_studios_units, "units1" = number_of_1_bedrooms_units, "units2" = number_of_2_bedrooms_units, "units3" = number_of_3_bedrooms_units, "units4" = number_of_4_bedrooms_units, "sf0" = studio_avg_sf, "sf1" = one_bedroom_avg_sf, "sf2" = two_bedroom_avg_sf, "sf3" = three_bedroom_avg_sf, "sf4" = four_bedroom_avg_sf, latitude, longitude)
+
+unit_mix_clean <- unit_mix_clean |> 
+  mutate(market = case_when(
+    year_built <= 2016 ~ "Past",
+    year_built >= 2017 ~ "Recent",
+    name == "Ashlake Crossing" ~ "Recent"))
+
+# BY STYLE
+
+style_mix <- unit_mix_clean |> 
+  group_by(market) |> 
+  count(style)
+  
+style_mix <- transform(style_mix,
+                       percent = ave(n,
+                                     market,
+                                     FUN = prop.table))
+
+# Percent of total properties by style.
+
+style_mix_bar <- gg_bar_col(style_mix,
+                            x_var = market,
+                            y_var = percent,
+                            col_var = style,
+                            stack = TRUE)
+
+plotly::ggplotly(style_mix_bar) |> 
+  plotly_camera()
+                       
+
+# BY BEDROOM
+br_mix_long <- unit_mix_clean |> 
+  select(address, market, units0, units1, units2, units3, latitude, longitude) |> 
+  pivot_longer(
+    c(units0, units1, units2, units3),
+    names_to = "bedrooms",
+    values_to = "units"
+  )
+
+br_mix <- br_mix_long |> 
+  group_by(market, bedrooms) |> 
+  na.omit() |> 
+  summarise(units = sum(units))
+
+
+br_mix <- transform(br_mix, 
+                    percent = ave(units,
+                                  market,
+                                  FUN = prop.table))
+
+# Percent of total units by bedroom by market.
+br_mix_bar <- gg_bar_col(br_mix,
+           x_var = market,
+           y_var = percent,
+           col_var = bedrooms,
+           stack = TRUE)
+
+plotly::ggplotly(br_mix_bar) |> 
+  plotly_camera()
+
+# BY SQUARE FOOTAGE
+
+sf_mix <- unit_mix_clean |> 
+  select(address, market, sf0, sf1, sf2, sf3) |> 
+  pivot_longer(
+    c(sf0, sf1, sf2, sf3),
+    names_to = "bedroom",
+    values_to = "sf"
+  ) |> 
+  na.omit() |> 
+  mutate(bedroom = case_when(
+    bedroom == "sf0" ~ "Studio",
+    bedroom == "sf1" ~ "One Bedroom",
+    bedroom == "sf2" ~ "Two Bedroom",
+    bedroom == "sf3" ~ "Three Bedroom"
+  ))
+
+# Histogram of average sf of bedrooms by properties.
+sf_mix_hist <- gg_histogram_col_facet(sf_mix,
+                       x_var = sf,
+                       col_var = market,
+                       facet_var = bedroom)
+
+plotly::ggplotly(sf_mix_hist) |> 
+  plotly_camera()
+
+
+
 ```
 
 - BAR CHART: PERCENT OF UNITS BY STYLE (COLORED OR FACETED BY RECENT/EXISTING)
 - BAR CHART: PERCENT OF TOTAL UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING)
-- BAR CHART: AVERAGE SIZE (SQFT) OF UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING)
+- BAR CHART: AVERAGE SIZE (SQFT) OF UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING) 
+- 
 
 ## Amenities
 
@@ -59,6 +213,45 @@ Compare presence of common amenities:
 # If amenity is listed in original CoStar field, its respective column will be TRUE
 # Use stringr::str_detect()
 # Example: mutate(pool = str_detect(amenities, "Pool"))
+
+# May need to up the number of amenities a bit. It's not telling a great story based on the data. Mainly because there are several NULL values for recent developments because amenities are not listed yet.
+
+amenities <- read_csv("data/costar_unit_mix.csv") |> 
+  clean_names()
+
+amenities_clean <- amenities|> 
+  filter(property_address != "3201 Lady Marian Ln") |> 
+  filter(property_address != "7626 Sandler Dr") |> 
+  filter(property_address != "21203 Orange Hill Ave") |>
+  filter(property_address != "12020 Winfree St") |> 
+  select("address" = property_address, "name" = property_name, "status" = building_status, style, "units" = number_of_units, avg_unit_sf, year_built, rent_type, amenities, latitude, longitude) |> 
+  mutate(market = case_when(
+    year_built <= 2016 ~ "Past",
+    year_built >= 2017 ~ "Recent",
+    name == "Ashlake Crossing" ~ "Recent"))
+
+
+amenities_clean <- amenities_clean |> 
+  mutate(pool = str_detect(amenities, "Pool"),
+         clubhouse = str_detect(amenities, "Clubhouse"),
+         fitness = str_detect(amenities, "Fitness Center"),
+         propmanager = str_detect(amenities, "Property Manager on Site"))
+
+amenity_count <- amenities_clean |> 
+  select(address, market, pool, clubhouse, fitness, propmanager) |> 
+  na.omit() |> 
+  rowwise() |> 
+  mutate(count = as.character(sum(c_across(pool:propmanager) == "TRUE")))
+
+amenity_summary <- amenity_count |> 
+  group_by(market) |> 
+  count(count)
+
+amenity_bar <- gg_bar_col(amenity_count,
+                          x_var = market,
+                          y_var = )
+
+
 
 ```
 
@@ -80,6 +273,245 @@ Describe locations/neighborhoods where newer development is most common
 - BAR CHART: PERCENT OF UNITS BY MAGISTERIAL DISTRICT (COLORED OR FACETED BY RECENT/EXISTING)
 
 ### Proximity to public transportation
+
+
+``` {r spatial}
+library(tidyverse)
+library(sf)
+library(mapview)
+library(crsuggest)
+library(tigris)
+options(tigris_use_cache = TRUE)
+
+costar <- read_csv("data/costar_market_recent.csv")
+noah <- read_csv("data/chesterfield_noah_coded.csv")
+nhpd <- read_csv("data/nhpd_chesterfield.csv")
+
+# Let's take the CoStar properties as an example; the same workflow
+# will apply for the other properties as well.  
+# First, we convert to a spatial object: 
+costar_sf <- costar %>%
+  st_as_sf(coords = c("Longitude", "Latitude"), 
+           crs = 4326)
+
+# Map the properties:
+mapview(costar_sf)
+
+# Identify an appropriate coordinate reference system:
+va_crs <- suggest_top_crs(costar_sf, units = "m",
+                          inherit_gcs = FALSE)
+
+# We'll use the Virginia South state plane CRS (6594)
+costar_prj <- st_transform(costar_sf, va_crs)
+
+# Grab VA Census tracts and identify those that overlap the properties:
+chesterfield_tracts <- tracts("VA", "Chesterfield", year = 2021) %>%
+  st_transform(va_crs)
+
+costar_tracts <- st_filter(chesterfield_tracts, costar_prj)
+
+# Options for computing proximity include: 
+# - "As the crow flies" straight-line distances, which are handled in sf;
+# - Network distances / travel-times, which are easiest to compute using
+# - my mapboxapi R package.
+
+# Transportation data (GRTC stops):
+stops <- st_read("data/grtc/Stops_May2022.shp") %>%
+  st_transform(va_crs)
+
+# Take a quick look:
+mapview(stops)
+
+# We can use st_distance() to compute the distance between properties and stops,
+# then find the minimum distance to determine the nearest stop
+costar_to_stops <- st_distance(costar_prj, stops)
+
+costar_stop_distance <- apply(costar_to_stops, 1, min) %>%
+  magrittr::divide_by(1609.34)
+
+# Alternatively, we can compute a 0.5 mile buffer around properties
+# and either count up bus stops or identify whether a bus stop is 
+# accessible
+costar_buffer <- st_buffer(costar_prj, 804.67)
+
+mapview(costar_buffer)
+
+# Travel-times are another way to look at this.  We'll use my mapboxapi R package
+# to calculate network buffers (also called "isodistances"), travel-time matrices,
+# and also travel-time isochrones.
+#
+# I'm working on a couple updates to the package so we'll need the 
+# development version from GitHub:
+# remotes::install_github("walkerke/mapboxapi")
+library(mapboxapi)
+
+
+# You'll need a Mapbox account + an access token to use its services.
+# Head over to https://account.mapbox.com/ and sign up for the service, then 
+# grab your default access token.  Set it in R as follows, and install it 
+# if you'd like: 
+mb_access_token(MAPBOX_PUBLIC_TOKEN, overwrite = TRUE, install = TRUE)
+
+# You'll now be able to compute network buffers and distance/travel-times
+# based on a road network and typical traffic (or a given travel mode).
+costar_network_buffer <- mb_isochrone(costar_prj, profile = "walking",
+                                      distance = 805)
+
+mapview(costar_network_buffer)
+# Note how different the 0.5 mile network buffers are from the straight-line buffers. 
+
+# To get the shortest walking distance, we can compute a travel-distance matrix
+# Due to internal limitations of the Mapbox matrix API, the volume of stops, and the increased complexity of building network-based matrices
+# this will be slow to get the dense matrix.  This took me a few minutes to compute.  
+# costar_stop_walking <- costar_prj %>%
+#   mutate(chunk = ntile(n = 2)) %>%
+#   split(~chunk) %>%
+#   map(~{
+#     mb_matrix(origins = .x,
+#               destinations = stops,
+#               profile = "walking",
+#               output = "distance")
+#   }) %>%
+#   reduce(rbind) %>%
+#   apply(1, min) %>%
+#   magrittr::divide_by(1609.34)
+
+# A (much!) faster way to handle this is be to iterate through the apartments, find the nearest n stops by straight-line distance, then calculate the network distance to them.  That would look like this for the nearest 20 stops:
+library(nngeo)
+
+nearest_stops <- st_nn(costar_prj, stops, k = 20)
+
+costar_stop_walking <- imap(nearest_stops, ~{
+  # Get the specific property (the list index)
+  property <- costar_prj[.y,]
+  
+  # Get the nearby stops (the indices in the list element)
+  nearby_stops <- stops[.x, ]
+  
+  # Calculate the matrix
+  mb_matrix(origins = property,
+            destinations = nearby_stops,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+# Interestingly, the walking distances are reasonably different from the straight-line distances,
+# and sometimes far exceed them.  
+
+# From here, you can readily append both the minimum walking distance to 
+# a transit stop to the CoStar data, then determine which properties are 
+# within 0.5 miles of a transit stop
+costar <- costar %>%
+  mutate(
+    walk_to_transit = costar_stop_walking,
+    transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
+  )
+
+
+# Once this workflow is settled, you can reasonably reproduce it for the other datasets.  
+schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") %>%
+  st_transform(va_crs)
+
+nearest_schools <- st_nn(costar_prj, schools, k = 20)
+
+costar_school_driving <- imap(nearest_schools, ~{
+  # Get the specific property (the list index)
+  property <- costar_prj[.y,]
+  
+  # Get the nearby schools (the indices in the list element)
+  nearby_schools <- schools[.x, ]
+  
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  # There is also a "driving-traffic" profile but unfortunately 
+  # the Matrix API doesn't allow you to specify a time of day, so it 
+  # gives you a mix of historical and live traffic instead.
+  mb_matrix(origins = property,
+            destinations = nearby_schools,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) 
+
+# Grocery stores: 
+# We'll use SNAP retailers from the USDA as a proxy here
+# This is not perfect so some filtering may be necessary
+# as it picks up on convenience stores as well
+snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b2deb56d_0.csv") %>%
+  filter(State == "VA") %>%
+  st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
+  st_transform(va_crs)
+
+nearest_snap <- st_nn(costar_prj, snap, k = 20)
+
+
+costar_snap_walking <- imap(nearest_snap, ~{
+  # Get the specific property (the list index)
+  property <- costar_prj[.y,]
+  
+  # Get the nearby stops (the indices in the list element)
+  nearby_snap <- snap[.x, ]
+  
+  # Calculate the matrix
+  mb_matrix(origins = property,
+            destinations = nearby_snap,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+# Hospital / urgent care
+# I'm not filtering by type but you might consider doing so
+# There are some other datasets in HIFLD on care centers that may 
+# be relevant as well.
+hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
+  st_transform(va_crs)
+
+nearest_hospitals <- st_nn(costar_prj, hospitals, k = 20)
+
+costar_hospital_driving <- imap(nearest_hospitals, ~{
+  # Get the specific property (the list index)
+  property <- costar_prj[.y,]
+  
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_hospitals <- hospitals[.x, ]
+  
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_hospitals,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) 
+
+# Jobs are pending in the Google Doc (though I can show you how to 
+# create jobs clusters with LODES data)
+
+# Finally, we can put all the data back together with minimum travel times
+# and critical distance / duration flags.
+costar_output <- costar %>%
+  mutate(
+    miles_to_transit = costar_stop_walking,
+    transit_nearby = ifelse(miles_to_transit <= 0.5, 1, 0),
+    minutes_to_school = costar_school_driving,
+    school_nearby = ifelse(minutes_to_school <= 30, 1, 0),
+    miles_to_snap = costar_snap_walking,
+    snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0),
+    minutes_to_hospital = costar_hospital_driving,
+    hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0)
+  )
+
+
+```
 
 Compare location of new multifamily development versus older multifamily relative to access to public transportation
 
