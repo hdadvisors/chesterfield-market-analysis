@@ -1,4 +1,6 @@
-# Route 1 corridor analysis
+# (PART) CORRIDOR CASE STUDIES {.unnumbered}
+
+# Route 1 corridor analysis {#part-2b-1}
 
 This section describes the Route 1 corridor in terms of its rental housing market, proximity of rental homes to amenities, recent major investments, and homeownership relative to the price of single-family rentals.
 

@@ -1,4 +1,6 @@
-# Eastern Hull Street Road corridor analysis
+# (PART) CORRIDOR CASE STUDIES {.unnumbered}
+
+# Eastern Hull Street Road corridor analysis {#part-2b-1}
 
 ```{r setup}
 

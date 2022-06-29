@@ -1,4 +1,6 @@
-# Market comparison
+# COUNTYWIDE MARKET ANALYSIS {.unnumbered}
+
+# Market comparison {#part-2a-3}
 
 This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, "recent" developers are those built in the past five years, are under construction, or are proposed.
 
@@ -7,8 +9,10 @@ This section will make comparisons between recent multifamily developments and e
 Compare average asking rent prices (also by bedroom)
 
 
-
 ```{r price}
+
+library(tidyverse)
+
 # CoStar Recent Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Min Year Built: 2017
 
 # Load in costar_rent_recent.csv; Average rents for all units and by bedrooms
@@ -64,13 +68,14 @@ br_avg_rent <- gg_line_col_facet(
 plotly::ggplotly(total_avg_rent) |> 
   plotly_camera()
 
-plotly::ggplotly(br_avg_rent) |> 
-  plotly_camera()
-  
 ```
 
-- LINE CHART OF AVERAGE ASKING RENT FOR RECENT DEVELOPMENTS VS PAST DEVELOPMENTS
-- LINE CHART OF AVERAGE ASKING RENT BY BEDROOM FOR RECENT DEVELOPMENTS VS PAST DEVELOPMENTS (FACETED BY BEDROOM)
+```{r br-rent}
+
+plotly::ggplotly(br_avg_rent) |> 
+  plotly_camera()
+
+```
 
 ## Unit mix
 
@@ -247,9 +252,6 @@ amenity_summary <- amenity_count |>
   group_by(market) |> 
   count(count)
 
-amenity_bar <- gg_bar_col(amenity_count,
-                          x_var = market,
-                          y_var = )
 
 
 
@@ -275,7 +277,8 @@ Describe locations/neighborhoods where newer development is most common
 ### Proximity to public transportation
 
 
-``` {r spatial}
+```
+
 library(tidyverse)
 library(sf)
 library(mapview)
@@ -345,12 +348,11 @@ mapview(costar_buffer)
 # remotes::install_github("walkerke/mapboxapi")
 library(mapboxapi)
 
-
 # You'll need a Mapbox account + an access token to use its services.
 # Head over to https://account.mapbox.com/ and sign up for the service, then 
 # grab your default access token.  Set it in R as follows, and install it 
 # if you'd like: 
-mb_access_token(MAPBOX_PUBLIC_TOKEN, overwrite = TRUE, install = TRUE)
+mb_access_token(MAPBOX_PUBLIC_TOKEN)
 
 # You'll now be able to compute network buffers and distance/travel-times
 # based on a road network and typical traffic (or a given travel mode).

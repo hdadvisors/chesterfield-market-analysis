@@ -1,6 +1,8 @@
-# Rental spatial analysis
+# (PART) COUNTYWIDE MARKET ANALYSIS {.unnumbered}
 
-This section presents an analysis of the county’s existing rental supply, focusing on the amount and location of rental housing units. 
+# Rental Spatial Analyis {#part-2a-2}
+
+This section presents an analysis of the county's existing rental supply, focusing on the amount and location of rental housing units by Chesterfield County magisterial districts.
 
 ```{r setup}
 
@@ -17,14 +19,15 @@ library(simplevis)
 
 ## Recent multifamily developments
 
-The last five years have shown fluctuating multifamily development completions based on CoStar's proprietary commercial real estate database. From zero completed units in 2018 to a five year high of 1,569 units in 2020, development has been sporadic but is expected to grow significantly in the coming years. Most recent development has consisted of low-rise buildings, offering luxury amenities such as clubhouses, pools, and fitness centers.
+The last five years have shown fluctuating multifamily development completions based on CoStar's proprietary commercial real estate database. From zero completed units in 2018 to a five year high of 1,569 units in 2020, development has been sporadic but is expected to grow significantly in the coming years. Most recent developments have consisted of low-rise buildings, offering amenities such as clubhouses, pools, and fitness centers.
 
-As of June 2022, there were 34 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
+As of June 2022, there were 33 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. An additional development is a mixed-income senior rental housing project by Better Housing Coalition that was completed recently. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
 
-Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. The overwhelming majority of these developments will be completed in the Midlothian District.
+Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. 
 
-This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers --- providing less risk when compared to redevelopment of brownfield sites. 
-```{r recent}
+This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers --- providing less risk when compared to redevelopment of brownfield sites. The Midlothian area also offers convenient access to Route 288, where residents can reach major job centers like the County Government Center, or even centers outside the county, like West Creek in Henrico County.
+
+```{r recent-mf, fig.cap= "Recent multifamily developments by magisterial district"}
 
 #CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing, Proposed, Under Construction; Year Built Min: 2017
 
@@ -50,10 +53,18 @@ recent <- as.data.frame(recent) |>
 #Spatial join of recent developments to magisterial districts.
 newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
 
-#Leaflet map of new builds. Would like to mask to just Chesterfield County.
-leaf_sf_col(newbuilds_by_district,
-            col_var = MagDistName)
+newbuild_map <- newbuilds_by_district |> 
+  select("Development" = property_name, "Address" = property_address, "Units" = number_of_units, "District" = MagDistName, latitude, longitude)
 
+#Leaflet map of new builds. Would like to mask to just Chesterfield County.
+leaf_sf_col(newbuild_map,
+            col_var = District)
+
+```
+
+*Source: CoStar Group, Inc.*
+
+```{r new-units, fig.cap= "Number of recent multifamily units by magisterial district"}
 #Summarize number of units by magisterial districts.
 recentunits <- newbuilds_by_district |> 
   st_drop_geometry() |> 
@@ -73,6 +84,12 @@ recent <- gg_bar_col(recentunits,
 plotly::ggplotly(recent) |> 
   plotly_camera()
 
+```
+
+*Source: CoStar Group, Inc.*
+
+```{r units-time, fig.cap= "Timeline of recent multifamily units by magisterial district"}
+
 #Summarize number of units by year to show future development timeline.
 status_units <- newbuilds_by_district |> 
   st_drop_geometry() |> 
@@ -88,40 +105,46 @@ status_timeline <- gg_bar_col(status_units,
 
 plotly::ggplotly(status_timeline) |> 
   plotly_camera()
+```
 
+*Source: CoStar Group, Inc.*
+
+```{r}
 #It might be helpful to size dots by number of units. Colors need to be changed to be more visible. 
-districts |> plot_mapbox() |> 
-  add_sf(
-    data = newbuilds_by_district,
-    y = ~latitude,
-    x = ~longitude,
-    color = ~ MagDistName
-  )
+#districts |> plot_mapbox() |> 
+ # add_sf(
+  #  data = newbuilds_by_district,
+  #    y = ~latitude,
+  #  x = ~longitude,
+  #  color = ~ MagDistName
+#  )
 
 #Determining average number of units by property. Remove NA values.
-average_units <- mean(newbuilds_by_district$number_of_units, na.rm = TRUE)
-
+#average_units <- mean(newbuilds_by_district$number_of_units, na.rm = TRUE)
 
 ```
 
-- MAP OF RECENT DEVELOPMENTS
-- BAR CHART OF UNITS BY MAGISTERIAL DISTRICT
+*Source: CoStar Group, Inc.*
 
 ## Market affordable rental
 
-Market affordable rental housing is spread throughout each district of Chesterfield County. However, the majority of market affordable rentals lie along the city-county border. This is a typical trend in most metropolitan areas, wherein early suburban development in the mid- to late 20th century led to small garden apartment development.
+Market affordable rental housing is spread throughout each district of Chesterfield County. However, the majority of market affordable rentals lie along the city-county border. This is a typical trend in most metropolitan areas, wherein early suburban development in the mid- to late 20th century led to small garden apartment development on the outskirts of major cities. But these "inner-ring" suburbs are growing rapidly, especially with more and more diverse populations.[^part-2a-2-1]
 
-The Bermuda District, which includes the entirety of the Route One corridor, contains the largest number of market affordable rental properties, specifically manufactured home communities (8 from the city border down to Route 10). 
+[^part-2a-2-1]: Hanlon, Bernadette. (2009). "A Typologoy of Inner-Ring Suburbs: Class, Race, and Ethnicity in U.S. Suburbia." City and Community.2009;8(3):221-246. <doi:10.1111/j.1540-6040.2009.01287.x>
 
-However, market affordable rentals are largely located in garden style apartments. Garden style apartments are communities made up of small buildings that are at least two stories high, but no higher than four stories. 
+The Bermuda District, which includes the entirety of the Route One corridor, contains the largest number of market affordable rental properties, specifically manufactured home communities (8 from the city border down to Route 10). The only other district with manufactured home communities present is the Midlothian District with an estimated 275 homes across two properties --- the majority of which are located in Suburban Village.
 
-The largest of these communities is Crystal Lakes Apartments is located along Chippenham Parkway --- with 716 apartment homes. Built in 1967, the property recently underwent renovations in 2020. Subsequently, the property saw a 6 percent increase in average market rent per unit from 2019 to 2020. 
+Market affordable rentals are largely located in garden style apartments though. Garden style apartments are communities made up of small buildings that are at least two stories high, but no higher than four stories. This style of apartment was hugely popular in the 1960s and remained so throughout the 1970s and 1980s.[^part-2a-2-2]
+
+[^part-2a-2-2]: Johnson, Emily. (2022). <https://rejournals.com/suburban-garden-style-apartments-are-2022s-comeback-kid/>
+
+The largest of these communities is Crystal Lakes Apartments is located along Chippenham Parkway --- with 716 apartment homes. Built in 1967, the property recently underwent renovations in 2020. Subsequently, the property saw a 6 percent increase in average market rent per unit from 2019 to 2020.
 
 These older garden style communities may have some amenities like a clubhouse, playgrounds, or fitness centers, but they are often outdated. Twenty-six of the 61 market affordable properties were built in the 1960s and 1970s. Only eight of these properties have reported a renovation; most of them having been completed in the last seven years.
 
+Preserving market affordable rentals, especially near the city-county border and along transit lines, helps support low- to moderate-income renters. McKinsey & Company, a global management consulting firm, has even focused research on preserving such a valuable asset of local housing stock.^[Kling et al. https://www.mckinsey.com/industries/public-and-social-sector/our-insights/preserving-the-largest-and-most-at-risk-supply-of-affordable-housing]
 
-
-```{r noah}
+```{r noah-map, fig.cap= "Map of market affordable units by magisterial district"}
 
 #Costar filter - Chesterfield County, VA, Property type: Multi-family; Construction status: Existing; Rent Type: Market; Class: B or C; CoStar Building Rating: three or fewer stars
 
@@ -149,6 +172,11 @@ noah_by_district <- noah_by_district |>
 
 leaf_sf_col(noah_by_district,
             col_var = MagDistName)
+```
+
+*Source: CoStar Group, Inc.*
+
+```{r noah-units, fig.cap= "Total market affordable homes by magisterial district"}
 
 #Summarize number of NOAH units by magisterial districts. Add in a note about NA values
 noahunits <- noah_by_district |> 
@@ -168,6 +196,11 @@ noah_count <- gg_bar_col(noahunits,
 
 plotly::ggplotly(noah_count) |> 
   plotly_camera()
+```
+
+*Source: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia.*
+
+```{r noah-type, fig.cap= "Type of market affordable housing by magisterial district"}
 
 #Create bar chart showing type by magisterial district.
 
@@ -183,7 +216,11 @@ noah_t_district <- gg_bar_col(noah_sum_district,
 
 plotly::ggplotly(noah_t_district) |> 
   plotly_camera()
+```
 
+*Source: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia.*
+
+```{r noah-typemap, fig.cap= "Map of market affordable housing by type"}
 #Create map showing NOAH by type.
 
 leaf_sf_col(noah_by_district,
@@ -204,23 +241,16 @@ gg_line(noah_built,
 
 ```
 
-- MAP OF MARKET AFFORDABLE (TWO COLORS FOR MULTIFAMILY AND MHCs)
-- STACKED BAR CHART OF UNITS BY MAGISTERIAL DISTRICT (TWO COLORS FOR MULTIFAMILY AND MHCs)
+*Source: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia.*
 
 ## Affordable rental
 
-Rental housing supported by federal affordable housing programs is located in each Chesterfield County district. As of early 2022, the Bermuda District contains the most affordable housing units --- with roughly 1,622 homes across 14 different properties. 
-
-The bulk of affordable rental housing is supported by the Low-Income Housing Tax Credit program --- 2,312 rental homes. 
-
-Spatial analysis of affordable housing projects. Generally describe:
-- Project types,
-- Developer types (nonprofit or for profit)
-- Unit mix
-- Subsidy types (focus on LIHTC)
-- Status of subsidy (when expire?)
+Rental housing supported by federal affordable housing programs is located in each Chesterfield County district. As of early 2022, the Bermuda District contains the most affordable housing units --- with roughly 1,622 homes across 14 different buildings. The Dale District compares the second most federally-supported rental housing with 881 homes --- nearly half that of the Bermuda District. The location of subsidized housing in these areas is largely related to the provisions of federal programs like the Low-Income Housing Tax Credit program that favor development in [Qualified Census Tracts (QCTs)](https://www.huduser.gov/portal/datasets/qct.html) and [Difficult Development Areas (DDAs)](https://www.huduser.gov/portal/datasets/qct.html).
 
 ```{r affordable}
+
+library(lubridate)
+library(stringi)
 
 #Data is from a Feb 2022 pull of NHPD for Chesterfield County. 
 
@@ -232,7 +262,8 @@ Spatial analysis of affordable housing projects. Generally describe:
 affordable <- read_csv("data/nhpd_chesterfield.csv") |> 
   clean_names() |> 
   filter(subsidy_status != "Inactive") |> 
-  select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address)
+  select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address, target_population, end_date) |> 
+  mutate(end_date = stri_sub(end_date, -4))
 
 affordable <- as.data.frame(affordable) |> 
   st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
@@ -244,24 +275,12 @@ affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistNa
 #Create map of affordable units by district.
 leaf_sf_col(affordable_by_district,
             col_var = MagDistName)
+```
+*Source: National Housing Preservation Database*
 
-#Summarize number of NHPD units by magisterial districts. Add in a note about NA values
-affunits <- affordable_by_district |> 
-  st_drop_geometry() |> 
-  select("District" = MagDistName, "Units" = assisted_units)|> 
-  group_by(District) |> 
-  summarise(Units = sum(Units)) |> 
-  mutate(District = str_to_sentence(District))
+The bulk of affordable rental housing is supported by the Low-Income Housing Tax Credit program --- 2,312 rental homes. Significant research has been doing on the placement of LIHTC developments and their impact on surrounding communities. A review of these studies found that "property value increased when LIHTC developments are built in low-income areas" and furthermore, decreases in crime are associated with LIHTC development.^[Keri-Nicole Dillman, Keren Mertens Horn & Ann Verrilli (2017) The What, Where, and When of Place-Based Housing Policy’s Neighborhood Effects, Housing Policy Debate, 27:2, 282-305, DOI: 10.1080/10511482.2016.1172103] Even the location of LIHTC development in high opportunity areas has proven to have positive impacts.^[*Ibid*]
 
-#Create bar chart for NHPD units by magisterial districts.
-affcount <- gg_bar_col(affunits,
-               x_var = District,
-               y_var = Units,
-               col_var = District)
-
-plotly::ggplotly(affcount) |> 
-  plotly_camera()
-
+```{r aff-type, fig.cap= "Subsidy type by magisterial district"}
 #Create bar chart showing subsidy type by district.Need help with reordering
 
 afftype <- ggplot(affordable_by_district,
@@ -272,13 +291,35 @@ afftype <- ggplot(affordable_by_district,
 
 plotly::ggplotly(afftype) |> 
   plotly_camera()
-  
+
 
 
 ```
+*Source: National Housing Preservation Database*
 
-- MAP OF AFFORDABLE PROPERTIES (COLOR BY SUBSIDY TYPE)
-- STACKED BAR CHART OF UNITS BY MAGISTERIAL DISTRICT (COLOR BY SUBSIDY TYPE)
+LIHTC in the County has largely been developed by for profit developers with only one non-profit developer in the county, Better Housing Coalition (BHC). BHC, one of the Richmond region's largest nonprofit developers of affordable housing, has concentrated much of their work along Route One --- where they first developed their first phase of Winchester Green townhomes in 1999.^[Phase 1 of Winchester Greens was financed by a \$5.8 million bond issued by the Chesterfield County Industrial Development Authority, \$13.8 million from HUD, and \$800,000 in Community Development Block Grant from Chesterfield County.] Since 1999, Better Housing Coalition has continued to phase development with Market Square and will continue develop on adjacent parcels with Winchester Forest.
+
+Programs like LIHTC have a time frame for affordability restrictions. For LIHTC in Virginia, like many other states, there is a 30 year commitment to affordability, but only a 15 year compliance period, wherein property owners can increase rents. By 2040, the majority of existing LIHTC housing (1,984 homes) will be outside the 30 year commitment period. Nonprofit developers will often seek new allocation of tax credits before their commitment period ends, but there is often little incentive for for-profit developers to maintain affordability restrictions past the compliance period.
+
+```{r loss, fig.cap= "LIHTC housing at risk of loss of affordability by year"}
+
+loss <- affordable_by_district |> 
+  select(property_name, subsidy_name, assisted_units, end_date, MagDistName) |> 
+  mutate(end_date = as.numeric(end_date)) |> 
+  filter(subsidy_name == "LIHTC") |> 
+  mutate(fifteenyear = (end_date - 15))
+
+loss_bar <- gg_bar_col(loss,
+                       x_var = end_date,
+                       y_var = assisted_units,
+                       col_var = MagDistName,
+                       stack = TRUE)
+
+plotly::ggplotly(loss_bar) |> 
+  plotly_camera()
+
+```
+*Source: National Housing Preservation Database*
 
 ### Price comparison
 
@@ -294,10 +335,10 @@ p_comp <- read_csv("data/costar_price_comparison.csv") |>
 
 ```
 
-- Compare affordable (rent-restricted) rents to market-rate (non-affordable) rents
-- For market-rate, include ALL other CoStar properties, not just NOAH
-- Show at county level and magisterial district
-- Since CoStar is showing average rent by property, don't want to average the averages
-- Could do colored box plot where color is affordable vs non-affordable, each column is magisterial district
+-   Compare affordable (rent-restricted) rents to market-rate (non-affordable) rents
+-   For market-rate, include ALL other CoStar properties, not just NOAH
+-   Show at county level and magisterial district
+-   Since CoStar is showing average rent by property, don't want to average the averages
+-   Could do colored box plot where color is affordable vs non-affordable, each column is magisterial district
 
-https://statisticsnz.github.io/simplevis/reference/gg_boxplot_col.html
+<https://statisticsnz.github.io/simplevis/reference/gg_boxplot_col.html>
