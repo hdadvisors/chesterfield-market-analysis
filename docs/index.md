@@ -1,7 +1,7 @@
 --- 
 title: "Chesterfield County Rental Market Analysis"
 author: "HDAdvisors"
-date: "2022-05-27"
+date: "2022-06-30"
 site: bookdown::bookdown_site
 documentclass: book
 # url: your book url like https://bookdown.org/yihui/bookdown
@@ -14,7 +14,7 @@ csl: chicago-fullnote-bibliography.csl
 # About {-}
 
 ::: {.rmdcaution}
-This report is currently in development. It was last updated on **2022-05-27**.
+This report is currently in development. It was last updated on **2022-06-30**.
 :::
 
 Chesterfield County community revitalization staff seek additional information about current rental market dynamics, particularly along the county’s major commercial corridors. This report compiles and analyzes data on subsidized, market-affordable, and newly-built rental units to help strategically guide the county’s future community development investments using CDBG and other grant funds. 
@@ -33,8 +33,8 @@ This part provides insight into household incomes, housing cost burden, and hous
 
 **PART 2-A: COUNTYWIDE MARKET ANALYSIS**
 
-*To be completed later.*
+This section summarizes the existing stock of rental units within the county and provides an analysis of recent price and production trends in the rental market. The second chapter conducts a spatial analysis of recent multifamily, market affordable, and affordable rental housing in the county. The third chapter is a market comparison between recent multifamily (built in the last five years or slated for future construction) development and existing rental supply in the county. The final chapter summarizes in-depth interviews with nonprofit and for-profit multifamily developers in the county.
 
 **PART 2-B: CORRIDOR CASE STUDIES**
 
-*To be completed later.*
+This section provides a market and spatial analysis of multifamily developments along two major corridors in the county: the Route One Corridor from the city-county line to Route 10 and the Eastern Hull Street Corridor from the city-county border to Genito Road.
