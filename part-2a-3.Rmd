@@ -4,14 +4,23 @@
 
 This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, "recent" developers are those built in the past five years, are under construction, or are proposed.
 
+```{r setup}
+
+library(tidyverse)
+library(zoo)
+library(janitor)
+library(simplevis)
+library(ggplot2)
+library(plotly)
+
+```
+
 ## Price
 
 Compare average asking rent prices (also by bedroom)
 
 
 ```{r price}
-
-library(tidyverse)
 
 # CoStar Recent Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Min Year Built: 2017
 
@@ -33,8 +42,6 @@ past_price <- read_csv("data/costar_rent_past.csv") |>
 
 # Filter "studio" out for both
 
-library(zoo)
-
 price_comp <- rbind(recent_price, past_price)
 
 avg_rent_all <- price_comp |> 
@@ -49,8 +56,6 @@ avg_rent_br <- price_comp |>
   mutate(rent_adj = parse_number(rent_adj),
          rent = parse_number(rent),
          period = as.yearqtr(period))
-
-library(simplevis)
 
 total_avg_rent <- gg_line_col(
   avg_rent_all,
@@ -82,10 +87,6 @@ plotly::ggplotly(br_avg_rent) |>
 Compare physical characteristics of units
 
 ``` {r unit-mix}
-
-library(tidyverse)
-library(janitor)
-library(simplevis)
 
 # Need list of existing, proposed, or under construction properties with... 
 

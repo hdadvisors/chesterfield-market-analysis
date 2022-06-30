@@ -301,6 +301,9 @@ LIHTC in the County has largely been developed by for profit developers with onl
 
 Programs like LIHTC have a time frame for affordability restrictions. For LIHTC in Virginia, like many other states, there is a 30 year commitment to affordability, but only a 15 year compliance period, wherein property owners can increase rents. By 2040, the majority of existing LIHTC housing (1,984 homes) will be outside the 30 year commitment period. Nonprofit developers will often seek new allocation of tax credits before their commitment period ends, but there is often little incentive for for-profit developers to maintain affordability restrictions past the compliance period.
 
+LIHTC developments in the Bermuda and Dale Districts are set to face the end of the affordability commitment period before 2040, but Bermuda District LIHTC properties are largely nonprofit owned and managed --- therefore, less likely at risk of loss. But Dale District LIHTC properties could face significant risk of exiting from the affordable housing stock.
+
+
 ```{r loss, fig.cap= "LIHTC housing at risk of loss of affordability by year"}
 
 loss <- affordable_by_district |> 
@@ -323,15 +326,82 @@ plotly::ggplotly(loss_bar) |>
 
 ### Price comparison
 
-```{r price-comparison}
+The following makes comparisons between affordable multifamily and market-rate multifamily rental prices across Chesterfield County. CoStar data is incomplete for some properties, but still provides an accurate and up-to-date average market asking rent per unit by property. The analysis below includes 96 multifamily properties where average asking rent data is available. It excludes manufactured home communities and single family rentals.
+
+
+
+```{r price-comparison-map}
 #CoStar filters: Chesterfield County, Virginia; Multi-family; Construction status: Existing
 
-#Results in 119 records. Some have values missing for Rent Type and Affordable Type - which would require us to remove them from the analysis.
+#Results in 119 records. Some have values missing for Rent Type and Affordable Type - which would require us to remove them from the analysis. Made edits below and removed non-multifamily from the analysis.
 
 p_comp <- read_csv("data/costar_price_comparison.csv") |> 
-  clean_names()
+  clean_names() |> 
+  select(property_address, property_name, style, owner_name, number_of_units, avg_asking_unit, rent_type, market_segment,latitude, longitude) |> 
+  filter(number_of_units >3) |> 
+  mutate(style = case_when(
+    property_address == "2507 Alcott Rd" ~ "Low-Rise",
+    property_address == "10000 Midlothian Tpke" ~ "Manufactured Home Community",
+    property_address == "8219 Jefferson Davis Hwy" ~ "Manufactured Home Community",
+    property_address == "9608 Jefferson Davis Hwy" ~ "Manufactured Home Community",
+    property_address == "5400 Remuda Dr" ~ "Low Rise",
+    property_address == "12329-12331 Jefferson Davis Hwy" ~ "Manufactured Home Community",
+    property_address == "3524 Festival Park Plz" ~ "Low Rise",
+    property_address == "3524 Festival Park Plz" ~ "Manufactured Home Community",
+    TRUE ~ style)
+    ) |> 
+  filter(style != "Manufactured Home Community") |> 
+  drop_na(avg_asking_unit)
+
+p_comp <- as.data.frame(p_comp) |> 
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+
+comp_by_district <- st_join(p_comp, left = FALSE, districts["MagDistName"])
+
+# I think it would be great to do a proportional dot map based on average rent. My attempt below.
+
+pal <- colorFactor(c("red", "green", "blue"), domain = c("Affordable", "Market", "Market/Affordable"))
+
+leaflet(comp_by_district) |>
+  addTiles() |>
+  addCircleMarkers(
+    radius = ~avg_asking_unit/200,
+    color = ~pal(rent_type),
+    stroke = TRUE, fillOpacity = 0.5
+   )
 
 
+
+```
+```{r pcomp-hist-county}
+
+# I think a histogram is easier to understand than a boxplot but I've given both options below.
+
+pcomp_box_county <- gg_boxplot_col(comp_by_district,
+                               x_var = rent_type,
+                               y_var = avg_asking_unit,
+                               col_var = rent_type)
+
+plotly::ggplotly(pcomp_box_county) |> 
+  plotly_camera()
+
+pcomp_hist_county <- gg_histogram_col(comp_by_district,
+                                      x_var = avg_asking_unit,
+                                      col_var = rent_type)
+
+plotly::ggplotly(pcomp_hist_county) |> 
+  plotly_camera()
+
+```
+```{r pcomp-hist-dist}
+
+pcomp_hist_dist <- gg_histogram_col_facet(comp_by_district,
+                                    x_var = avg_asking_unit,
+                                    col_var = rent_type,
+                                    facet_var = MagDistName)
+
+plotly::ggplotly(pcomp_hist_dist) |> 
+  plotly_camera()
 
 ```
 
