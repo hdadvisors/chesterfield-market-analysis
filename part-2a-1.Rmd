@@ -21,6 +21,8 @@ library(qs)
 library(readxl)
 library(sf)
 library(stringdist)
+library(leaflet)
+library(htmlwidgets)
 
 ```
 
@@ -140,7 +142,7 @@ Single-family home rentals (SFR) in the county have been on the rise --- experie
 
 SFRs are a growing trend in the rental market as lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked avoid higher density apartments and had the ability to work and learn remotely.^[https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/]
 
-Based on an analysis of owner address and parcel address, there are an estimated 13,205 single-family home rentals in the county.
+Based on an analysis of owner address and parcel address, there are an estimated 13,205 single-family home rentals in the county. The majority of single-family rental owners in the county (61 percent) live somewhere else in the county, while 29 percent live somewhere else in Virginia. The remaining 10 percent of single-family rental owners live out-of-state.
 
 ```
 THIS NEEDS FLESHED OUT A BIT MORE BASED ON THE SCRIPT BELOW. 
@@ -152,7 +154,15 @@ Maybe requires a better map that can be zoomed in on. I think there needs to be 
 
 ```{r sfr}
 
+districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
+
+districts <- read_sf(districts_geojson)
+
+plot(districts$geometry)
+
 parcels <- st_read("data/ParcelsEnriched.shp")
+
+parcels <- st_point_on_surface(parcels)
 
 parcels_sub <- parcels %>%
   select(
@@ -167,6 +177,9 @@ parcels_sub <- parcels %>%
     year_built = Year_Built,
     improvement = Improvemen
   )
+
+parcels_sub <- st_join(parcels_sub, left = FALSE, districts["MagDistName"])
+
 
 parcels_sub$match_score <- stringsim(parcels_sub$owner_address, parcels_sub$address)
 
@@ -243,19 +256,47 @@ rental_pct <- rental_class %>%
   ungroup() %>%
   mutate(pct = 100 * (n / sum(n)))
 
-ggplot() + 
-  geom_sf(data = rental_class, aes(fill = owner_location), color = NA) + 
-  geom_sf(data = ch_water, fill = "#8ecbe6", color = NA) + 
-  geom_sf(data = ch_roads, color = "grey50", lwd = 0.05) + 
-  theme_void(base_size = 12) + 
-  scale_fill_manual(values = c("#15a19c", "#ba150f","#482d61"),
-                    labels = c("Chesterfield (61%)",
-                               "Virginia (29%)",
-                               "Out of state (10%)")) + 
-  # theme(legend.position = "bottom", plot.background = element_rect(fill = "#dcf5e0", color = NA),
-  #       panel.background = element_rect(fill = "#dcf5e0", color = NA)) + 
-  labs(fill = "Rental Owner Location     ")
+sfr_bar <- gg_bar_col(rental_pct,
+                      x_var = owner_location,
+                      y_var = n,
+                      col_var = owner_location)
 
+plotly::ggplotly(sfr_bar) |> 
+  plotly_camera()
+
+```
+
+The map below shows the spatial distribution of SFRs across the county. Much of the county's SFR is located between Chippenham Parkway (SR 150) and the World War II Veterans Memorial Highway (SR 288). This area is heavily single-family development from the last five decades. Additional densities of SFR can be seen along the Route One Corridor, as well as the Ettrick area of Chesterfield --- straddling Colonial Heights and Petersburg.
+
+```{r sfr-map, fig.cap= "Map of SFR in the county"}
+
+# sfr_pal <- colorFactor(c("green", "red", "blue"), domain = c("Owner in Chesterfield", "Owner in Virginia", "Owner out of state"))
+
+# sfr_map <- leaflet(rental_class) |> 
+#   addTiles() |> 
+#   addCircleMarkers(
+#     radius = 2,
+#     color = ~sfr_pal(owner_location),
+#     stroke = FALSE, fillOpacity = 0.5
+#   )
+# 
+# saveWidget(sfr_map, file = "maps/sfr_map.html")
+
+# ggplot() + 
+#   geom_sf(data = rental_class, aes(fill = owner_location), color = "red") + 
+#   geom_sf(data = ch_water, fill = "#8ecbe6", color = NA) + 
+#   geom_sf(data = ch_roads, color = "grey50", lwd = 0.05) +
+#   theme_void(base_size = 12) + 
+#   scale_fill_manual(values = c("#15a19c", "#ba150f","#482d61"),
+#                     labels = c("Chesterfield (61%)",
+#                                "Virginia (29%)",
+#                                "Out of state (10%)")) +
+#   # theme(legend.position = "bottom", plot.background = element_rect(fill = "#dcf5e0", color = NA),
+#   #       panel.background = element_rect(fill = "#dcf5e0", color = NA)) + 
+#   labs(fill = "Rental Owner Location")
+
+
+knitr::include_url("maps/sfr_map.html", height = "500px")
 
 ```
 
