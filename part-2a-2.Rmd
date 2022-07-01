@@ -36,24 +36,24 @@ This shift in intense development can be attributed to increasing home demand in
 
 #Might want to consider adding in additional BHC developments into this list of properties. Winchester Forest (160 units), Colbrook (152 units), and Horner Run (49 units). Swift Creek Station should be condensed into a single entry? Different buildings of different stories but same development. I emailed Jessica for information about this development. Would be nice to have that information included. Should probably email Lee about those BHC projects and get addresses and expected year built.
 
-# recent <- read_csv("data/costar_market_recent.csv") |> 
-#   clean_names()
-# 
-# #Bring in magisterial districts from Chesterfield County Geospace.
-# 
-# districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
-# 
-# districts <- read_sf(districts_geojson)
-# 
-# plot(districts$geometry)
-# 
-# recent <- as.data.frame(recent) |> 
-#   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
-# 
-# 
-# #Spatial join of recent developments to magisterial districts.
-# newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
-# 
+recent <- read_csv("data/costar_market_recent.csv") |>
+  clean_names()
+
+#Bring in magisterial districts from Chesterfield County Geospace.
+
+districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
+
+districts <- read_sf(districts_geojson)
+
+plot(districts$geometry)
+
+recent <- as.data.frame(recent) |>
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+
+
+#Spatial join of recent developments to magisterial districts.
+newbuilds_by_district <- st_join(recent, left = FALSE, districts["MagDistName"])
+
 # newbuild_map <- newbuilds_by_district |> 
 #   select("Development" = property_name, "Address" = property_address, "Units" = number_of_units, "District" = MagDistName, latitude, longitude)
 # 
@@ -72,6 +72,7 @@ knitr::include_url("maps/new_map.html", height = "500px")
 
 ```{r new-units, fig.cap= "Number of recent multifamily units by magisterial district"}
 #Summarize number of units by magisterial districts.
+
 recentunits <- newbuilds_by_district |> 
   st_drop_geometry() |> 
   select("District" = MagDistName, number_of_units)|> 
@@ -158,23 +159,23 @@ Preserving market affordable rentals, especially near the city-county border and
 
 #I still have some concerns about the filters chosen because they include some newer builds like Colony Village II. I think there should be an additional filter for year built. I would want to exclude anything built after 1999. I would also remove 3201 Lady Marian Ln which is an over 4,000 SF single-family home. These changes would need to be reflected in previous Part 1 section on NOAH. 
 
-# noah <- read_csv("data/chesterfield_noah_coded.csv") |> 
-#   clean_names()
-# 
-# noah <- as.data.frame(noah) |> 
-#   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
-# 
-# #Spatial join NOAH properties to magisterial districts.
-# noah_by_district <- st_join(noah, left = FALSE, districts["MagDistName"])
-# 
-# noah_by_district <- noah_by_district |> 
-#   filter(is.na(yearbuilt)|yearbuilt<2000) |> 
-#   filter(address != "3201 Lady Marian Ln") |> 
-#   mutate(type = case_when(
-#     style == "Garden" ~ "Multifamily",
-#     style == "Low-Rise" ~ "Multifamily",
-#     TRUE ~ style
-#   ))
+noah <- read_csv("data/chesterfield_noah_coded.csv") |>
+  clean_names()
+
+noah <- as.data.frame(noah) |>
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+
+#Spatial join NOAH properties to magisterial districts.
+noah_by_district <- st_join(noah, left = FALSE, districts["MagDistName"])
+
+noah_by_district <- noah_by_district |>
+  filter(is.na(yearbuilt)|yearbuilt<2000) |>
+  filter(address != "3201 Lady Marian Ln") |>
+  mutate(type = case_when(
+    style == "Garden" ~ "Multifamily",
+    style == "Low-Rise" ~ "Multifamily",
+    TRUE ~ style
+  ))
 # 
 # noah_map_dist <- leaf_sf_col(noah_by_district,
 #                              col_var = MagDistName)
@@ -270,19 +271,19 @@ library(stringi)
 
 # Not all of the above are captured by NHPD, so there is a gap in data here. Requested from Virginia Housing a listing of LIHTC properties.
 
-# affordable <- read_csv("data/nhpd_chesterfield.csv") |> 
-#   clean_names() |> 
-#   filter(subsidy_status != "Inactive") |> 
-#   select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address, target_population, end_date) |> 
-#   mutate(end_date = stri_sub(end_date, -4))
-# 
-# affordable <- as.data.frame(affordable) |> 
-#   st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
-# 
-# 
-# #Spatial join NHPD properties to magisterial districts.
-# affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistName"])
-# 
+affordable <- read_csv("data/nhpd_chesterfield.csv") |>
+  clean_names() |>
+  filter(subsidy_status != "Inactive") |>
+  select(property_name, owner_name, owner_type, subsidy_name, subsidy_subname, assisted_units, known_total_units, lat, long, street_address, target_population, end_date) |>
+  mutate(end_date = stri_sub(end_date, -4))
+
+affordable <- as.data.frame(affordable) |>
+  st_as_sf(coords = c("long", "lat"), crs=4326, remove=FALSE)
+
+
+#Spatial join NHPD properties to magisterial districts.
+affordable_by_district <- st_join(affordable, left = FALSE, districts["MagDistName"])
+
 # #Create map of affordable units by district.
 # aff_map <- leaf_sf_col(affordable_by_district,
 #             col_var = MagDistName)

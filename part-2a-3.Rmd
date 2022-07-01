@@ -254,8 +254,6 @@ amenity_summary <- amenity_count |>
   count(count)
 
 
-
-
 ```
 
 - BAR CHART: PERCENT OF UNITS BY PRESENCE OF AMENITY (COLORED OR FACETED BY RECENT/EXISTING)

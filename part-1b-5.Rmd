@@ -175,7 +175,7 @@ gg_bar_col(
   y_var = pct,
   col_var = r1,
   size_line = 0,
-  size_width = 0.7,
+  width = 0.7,
   x_title = "Census tracts",
   y_title = "Percent cost-burdened",
   y_labels = scales::label_percent(),
