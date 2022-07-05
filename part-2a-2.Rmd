@@ -24,7 +24,7 @@ The last five years have shown fluctuating multifamily development completions b
 
 As of June 2022, there were 33 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. An additional development is a mixed-income senior rental housing project by Better Housing Coalition that was completed recently. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
 
-Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022. 
+Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed --- slightly more than the number of homes completed between 2020 and 2022.
 
 This shift in intense development can be attributed to increasing home demand in this affluent and amenity rich portion of the county. Greenfield development in the western part of the county also contributes to its attractiveness to multifamily and mixed-use developers --- providing less risk when compared to redevelopment of brownfield sites. The Midlothian area also offers convenient access to Route 288, where residents can reach major job centers like the County Government Center, or even centers outside the county, like West Creek in Henrico County.
 
@@ -147,9 +147,11 @@ Market affordable rentals are largely located in garden style apartments though.
 
 The largest of these communities is Crystal Lakes Apartments is located along Chippenham Parkway --- with 716 apartment homes. Built in 1967, the property recently underwent renovations in 2020. Subsequently, the property saw a 6 percent increase in average market rent per unit from 2019 to 2020.
 
-These older garden style communities may have some amenities like a clubhouse, playgrounds, or fitness centers, but they are often outdated. Twenty-six of the 61 market affordable properties were built in the 1960s and 1970s. Only eight of these properties have reported a renovation; most of them having been completed in the last seven years.
+These older garden style communities may have some amenities like a clubhouse, playgrounds, or fitness centers, but they are often outdated. Twenty-six of the 61 market affordable properties were built in the 1960s and 1970s. Only eight of these properties have reported a renovation; most of these renovations having been completed in the last seven years.
 
-Preserving market affordable rentals, especially near the city-county border and along transit lines, helps support low- to moderate-income renters. McKinsey & Company, a global management consulting firm, has even focused research on preserving such a valuable asset of local housing stock.^[Kling et al. https://www.mckinsey.com/industries/public-and-social-sector/our-insights/preserving-the-largest-and-most-at-risk-supply-of-affordable-housing]
+Preserving market affordable rentals, especially near the city-county border and along transit lines, helps support low- to moderate-income renters. McKinsey & Company, a global management consulting firm, has even focused research on preserving such a valuable asset of local housing stock.[^part-2a-2-3] 
+
+[^part-2a-2-3]: Kling et al. <https://www.mckinsey.com/industries/public-and-social-sector/our-insights/preserving-the-largest-and-most-at-risk-supply-of-affordable-housing>
 
 ```{r noah-map, fig.cap= "Map of market affordable units by magisterial district"}
 
@@ -266,10 +268,10 @@ library(stringi)
 
 #Data is from a Feb 2022 pull of NHPD for Chesterfield County. 
 
-#As a supplement, the following properties are listed as Market/Affordable in CoStar:
-# PARK AT RIDGEDALE; BROADWATER TOWNHOMES; MERIDIAN WATERMARK; CHESTER VILLAGE; BELLWOOD TERRACE; MARKET WOODS
+#These properties are not captured by NHPD but are for some reason listed as market/affordable, these are listed in CoStar:
+# PARK AT RIDGEDALE; BROADWATER TOWNHOMES; MERIDIAN WATERMARK; CHESTER VILLAGE; BELLWOOD TERRACE; MARKET WOODS (BHC - LIHTC deal)
 
-# Not all of the above are captured by NHPD, so there is a gap in data here. Requested from Virginia Housing a listing of LIHTC properties.
+# Not all of the above are captured by NHPD, so there is a gap in data here. Requested from Virginia Housing a listing of LIHTC properties, but it is a bit difficult to parse currently. I would rely on the NHPD data for now and make mention of the BHC deals coming.
 
 affordable <- read_csv("data/nhpd_chesterfield.csv") |>
   clean_names() |>
@@ -295,9 +297,14 @@ knitr::include_url("maps/aff_map.html", height = "500px")
 
 
 ```
+
 *Source: National Housing Preservation Database*
 
-The bulk of affordable rental housing is supported by the Low-Income Housing Tax Credit program --- 2,312 rental homes. Significant research has been doing on the placement of LIHTC developments and their impact on surrounding communities. A review of these studies found that "property value increased when LIHTC developments are built in low-income areas" and furthermore, decreases in crime are associated with LIHTC development.^[Keri-Nicole Dillman, Keren Mertens Horn & Ann Verrilli (2017) The What, Where, and When of Place-Based Housing Policy’s Neighborhood Effects, Housing Policy Debate, 27:2, 282-305, DOI: 10.1080/10511482.2016.1172103] Even the location of LIHTC development in high opportunity areas has proven to have positive impacts.^[*Ibid*]
+The bulk of affordable rental housing is supported by the Low-Income Housing Tax Credit program --- 2,312 rental homes. Significant research has been doing on the placement of LIHTC developments and their impact on surrounding communities. A review of these studies found that "property value increased when LIHTC developments are built in low-income areas" and furthermore, decreases in crime are associated with LIHTC development.[^part-2a-2-4] Even the location of LIHTC development in high opportunity areas has proven to have positive impacts.[^part-2a-2-5]
+
+[^part-2a-2-4]: Keri-Nicole Dillman, Keren Mertens Horn & Ann Verrilli (2017) The What, Where, and When of Place-Based Housing Policy's Neighborhood Effects, Housing Policy Debate, 27:2, 282-305, DOI: 10.1080/10511482.2016.1172103
+
+[^part-2a-2-5]: *Ibid*
 
 ```{r aff-type, fig.cap= "Subsidy type by magisterial district"}
 #Create bar chart showing subsidy type by district.Need help with reordering
@@ -314,14 +321,16 @@ plotly::ggplotly(afftype) |>
 
 
 ```
+
 *Source: National Housing Preservation Database*
 
-LIHTC in the County has largely been developed by for profit developers with only one non-profit developer in the county, Better Housing Coalition (BHC). BHC, one of the Richmond region's largest nonprofit developers of affordable housing, has concentrated much of their work along Route One --- where they first developed their first phase of Winchester Green townhomes in 1999.^[Phase 1 of Winchester Greens was financed by a \$5.8 million bond issued by the Chesterfield County Industrial Development Authority, \$13.8 million from HUD, and \$800,000 in Community Development Block Grant from Chesterfield County.] Since 1999, Better Housing Coalition has continued to phase development with Market Square and will continue develop on adjacent parcels with Winchester Forest.
+LIHTC in the County has largely been developed by for profit developers with only one non-profit developer in the county, Better Housing Coalition (BHC). BHC, one of the Richmond region's largest nonprofit developers of affordable housing, has concentrated much of their work along Route One --- where they first developed their first phase of Winchester Green townhomes in 1999.[^part-2a-2-6] Since 1999, Better Housing Coalition has continued to phase development with Market Square and will continue develop on adjacent parcels with Winchester Forest.
+
+[^part-2a-2-6]: Phase 1 of Winchester Greens was financed by a \$5.8 million bond issued by the Chesterfield County Industrial Development Authority, \$13.8 million from HUD, and \$800,000 in Community Development Block Grant from Chesterfield County.
 
 Programs like LIHTC have a time frame for affordability restrictions. For LIHTC in Virginia, like many other states, there is a 30 year commitment to affordability, but only a 15 year compliance period, wherein property owners can increase rents. By 2040, the majority of existing LIHTC housing (1,984 homes) will be outside the 30 year commitment period. Nonprofit developers will often seek new allocation of tax credits before their commitment period ends, but there is often little incentive for for-profit developers to maintain affordability restrictions past the compliance period.
 
 LIHTC developments in the Bermuda and Dale Districts are set to face the end of the affordability commitment period before 2040, but Bermuda District LIHTC properties are largely nonprofit owned and managed --- therefore, less likely at risk of loss. But Dale District LIHTC properties could face significant risk of exiting from the affordable housing stock.
-
 
 ```{r loss, fig.cap= "LIHTC housing at risk of loss of affordability by year"}
 
@@ -341,13 +350,14 @@ plotly::ggplotly(loss_bar) |>
   plotly_camera()
 
 ```
+
 *Source: National Housing Preservation Database*
 
 ### Price comparison
 
 The following makes comparisons between affordable multifamily and market-rate multifamily rental prices across Chesterfield County. CoStar data is incomplete for some properties, but still provides an accurate and up-to-date average market asking rent per unit by property. The analysis below includes 96 multifamily properties where average asking rent data is available. It excludes manufactured home communities and single family rentals.
 
-
+The map below shows the location of market rate, affordable (rent restricted or rent subsidized), and market/affordable multifamily developments. The size of the circle represents the average asking market rent per unit for each property. The map shows a large amount of market rate properties located in the northern section of the county, specifically along Midlothian Turnpike and Route 288. Affordable rental properties, including those that are mixed-income, are largely located towards the eastern part of the county along Route One and Route 10.
 
 ```{r price-comparison-map}
 #CoStar filters: Chesterfield County, Virginia; Multi-family; Construction status: Existing
@@ -381,20 +391,23 @@ comp_by_district <- st_join(p_comp, left = FALSE, districts["MagDistName"])
 
 # pal <- colorFactor(c("red", "green", "blue"), domain = c("Affordable", "Market", "Market/Affordable"))
 # 
-# comp_map <- leaflet(comp_by_district) |> 
+# comp_map <- leaflet(comp_by_district) |>
 #   addTiles() |>
 #   addCircleMarkers(
 #     radius = ~avg_asking_unit/200,
 #     color = ~pal(rent_type),
 #     stroke = TRUE, fillOpacity = 0.5
 #    )
-# 
-# saveWidget(comp_map, "maps/comp_map.html")
+
+saveWidget(comp_map, "maps/comp_map.html")
 
 knitr::include_url("maps/comp_map.html", height = "500px")
 
 
 ```
+*Source: CoStar Group, Inc.*
+
+Market rate rents skew towards the \$1,500 to \$2,000 range, with two properties well-above the \$2,000 rent level. These two properties are high-end properties; one being a townhome development and the other a senior independent living with substantial amenities and programming. Affordable rental properties have rents that sit closer to \$1,000, which would require at least $40,000 annually to not be cost-burdened. Market/affordable rents are scattered but are typically between \$1,000 and \$1,500. 
 ```{r pcomp-hist-county}
 
 # I think a histogram is easier to understand than a boxplot but I've given both options below.
@@ -407,14 +420,19 @@ pcomp_box_county <- gg_boxplot_col(comp_by_district,
 plotly::ggplotly(pcomp_box_county) |> 
   plotly_camera()
 
-pcomp_hist_county <- gg_histogram_col(comp_by_district,
+pcomp_hist_county <- gg_histogram_col_facet(comp_by_district,
                                       x_var = avg_asking_unit,
-                                      col_var = rent_type)
+                                      col_var = rent_type,
+                                      facet_var = rent_type)
 
 plotly::ggplotly(pcomp_hist_county) |> 
   plotly_camera()
 
 ```
+*Source: CoStar Group, Inc.*
+
+Showing the distribution of rents by magisterial districts shows different rental markets for each district. 
+ 
 ```{r pcomp-hist-dist}
 
 pcomp_hist_dist <- gg_histogram_col_facet(comp_by_district,
@@ -426,6 +444,7 @@ plotly::ggplotly(pcomp_hist_dist) |>
   plotly_camera()
 
 ```
+*Source: CoStar Group, Inc.*
 
 -   Compare affordable (rent-restricted) rents to market-rate (non-affordable) rents
 -   For market-rate, include ALL other CoStar properties, not just NOAH
