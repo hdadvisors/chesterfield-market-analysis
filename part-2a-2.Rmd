@@ -366,7 +366,7 @@ The map below shows the location of market rate, affordable (rent restricted or 
 
 p_comp <- read_csv("data/costar_price_comparison.csv") |> 
   clean_names() |> 
-  select(property_address, property_name, style, owner_name, number_of_units, avg_asking_unit, rent_type, market_segment,latitude, longitude) |> 
+  select(property_address, property_name, style, owner_name, year_built, number_of_units, avg_asking_unit, rent_type, market_segment,latitude, longitude) |> 
   filter(number_of_units >3) |> 
   mutate(style = case_when(
     property_address == "2507 Alcott Rd" ~ "Low-Rise",
