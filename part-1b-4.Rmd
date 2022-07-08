@@ -49,6 +49,7 @@ Another important part of a diverse workforce are public sector jobs, like teach
 The table below shows the median annual wage for six common occupations with Chesterfield County government. These positions generally pay higher than the county's most prevelant private-sector jobs.
 
 ```{r public-sector}
+
 cf_wages %>% 
   filter(occ_code == "county") %>%
   select(2,7) %>% 
@@ -215,10 +216,10 @@ cpi <- read_excel("data/CPI_U_RS.xlsx") %>%
   transform(year = as.numeric(year))
 
 b25119_cpi <- b25119_data %>%
-    left_join(cpi, by = 'year') %>%
+  left_join(cpi, by = 'year') %>%
   transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
   select(year, tenure, dollars20, moe, reliability) %>%
-    filter(tenure == "Renter")
+  filter(tenure == "Renter")
 
 ```
 

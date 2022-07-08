@@ -1,0 +1,15 @@
+fig:recent-mf
+fig:new-units
+fig:units-time
+fig:noah-map
+fig:noah-units
+fig:noah-type
+fig:noah-typemap
+fig:affordable-map
+fig:aff-type
+fig:loss
+part-2a-2
+recent-multifamily-developments
+market-affordable-rental
+affordable-rental
+price-comparison

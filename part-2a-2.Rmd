@@ -112,11 +112,13 @@ status_timeline <- gg_bar_col(status_units,
 
 plotly::ggplotly(status_timeline) |> 
   plotly_camera()
+
 ```
 
 *Source: CoStar Group, Inc.*
 
 ```{r}
+
 #It might be helpful to size dots by number of units. Colors need to be changed to be more visible. 
 #districts |> plot_mapbox() |> 
  # add_sf(
@@ -237,8 +239,8 @@ plotly::ggplotly(noah_t_district) |>
 ```{r noah-typemap, fig.cap= "Map of market affordable housing by type"}
 #Create map showing NOAH by type.
 
-leaf_sf_col(noah_by_district,
-            col_var = type)
+# leaf_sf_col(noah_by_district,
+#             col_var = type)
 
 #Create chart showing NOAH by year built.
 
@@ -399,7 +401,7 @@ comp_by_district <- st_join(p_comp, left = FALSE, districts["MagDistName"])
 #     stroke = TRUE, fillOpacity = 0.5
 #    )
 
-saveWidget(comp_map, "maps/comp_map.html")
+# saveWidget(comp_map, "maps/comp_map.html")
 
 knitr::include_url("maps/comp_map.html", height = "500px")
 
