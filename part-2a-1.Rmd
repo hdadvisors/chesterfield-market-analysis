@@ -1,4 +1,6 @@
-# Rental market summary 
+# (PART) COUNTYWIDE MARKET ANALYSIS {.unnumbered}
+
+# Rental market summary {#part-2a-1}
 
 This section summarizes the existing stock of rental units within the county and provides an analysis of recent price and production trends in the rental market.
 
