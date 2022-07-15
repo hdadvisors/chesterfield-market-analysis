@@ -21,7 +21,7 @@ This section describes the Eastern Hull Street Road corridor in terms of its ren
 
 For the purposes of this analysis, this corridor is defined as the Census tracts 1002.05, 1002.06, 1002.08, 1002.09, and 1002.10. These tracts include many of the neighborhoods directly adjacent to Hull Street Road from Chippenham Parkway to Courthouse Road.
 
-```{r r1-base-map, fig.cap="Eastern Hull Street Road corridor", message=FALSE}
+```{r hsr-base-map, fig.cap="Eastern Hull Street Road corridor", message=FALSE}
 
 hsr_tracts_list <- c("100205", "100206", "100208", "100209", "100210")
 

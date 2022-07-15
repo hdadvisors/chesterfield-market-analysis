@@ -6,27 +6,362 @@ This section describes the Route 1 corridor in terms of its rental housing marke
 
 The Route 1 corridor used in this section uses the same six census tracts from the previous Route 1 affordability analysis in [Chapter 10](#part-1b-5).
 
+```{r setup}
+
+library(tidycensus)
+library(tidyverse)
+library(janitor)
+library(leaflet)
+library(sf)
+library(sp)
+library(tigris)
+library(mapview)
+library(simplevis)
+library(readxl)
+library(ggplot2)
+library(lubridate)
+
+```
+
+```{r route-one-map}
+
+r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
+
+r1_tracts <- tracts("VA", "Chesterfield",
+                    progress_bar = FALSE) %>% 
+  filter(TRACTCE %in% r1_tracts_list) %>% 
+  st_transform(4326)
+
+```
 ## Rental housing supply
 
 ### Number of rental homes
 
-- ACS estimate of renter households
+```{r r1-rhh}
+
+years <- 2010:2020
+
+b25003_vars <- load_variables(2020, "acs5") |> 
+  filter(str_sub(name, end = 7) %in% "B25003_")
+
+b25003_raw <- map_dfr(years, function(yr){
+  b25003_pull <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25003",
+    year = yr,
+    survey = "acs5",
+    cache_table = TRUE
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25003_r1_raw <- b25003_raw |> 
+  subset(GEOID %in% r1_tracts$GEOID)
+
+b25003_vars_cleaned <- b25003_vars |> 
+  separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
+  select(variable = name, tenure) |> 
+  drop_na() |> 
+  mutate(tenure = case_when(
+    tenure == "Owner occupied" ~ "Homeowner",
+    tenure == "Renter occupied" ~ "Renter"
+  )) |> 
+  filter(tenure == "Renter")
+
+b25003_r1 <- b25003_r1_raw |> 
+  right_join(b25003_vars_cleaned, by = "variable") |> 
+  select(NAME, fips = GEOID, year, tenure, estimate, moe)
+
+b25003_route1 <- b25003_r1 |> 
+  group_by(year) |> 
+  summarise(estimate = sum(estimate))
+  
+#Create line graph showing change in renter households across time.
+r1_renters_plot <- gg_line(
+  b25003_route1,
+  x_var = year,
+  y_var = estimate,
+  y_breaks_n = 5,
+  title = "Renter households",
+  x_title = element_blank())
+
+plotly::ggplotly(r1_renters_plot) %>% 
+  plotly_camera()
+
+  
+```
+
 - CoStar number of apartments (all types)
+
+```{r costar-mf-1, fig.cap= "Total number of multifamily units by property status"}
+
+# Load .csv of CoStar properties. Data was collected by hand drawing boundaries for the necessary census tracts in the CoStar platform. No filters were placed on the search aside from multi-family property.
+
+costar_r1_mf <- read_csv("data/costar_r1_mf.csv") |> 
+  clean_names() |> 
+  filter(property_address != "8219 Jefferson Davis Hwy") |> 
+  filter(property_address != "9608 Jefferson Davis Hwy") |> 
+  filter(property_address != "2537 Norcliff Rd") |> 
+  filter(property_address != "12329-12331 Jefferson Davis Hwy") |> 
+  filter(property_address != "9701 Jefferson Davis Hwy")
+
+r1_unit_cnt <- costar_r1_mf |> 
+  group_by(building_status) |> 
+  summarise(units = sum(number_of_units))
+
+r1_unit_cnt_bar <- gg_bar_col(
+  r1_unit_cnt,
+  x_var = building_status,
+  y_var = units,
+  col_var = building_status
+)
+
+plotly::ggplotly(r1_unit_cnt_bar) %>% 
+  plotly_camera()
+
+```
+
+
+```{r costar-mf-2, fig.cap="Map of multifamily properties along Route One Corridor"}
+
+r1_map <- costar_r1_mf |> 
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+
+leaflet(r1_map) |> 
+  addTiles() |> 
+  addCircleMarkers(
+    radius = 3) |> 
+  addPolygons(data=r1_tracts, weight = 2, fillColor = NULL)
+
+
+```
 - Manufactured home communities
+
+```{r mhc-r1}
+
+# Use MHCCV study instead
+
+```
+
 - Estimated single-family rentals (county data)
+
+```{r sfr-r1}
+
+```
 
 ### Rental prices
 
 - ACS median rent by tract
+
+```{r acs-r1-rent}
+
+years <- 2010:2020
+
+b25064_vars <- load_variables(2020, "acs5") |> 
+  filter(str_sub(name, end =6) %in% "B25064")
+
+b25064_raw <- map_dfr(years, function(yr){
+  b25064_pull <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25064",
+    year = yr,
+    survey = "acs5",
+    cache_table = TRUE,
+    geometry = TRUE
+  ) %>%
+    mutate(year = yr)
+  })
+
+b25064_r1_raw <- b25064_raw |> 
+  subset(GEOID %in% r1_tracts$GEOID)
+
+cpi <- read_excel("data/CPI_U_RS.xlsx")
+cpi <- cpi |>  
+  rename(year = Year,
+         priceindex = Index) |> 
+  transform(year = as.numeric(year))
+
+r1_rent_cpi <- b25064_r1_raw |> 
+    left_join(cpi, by = 'year') |> 
+  transform(dollars20 = ((381.2/priceindex)*estimate)) |> 
+  select(GEOID, NAME, year, dollars20) |> 
+  separate(NAME, into = c("tract", "county", "state"), sep = ",") |> 
+  transform(year_char = as.character(year))
+
+# Not sure about the best visualization. Ideally a Shiny app that can tab across years to show the change in median rent.
+
+gg_sf_col_facet(
+  r1_rent_cpi,
+  col_var = dollars20,
+  col_na_rm = TRUE,
+  facet_var = year_char
+) + 
+  scale_fill_viridis_c(option = "magma")
+
+
+```
+
 - CoStar average asking rent (all units)
+
+```{r costar-r1-rent}
+
+# Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
+
+costar_r1_rent <- read_csv("data/costar_r1_rent.csv") |> 
+  clean_names() |> 
+  mutate(period = case_when(
+    period == "2022 Q3 QTD" ~ "2022 Q3",
+    TRUE ~ period)) |> 
+  mutate(period = yq(period)) |> 
+  mutate(current_search = parse_number(current_search))
+
+colnames(costar_r1_rent)[2] <- "rent"
+
+gg_line(costar_r1_rent,
+        x_var = period,
+        y_var = rent) + 
+  scale_x_date()
+
+
+```
 - CoStar average asking rent (by bedroom)
+```{r costar-r1-brent}
+
+# Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
+
+
+costar_r1_brent <- read_csv("data/costar_r1_brent.csv") |> 
+  clean_names() |> 
+  mutate(period = case_when(
+    period == "2022 Q3 QTD" ~ "2022 Q3",
+    TRUE ~ period)) |> 
+  pivot_longer(
+    cols = 2:5,
+    names_to = "br",
+    values_to = "rent"
+  ) |> 
+  mutate(br = case_when(
+    br == "studio" ~ "Studio",
+    br == "x1_bed" ~ "One bedroom",
+    br == "x2_beds" ~ "Two bedroom",
+    br == "x3_beds" ~ "Three bedroom"
+  )) |> 
+  mutate(period = yq(period)) |> 
+  mutate(rent = parse_number(rent))
+
+gg_line_col(costar_r1_brent,
+        x_var = period,
+        y_var = rent,
+        col_var = br) + 
+  scale_x_date()
+
+```
+
 - Single-family home rents (active listings and units leased in past 365 days, via MLS)
+
+```{r mls-sfr}
+
+# Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export.
+
+mls_r1_sfr <- read_csv("data/mls_r1_sfr.csv") |> 
+  clean_names() |> 
+  mutate(sales_date = mdy(sales_date)) |> 
+  mutate(list_price = parse_number(list_price))
+
+gg_point_col(mls_r1_sfr,
+         x_var = sales_date,
+         y_var = list_price,
+         col_var = type)
+
+
+
+```
 
 ### Conditions
 
 - ACS rental units by year built
+```{r acs-yrblt}
+
+b25036_vars <- load_variables(2020, "acs5") |> 
+  filter(str_sub(name, end = 6) %in% "B25036")
+
+b25036_raw <- get_acs(
+  geography = "tract",
+  county = "Chesterfield County",
+  state = "VA",
+  table = "B25036",
+  year = 2020,
+  survey = "acs5",
+  cache_table = TRUE,
+  geometry = TRUE
+  )
+
+b25036_r1_raw <- b25036_raw |> 
+  subset(GEOID %in% r1_tracts$GEOID)
+
+# Maybe keep all households in order to do percentages across entire housing stock? Or just rental housing stock?
+
+b25036_vars_cleaned <- b25036_vars |> 
+  separate(label, into = c("est", "total", "tenure", "yrblt"), sep = "!!") |> 
+  select(variable = name, tenure, yrblt) |> 
+  filter(tenure == "Renter occupied:") |> 
+  drop_na() |> 
+  mutate(tenure = "Renter")
+
+b25036_r1 <- b25036_r1_raw |> 
+  right_join(b25036_vars_cleaned, by = "variable")
+
+b25036_r1_grp <- b25036_r1 |> 
+  mutate(yrblt = case_when(
+    yrblt == "Built 1939 or earlier" ~ "1939 or earlier",
+    yrblt == "Built 1940 to 1949" ~ "1940 to 1959",
+    yrblt == "Built 1950 to 1959" ~ "1940 to 1959",
+    yrblt == "Built 1960 to 1969" ~ "1960 to 1979",
+    yrblt == "Built 1970 to 1979" ~ "1960 to 1979",
+    yrblt == "Built 1980 to 1989" ~ "1980 to 1999",
+    yrblt == "Built 1990 to 1999" ~ "1980 to 1999",
+    yrblt == "Built 2000 to 2009" ~ "2000 to 2009",
+    yrblt == "Built 2010 to 2013" ~ "2010 or later",
+    yrblt == "Built 2014 or later" ~ "2010 or later"
+  )) |> 
+  mutate(yrgrp = case_when(
+    yrblt == "2000 to 2009" ~ yrblt,
+    yrblt == "2010 or later" ~ yrblt,
+    yrblt == "1980 to 1999" ~ yrblt,
+    TRUE ~ "Pre-1980"
+  ))
+
+b25036_r1_grp <- b25036_r1_grp |> 
+  group_by(yrgrp, NAME) |> 
+  summarise(estimate = sum(estimate)) |> 
+  filter(yrgrp == "Pre-1980")
+
+# Map showing concentration of pre-1980 rentals.
+
+gg_sf_col(b25036_r1_grp,
+          col_var = estimate) +
+  scale_fill_viridis_c(option = "magma")
+  
+
+
+```
 - CoStar property year built
+```{r costar-mf-3}
+
+
+```
+
 - CoStar rating
+
+```{r costar-mf-3}
+
+
+```
+
 - MHC ratings from 2016 MHCCV study
 
 ## Proximity to amenities

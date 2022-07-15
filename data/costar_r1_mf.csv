@@ -1,0 +1,29 @@
+Property Address,County Name,State,Zip,Property Name,Building Status,Number Of Units,Style,Star Rating,Year Built,Year Renovated,Building Park,Total Buildings,Zoning,Number Of Stories,$Price/Unit,Vacancy %,Avg Unit SF,Avg Asking/Unit,Avg Effective/Unit,Rent Type,Affordable Type,Market Segment,Owner Name,Developer Name,Number Of 1 Bedrooms Units,Number Of 2 Bedrooms Units,Number Of 3 Bedrooms Units,Number Of 4 Bedrooms Units,Latitude,Longitude
+5002 Alan Dr,Chesterfield,VA,23234,Oakwood Apartments,Existing,32,Garden,2,1975,,,8,R-7,1,,3.93,,870,865,Market,,All,Sage Commercial Ventures,,16,16,,,37.453624,-77.446765
+2507 Alcott Rd,Chesterfield,VA,23237,Huntwood Apartments,Existing,48,Single-Family Home,2,1974,,,7,C-3,1,,3.93,500,700,696,Market,,All,Sage Commercial Ventures,,48,,,,37.423032,-77.4366379
+2800 Bensley Commons Blvd,Chesterfield,VA,23237-1726,Winchester Greens Apartments,Existing,240,Garden,3,2000,,,42,R12,2,,2.23,1186,974,970,Affordable,Rent Restricted,All,Better Housing Coalition,,,64,176,,37.4236177,-77.4418739
+7101 Bensley Commons Blvd,Chesterfield,VA,23237,"Market Square I, II, and III",Existing,174,Garden,4,2006,,,5,,3,,1.36,801,1253,1249,Affordable,Rent Restricted,Senior,Better Housing Coalition,,71,103,,,37.4245944,-77.4415003
+5201-5223 Collindale Rd,Chesterfield,VA,23234,Collindale Apartments,Existing,20,Garden,2,1964,1990,,6,R7,2,,3.93,950,806,802,Market,,All,Great Richmond Rentals,,,20,,,37.4525867,-77.4445528
+10200 Colony Village Way,Chesterfield,VA,23237-3374,Colony Village II,Existing,166,Low-Rise,3,2017,,,3,C5,2,,20.56,835,1601,1600,Market,,All,Plus Management,"The Emerson Construction Group, Inc",88,70,8,,37.385989,-77.4258182
+10250 Colony Village Way,Chesterfield,VA,23237,Colony Village,Existing,166,Garden,4,2013,,,8,C5,3,,9.12,871,1548,1546,Market,,All,Plus Management,"The Emerson Construction Group, Inc",58,83,25,,37.3868515,-77.4266142
+6110 Cricklewood Dr,Chesterfield,VA,23234,SouthPointe Landing Apartments,Existing,192,Garden,2,1972,,,19,RMF,2,,5.29,1031,975,969,Affordable,Rent Restricted,All,Hivernan Realty Group LLC,,,160,32,,37.443839,-77.448835
+2796 Goolsby Ave,Chesterfield,VA,23234-4436,Heritage Pointe Apartments,Existing,110,Garden,3,1968,,,6,R7,2,,1.28,888,1040,1036,Market,,All,"KRS Holdings, Inc.",,,110,,,37.4520676,-77.4467055
+Jefferson Davis Hwy,Chesterfield,VA,23237,Maple Woods Apartments,Proposed,92,Mid-Rise,3,2023,,,1,,4,,,,,,,,All,Lalani Properties Llc,South Creek Development,,,,,37.4169455,-77.4357878
+8219 Jefferson Davis Hwy,Chesterfield,VA,23237-1361,,Existing,13,,2,1957,,,1,C3,,,,800,,,,,All,Jim Blackburn,,13,,,,37.4129137,-77.4348938
+9200 Jefferson Davis Hwy,Chesterfield,VA,23237,Lambert Landing,Proposed,112,Low-Rise,3,2023,,,1,,1,,,700,,,Market,,All,Woda Cooper Companies,,112,,,,37.399948,-77.431476
+9608 Jefferson Davis Hwy,Chesterfield,VA,23237,,Existing,13,,2,1957,,,,C-5,1,,3.93,,828,824,,,,Idris Mohammed,,13,,,,37.3932258,-77.4295826
+11240 Jefferson Davis Hwy,Chesterfield,VA,23237-4241,,Existing,52,Garden,3,1963,,,13,C3,1,,3.93,,,,Market,,All,"KRS Holdings, Inc.",,52,,,,37.3739812,-77.4194953
+2530 Marina Dr,Chesterfield,VA,23234-5139,Falling Creek,Existing,348,Garden,2,1964,2017,,31,RMF,2,,2.21,568,899,896,Market,,All,Prospect Capital Corporation,,230,116,,,37.4378792,-77.4393993
+12300 Moore’s Lake Rd,Chesterfield,VA,23831-2317,The Jane at Moore's Lake,Existing,385,Mid-Rise,4,2019,,,2,,4,,6.54,836,1721,1721,Market,,All,Emerson & Roper- The Jane at Moore's Lake,Plus MGT,193,123,69,,37.3621348,-77.4099752
+2501 New Park Rd,Chesterfield,VA,23237,Market Woods,Existing,60,Low-Rise,3,2020,,,1,,3,,11.61,705,928,919,Market/Affordable,Rent Restricted,Senior,Better Housing Coalition,,22,38,,,37.4224921,-77.4396854
+2554 Noel St,Chesterfield,VA,23237-4470,Bellwood Terrace Apartments,Existing,104,Garden,2,1962,,,51,C3,1,,0.16,546,641,639,Market/Affordable,Rent Restricted,All,"David, Kamp & Frank, LLC",,83,21,,,37.418508,-77.4345264
+2537 Norcliff Rd,Chesterfield,VA,23237,,Existing,3,,2,1946,,,,R-7,1,,3.93,,,,,,,Linda Harris,,,,,,37.4035424,-77.430937
+5403 Remuda Dr,Chesterfield,VA,23234-4470,Remuda Crossing,Existing,86,Garden,2,1958,,,5,R7,2,,0.37,880,925,922,Market,,All,"KRS Holdings, Inc.",,,86,,,37.4496538,-77.443458
+4101 Runner Loop,Chesterfield,VA,23831-4463,The Station,Under Construction,201,Mid-Rise,5,2022,,,5,RMF,5,,,1040,1849,1849,Market,,All,Virginia Housing Development Authority,Breeden Construction,40,140,21,,37.3586547,-77.443
+6100 Strathmore Rd,Chesterfield,VA,23234,Parkway Gardens,Existing,44,Garden,2,1965,,,11,,1,,3.93,675,636,633,Market,,All,"Crown Hill, LLC",,44,,,,37.4417441,-77.4503715
+7001 Wentworth St,Chesterfield,VA,23237-1503,Lafayette Townhouse Apartments,Existing,48,Garden,3,1956,,,7,R7,2,,,800,742,740,Market,,All,Jonathan A. Frank,,,48,,,37.4293998,-77.4444602
+6745 Jefferson Davis Hwy,Chesterfield,VA,23237-1218,The Maisonettes Apartments,Existing,104,Garden,3,1966,,,20,MH1,2,,3.73,678,936,931,Market,,All,Maison Incorporated,,104,,,,37.4326575,-77.4377512
+9701 Jefferson Davis Hwy,Chesterfield,VA,23237-4666,Holiday Mobile Home Park,Existing,140,,2,1967,,,,MH1,1,,3.93,498,,,Market,,All,John Yancey Real Estate,,,,,,37.3937053,-77.4259763
+12329-12331 Jefferson Davis Hwy,Chesterfield,VA,23831,,Existing,53,,3,1969,,,,MH1,,,3.93,,,,,,All,project:HOMES,,,53,,,37.3571678,-77.411225
+3145 Parkdale Rd,Chesterfield,VA,23234-6357,,Existing,12,Low-Rise,2,1956,,,3,R7,1,,3.93,,,,Market,,All,"KRS Holdings, Inc.",,12,,,,37.4379419,-77.4518733
+5400 Remuda Dr,Chesterfield,VA,23234,,Existing,26,,2,1963,,,,R7,2,,3.93,,,,Market,,All,"KRS Holdings, Inc.",,,,,,37.4495076,-77.4440923
