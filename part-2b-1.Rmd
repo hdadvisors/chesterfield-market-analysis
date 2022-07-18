@@ -20,8 +20,23 @@ library(simplevis)
 library(readxl)
 library(ggplot2)
 library(lubridate)
+library(viridis)
+library(tidygeocoder)
 
 ```
+## The Route One Corridor
+
+U.S Route 1 once served as the major north-south corridor that connected East Coast states. However, the
+completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then,
+areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present
+challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county’s most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
+
+Current conditions on the northern section of Route 1 prevent significant reinvestment, but recent efforts by the County improve those conditions and incentivize new and much needed development. The 2018 Northern Jefferson Davis Special Area Plan and the 2019 Northern Jefferson Davis Real Estate Market Study provide Chesterfield County with initial tools to revitalize Route 1. Momentum has continued with the Route 1 Residential Overlay District, the Northern Jefferson Davis Incentive Program, and Greater Richmond Transit Company’s Pilot Bus Service. 
+
+Much of the new rental housing development has occurred at the southern end of the study area --- pulled towards the intersection of W. Hundred Road (State Route 10) and Route 1, where there is a dense concentration of retail shopping options. 
+
+This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. 
+
 
 ```{r route-one-map}
 
@@ -32,10 +47,16 @@ r1_tracts <- tracts("VA", "Chesterfield",
   filter(TRACTCE %in% r1_tracts_list) %>% 
   st_transform(4326)
 
+leaf_sf(r1_tracts)
+
 ```
 ## Rental housing supply
 
+The following describes the existing rental housing supply along the Route 1 corridor.
+
 ### Number of rental homes
+
+The number of rental homes along the Route 1 corridor has increased by 26 percent between 2010 and 2020 - a total of 708 renter households. Much of this rental housing growth occurred in the latter half of the decade --- from 2014 and on. From 2010 to 2012, rental housing was in decline --- most likely a reflection of the latter year impacts from the Great Recession. During this timeframe, the construction industry struggled to keep pace with the growing demand for new rental housing. From 2019 to 2020, there was a higher estimated percent change (13 percent)in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market --- margins of error for the data in 2020 are also higher than previous years; and therefore, these changes should be interpreted with caution.
 
 ```{r r1-rhh}
 
@@ -52,8 +73,9 @@ b25003_raw <- map_dfr(years, function(yr){
     table = "B25003",
     year = yr,
     survey = "acs5",
-    cache_table = TRUE
-  ) %>%
+    cache_table = TRUE,
+    geometry = TRUE
+  ) |> 
     mutate(year = yr)
   })
 
@@ -93,7 +115,31 @@ plotly::ggplotly(r1_renters_plot) %>%
   
 ```
 
-- CoStar number of apartments (all types)
+Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Ampthill area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households. While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
+
+
+```{r r1-rhh-map-10}
+
+b25003_r1_10 <- b25003_r1 |> 
+  filter(year == 2010) |> 
+  select(NAME, fips, year, estimate)
+
+b25003_r1_20 <- b25003_r1 |> 
+  filter(year == 2020) |> 
+  select(NAME, fips, year, estimate)
+
+b25003_r1_10_20 <- cbind(b25003_r1_10, b25003_r1_20) |> 
+  select(NAME, fips, est10 = estimate, est20 = estimate.1, geometry) |> 
+  mutate(change = (est20-est10))
+
+
+
+```
+
+
+#### Multifamily properties
+
+Of the estimated 3,376 occupied rental homes from the U.S. Census Bureau, CoStar captures at most 2,417 of them that are located across 20 multifamily properties. These multifamily properties contain at least 12 rental homes and the majority of these properties (70 percent) are garden-style apartments. The majority (70 percent) of existing properties were built before 1976, and of these fourteen properties, only two have a recorded renovation --- Collindale Apartments (renovated in 1990) and Falling Creek (renovated in 2017).
 
 ```{r costar-mf-1, fig.cap= "Total number of multifamily units by property status"}
 
@@ -123,6 +169,8 @@ plotly::ggplotly(r1_unit_cnt_bar) %>%
 
 ```
 
+The city-county border was located much further north before the annexation of Northern Chesterfield by the City of Richmond in 1970. In spite of this change, these older rental properties represent the extent to which rental housing development in the mid-20th century stretched into the county. 
+
 
 ```{r costar-mf-2, fig.cap="Map of multifamily properties along Route One Corridor"}
 
@@ -141,13 +189,71 @@ leaflet(r1_map) |>
 
 ```{r mhc-r1}
 
-# Use MHCCV study instead
+# Use MHCCV study instead; supplement additional MHCs.
+
+mhc <- read_csv("data/mhccv_chesterfield.csv") 
+
+mhc <- mhc |> 
+  transform(fulladdress = paste(mhc$address, mhc$county, mhc$state, mhc$zip, sep = ", "))|> 
+  select(name, fulladdress, units, units_mhccv, corridor)
+
+mhc_coded <- mhc |> 
+  geocode(address = fulladdress,
+          method = 'geocodio',
+          full_results = TRUE,
+          unique_only = FALSE,
+          lat = Latitude,
+          long = Longitude)
+
+mhc_coded <- mhc_coded |> 
+  mutate(Latitude = case_when(
+    name == "Holiday Mobile Home Park" ~ 37.393355,
+    TRUE ~ Latitude
+  )) |> 
+  mutate(Longitude = case_when(
+    name == "Holiday Mobile Home Park" ~ -77.427561,
+    TRUE ~ Longitude
+  ))
+
+mhc_coded_r1 <- mhc_coded |> 
+  filter(corridor == "Route 1 - N")
+
+
+leaflet(mhc_coded_r1) |> 
+  addTiles() |> 
+  addCircleMarkers(
+    radius = ~ (units_mhccv/5),
+    color = "orange",
+    stroke = FALSE, fillOpacity = 0.5
+  )
+
+
 
 ```
 
 - Estimated single-family rentals (county data)
 
 ```{r sfr-r1}
+
+sfr_r1 <- ch_sfh |> 
+  st_join(left = FALSE, r1_tracts["NAMELSAD"]) |> 
+  select(address, year_built, improvement, ownership, NAMELSAD, geometry)
+
+sfr_r1_summary <- sfr_r1 |> 
+  group_by(NAMELSAD, ownership) |> 
+  summarise(count = n_distinct(address)) |> 
+  mutate(total_sfh = case_when(
+    NAMELSAD == NAMELSAD ~ sum(count))
+  ) |> 
+  mutate(percent_sfh = count/total_sfh) |> 
+  filter(ownership == "Renter-occupied SFH") |> 
+  st_drop_geometry()
+
+sfr_r1_tracts <- r1_tracts |> 
+  left_join(sfr_r1_summary, by = "NAMELSAD")
+
+leaf_sf_col(sfr_r1_tracts,
+            col_var = percent_sfh)
 
 ```
 
