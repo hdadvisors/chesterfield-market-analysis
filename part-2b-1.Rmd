@@ -25,7 +25,6 @@ library(tidygeocoder)
 library(knitr)
 
 
-
 ```
 
 ## The Route One Corridor
@@ -36,7 +35,7 @@ Current conditions on the northern section of Route 1 prevent significant reinve
 
 Much of the new rental housing development has occurred at the southern end of the study area --- pulled towards the intersection of W. Hundred Road (State Route 10) and Route 1, where there is a dense concentration of retail shopping options.
 
-This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south.
+This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester.
 
 ```{r route-one-map}
 
@@ -116,7 +115,7 @@ plotly::ggplotly(r1_renters_plot) %>%
   
 ```
 
-Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Ampthill area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households. While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
+Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Bensley area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households. While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
 
 ```{r r1-rhh-map-10}
 
@@ -268,9 +267,9 @@ mhc_coded_r1 |>
 
 As mentioned previously in [Chapter 11](#part-2a-1), the growth of the single-family home rental (SFR) market is impacting all parts of the county. And the Route 1 corridor is no exception.
 
-Along the northern Route 1 corridor, there is an estimated 1,012 single-family home rentals --- about 20 percent of all single-family homes the area.^[This analysis was conducted by matching owner mailing address to physical address for all parcels wherein the land use code is "Single Dwelling." This analysis does not account for condominiums and therefore could be considered an undercount.] The highest concentration of SFR is within Census Tract 1003 (Ampthill), where 28 percent of all single-family homes are believed to be renter occupied.
+Along the northern Route 1 corridor, there is an estimated 1,008 single-family home rentals --- about 20 percent of all single-family homes the area.^[This analysis was conducted by matching owner mailing address to physical address for all parcels wherein the land use code is "Single Dwelling." This analysis does not account for condominiums and therefore could be considered an undercount.] The highest concentration of SFR is within Census Tract 1003 (Bensley), where 28 percent of all single-family homes are believed to be renter occupied.
 
-SFR is a growing demand among renters as homeownership continues to be out of reach for many, but it also serves a growing demand among households looking for greater space and privacy not offered in apartments. As seen in [Chapter 13](#part-2a-3), nearly 54 percent of recent multifamily housing is two-bedrooms or less, leaving many larger households competing for less supply. SFR is largely filling the gap where multifamily developers are often falling short due to increasing construction costs and public opposition.
+SFR is a growing demand among renters as homeownership continues to be out of reach for many, but it also serves a growing demand among households looking for greater space and privacy not offered in apartments. As seen in [Chapter 13](#part-2a-3), nearly 54 percent of recent multifamily housing is two-bedrooms or less, leaving many larger households competing for less supply. SFR is filling the gap where multifamily developers are often falling short due to increasing construction costs and public opposition.
 
 ```{r sfr-r1}
 
@@ -278,7 +277,8 @@ SFR is a growing demand among renters as homeownership continues to be out of re
 
 sfr_r1 <- ch_sfh |> 
   st_join(left = FALSE, r1_tracts["NAMELSAD"]) |> 
-  select(address, year_built, improvement, ownership, NAMELSAD, geometry)
+  select(address, year_built, improvement, ownership, owner_zip, owner_state, NAMELSAD, geometry) |> 
+  filter(improvement > 0)
 
 sfr_r1_summary <- sfr_r1 |> 
   group_by(NAMELSAD, ownership) |> 
@@ -296,14 +296,44 @@ sfr_r1_tracts <- r1_tracts |>
 leaf_sf_col(sfr_r1_tracts,
             col_var = percent_sfh)
 
-sum(sfr_r1_tracts$count)
+sum(sfr_r1_summary$count)
 
 sum(sfr_r1_tracts$total_sfh)
+```
+The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Only 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida. 
+```{r sfr_r1_owners}
+
+sf_use_s2(FALSE)
+zips <- zctas(cb = TRUE) %>%
+  st_point_on_surface()
+chesterfield <- counties("VA", cb = TRUE) %>%
+  filter(NAME == "Chesterfield")
+
+chesterfield_zips <- zips[chesterfield, ]
+
+zip_list <- chesterfield_zips$GEOID20
+
+# There is a duplicate address that I end up filtering out with a distinct count.
+
+rental_class_r1 <- sfr_r1|> 
+  filter(ownership == "Renter-occupied SFH") %>%
+  mutate(owner_location = case_when(
+    owner_zip %in% zip_list ~ "Owner in Chesterfield",
+    owner_state == "VA" ~  "Owner in Virginia",
+    TRUE ~ "Owner out of state"
+  ))
+
+rental_class_r1_summary <- rental_class_r1 |> 
+  group_by(owner_location) |> 
+  summarise(count = n_distinct(address))
+
+
 ```
 
 ### Rental prices
 
--   ACS median rent by tract
+Median rents in the northern Route 1 corridor have fluctuated in the last decade. But increases in the typical rent have most significantly occurred in the southern part of Bellwood (Census Tract 1004.07) where Colony Village was developed. In this part of the corridor, median rent has increased by 24 percent from 2010 to 2020. 
+
 
 ```{r acs-r1-rent}
 
@@ -363,18 +393,32 @@ leaf_sf_col(r1_rent_change_map,
 
 
 ```
-
+There are clear differences in median rents between the northern and southern sections of the Route 1 corridor. Northern Chester and southern Bellwood had median rents above \$1,300 in 2020 --- \$1,314 and \$1,367, respectively. Median rents in the northern part of the corridor ranged from \$780 to \$1,059 -- hundreds of dollars less in all cases than the southern part of the corridor. Much of this difference in rental markets is no doubt a result of newer developments like Colony Village and The Jane at Moore's Lake. There have been few new multifamily developments in the northern section aside from Better Housing Coalition developments. 
 ```{r acs-r1-rent1}
 
-gg_line_col(r1_rent_cpi,
+r1_rent_cpi <- r1_rent_cpi |> 
+  mutate(neighborhood = case_when(
+    NAMELSAD == "Census Tract 1003" ~ "Bensley",
+    NAMELSAD == "Census Tract 1004.05" ~ "Bensley",
+    NAMELSAD == "Census Tract 1004.04" ~ "Bellwood",
+    NAMELSAD == "Census Tract 1004.06" ~ "Bellwood",
+    NAMELSAD == "Census Tract 1004.07" ~ "Bellwood",
+    NAMELSAD == "Census Tract 1004.09" ~ "Northern Chester",
+  ))
+
+gg_line_col_facet(r1_rent_cpi,
             x_var = year,
             y_var = dollars20,
-            col_var = NAMELSAD
+            col_var = NAMELSAD,
+            facet_var = neighborhood
             )
 
 
 ```
--   CoStar average asking rent (all units)
+
+#### Multifamily Rents
+
+CoStar's analytics allows for a broad snapshot of average rent data along Route 1 on a quarter-by-quarter basis. Average rent per apartment was on a steady decline from 2002 until the rental market began to recover in 2013. It was not until Q3 2014 that average rent began to experience consistent increases quarter over quarter from \$1,109 to \$1,214 in the most recent 2022 quarter. From 2017 to early 2020, the typical average rent increase was about \$3 but between Q1 2020 and Q2 2020 the average rent jumped \$15 from \$1,195 to \$1,210. It was during this timeframe that the pandemic began to impact housing markets, leading to significantly low rental vacancy rates as the eviction moratorium was put in place and increasing demand for housing away from the denser urban environment.
 
 ```{r costar-r1-rent}
 
@@ -390,15 +434,18 @@ costar_r1_rent <- read_csv("data/costar_r1_rent.csv") |>
 
 colnames(costar_r1_rent)[2] <- "rent"
 
-gg_line(costar_r1_rent,
+costar_r1_rent_line <- gg_line(costar_r1_rent,
         x_var = period,
         y_var = rent) + 
   scale_x_date()
 
+plotly::ggplotly(costar_r1_rent_line) |> 
+  plotly_camera()
+
 
 ```
 
--   CoStar average asking rent (by bedroom)
+Average rent disaggregated by number of bedrooms shows fairly steady increases for all bedroom types, especially one- and two-bedroom apartments. Studios and three-bedroom apartments in the area have seen decreasing rents in recent years. In fact, average rent for three bedroom apartments are now \$56 cheaper (\$1,431) than they were at the start of 2012 (\$1,487). While we can only speculate as to reason for this, there has been a growing shift investor 
 
 ```{r costar-r1-brent}
 
@@ -422,18 +469,28 @@ costar_r1_brent <- read_csv("data/costar_r1_brent.csv") |>
     br == "x3_beds" ~ "Three bedroom"
   )) |> 
   mutate(period = yq(period)) |> 
-  mutate(rent = parse_number(rent))
+  mutate(year = year(period)) |> 
+  mutate(rent = parse_number(rent)) |> 
+  filter(year > 2011)
 
-gg_line_col(costar_r1_brent,
+r1_br_line<- gg_line_col_facet(costar_r1_brent,
         x_var = period,
         y_var = rent,
-        col_var = br) + 
+        col_var = br,
+        facet_var = br) + 
   scale_x_date()
+
+plotly::ggplotly(r1_br_line) |> 
+  plotly_camera()
 
 ```
 
--   Single-family home rents (active listings and units leased in past 365 days, via MLS)
+#### Single-family rents
 
+Single-family rentals are not often listed via sources that provide consistent or reliable data. Facebook groups and other social networks often play a major role in advertising SFR, but the Central Virginia Regional Multiple Listing Service (CVR MLS) does pick up some of this market. Within the last year, there were 44 single-family homes rented through the MLS.
+
+The average listed rent for one of these SFR was \$1,336 --- nearly \$100 less the average rent for a three-bedroom apartment. Single-family detached homes fetch higher rental prices versus condominiums or duplexes. 
+ 
 ```{r mls-sfr}
 
 # Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export.
@@ -448,13 +505,31 @@ gg_point_col(mls_r1_sfr,
          y_var = list_price,
          col_var = type)
 
+mean(mls_r1_sfr$list_price, na.rm = TRUE)
+```
+The majority of SFR listed through MLS are three-bedroom homes (54 percent), while 18 percent are four-bedrooms or more --- an option that apartments do not often offer. 
+```{r mls-sfr1}
+
+# Spread of bedrooms
+
+mls_r1_sfr_br <- mls_r1_sfr |> 
+  mutate(number_bedrooms = as.character(number_bedrooms)) |> 
+  group_by(number_bedrooms) |> 
+  summarise(count = n_distinct(address)) |> 
+  transform(percent = count/sum(count))
+
+gg_bar_col(mls_r1_sfr_br,
+           x_var = number_bedrooms,
+           y_var = percent,
+           col_var = number_bedrooms)
 
 
 ```
-
 ### Conditions
 
--   ACS rental units by year built
+Aging rental properties require substantial capital in order to maintain properties. Even properties built in the 1980s are approaching half a century in age. Along the Route 1 corridor, there are 1,812 rental homes that were built before 1980. The largest share of these homes are located in the Bensley area (Census Tracts 1003 and 1004.04). 
+
+
 
 ```{r acs-yrblt}
 
@@ -505,33 +580,50 @@ b25036_r1_grp <- b25036_r1 |>
     yrblt == "2010 or later" ~ yrblt,
     yrblt == "1980 to 1999" ~ yrblt,
     TRUE ~ "Pre-1980"
-  ))
+  )) |> 
+  mutate(total_renters = sum(estimate))
+
+# Total renter households is 3,376
 
 b25036_r1_grp <- b25036_r1_grp |> 
   group_by(yrgrp, NAME) |> 
   summarise(estimate = sum(estimate)) |> 
-  filter(yrgrp == "Pre-1980")
+  filter(yrgrp == "Pre-1980") |> 
+  transform(percent = estimate/3376)
 
 # Map showing concentration of pre-1980 rentals.
 
 gg_sf_col(b25036_r1_grp,
-          col_var = estimate) +
+          col_var = percent) +
   scale_fill_viridis_c(option = "magma")
   
 
 
 ```
 
--   CoStar property year built
+Of the 23 CoStar-listed multifamily properties, 14 (61 percent) 
 
 ```{r costar-mf-3}
 
+# Histogram or chart?
+
+costar_r1_yrblt <- costar_r1_mf |> 
+  select(year_built, property_address, building_status)
+
+gg_histogram(costar_r1_yrblt,
+             x_var = year_built)
 
 ```
 
 -   CoStar rating
 
 ```{r costar-mf-3}
+
+costar_r1_stars <- costar_r1_mf |> 
+  select(star_rating, property_address, building_status) |> 
+  mutate(star_rating = as.character(star_rating))
+  
+  
 
 
 ```
