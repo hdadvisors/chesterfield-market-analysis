@@ -22,21 +22,21 @@ library(ggplot2)
 library(lubridate)
 library(viridis)
 library(tidygeocoder)
+library(knitr)
+
+
 
 ```
+
 ## The Route One Corridor
 
-U.S Route 1 once served as the major north-south corridor that connected East Coast states. However, the
-completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then,
-areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present
-challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county’s most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
+U.S Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
 
-Current conditions on the northern section of Route 1 prevent significant reinvestment, but recent efforts by the County improve those conditions and incentivize new and much needed development. The 2018 Northern Jefferson Davis Special Area Plan and the 2019 Northern Jefferson Davis Real Estate Market Study provide Chesterfield County with initial tools to revitalize Route 1. Momentum has continued with the Route 1 Residential Overlay District, the Northern Jefferson Davis Incentive Program, and Greater Richmond Transit Company’s Pilot Bus Service. 
+Current conditions on the northern section of Route 1 prevent significant reinvestment, but recent efforts by the County improve those conditions and incentivize new and much needed development. The 2018 Northern Jefferson Davis Special Area Plan and the 2019 Northern Jefferson Davis Real Estate Market Study provide Chesterfield County with initial tools to revitalize Route 1. Momentum has continued with the Route 1 Residential Overlay District, the Northern Jefferson Davis Incentive Program, and Greater Richmond Transit Company's Pilot Bus Service.
 
-Much of the new rental housing development has occurred at the southern end of the study area --- pulled towards the intersection of W. Hundred Road (State Route 10) and Route 1, where there is a dense concentration of retail shopping options. 
+Much of the new rental housing development has occurred at the southern end of the study area --- pulled towards the intersection of W. Hundred Road (State Route 10) and Route 1, where there is a dense concentration of retail shopping options.
 
-This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. 
-
+This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south.
 
 ```{r route-one-map}
 
@@ -50,6 +50,7 @@ r1_tracts <- tracts("VA", "Chesterfield",
 leaf_sf(r1_tracts)
 
 ```
+
 ## Rental housing supply
 
 The following describes the existing rental housing supply along the Route 1 corridor.
@@ -117,7 +118,6 @@ plotly::ggplotly(r1_renters_plot) %>%
 
 Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Ampthill area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households. While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
 
-
 ```{r r1-rhh-map-10}
 
 b25003_r1_10 <- b25003_r1 |> 
@@ -136,8 +136,7 @@ b25003_r1_10_20 <- cbind(b25003_r1_10, b25003_r1_20) |>
 
 ```
 
-
-#### Multifamily properties
+### Multifamily properties
 
 Of the estimated 3,376 occupied rental homes from the U.S. Census Bureau, CoStar captures at most 2,417 of them that are located across 20 multifamily properties. These multifamily properties contain at least 12 rental homes and the majority of these properties (70 percent) are garden-style apartments. The majority (70 percent) of existing properties were built before 1976, and of these fourteen properties, only two have a recorded renovation --- Collindale Apartments (renovated in 1990) and Falling Creek (renovated in 2017).
 
@@ -169,8 +168,7 @@ plotly::ggplotly(r1_unit_cnt_bar) %>%
 
 ```
 
-The city-county border was located much further north before the annexation of Northern Chesterfield by the City of Richmond in 1970. In spite of this change, these older rental properties represent the extent to which rental housing development in the mid-20th century stretched into the county. 
-
+The city-county border was located much further north before the annexation of Northern Chesterfield by the City of Richmond in 1970. In spite of this change, these older rental properties represent the extent to which rental housing development in the mid-20th century stretched into the county.
 
 ```{r costar-mf-2, fig.cap="Map of multifamily properties along Route One Corridor"}
 
@@ -185,7 +183,23 @@ leaflet(r1_map) |>
 
 
 ```
-- Manufactured home communities
+
+### Manufactured Home Communities
+
+Manufactured housing grew out of the "travel trailer" popularity of the mid-20th century. These trailers evolved into the manufactured housing when the U.S. Department of Housing and Urban Development developed standardized building codes and the the Federal Housing Administration began offering mortgage insurance on both homes and lots.
+
+Communities of manufactured homes grew out of the decline of "travel trailer" camp grounds and the increase in manufactured housing production. With the need for land to place manufactured homes, there were few options aside from existing land where similar types of housing were already permitted, or where a household could afford a plot of land themselves. Land owners also saw a value in developing manufactured home communities for those who wanted the experience of a single-family detached home, but could not afford to purchase.
+
+But the stigma of manufactured housing has plagued both residents and developers for decades. There have been no new manufactured home communities in Virginia in that same amount of time. Nonetheless, manufactured home communities have carved out a particular niche along the housing spectrum, offering an affordable albeit often precarious housing opportunity.
+
+Manufactured home communities offer rental housing opportunities across the county by one of two ways:
+
+1.  A household owns their manufactured home and rents the land in which their home is placed (i.e. paying lot rent); or
+2.  A household rents the manufactured home that is owned by the community owner (i.e. paying rent where lot rent is included).
+
+Accurate data on manufactured home communities is difficult to come by. Community owners may allow for the additional of homes on a continuous basis without approval, or some homes may be left abandoned after a tenant has vacated. Anecdotally, some owners have even subdivided a single home into four units to be rented. This makes it difficult to have an accurate count of households.
+
+The northern Route 1 corridor has a substantial number of manufactured home communities --- specifically 10 out of the county's known 17 manufactured home communities are located in the area. This accounts for at least 514 individual manufactured homes, or 31 percent of all homes located in a manufactured home community. This includes the sixth largest manufactured home park in the county, Shady Hill, which was recently purchased in July 2022.
 
 ```{r mhc-r1}
 
@@ -227,13 +241,40 @@ leaflet(mhc_coded_r1) |>
     stroke = FALSE, fillOpacity = 0.5
   )
 
+sum(mhc_coded_r1$units_mhccv)
 
+sum(mhc$units_mhccv)
 
 ```
 
-- Estimated single-family rentals (county data)
+Notable among these communities is Bermuda Estates, which was purchased by affordable housing nonprofit, project:HOMES, in September 2020. Only one of two nonprofit owned and managed manufactured home communities in the Commonwealth, Bermuda Estates has seen signficant infrastructure improvements and the replacement of homes with new energy efficient manufactured home models by project:HOMES.
+
+
+```{r r1-mhc-list}
+
+mhc_coded_r1 |> 
+  arrange(desc(units_mhccv)) |> 
+  select(1,4) |> 
+  kable(caption = "Manufactured home communities along northern Route 1 corridor",
+        align = "lr",
+        col.names = c("Name", "Estimated homes")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(8, bold=TRUE)
+
+```
+
+### Single-Family Rentals (SFR)
+
+As mentioned previously in [Chapter 11](#part-2a-1), the growth of the single-family home rental (SFR) market is impacting all parts of the county. And the Route 1 corridor is no exception.
+
+Along the northern Route 1 corridor, there is an estimated 1,012 single-family home rentals --- about 20 percent of all single-family homes the area.^[This analysis was conducted by matching owner mailing address to physical address for all parcels wherein the land use code is "Single Dwelling." This analysis does not account for condominiums and therefore could be considered an undercount.] The highest concentration of SFR is within Census Tract 1003 (Ampthill), where 28 percent of all single-family homes are believed to be renter occupied.
+
+SFR is a growing demand among renters as homeownership continues to be out of reach for many, but it also serves a growing demand among households looking for greater space and privacy not offered in apartments. As seen in [Chapter 13](#part-2a-3), nearly 54 percent of recent multifamily housing is two-bedrooms or less, leaving many larger households competing for less supply. SFR is largely filling the gap where multifamily developers are often falling short due to increasing construction costs and public opposition.
 
 ```{r sfr-r1}
+
+# Choropleth map of percent of SFR by census tract. Perhaps include a chart as well. Might be interesting to compare to change in homeownership rate for each.
 
 sfr_r1 <- ch_sfh |> 
   st_join(left = FALSE, r1_tracts["NAMELSAD"]) |> 
@@ -255,11 +296,14 @@ sfr_r1_tracts <- r1_tracts |>
 leaf_sf_col(sfr_r1_tracts,
             col_var = percent_sfh)
 
+sum(sfr_r1_tracts$count)
+
+sum(sfr_r1_tracts$total_sfh)
 ```
 
 ### Rental prices
 
-- ACS median rent by tract
+-   ACS median rent by tract
 
 ```{r acs-r1-rent}
 
@@ -295,23 +339,42 @@ r1_rent_cpi <- b25064_r1_raw |>
     left_join(cpi, by = 'year') |> 
   transform(dollars20 = ((381.2/priceindex)*estimate)) |> 
   select(GEOID, NAME, year, dollars20) |> 
-  separate(NAME, into = c("tract", "county", "state"), sep = ",") |> 
+  separate(NAME, into = c("NAMELSAD", "county", "state"), sep = ",") |> 
   transform(year_char = as.character(year))
+
+r1_rent_change <- r1_rent_cpi |> 
+  select(NAMELSAD, year, dollars20) |> 
+  st_drop_geometry() |> 
+  pivot_wider(
+    names_from = year,
+    values_from = dollars20
+  )
+
+r1_rent_change_map <- r1_tracts |>
+  left_join(r1_rent_change, by = "NAMELSAD") |> 
+  clean_names() |> 
+  select(tract = namelsad, x2010:x2020) |> 
+  transform(change =(x2020-x2010)/x2010)
 
 # Not sure about the best visualization. Ideally a Shiny app that can tab across years to show the change in median rent.
 
-gg_sf_col_facet(
-  r1_rent_cpi,
-  col_var = dollars20,
-  col_na_rm = TRUE,
-  facet_var = year_char
-) + 
-  scale_fill_viridis_c(option = "magma")
+leaf_sf_col(r1_rent_change_map,
+            col_var = change)
 
 
 ```
 
-- CoStar average asking rent (all units)
+```{r acs-r1-rent1}
+
+gg_line_col(r1_rent_cpi,
+            x_var = year,
+            y_var = dollars20,
+            col_var = NAMELSAD
+            )
+
+
+```
+-   CoStar average asking rent (all units)
 
 ```{r costar-r1-rent}
 
@@ -334,7 +397,9 @@ gg_line(costar_r1_rent,
 
 
 ```
-- CoStar average asking rent (by bedroom)
+
+-   CoStar average asking rent (by bedroom)
+
 ```{r costar-r1-brent}
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
@@ -367,7 +432,7 @@ gg_line_col(costar_r1_brent,
 
 ```
 
-- Single-family home rents (active listings and units leased in past 365 days, via MLS)
+-   Single-family home rents (active listings and units leased in past 365 days, via MLS)
 
 ```{r mls-sfr}
 
@@ -389,7 +454,8 @@ gg_point_col(mls_r1_sfr,
 
 ### Conditions
 
-- ACS rental units by year built
+-   ACS rental units by year built
+
 ```{r acs-yrblt}
 
 b25036_vars <- load_variables(2020, "acs5") |> 
@@ -455,20 +521,22 @@ gg_sf_col(b25036_r1_grp,
 
 
 ```
-- CoStar property year built
-```{r costar-mf-3}
 
-
-```
-
-- CoStar rating
+-   CoStar property year built
 
 ```{r costar-mf-3}
 
 
 ```
 
-- MHC ratings from 2016 MHCCV study
+-   CoStar rating
+
+```{r costar-mf-3}
+
+
+```
+
+-   MHC ratings from 2016 MHCCV study
 
 ## Proximity to amenities
 
@@ -476,25 +544,25 @@ gg_sf_col(b25036_r1_grp,
 
 Compare location of new multifamily development versus older multifamily relative to access to public transportation
 
-- Within or outside of 1/2 mile buffer from GRTC stop
+-   Within or outside of 1/2 mile buffer from GRTC stop
 
 ### Schools
 
 Compare location of new multifamily development versus older multifamily relative to access to public schools
 
-- Within or outside of 30 minute drive time
+-   Within or outside of 30 minute drive time
 
 ### Grocery stores
 
 Compare location of new multifamily development versus older multifamily relative to access to grocery stores
 
-- Within or outside of 1/2 mile buffer from grocery store
+-   Within or outside of 1/2 mile buffer from grocery store
 
 ### Healthcare
 
 Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
 
-- Within or outside of 15 minute drive time
+-   Within or outside of 15 minute drive time
 
 ### Job centers
 
@@ -502,21 +570,21 @@ TBD, waiting for feedback from county staff
 
 ## Public and private investments
 
-- Check CoStar for newest builds/renovations/transactions (commercial properties, too)
-- Ask Jessica for what county has had a hand in
+-   Check CoStar for newest builds/renovations/transactions (commercial properties, too)
+-   Ask Jessica for what county has had a hand in
 
 Route 10, Bermuda Estates, Falling Creek Rehab, Multifamily Overlay District, R.O.A.R.
 
 ### Case study
 
-- Choose an interesting recent residential development
-- Add a photo
-- Describe development and market it serves
-- Rent/sale prices
+-   Choose an interesting recent residential development
+-   Add a photo
+-   Describe development and market it serves
+-   Rent/sale prices
 
 ## Single-family rental versus purchase
 
-- Single-family rental prices from MLS records
-- Median home sales price from past 365 days
-- Calculate income needed to afford SFR and homeownership
-- Use same methodology from Part 1b-4 for homeownership affordability
+-   Single-family rental prices from MLS records
+-   Median home sales price from past 365 days
+-   Calculate income needed to afford SFR and homeownership
+-   Use same methodology from Part 1b-4 for homeownership affordability
