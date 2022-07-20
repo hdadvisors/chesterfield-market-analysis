@@ -641,8 +641,7 @@ gg_histogram(costar_r1_yrblt,
 
 ```
 
-CoStar's building rating system also provides a snapshot of condition of multifamily properties. Eighty-three percent of multifamily properties along the corridor are three-star or less --- meaning that in terms of quality and amenities that these buildings are relatively average or simply functional. In comparison, four-star properties are "are constructed with higher end finishes and specifications, providing desirable amenities to
-residents and designed/built to competitive and contemporary standards," while five-star properties are "the luxury end of multi-family buildings defined by finishes, amenities, the overall interior/exterior design and the highest level of specifications for its style..."
+CoStar's building rating system also provides a snapshot of condition of multifamily properties. Eighty-three percent of multifamily properties along the corridor are three-star or less --- meaning that in terms of quality and amenities that these buildings are relatively average or simply functional. In comparison, four-star properties are "are constructed with higher end finishes and specifications, providing desirable amenities to residents and designed/built to competitive and contemporary standards," while five-star properties are "the luxury end of multi-family buildings defined by finishes, amenities, the overall interior/exterior design and the highest level of specifications for its style..."
 
 ```{r costar-mf-3}
 
@@ -670,7 +669,7 @@ plotly::ggplotly(r1_star_bar) |>
 
 ### Public transportation
 
-The Route 1 corridor has recently benefited from the 
+The Route 1 corridor has recently benefited from the
 
 ```{r r1-stops}
 
@@ -724,17 +723,9 @@ r1_trans_map <- costar_r1_map |>
      transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
    )
 
-
-stops_shp <- readOGR(dsn = ".",
-                     layer = "data/Stops_May2022",
-                     verbose = FALSE)
-
-stops_latlon <- spTransform(stops_shp, CRS("+proj=longlat +datum=WGS84"))
-
-
 pal <- colorFactor(c("red", "green"), domain = c(0, 1))
 
-# How can I add a stops layer to show the location of stops to this. There is some issue with the stops data frame when adding in leaflet. 
+# How can I add a stops layer to show the location of stops in relation to properties. There is some issue with the stops data frame when adding in leaflet. 
 
 leaflet(r1_trans_map) |>
    addTiles() |>
@@ -742,7 +733,7 @@ leaflet(r1_trans_map) |>
      radius = 5,
      color = ~pal(transit_nearby),
      stroke = FALSE, fillOpacity = 0.5
-    )
+    ) 
 
 mapview(r1_trans_map, zcol = "transit_nearby") +
   mapview(stops)
@@ -764,14 +755,15 @@ schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/se
 
 nearest_schools <- st_nn(r1_prj, schools, k = 20)
 
-
 mapview(schools) +
   mapview(costar_r1_tracts)
 
 ```
 
-
 ```{r r1-schools}
+
+# I think I would want to understand the number of schools within a distance of certain properties and what schools those are. 
+
 r1_school_driving <- imap(nearest_schools, ~{
   
   property <- r1_prj[.y,]
@@ -818,7 +810,7 @@ TBD, waiting for feedback from county staff
 -   Check CoStar for newest builds/renovations/transactions (commercial properties, too)
 -   Ask Jessica for what county has had a hand in
 
-Route 10, Bermuda Estates, Falling Creek Rehab, Multifamily Overlay District, R.O.A.R.
+Route One Association for Revitalization, multifamily overlay district
 
 ### Case study
 
@@ -826,6 +818,8 @@ Route 10, Bermuda Estates, Falling Creek Rehab, Multifamily Overlay District, R.
 -   Add a photo
 -   Describe development and market it serves
 -   Rent/sale prices
+
+Bermuda Estates or The Jane at Moore's Lake or most recent BHC phase (Colbrook)
 
 ## Single-family rental versus purchase
 
