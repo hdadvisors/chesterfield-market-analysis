@@ -23,7 +23,11 @@ library(lubridate)
 library(viridis)
 library(tidygeocoder)
 library(knitr)
-
+library(crsuggest)
+options(tigris_use_cache = TRUE)
+remotes::install_github("walkerke/mapboxapi")
+library(mapboxapi)
+library(rgdal)
 
 ```
 
@@ -42,11 +46,28 @@ This study focuses its research on the six census tracts that straddle the Route
 r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
 r1_tracts <- tracts("VA", "Chesterfield",
-                    progress_bar = FALSE) %>% 
-  filter(TRACTCE %in% r1_tracts_list) %>% 
-  st_transform(4326)
+                    progress_bar = FALSE) |> 
+  filter(TRACTCE %in% r1_tracts_list) |> 
+  st_transform(4326) |> 
+  mutate(neighborhood = case_when(
+    TRACTCE == "100300" ~ "Bensley",
+    TRACTCE == "100404" ~ "Bellwood",
+    TRACTCE == "100405" ~ "Bensley",
+    TRACTCE == "100406" ~ "Bellwood",
+    TRACTCE == "100407" ~ "Bellwood",
+    TRACTCE == "100409" ~ "Northern Chester"
+  ))
 
-leaf_sf(r1_tracts)
+hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
+  
+leaflet(r1_tracts) |> 
+  addTiles() |> 
+  addPolygons(color = ~hood_pal(neighborhood), 
+              weight = 3, 
+              label = ~r1_tracts$NAMELSAD,
+              labelOptions = labelOptions(noHide = F, 
+                                          direction = "auto",
+                                          textsize = "15px"))
 
 ```
 
@@ -248,7 +269,6 @@ sum(mhc$units_mhccv)
 
 Notable among these communities is Bermuda Estates, which was purchased by affordable housing nonprofit, project:HOMES, in September 2020. Only one of two nonprofit owned and managed manufactured home communities in the Commonwealth, Bermuda Estates has seen signficant infrastructure improvements and the replacement of homes with new energy efficient manufactured home models by project:HOMES.
 
-
 ```{r r1-mhc-list}
 
 mhc_coded_r1 |> 
@@ -267,7 +287,9 @@ mhc_coded_r1 |>
 
 As mentioned previously in [Chapter 11](#part-2a-1), the growth of the single-family home rental (SFR) market is impacting all parts of the county. And the Route 1 corridor is no exception.
 
-Along the northern Route 1 corridor, there is an estimated 1,008 single-family home rentals --- about 20 percent of all single-family homes the area.^[This analysis was conducted by matching owner mailing address to physical address for all parcels wherein the land use code is "Single Dwelling." This analysis does not account for condominiums and therefore could be considered an undercount.] The highest concentration of SFR is within Census Tract 1003 (Bensley), where 28 percent of all single-family homes are believed to be renter occupied.
+Along the northern Route 1 corridor, there is an estimated 1,008 single-family home rentals --- about 20 percent of all single-family homes the area.[^part-2b-1-1] The highest concentration of SFR is within Census Tract 1003 (Bensley), where 28 percent of all single-family homes are believed to be renter occupied.
+
+[^part-2b-1-1]: This analysis was conducted by matching owner mailing address to physical address for all parcels wherein the land use code is "Single Dwelling." This analysis does not account for condominiums and therefore could be considered an undercount.
 
 SFR is a growing demand among renters as homeownership continues to be out of reach for many, but it also serves a growing demand among households looking for greater space and privacy not offered in apartments. As seen in [Chapter 13](#part-2a-3), nearly 54 percent of recent multifamily housing is two-bedrooms or less, leaving many larger households competing for less supply. SFR is filling the gap where multifamily developers are often falling short due to increasing construction costs and public opposition.
 
@@ -300,7 +322,9 @@ sum(sfr_r1_summary$count)
 
 sum(sfr_r1_tracts$total_sfh)
 ```
-The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Only 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida. 
+
+The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Only 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida.
+
 ```{r sfr_r1_owners}
 
 sf_use_s2(FALSE)
@@ -332,8 +356,7 @@ rental_class_r1_summary <- rental_class_r1 |>
 
 ### Rental prices
 
-Median rents in the northern Route 1 corridor have fluctuated in the last decade. But increases in the typical rent have most significantly occurred in the southern part of Bellwood (Census Tract 1004.07) where Colony Village was developed. In this part of the corridor, median rent has increased by 24 percent from 2010 to 2020. 
-
+Median rents in the northern Route 1 corridor have fluctuated in the last decade. But increases in the typical rent have most significantly occurred in the southern part of Bellwood (Census Tract 1004.07) where Colony Village was developed. In this part of the corridor, median rent has increased by 24 percent from 2010 to 2020.
 
 ```{r acs-r1-rent}
 
@@ -393,7 +416,9 @@ leaf_sf_col(r1_rent_change_map,
 
 
 ```
-There are clear differences in median rents between the northern and southern sections of the Route 1 corridor. Northern Chester and southern Bellwood had median rents above \$1,300 in 2020 --- \$1,314 and \$1,367, respectively. Median rents in the northern part of the corridor ranged from \$780 to \$1,059 -- hundreds of dollars less in all cases than the southern part of the corridor. Much of this difference in rental markets is no doubt a result of newer developments like Colony Village and The Jane at Moore's Lake. There have been few new multifamily developments in the northern section aside from Better Housing Coalition developments. 
+
+There are clear differences in median rents between the northern and southern sections of the Route 1 corridor. Northern Chester and southern Bellwood had median rents above \$1,300 in 2020 --- \$1,314 and \$1,367, respectively. Median rents in the northern part of the corridor ranged from \$780 to \$1,059 -- hundreds of dollars less in all cases than the southern part of the corridor. Much of this difference in rental markets is no doubt a result of newer developments like Colony Village and The Jane at Moore's Lake. There have been few new multifamily developments in the northern section aside from Better Housing Coalition developments.
+
 ```{r acs-r1-rent1}
 
 r1_rent_cpi <- r1_rent_cpi |> 
@@ -445,7 +470,7 @@ plotly::ggplotly(costar_r1_rent_line) |>
 
 ```
 
-Average rent disaggregated by number of bedrooms shows fairly steady increases for all bedroom types, especially one- and two-bedroom apartments. Studios and three-bedroom apartments in the area have seen decreasing rents in recent years. In fact, average rent for three bedroom apartments are now \$56 cheaper (\$1,431) than they were at the start of 2012 (\$1,487). While we can only speculate as to reason for this, there has been a growing shift investor 
+Average rent disaggregated by number of bedrooms shows fairly steady increases for all bedroom types, especially one- and two-bedroom apartments. Studios and three-bedroom apartments in the area have seen decreasing rents in recent years. In fact, average rent for three bedroom apartments are now \$56 cheaper (\$1,431) than they were at the start of 2012 (\$1,487). While we can only speculate as to reason for this, there has been a growing shift investor
 
 ```{r costar-r1-brent}
 
@@ -489,8 +514,8 @@ plotly::ggplotly(r1_br_line) |>
 
 Single-family rentals are not often listed via sources that provide consistent or reliable data. Facebook groups and other social networks often play a major role in advertising SFR, but the Central Virginia Regional Multiple Listing Service (CVR MLS) does pick up some of this market. Within the last year, there were 44 single-family homes rented through the MLS.
 
-The average listed rent for one of these SFR was \$1,336 --- nearly \$100 less the average rent for a three-bedroom apartment. Single-family detached homes fetch higher rental prices versus condominiums or duplexes. 
- 
+The average listed rent for one of these SFR was \$1,336 --- nearly \$100 less the average rent for a three-bedroom apartment. Single-family detached homes fetch higher rental prices versus condominiums or duplexes.
+
 ```{r mls-sfr}
 
 # Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export.
@@ -507,7 +532,9 @@ gg_point_col(mls_r1_sfr,
 
 mean(mls_r1_sfr$list_price, na.rm = TRUE)
 ```
-The majority of SFR listed through MLS are three-bedroom homes (54 percent), while 18 percent are four-bedrooms or more --- an option that apartments do not often offer. 
+
+The majority of SFR listed through MLS are three-bedroom homes (54 percent), while 18 percent are four-bedrooms or more --- an option that apartments do not often offer.
+
 ```{r mls-sfr1}
 
 # Spread of bedrooms
@@ -525,11 +552,10 @@ gg_bar_col(mls_r1_sfr_br,
 
 
 ```
+
 ### Conditions
 
-Aging rental properties require substantial capital in order to maintain properties. Even properties built in the 1980s are approaching half a century in age. Along the Route 1 corridor, there are 1,812 rental homes that were built before 1980. The largest share of these homes are located in the Bensley area (Census Tracts 1003 and 1004.04). 
-
-
+Aging rental properties require substantial capital in order to maintain properties. Even properties built in the 1980s are approaching half a century in age. Along the Route 1 corridor, there are 1,812 rental homes that were built before 1980. The largest share of these homes are located in the Bensley area (Census Tracts 1003 and 1004.04).
 
 ```{r acs-yrblt}
 
@@ -601,7 +627,7 @@ gg_sf_col(b25036_r1_grp,
 
 ```
 
-Of the 23 CoStar-listed multifamily properties, 14 (61 percent) 
+Of the 23 CoStar-listed multifamily properties, 14 (61 percent) were constructed before 1980. There was no major multifamily development activity again until 2000 when Better Housing Coalition constructed Winchester Green Apartments' first phase. There has been little new multifamily development along the corridor during the last two decades --- activity has largely been spearheaded by Better Housing Coalition and Emerson Companies. With few newer developments, there are fewer options for those who are looking to rent along the corridor --- either having to choose a pre-1980s apartment, which are often in need of renovation, or among new luxury apartments that are often outside the budgets of existing renters along the corridor.
 
 ```{r costar-mf-3}
 
@@ -615,16 +641,26 @@ gg_histogram(costar_r1_yrblt,
 
 ```
 
--   CoStar rating
+CoStar's building rating system also provides a snapshot of condition of multifamily properties. Eighty-three percent of multifamily properties along the corridor are three-star or less --- meaning that in terms of quality and amenities that these buildings are relatively average or simply functional. In comparison, four-star properties are "are constructed with higher end finishes and specifications, providing desirable amenities to
+residents and designed/built to competitive and contemporary standards," while five-star properties are "the luxury end of multi-family buildings defined by finishes, amenities, the overall interior/exterior design and the highest level of specifications for its style..."
 
 ```{r costar-mf-3}
 
 costar_r1_stars <- costar_r1_mf |> 
   select(star_rating, property_address, building_status) |> 
-  mutate(star_rating = as.character(star_rating))
-  
-  
+  mutate(star_rating = as.character(star_rating)) |> 
+  group_by(star_rating) |> 
+  summarise(count = n_distinct(property_address))
 
+  
+r1_star_bar <- gg_bar_col(costar_r1_stars,
+           x_var = star_rating,
+           y_var = count,
+           col_var = star_rating
+           )
+
+plotly::ggplotly(r1_star_bar) |> 
+  plotly_camera()
 
 ```
 
@@ -634,11 +670,128 @@ costar_r1_stars <- costar_r1_mf |>
 
 ### Public transportation
 
+The Route 1 corridor has recently benefited from the 
+
+```{r r1-stops}
+
+costar_r1_map <- costar_r1_mf |>
+  st_as_sf(coords = c("longitude", "latitude"),
+           crs = 4326)
+
+va_crs <- suggest_top_crs(costar_r1_map, units = "m",
+                          inherit_gcs = FALSE)
+
+r1_prj <- st_transform(costar_r1_map, va_crs)
+
+r1_tracts_map <- tracts("VA", "Chesterfield", year = 2021) |>
+  st_transform(va_crs)
+
+costar_r1_tracts <- st_filter(r1_tracts_map, r1_prj)
+
+stops <- st_read("data/grtc/Stops_May2022.shp") |> 
+  st_transform(va_crs)
+
+r1_network_buffer <- mb_isochrone(r1_prj, profile = "walking",
+                                       distance = 805)
+library(nngeo)
+
+nearest_stops <- st_nn(r1_prj, stops, k = 20)
+
+mapview(stops) + 
+  mapview(costar_r1_tracts)
+
+```
+
+```{r r1-mf-stops}
+
+costar_stop_walking <- imap(nearest_stops, ~{
+  
+  property <- r1_prj[.y,]
+  
+  nearby_stops <- stops[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_stops,
+            profile = "walking",
+            output = "distance")}) |> 
+  reduce(rbind) |> 
+  apply(1, min) |> 
+  magrittr::divide_by(1609.34)
+
+r1_trans_map <- costar_r1_map |>
+   mutate(
+     walk_to_transit = costar_stop_walking,
+     transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
+   )
+
+
+stops_shp <- readOGR(dsn = ".",
+                     layer = "data/Stops_May2022",
+                     verbose = FALSE)
+
+stops_latlon <- spTransform(stops_shp, CRS("+proj=longlat +datum=WGS84"))
+
+
+pal <- colorFactor(c("red", "green"), domain = c(0, 1))
+
+# How can I add a stops layer to show the location of stops to this. There is some issue with the stops data frame when adding in leaflet. 
+
+leaflet(r1_trans_map) |>
+   addTiles() |>
+   addCircleMarkers(
+     radius = 5,
+     color = ~pal(transit_nearby),
+     stroke = FALSE, fillOpacity = 0.5
+    )
+
+mapview(r1_trans_map, zcol = "transit_nearby") +
+  mapview(stops)
+
+mean(r1_trans_map$walk_to_transit)
+
+```
+
 Compare location of new multifamily development versus older multifamily relative to access to public transportation
 
 -   Within or outside of 1/2 mile buffer from GRTC stop
 
 ### Schools
+
+```{r r1-school-map}
+
+schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
+  st_transform(va_crs)
+
+nearest_schools <- st_nn(r1_prj, schools, k = 20)
+
+
+mapview(schools) +
+  mapview(costar_r1_tracts)
+
+```
+
+
+```{r r1-schools}
+r1_school_driving <- imap(nearest_schools, ~{
+  
+  property <- r1_prj[.y,]
+
+  nearby_schools <- schools[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_schools,
+            profile = "driving",
+            output = "duration")
+}) |> 
+  reduce(rbind) |> 
+  apply(1, min)
+
+r1_schools_map <- r1_trans_map |>
+  mutate(
+    minutes_to_school = r1_school_driving,
+    school_nearby = ifelse(minutes_to_school <= 30, 1, 0))
+
+```
 
 Compare location of new multifamily development versus older multifamily relative to access to public schools
 
