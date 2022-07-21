@@ -67,7 +67,11 @@ leaflet(r1_tracts) |>
               label = ~r1_tracts$NAMELSAD,
               labelOptions = labelOptions(noHide = F, 
                                           direction = "auto",
-                                          textsize = "15px"))
+                                          textsize = "15px")) |> 
+  addLegend("topright",
+            pal = hood_pal,
+            values = ~neighborhood,
+            title = "Route 1 corridor neighborhoods")
 
 ```
 
@@ -518,7 +522,7 @@ The average listed rent for one of these SFR was \$1,336 --- nearly \$100 less t
 
 ```{r mls-sfr}
 
-# Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export.
+# Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export. From July 2022.
 
 mls_r1_sfr <- read_csv("data/mls_r1_sfr.csv") |> 
   clean_names() |> 
@@ -663,13 +667,27 @@ plotly::ggplotly(r1_star_bar) |>
 
 ```
 
--   MHC ratings from 2016 MHCCV study
+In 2016, the Manufactured Home Community Coalition of Virginia conducted an assessment of manufactured home communities in Central Virginia. Their assessment included all but three of the communities identified in this study.
+
+Based on an analysis of community socio-economic conditions, spatial patterns, and design characteristics, MHCCV created a typology that helps understand community conditions and potential areas for concern. To supplement their typology, communities not identified previously were assigned a typology.[^part-2b-1-2]
+
+[^part-2b-1-2]: Bermuda Estates was assigned a completely new typology due to its ownership by nonprofit, project:HOMES. This typology emphasizes the stability of the park and the continued investments in the community given project:HOMES' overall mission.
+
+Of the ten communities located along the corridor, six are either obsolete or under pressure. Obsolete communities were found to have "severe, long-standing deficiencies in infrastructure, housing condition, private property, tenure, amenities, and management. Under pressure communities often house low-income families with children and are located in areas close to daily needs. They have poor conditions and are at the most risk for redevelopment.
+
+```{r mhccv-condition}
+
+mhc_con <- read_csv("data/mhccv_chesterfield.csv") |> 
+  filter(corridor == "Route 1 - N")
+
+
+```
 
 ## Proximity to amenities
 
 ### Public transportation
 
-The Route 1 corridor has recently benefited from the
+Public transportation is not prevalent throughout Chesterfield County. But the extension of Greater Richmond Transit
 
 ```{r r1-stops}
 
@@ -791,11 +809,91 @@ Compare location of new multifamily development versus older multifamily relativ
 
 ### Grocery stores
 
+```{r r1-grocery}
+# Grocery stores:
+# We'll use SNAP retailers from the USDA as a proxy here
+# This is not perfect so some filtering may be necessary
+# as it picks up on convenience stores as well
+snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b2deb56d_0.csv") %>%
+  filter(State == "VA") %>%
+  st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
+  st_transform(va_crs)
+
+nearest_snap <- st_nn(r1_prj, snap, k = 20)
+
+r1_grocery <- imap(nearest_snap, ~{
+
+  property <- r1_prj[.y,]
+
+  nearby_snap <- snap[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snap,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+r1_grocery_map <- r1_schools_map |>
+  mutate(
+    miles_to_snap = r1_grocery,
+    snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
+
+pal <- colorFactor(c("red", "blue"), domain = c(0,1))
+
+leaflet(r1_grocery_map) |>
+  addTiles() |>
+  addCircleMarkers(
+    radius = 5,
+    color = ~pal(snap_nearby),
+    stroke = FALSE, fillOpacity = 0.5
+   )
+
+
+```
+
 Compare location of new multifamily development versus older multifamily relative to access to grocery stores
 
 -   Within or outside of 1/2 mile buffer from grocery store
 
 ### Healthcare
+
+```{r medical}
+# Hospital / urgent care
+# I'm not filtering by type but you might consider doing so
+# There are some other datasets in HIFLD on care centers that may 
+# be relevant as well.
+hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
+  st_transform(va_crs)
+# 
+nearest_hospitals <- st_nn(comp_prj, hospitals, k = 20)
+# 
+costar_hospital_driving <- imap(nearest_hospitals, ~{
+  # Get the specific property (the list index)
+  property <- comp_prj[.y,]
+#   
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_hospitals <- hospitals[.x, ]
+#   
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_hospitals,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+comp_map_sf <- comp_map_sf |>
+  mutate(
+    minutes_to_hospital = costar_hospital_driving,
+    hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
+
+```
 
 Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
 
@@ -806,6 +904,27 @@ Compare location of new multifamily development versus older multifamily relativ
 TBD, waiting for feedback from county staff
 
 ## Public and private investments
+
+Chesterfield County has largely focused revitalization efforts on the northern section on the Route 1 corridor. The Northern Jefferson Davis Special Area Plan was adopted in 2018 and reflects the County's ongoing commitment to improve quality of life for residents of the corridor. Recent public projects include:
+
+-   **Bensley Park** field renovations and paving.
+-   **Shared-Use Path** planned for Route 1 from Marina Drive to Elliham Avenue.
+-   **Falling Creek Ironworks Park** improvements in planning.
+
+Additionally, the Board of Supervisors approved the Route 1 Residential Overlay ordinance in 2019, which allows for high density multifamily development by-right in C3 and C5 zoned parcels with some restrictions. This ordinance also reduced parking requirements for apartments located within a quarter-mile of bus stops and encourages less auto-centric development, which has historically stifled revitalization of the corridor.
+
+Add about tax abatement policy.
+
+Add about Route 1 transit.
+
+
+https://www.chesterfieldobserver.com/articles/county-offers-parking-credits-to-developers-on-route-1/
+
+https://www.chesterfieldobserver.com/articles/county-pushes-transit-rehab-incentives-for-jeff-davis/
+
+https://www.chesterfield.gov/CivicAlerts.aspx?AID=2448&ARC=3953
+
+
 
 -   Check CoStar for newest builds/renovations/transactions (commercial properties, too)
 -   Ask Jessica for what county has had a hand in
@@ -819,7 +938,9 @@ Route One Association for Revitalization, multifamily overlay district
 -   Describe development and market it serves
 -   Rent/sale prices
 
-Bermuda Estates or The Jane at Moore's Lake or most recent BHC phase (Colbrook)
+Bermuda Estates or The Jane at Moore's Lake or most recent BHC phase (Colbrook) 
+
+**Colbrook is outside the study area**
 
 ## Single-family rental versus purchase
 

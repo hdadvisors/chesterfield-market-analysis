@@ -2,18 +2,26 @@
 
 ```{r setup}
 
-library(tidyverse)
 library(tidycensus)
-library(lubridate)
-library(plotly)
-library(formattable)
-library(scales)
-library(simplevis)
+library(tidyverse)
+library(janitor)
+library(leaflet)
 library(sf)
+library(sp)
 library(tigris)
-library(mapboxapi)
 library(mapview)
+library(simplevis)
+library(readxl)
+library(ggplot2)
+library(lubridate)
+library(viridis)
 library(tidygeocoder)
+library(knitr)
+library(crsuggest)
+options(tigris_use_cache = TRUE)
+remotes::install_github("walkerke/mapboxapi")
+library(mapboxapi)
+library(rgdal)
 
 ```
 
@@ -23,7 +31,7 @@ For the purposes of this analysis, this corridor is defined as the Census tracts
 
 ```{r hsr-base-map, fig.cap="Eastern Hull Street Road corridor", message=FALSE}
 
-hsr_tracts_list <- c("100205", "100206", "100208", "100209", "100210")
+hsr_tracts_list <- c("100205", "100206", "100208", "100209", "100210", "100211")
 
 hsr_tracts <- tracts("VA", "Chesterfield",
                     progress_bar = FALSE) %>% 
@@ -33,14 +41,14 @@ hsr_tracts <- tracts("VA", "Chesterfield",
 # Run the mapview and savewidget functions before building the book
 # Once the widget is saved, activate the knitr function to embed the map
 
-# hsr_map <- mapview(hsr_tracts,
-#           alpha = 0.5,
-#           col.regions = "cornflowerblue",
-#           legend = F,
-#           popup = F,
-#           label = "NAMELSAD",
-#           layer.name = "Eastern Hull Street Road corridor census tracts")
-# 
+mapview(hsr_tracts,
+          alpha = 0.5,
+          col.regions = "cornflowerblue",
+          legend = F,
+          popup = F,
+          label = "NAMELSAD",
+          layer.name = "Eastern Hull Street Road corridor census tracts")
+#
 # htmlwidgets::saveWidget(hsr_map@map, "maps/hsr_map.html")
 
 # knitr::include_url("maps/hsr_map.html", height = "500px")
@@ -52,6 +60,63 @@ hsr_tracts <- tracts("VA", "Chesterfield",
 ### Number of rental homes
 
 - ACS estimate of renter households
+
+```{r hsr-rhh}
+
+years <- 2010:2020
+
+b25003_vars <- load_variables(2020, "acs5") |> 
+  filter(str_sub(name, end = 7) %in% "B25003_")
+
+b25003_raw <- map_dfr(years, function(yr){
+  b25003_pull <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25003",
+    year = yr,
+    survey = "acs5",
+    cache_table = TRUE,
+    geometry = TRUE
+  ) |> 
+    mutate(year = yr)
+  })
+
+b25003_hsr_raw <- b25003_raw |> 
+  subset(GEOID %in% hsr_tracts$GEOID)
+
+b25003_vars_cleaned <- b25003_vars |> 
+  separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
+  select(variable = name, tenure) |> 
+  drop_na() |> 
+  mutate(tenure = case_when(
+    tenure == "Owner occupied" ~ "Homeowner",
+    tenure == "Renter occupied" ~ "Renter"
+  )) |> 
+  filter(tenure == "Renter")
+
+b25003_hsr <- b25003_hsr_raw |> 
+  right_join(b25003_vars_cleaned, by = "variable") |> 
+  select(NAME, fips = GEOID, year, tenure, estimate, moe)
+
+b25003_r360 <- b25003_hsr |> 
+  group_by(year) |> 
+  summarise(estimate = sum(estimate))
+  
+#Create line graph showing change in renter households across time.
+hsr_renters_plot <- gg_line(
+  b25003_r360,
+  x_var = year,
+  y_var = estimate,
+  y_breaks_n = 5,
+  title = "Renter households",
+  x_title = element_blank())
+
+plotly::ggplotly(hsr_renters_plot) %>% 
+  plotly_camera()
+
+  
+```
 - CoStar number of apartments (all types)
 - Estimated single-family rentals (county data)
 
