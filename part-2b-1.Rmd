@@ -28,6 +28,7 @@ options(tigris_use_cache = TRUE)
 remotes::install_github("walkerke/mapboxapi")
 library(mapboxapi)
 library(rgdal)
+library(lehdr)
 
 ```
 
@@ -459,7 +460,8 @@ costar_r1_rent <- read_csv("data/costar_r1_rent.csv") |>
     period == "2022 Q3 QTD" ~ "2022 Q3",
     TRUE ~ period)) |> 
   mutate(period = yq(period)) |> 
-  mutate(current_search = parse_number(current_search))
+  mutate(current_search = parse_number(current_search)) |> 
+  mutate(year = year(period))
 
 colnames(costar_r1_rent)[2] <- "rent"
 
@@ -647,7 +649,7 @@ gg_histogram(costar_r1_yrblt,
 
 CoStar's building rating system also provides a snapshot of condition of multifamily properties. Eighty-three percent of multifamily properties along the corridor are three-star or less --- meaning that in terms of quality and amenities that these buildings are relatively average or simply functional. In comparison, four-star properties are "are constructed with higher end finishes and specifications, providing desirable amenities to residents and designed/built to competitive and contemporary standards," while five-star properties are "the luxury end of multi-family buildings defined by finishes, amenities, the overall interior/exterior design and the highest level of specifications for its style..."
 
-```{r costar-mf-3}
+```{r costar-mf-4}
 
 costar_r1_stars <- costar_r1_mf |> 
   select(star_rating, property_address, building_status) |> 
@@ -869,11 +871,11 @@ hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/
   filter(STATE == "VA") %>%
   st_transform(va_crs)
 # 
-nearest_hospitals <- st_nn(comp_prj, hospitals, k = 20)
+nearest_hospitals <- st_nn(r1_prj, hospitals, k = 20)
 # 
 costar_hospital_driving <- imap(nearest_hospitals, ~{
   # Get the specific property (the list index)
-  property <- comp_prj[.y,]
+  property <- r1_prj[.y,]
 #   
   # Get the nearby hospitals (the indices in the list element)
   nearby_hospitals <- hospitals[.x, ]
@@ -888,7 +890,7 @@ costar_hospital_driving <- imap(nearest_hospitals, ~{
   reduce(rbind) %>%
   apply(1, min)
 
-comp_map_sf <- comp_map_sf |>
+r1_health_map <- r1_grocery_map |>
   mutate(
     minutes_to_hospital = costar_hospital_driving,
     hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
@@ -902,6 +904,74 @@ Compare location of new multifamily development versus older multifamily relativ
 ### Job centers
 
 TBD, waiting for feedback from county staff
+
+```{r r1-jobs}
+
+va_wac <- grab_lodes(
+  state = "va",
+  year = 2019,
+  lodes_type = "wac",
+  use_cache = TRUE
+)
+
+va_jobs <- va_wac %>%
+  select(w_geocode, jobs = C000)
+
+options(tigris_use_cache = TRUE)
+
+va_blocks <- blocks("VA", year = 2019)
+
+va_jobs_sf <- va_blocks %>%
+  select(w_geocode = GEOID10) %>%
+  inner_join(va_jobs, by = "w_geocode")
+
+r1 <- read_csv("data/costar_r1_mf.csv") %>%
+  st_as_sf(coords = c("Longitude", "Latitude"), 
+           crs = 4326) %>%
+  mutate(property_id = 1:nrow(.))
+
+costar_isos <- mb_isochrone(
+  location = r1,
+  profile = "driving",
+  time = 30,
+  depart_at = "2022-07-18T08:00",
+  id_column = "property_id"
+)
+
+reachable_jobs <- st_join(
+  st_transform(costar_isos, 6594),
+  st_centroid(st_transform(va_jobs_sf, 6594)),
+  left = FALSE
+) %>%
+  st_drop_geometry() %>%
+  group_by(id) %>%
+  summarize(n_jobs = sum(jobs, na.rm = TRUE))
+
+richmond_cbsa <- core_based_statistical_areas(cb = TRUE, year = 2019) %>%
+  filter(GEOID == "40060")
+
+richmond_tracts <- tracts("VA", cb = TRUE, year = 2019) %>%
+  st_filter(richmond_cbsa, .predicate = st_within) %>%
+  select(w_tract = GEOID)
+
+richmond_jobs <- left_join(
+  x = richmond_tracts,
+  y = grab_lodes(
+    state = "va",
+    year = 2019, 
+    lodes_type = "wac",
+    agg_geo = "tract",
+    use_cache = TRUE
+  ),
+  by = "w_tract"
+) %>%
+  select(w_tract, jobs = C000)
+
+mapview::mapview(richmond_jobs, zcol = "jobs")
+
+
+
+```
 
 ## Public and private investments
 
