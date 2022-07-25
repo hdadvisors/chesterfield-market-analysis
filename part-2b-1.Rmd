@@ -29,6 +29,7 @@ remotes::install_github("walkerke/mapboxapi")
 library(mapboxapi)
 library(rgdal)
 library(lehdr)
+library(scales)
 
 ```
 
@@ -175,7 +176,12 @@ costar_r1_mf <- read_csv("data/costar_r1_mf.csv") |>
   filter(property_address != "9608 Jefferson Davis Hwy") |> 
   filter(property_address != "2537 Norcliff Rd") |> 
   filter(property_address != "12329-12331 Jefferson Davis Hwy") |> 
-  filter(property_address != "9701 Jefferson Davis Hwy")
+  filter(property_address != "9701 Jefferson Davis Hwy") |> 
+  mutate(property_name = case_when(
+    property_address == "3145 Parkdale Rd" ~ "Parkdale Maisonettes", 
+    property_address == "11240 Jefferson Davis Hwy" ~ "Chester Maisonettes",
+    TRUE ~ property_name
+  ))
 
 r1_unit_cnt <- costar_r1_mf |> 
   group_by(building_status) |> 
@@ -687,11 +693,16 @@ mhc_con <- read_csv("data/mhccv_chesterfield.csv") |>
 
 ## Proximity to amenities
 
+Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs. 
+
 ### Public transportation
 
-Public transportation is not prevalent throughout Chesterfield County. But the extension of Greater Richmond Transit
+Public transportation is not prevalent throughout Chesterfield County. But in March 2020, the [Greater Richmond Transit Company (GRTC)](http://ridegrtc.com/statistics-reports/projects-plans/chesterfield-route-1-local-bus-service) partnered with Chesterfield County and the Department of Rail and Public Transportation (DRPT) to pilot local bus service from Falling Creek to John Tyler Community College. Along the Route 1 corridor, there are 24 stops --- 12 along each north and south 
 
-```{r r1-stops}
+Local bus service provides those without personal vehicles greater access to employment opportunities and the ability to reach community amenities such as grocery stores. Of the 23 properties along the corridor, 19 are within a half mile walking distance of a bus stop. In fact, the average distance of properties along this section of the corridor to a bus stop is 0.42 miles. This allows for nearly 2,000 renter households with less than a half mile access to bus service to the City of Richmond, John Tyler Community College, or retail at the intersection of Route 1 and Route 10.
+
+
+```{r r1-stops-setup}
 
 costar_r1_map <- costar_r1_mf |>
   st_as_sf(coords = c("longitude", "latitude"),
@@ -762,11 +773,16 @@ mean(r1_trans_map$walk_to_transit)
 
 ```
 
-Compare location of new multifamily development versus older multifamily relative to access to public transportation
-
--   Within or outside of 1/2 mile buffer from GRTC stop
 
 ### Schools
+
+Within the footprint of the Route 1 corridor study area, there are four Chesterfield County Public Schools (CCPS). These include:
+- Bensley Elementary School
+- Bellwood Elementary School
+- C.E. Curtis Elementary School
+- Thomas Dale High School
+
+Multifamily properties along the corridor are all within a 30 minute drive of a Chesterfield County Public School. The average time to at least one CCPS school is five minutes. Studies have found that longer commute times have negative impacts on students, including less time spent on activities that promote greater health outcomes.^[Voulgaris CT, Smart MJ, Taylor BD. Tired of Commuting? Relationships among Journeys to School, Sleep, and Exercise among American Teenagers. Journal of Planning Education and Research. 2019;39(2):142-154. doi:10.1177/0739456X17725148]
 
 ```{r r1-school-map}
 
@@ -803,13 +819,15 @@ r1_schools_map <- r1_trans_map |>
     minutes_to_school = r1_school_driving,
     school_nearby = ifelse(minutes_to_school <= 30, 1, 0))
 
+mean(r1_schools_map$minutes_to_school)
+
 ```
 
-Compare location of new multifamily development versus older multifamily relative to access to public schools
-
--   Within or outside of 30 minute drive time
-
 ### Grocery stores
+
+Close proximity to a full service grocery store provides families with a greater ability to purchase fresh meat and produce on a regular basis. When access is limited, many families have depend on more convenient options like corner stores and gas stations, where foods are often cheaper but lower quality. This impacts individual health and leads to greater prevalence of preventable diseases such as obesity, heart disease, and type 2 diabetes.
+
+Properties along the corridor are much more likely to be located within close proximity to a convenience store than a full-service grocery. Of all 23 properties, only one is located within a half mile distance of grocery store --- the Food Lion located at the Chippenham Parkway interchange. The average distance between an apartment and a full-service grocery is 1.39 miles, while the average distance to a convenience store or small market is 0.40 miles. For those without a personal vehicle, the choice in traveling to get food is often an easy one to make when convenience stores like Dollar Genearl are much more accessible.
 
 ```{r r1-grocery}
 # Grocery stores:
@@ -821,13 +839,20 @@ snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b
   st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
   st_transform(va_crs)
 
-nearest_snap <- st_nn(r1_prj, snap, k = 20)
+snap_fullservice <- snap |> 
+  filter(str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+
+snap_convenience <- snap |> 
+  filter(!str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+  
+# Full service grocery filter.
+nearest_snap <- st_nn(r1_prj, snap_fullservice, k = 20)
 
 r1_grocery <- imap(nearest_snap, ~{
 
   property <- r1_prj[.y,]
 
-  nearby_snap <- snap[.x, ]
+  nearby_snap <- snap_fullservice[.x, ]
 
   mb_matrix(origins = property,
             destinations = nearby_snap,
@@ -843,6 +868,30 @@ r1_grocery_map <- r1_schools_map |>
     miles_to_snap = r1_grocery,
     snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
 
+# Convenience store filter.
+
+nearest_snapconvenience <- st_nn(r1_prj, snap_convenience, k = 20)
+
+r1_convenience <- imap(nearest_snapconvenience, ~{
+
+  property <- r1_prj[.y,]
+
+  nearby_snapconvenience <- snap_convenience[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snapconvenience,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+r1_convenience_map <- r1_grocery_map |>
+  mutate(
+    miles_to_convenience = r1_convenience,
+    convenience_nearby = ifelse(miles_to_convenience <= 0.5, 1, 0))
+
 pal <- colorFactor(c("red", "blue"), domain = c(0,1))
 
 leaflet(r1_grocery_map) |>
@@ -853,26 +902,35 @@ leaflet(r1_grocery_map) |>
     stroke = FALSE, fillOpacity = 0.5
    )
 
+mean(r1_grocery_map$miles_to_snap)
 
+mean(r1_convenience_map$miles_to_convenience)
 ```
 
-Compare location of new multifamily development versus older multifamily relative to access to grocery stores
-
--   Within or outside of 1/2 mile buffer from grocery store
-
 ### Healthcare
+
+Healthcare access is an important factor in improving not only individual health, but community health. Acute care general hospitals are open 24 hours a day, 365 days a year and provide patients with wellness services as well as emergency medical episodes that require intensive care. Urgent care facilities provide walk-in clinic services for minor illnesses and injuries outside a hospital setting. Access to both of these levels of care provide communities with a spectrum of care.
+
+Along the corridor, the closest acute care hospital is Hunter Holmes McGuire Hospital, while the Concentra Urgent Care located in the Bellwood area is the closest urgent care facility. The average drive-time for a resident in a multifamily property along the corridor to an acute care hospital is 13.5 minutes, while their average drive-time to an urgent care is 7.5 minutes. Nationally, the average travel time for residents in a suburban setting is 12 minutes, slightly below that of the multifamily residents along the corridor.^[https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/] 
 
 ```{r medical}
 # Hospital / urgent care
 # I'm not filtering by type but you might consider doing so
 # There are some other datasets in HIFLD on care centers that may 
 # be relevant as well.
+
 hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
   filter(STATE == "VA") %>%
+  st_transform(va_crs) |> 
+  filter(STATUS == "OPEN") |> 
+  filter(TYPE == "GENERAL ACUTE CARE")
+
+urgentcare <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Urgent_Care_Facilities/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
   st_transform(va_crs)
-# 
+
 nearest_hospitals <- st_nn(r1_prj, hospitals, k = 20)
-# 
+
 costar_hospital_driving <- imap(nearest_hospitals, ~{
   # Get the specific property (the list index)
   property <- r1_prj[.y,]
@@ -890,20 +948,49 @@ costar_hospital_driving <- imap(nearest_hospitals, ~{
   reduce(rbind) %>%
   apply(1, min)
 
-r1_health_map <- r1_grocery_map |>
+r1_health_map <- r1_convenience_map |>
   mutate(
     minutes_to_hospital = costar_hospital_driving,
     hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
 
+nearest_urgent <- st_nn(r1_prj, urgentcare, k = 20)
+
+costar_urgent_driving <- imap(nearest_urgent, ~{
+  # Get the specific property (the list index)
+  property <- r1_prj[.y,]
+#   
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_urgent <- urgentcare[.x, ]
+#   
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_urgent,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+r1_urgent_map <- r1_health_map |>
+  mutate(
+    minutes_to_urgent = costar_urgent_driving,
+    urgent_nearby = ifelse(minutes_to_urgent <= 15, 1, 0))
+
+mean(r1_urgent_map$minutes_to_hospital)
+
+mean(r1_urgent_map$minutes_to_urgent)
+
+
 ```
-
-Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
-
--   Within or outside of 15 minute drive time
 
 ### Job centers
 
-TBD, waiting for feedback from county staff
+Living close to well-paying jobs can increase economic opportunities for low- and moderate-income households. When those opportunities are a further distance from where someone lives, that can often mean more money spent on commuting and less money for essentials like healthcare and housing. 
+
+Multifamily properties regardless of type or location along the corridor are generally well-located in relation to jobs. However, the northern section of the corridor sees greater proximity to more jobs --- largely because of the City of Richmond. Furthermore, properties closer to the city-county border are also in closer proximity to jobs paying greater than \$3,333 a month. On average, 54 percent of the jobs located within a 15 minute drive of properties pay greater than \$3,333. 
+
+Fewer high-paying job opportunities exist towards the southern end of the corridor in spite of higher end developments like The Jane and Colony Village. This most likely means that many residents are commuting longer distances away from the corridor for work. 
 
 ```{r r1-jobs}
 
@@ -914,8 +1001,10 @@ va_wac <- grab_lodes(
   use_cache = TRUE
 )
 
+# Jobs with earnings more than $3333/month.
+
 va_jobs <- va_wac %>%
-  select(w_geocode, jobs = C000)
+  select(w_geocode, total_jobs = C000, hi_paying_jobs = CE03, mid_paying_jobs = CE02, lo_paying_jobs = CE01, hs_jobs = CD02, ba_jobs = CD04)
 
 options(tigris_use_cache = TRUE)
 
@@ -928,12 +1017,25 @@ va_jobs_sf <- va_blocks %>%
 r1 <- read_csv("data/costar_r1_mf.csv") %>%
   st_as_sf(coords = c("Longitude", "Latitude"), 
            crs = 4326) %>%
-  mutate(property_id = 1:nrow(.))
+  mutate(property_id = 1:nrow(.)) |> 
+  clean_names() |> 
+  filter(property_address != "8219 Jefferson Davis Hwy") |> 
+  filter(property_address != "9608 Jefferson Davis Hwy") |> 
+  filter(property_address != "2537 Norcliff Rd") |> 
+  filter(property_address != "12329-12331 Jefferson Davis Hwy") |> 
+  filter(property_address != "9701 Jefferson Davis Hwy")  |> 
+  mutate(property_name = case_when(
+    property_address == "3145 Parkdale Rd" ~ "Parkdale Maisonettes", 
+    property_address == "11240 Jefferson Davis Hwy" ~ "Chester Maisonettes",
+    property_address == "5400 Remuda Dr" ~ "Remuda Crossing",
+    TRUE ~ property_name
+  ))
+  
 
 costar_isos <- mb_isochrone(
   location = r1,
   profile = "driving",
-  time = 30,
+  time = 15,
   depart_at = "2022-07-18T08:00",
   id_column = "property_id"
 )
@@ -945,32 +1047,31 @@ reachable_jobs <- st_join(
 ) %>%
   st_drop_geometry() %>%
   group_by(id) %>%
-  summarize(n_jobs = sum(jobs, na.rm = TRUE))
+  summarize(hi_jobs = sum(hi_paying_jobs, na.rm = TRUE),
+            mid_jobs = sum(mid_paying_jobs, na.rm = TRUE),
+            lo_jobs = sum(lo_paying_jobs, na.rm = TRUE),
+            total_jobs = sum(total_jobs, na.rm = TRUE),
+            hs_jobs = sum(hs_jobs, na.rm = TRUE),
+            ba_jobs = sum(ba_jobs, na.rm = TRUE))
 
-richmond_cbsa <- core_based_statistical_areas(cb = TRUE, year = 2019) %>%
-  filter(GEOID == "40060")
+r1_jobs <- r1 |> 
+  mutate(id = property_id)|> 
+  left_join(reachable_jobs, by = "id")
 
-richmond_tracts <- tracts("VA", cb = TRUE, year = 2019) %>%
-  st_filter(richmond_cbsa, .predicate = st_within) %>%
-  select(w_tract = GEOID)
+r1_jobs_list <- r1_jobs |> 
+  select(property_name, property_address, total_jobs, hi_jobs, mid_jobs, lo_jobs, ba_jobs, hs_jobs) |> 
+  transform(hi_percent = hi_jobs/total_jobs) |> 
+  transform(lo_percent = lo_jobs/total_jobs)
 
-richmond_jobs <- left_join(
-  x = richmond_tracts,
-  y = grab_lodes(
-    state = "va",
-    year = 2019, 
-    lodes_type = "wac",
-    agg_geo = "tract",
-    use_cache = TRUE
-  ),
-  by = "w_tract"
-) %>%
-  select(w_tract, jobs = C000)
+leaflet(r1_jobs_list) |>
+  addTiles() |>
+  addCircleMarkers(
+    radius = ~hi_percent*20,
+    color = "red",
+    stroke = FALSE, fillOpacity = 0.5
+   )
 
-mapview::mapview(richmond_jobs, zcol = "jobs")
-
-
-
+mean(r1_jobs_list$hi_percent)
 ```
 
 ## Public and private investments
@@ -983,10 +1084,9 @@ Chesterfield County has largely focused revitalization efforts on the northern s
 
 Additionally, the Board of Supervisors approved the Route 1 Residential Overlay ordinance in 2019, which allows for high density multifamily development by-right in C3 and C5 zoned parcels with some restrictions. This ordinance also reduced parking requirements for apartments located within a quarter-mile of bus stops and encourages less auto-centric development, which has historically stifled revitalization of the corridor.
 
-Add about tax abatement policy.
+The Board of Supervisors also extended the Route 1 tax abatement policy. The policy provides the developer of a qualifying project with a grant equal to 80 percent of their increasing real estate taxes for the first seven years after completion of the project. Over the final three years, the grant reduces to 60, 40, and 20 percent, respectively. 
 
-Add about Route 1 transit.
-
+With these incentives, as well as the Route 1 GRTC pilot, the County has continued to invest in the corridor to spur much-needed development. With dwindling supply of market affordable housing and at-risk manufactured home communities, many low- and moderate-income families will have few to no options for safe and stable housing. 
 
 https://www.chesterfieldobserver.com/articles/county-offers-parking-credits-to-developers-on-route-1/
 
@@ -1003,6 +1103,8 @@ Route One Association for Revitalization, multifamily overlay district
 
 ### Case study
 
+Bermuda Estates 
+
 -   Choose an interesting recent residential development
 -   Add a photo
 -   Describe development and market it serves
@@ -1014,6 +1116,129 @@ Bermuda Estates or The Jane at Moore's Lake or most recent BHC phase (Colbrook)
 
 ## Single-family rental versus purchase
 
+```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
+
+r1_sales <- read_csv("data/routeone_mls.csv")
+
+r1_sales_med <- r1_sales %>% 
+  filter(status != "ACT") %>%
+  select(salesprice, salesdate) %>% 
+  mutate(salesdate = mdy(salesdate),
+         year = floor_date(salesdate, "year"),
+         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>% 
+  group_by(year) %>%
+  summarise(median = median(salesprice))
+
+gg_line(r1_sales_med,
+        x_var = year,
+        y_var = median,
+        alpha_point = 0,
+        size_line = 0.75,
+        title = "Median single-family home sales price in study area",
+        y_labels = label_dollar(),
+        y_title = "Median sales price",
+        x_title = element_blank(),
+        y_zero = TRUE,
+        x_labels = scales::date_format(format = "%Y")
+      ) +
+  ggplot2::scale_x_date(limits = c(as.Date("2012-01-01"), as.Date("2022-01-01")),
+                        breaks = "1 year",
+                        date_labels = "%Y")
+  
+```
+
+
+```{r r1-sales-tract, fig.cap="Median single-family home sales price by Census tract", cache=TRUE}
+
+# Sys.getenv('GEOCODIO_API_KEY')
+# 
+# r1_geocode <- r1_sales %>%
+#   mutate(city = "Richmond",
+#          state = "VA") %>%
+#   mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
+#   geocode(address = fulladdress,
+#           method = 'geocodio',
+#           lat = latitude,
+#           long = longitude)
+# 
+# write_rds(r1_geocode, "r1_geocode.rds")
+
+r1_geocode <- read_rds("r1_geocode.rds")
+
+r1_sf <- r1_geocode %>%
+  st_as_sf(coords = c("longitude", "latitude"),
+           crs = 4326)
+
+r1_sales_tract <- st_join(
+  r1_tracts,
+  r1_sf) %>%
+  mutate(salesdate = mdy(salesdate),
+         year = floor_date(salesdate, "year"),
+         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>%
+  group_by(year, NAME) %>%
+  summarise(median = median(salesprice))
+  
+gg_line_col_facet(r1_sales_tract,
+                  x_var = year,
+                  y_var = median,
+                  col_var = NAME,
+                  facet_var = NAME,
+                  alpha_point = 0,
+                  size_line = 0.75,
+                  col_legend_none = TRUE,
+                  y_labels = label_dollar(),
+                  title = "Median single-family home sales price by Census tract",
+                  y_title = "Median sales price",
+                  x_title = element_blank(),
+                  x_labels = scales::date_format(format = "%Y")) +
+  ggplot2::scale_x_date(limits = c(as.Date("2012-01-01"), as.Date("2022-01-01")),
+                        breaks = "2 years",
+                        date_labels = "%Y") +
+  ggplot2::theme(axis.text.x = element_text(angle = 90))
+
+```
+
+```{r r1-home-price}
+
+r1_msp <- 251000
+downpayment <- 0.05 # 5% downpayment
+r1_principal <- r1_msp - (r1_msp * downpayment)
+closingcosts <- 0.015 # 1.5% closing costs
+r1_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
+intrate <- 0.0442 # Current interest rate from Freddie Mac
+utilities <- 250 # Assume $250/month for utilities
+
+r1_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
+
+r1_inc_needed <- ((r1_payment*10)/2.8)*12
+
+r1_labels <- c("Median sales price",
+            "Downpayment",
+            "Closing costs",
+            "Loan amount",
+            "Interest rate",
+            "Monthly utilities",
+            "Monthly payment",
+            "Income needed to buy home")
+
+r1_values <- c("$251,000",
+            "5.0%",
+            "1.5%",
+            "$277,766",
+            "4.42%",
+            "$250",
+            "$1,644.23",
+            "$62,790")
+
+data.frame(x = r1_labels, y = r1_values) %>% 
+  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(8, bold=TRUE)
+
+```
 -   Single-family rental prices from MLS records
 -   Median home sales price from past 365 days
 -   Calculate income needed to afford SFR and homeownership
