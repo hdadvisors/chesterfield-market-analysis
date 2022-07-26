@@ -331,7 +331,7 @@ plotly::ggplotly(costar_hsr_rent_line) |>
 
 
 ```
-Breaking out average rent by bedrooms shows a similar pattern among all bedroom sizes, except for studio apartments, in which there are none listed in the study area. 
+Breaking out average rent by bedrooms shows a similar pattern among all bedroom sizes, except for studio apartments, in which there are none listed in the study area. Three-bedroom apartments did see a substantial increase in the latter half of 2021 --- a \$61 increase (5 percent increase) from \$1,240 to \$1,301, but, like all other apartment types, have seen declines in 2022.
 
 ```{r costar-hsr-brent}
 
@@ -471,60 +471,43 @@ gg_sf_col(b25036_hsr_1980,
 
 Multifamily property construction has been rare in the corridor for much of the last half century. Only one development was completed in the 2000s --- Element at Stonebridge. This development was the result of the Cloverleaf Mall redevelopment and is oriented towards Midlothian Turnpike, rather than the Eastern Hull Street corridor. 
 
-More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978. 
+More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978. Only one property (Element at Stonebridge) is rated at four stars, while all other properties are three stars or less. Although largely functional, these lower-tiered properties can expect to need renovations in the coming years.
+
 ```{r costar-hsr-3}
 
 # Histogram or chart?
 
 costar_hsr_yrblt <- costar_hsr_mf |> 
-  select(property_name, corridor, year_built)
+  select(property_name, corridor, year_built, star_rating)
 
 costar_hsr_yrblt |> 
   arrange(desc(year_built)) |> 
-  kable(caption = "Multifamily properties located in Hull Street corridor study area by year built",
-        align = "llr",
-        col.names = c("Name", "Corridor", "Year Built")) |> 
+  kable(caption = "Multifamily properties located in Hull Street corridor study area by year built and rating",
+        align = "llrr",
+        col.names = c("Name", "Corridor", "Year Built", "CoStar Rating")) |> 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped"))
 
 
 ```
 
-- CoStar rating
-
-```{r costar-hsr-4}
-
-costar_hsr_stars <- costar_hsr_mf |> 
-  select(star_rating, property_address, building_status) |> 
-  mutate(star_rating = as.character(star_rating)) |> 
-  group_by(star_rating) |> 
-  summarise(count = n_distinct(property_address))
-
-  
-hsr_star_bar <- gg_bar_col(costar_hsr_stars,
-           x_var = star_rating,
-           y_var = count,
-           col_var = star_rating
-           )
-
-plotly::ggplotly(hsr_star_bar) |> 
-  plotly_camera()
-
-```
 
 ## Proximity to amenities
 
 ### Public transportation
 
-Compare location of new multifamily development versus older multifamily relative to access to public transportation
+Along the Eastern Hull Street corridor there is no public transportation within the county. The nearest stop is just across the city-county border at the Chippenham Mall Shopping Center and is part of Route 1C of the Greater Richmond Transit Company (GRTC). This route takes riders into Downtown Richmond and as far as Northside neighborhood within the city.
 
-- Within or outside of 1/2 mile buffer from GRTC stop
+To date, extension of GRTC down Hull Street through the county has only been explored in concept. A proposed concept for GRTC expansion could potentially extend service to commercial retail at Commonwealth Center in Midlothian.
+
+For the four multifamily properties located closest to the Hull Street corridor, no properties are within a half mile walking distance to public transit. For individuals without a car, accessing public transit means walking an average of two miles to the Chippenham Mall stop of Route 1C. It also means walking down a portion of Hull Street that is a six-lane highway interchange that has no sidewalks.
 
 ```{r r1-stops}
 
 costar_hsr_map <- costar_hsr_mf |>
   st_as_sf(coords = c("longitude", "latitude"),
-           crs = 4326)
+           crs = 4326) |> 
+  filter(corridor == "Hull Street")
 
 va_crs <- suggest_top_crs(costar_hsr_map, units = "m",
                           inherit_gcs = FALSE)
@@ -545,10 +528,11 @@ library(nngeo)
 
 nearest_stops <- st_nn(hsr_prj, stops, k = 20)
 
-mapview(stops) + 
-  mapview(costar_hsr_tracts)
+# mapview(stops) + 
+#   mapview(costar_hsr_tracts)
 
 ```
+
 
 ```{r r1-mf-stops}
 
@@ -572,24 +556,27 @@ hsr_trans_map <- costar_hsr_map |>
      transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
    )
 
-pal <- colorFactor(c("red", "green"), domain = c(0, 1))
-
-# How can I add a stops layer to show the location of stops in relation to properties. There is some issue with the stops data frame when adding in leaflet. 
-
-leaflet(hsr_trans_map) |>
-   addTiles() |>
-   addCircleMarkers(
-     radius = 5,
-     color = ~pal(transit_nearby),
-     stroke = FALSE, fillOpacity = 0.5
-    ) 
-
-mapview(hsr_trans_map, zcol = "transit_nearby") +
-  mapview(stops)
-
 mean(hsr_trans_map$walk_to_transit)
 
 ```
+
+### Schools
+
+Along the Eastern Hull Street Corridor, there are two Chesterfield County Public Schools:
+
+- Manchester Middle School; and
+- J.A. Chalkley Elementary School
+
+Nearby, but more oriented towards the Midlothian Turnpike are:
+
+- A.M. Davis Elementary School; and
+- Providence Middle School
+
+All four properties closest to the Eastern Hull Street corridor are within an ideal distance to a Chesterfield County Public School --- less than a five minute drive. This provides many families with a convenient drive to take their children to school. Properties north of Hull Street are zoned for either Davis Elementary or Providence Middle School --- but no multifamily properties exist on the northside of Hull Street.
+
+Those properties that would be zoned for these schools would be more appropriately identified as being part of the Midlothian Turnpike corridor. 
+
+
 ```{r r1-school-map}
 
 schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
@@ -597,12 +584,12 @@ schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/se
 
 nearest_schools <- st_nn(hsr_prj, schools, k = 20)
 
-mapview(schools) +
-  mapview(costar_hsr_tracts)
+# mapview(schools) +
+#   mapview(costar_hsr_tracts)
 
 ```
 
-```{r r1-schools}
+```{r hsr-schools}
 
 # I think I would want to understand the number of schools within a distance of certain properties and what schools those are. 
 
@@ -627,13 +614,14 @@ hsr_schools_map <- hsr_trans_map |>
 
 ```
 
-Compare location of new multifamily development versus older multifamily relative to access to public schools
-
--   Within or outside of 30 minute drive time
-
 ### Grocery stores
 
-```{r r1-grocery}
+Several ethnic food stores exist at the 360 West Shopping Center at the northwest corner of Turner Road and Hull Street. But full service grocery stores like Food Lion and Kroger are located further west, outside of the study area. Although only a short drive down the road, multifamily properties in the study area are much closer to a convenience store or small market, rather than a full service grocery store.
+
+The average distance to a convenience or small market is about half a mile, while the average distance to a full service grocery store is 1.45 miles. This distance is negligible for those with a personal vehicle, but for those without a car or unable to drive due to an impairment (e.g. physical or mental disability), traveling to the nearest Food Lion or Kroger can be quite difficult. Those having to walk face a near mile and a half walk along a highway with no sidewalks and vehicles going over 55 mph. 
+
+
+```{r hsr-grocery}
 # Grocery stores:
 # We'll use SNAP retailers from the USDA as a proxy here
 # This is not perfect so some filtering may be necessary
@@ -643,13 +631,20 @@ snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b
   st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
   st_transform(va_crs)
 
-nearest_snap <- st_nn(hsr_prj, snap, k = 20)
+snap_fullservice <- snap |> 
+  filter(str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+
+snap_convenience <- snap |> 
+  filter(!str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+  
+# Full service grocery filter.
+nearest_snap <- st_nn(hsr_prj, snap_fullservice, k = 20)
 
 hsr_grocery <- imap(nearest_snap, ~{
 
   property <- hsr_prj[.y,]
 
-  nearby_snap <- snap[.x, ]
+  nearby_snap <- snap_fullservice[.x, ]
 
   mb_matrix(origins = property,
             destinations = nearby_snap,
@@ -665,24 +660,49 @@ hsr_grocery_map <- hsr_schools_map |>
     miles_to_snap = hsr_grocery,
     snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
 
-pal <- colorFactor(c("red", "blue"), domain = c(0,1))
+# Convenience store filter.
 
-leaflet(hsr_grocery_map) |>
-  addTiles() |>
-  addCircleMarkers(
-    radius = 5,
-    color = ~pal(snap_nearby),
-    stroke = FALSE, fillOpacity = 0.5
-   )
+nearest_snapconvenience <- st_nn(hsr_prj, snap_convenience, k = 20)
 
+hsr_convenience <- imap(nearest_snapconvenience, ~{
+
+  property <- hsr_prj[.y,]
+
+  nearby_snapconvenience <- snap_convenience[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snapconvenience,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+hsr_convenience_map <- hsr_grocery_map |>
+  mutate(
+    miles_to_convenience = hsr_convenience,
+    convenience_nearby = ifelse(miles_to_convenience <= 0.5, 1, 0))
+
+# pal <- colorFactor(c("red", "blue"), domain = c(0,1))
+# 
+# leaflet(r1_grocery_map) |>
+#   addTiles() |>
+#   addCircleMarkers(
+#     radius = 5,
+#     color = ~pal(snap_nearby),
+#     stroke = FALSE, fillOpacity = 0.5
+#    )
+
+mean(hsr_grocery_map$miles_to_snap)
+
+mean(hsr_convenience_map$miles_to_convenience)
 
 ```
 
-Compare location of new multifamily development versus older multifamily relative to access to grocery stores
-
--   Within or outside of 1/2 mile buffer from grocery store
-
 ### Healthcare
+
+Comparatively, multifamily properties along the Eastern Hull Street corridor are closer to 
 
 ```{r medical}
 # Hospital / urgent care
@@ -691,8 +711,14 @@ Compare location of new multifamily development versus older multifamily relativ
 # be relevant as well.
 hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
   filter(STATE == "VA") %>%
+  st_transform(va_crs) |> 
+  filter(STATUS == "OPEN") |> 
+  filter(TYPE == "GENERAL ACUTE CARE")
+
+urgentcare <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Urgent_Care_Facilities/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
   st_transform(va_crs)
-# 
+
 nearest_hospitals <- st_nn(hsr_prj, hospitals, k = 20)
 # 
 costar_hospital_driving <- imap(nearest_hospitals, ~{
@@ -712,10 +738,39 @@ costar_hospital_driving <- imap(nearest_hospitals, ~{
   reduce(rbind) %>%
   apply(1, min)
 
-hsr_health_map <- hsr_grocery_map |>
+hsr_health_map <- hsr_convenience_map |>
   mutate(
     minutes_to_hospital = costar_hospital_driving,
     hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
+
+nearest_urgent <- st_nn(hsr_prj, urgentcare, k = 20)
+
+costar_urgent_driving <- imap(nearest_urgent, ~{
+  # Get the specific property (the list index)
+  property <- hsr_prj[.y,]
+#   
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_urgent <- urgentcare[.x, ]
+#   
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_urgent,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+hsr_urgent_map <- hsr_health_map |>
+  mutate(
+    minutes_to_urgent = costar_urgent_driving,
+    urgent_nearby = ifelse(minutes_to_urgent <= 15, 1, 0))
+
+mean(hsr_urgent_map$minutes_to_hospital)
+
+mean(hsr_urgent_map$minutes_to_urgent)
+
 
 ```
 Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
@@ -724,7 +779,88 @@ Compare location of new multifamily development versus older multifamily relativ
 
 ### Job centers
 
-TBD, waiting for feedback from county staff
+```{r r1-jobs}
+
+va_wac <- grab_lodes(
+  state = "va",
+  year = 2019,
+  lodes_type = "wac",
+  use_cache = TRUE
+)
+
+# Jobs with earnings more than $3333/month.
+
+va_jobs <- va_wac %>%
+  select(w_geocode, total_jobs = C000, hi_paying_jobs = CE03, mid_paying_jobs = CE02, lo_paying_jobs = CE01, hs_jobs = CD02, ba_jobs = CD04)
+
+options(tigris_use_cache = TRUE)
+
+va_blocks <- blocks("VA", year = 2019)
+
+va_jobs_sf <- va_blocks %>%
+  select(w_geocode = GEOID10) %>%
+  inner_join(va_jobs, by = "w_geocode")
+
+r1 <- read_csv("data/costar_r1_mf.csv") %>%
+  st_as_sf(coords = c("Longitude", "Latitude"), 
+           crs = 4326) %>%
+  mutate(property_id = 1:nrow(.)) |> 
+  clean_names() |> 
+  filter(property_address != "8219 Jefferson Davis Hwy") |> 
+  filter(property_address != "9608 Jefferson Davis Hwy") |> 
+  filter(property_address != "2537 Norcliff Rd") |> 
+  filter(property_address != "12329-12331 Jefferson Davis Hwy") |> 
+  filter(property_address != "9701 Jefferson Davis Hwy")  |> 
+  mutate(property_name = case_when(
+    property_address == "3145 Parkdale Rd" ~ "Parkdale Maisonettes", 
+    property_address == "11240 Jefferson Davis Hwy" ~ "Chester Maisonettes",
+    property_address == "5400 Remuda Dr" ~ "Remuda Crossing",
+    TRUE ~ property_name
+  ))
+  
+
+costar_isos <- mb_isochrone(
+  location = r1,
+  profile = "driving",
+  time = 15,
+  depart_at = "2022-07-18T08:00",
+  id_column = "property_id"
+)
+
+reachable_jobs <- st_join(
+  st_transform(costar_isos, 6594),
+  st_centroid(st_transform(va_jobs_sf, 6594)),
+  left = FALSE
+) %>%
+  st_drop_geometry() %>%
+  group_by(id) %>%
+  summarize(hi_jobs = sum(hi_paying_jobs, na.rm = TRUE),
+            mid_jobs = sum(mid_paying_jobs, na.rm = TRUE),
+            lo_jobs = sum(lo_paying_jobs, na.rm = TRUE),
+            total_jobs = sum(total_jobs, na.rm = TRUE),
+            hs_jobs = sum(hs_jobs, na.rm = TRUE),
+            ba_jobs = sum(ba_jobs, na.rm = TRUE))
+
+r1_jobs <- r1 |> 
+  mutate(id = property_id)|> 
+  left_join(reachable_jobs, by = "id")
+
+r1_jobs_list <- r1_jobs |> 
+  select(property_name, property_address, total_jobs, hi_jobs, mid_jobs, lo_jobs, ba_jobs, hs_jobs) |> 
+  transform(hi_percent = hi_jobs/total_jobs) |> 
+  transform(lo_percent = lo_jobs/total_jobs)
+
+leaflet(r1_jobs_list) |>
+  addTiles() |>
+  addCircleMarkers(
+    radius = ~hi_percent*20,
+    color = "red",
+    stroke = FALSE, fillOpacity = 0.5
+   )
+
+mean(r1_jobs_list$hi_percent)
+```
+
 
 ## Public and private investments
 
