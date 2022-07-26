@@ -23,6 +23,8 @@ options(tigris_use_cache = TRUE)
 remotes::install_github("walkerke/mapboxapi")
 library(mapboxapi)
 library(rgdal)
+library(optiRum)
+library(ggrepel)
 
 ```
 
@@ -280,21 +282,26 @@ leaf_sf_col(hsr_rent_change_map,
 
 ```{r acs-hsr-rent1}
 
+hsr_rent_cpi$label <- NA
+hsr_rent_cpi$label[which(hsr_rent_cpi$year == max(hsr_rent_cpi$year))] <- 
+  hsr_rent_cpi$dollars20[which(hsr_rent_cpi$year == max(hsr_rent_cpi$year))] 
 
 
-gg_line_col(hsr_rent_cpi,
-            x_var = year,
-            y_var = dollars20,
-            col_var = NAMELSAD
-            )
+ggplot(hsr_rent_cpi, aes(x = year, y = dollars20)) +
+  geom_line(aes(color = NAMELSAD)) +
+  geom_point(aes(color = NAMELSAD)) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  ggplot2::scale_x_continuous(limits = c(2009.5, 2020.5),
+                              breaks = seq(2010, 2020, 1)) +
+  labs(title = "Renter income in the Eastern Hull Street corridor study area",
+       x = NULL, y = "Median household income (2020 dollars)") +
+  scale_color_discrete(name = "Legend")
+
 
 
 ```
 
-Focusing on the areas adjacent to the Hull Street corridor, CoStar's data show an average rent across the four existing properties. Changes in average rent have been slight over the past decade. 
-
-
-*But throughout much of the pandemic, average rent has been on a steep incline --- from \$1,257 in Q3 2020 to \$1,406 in Q2 2022, a 12 percent increase. In the most recent quarter (Q3 2022), average rent has declined --- a potential sign of some cooling from the hot pandemic housing market.*
+Focusing on the areas adjacent to the Hull Street corridor, CoStar's data show an average rent across the four existing properties. Changes in average rent have been slight over the past decade, but have been on a steady climb --- reaching a decade max at the start of 2022 with an average rent of \$1,140. Over the course of the pandemic, rents in the area have seen upticks much like other parts of the county, including the Route 1 corridor. From Q1 2020 to Q3 2022, average rent saw a 2 percent increase from \$1,088 to \$1,110. But in 2022 so far, average rent has been in decline from its decade max --- potentially signaling some cooling of the hot pandemic housing market.
 
 ```{r costar-hsr-rent}
 
@@ -324,14 +331,14 @@ plotly::ggplotly(costar_hsr_rent_line) |>
 
 
 ```
-*Breaking out average rent by bedrooms shows a similar pattern among one- and two-bedroom apartments. But interestingly, two-bedroom apartments in the area command much higher rents than three-bedrooms. As of Q3 2022, the average rent for a two-bedroom was \$55 more than a three-bedroom apartment --- \$1,347 versus \$1,292.*
+Breaking out average rent by bedrooms shows a similar pattern among all bedroom sizes, except for studio apartments, in which there are none listed in the study area. 
 
 ```{r costar-hsr-brent}
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
 
 
-costar_hsr_brent <- read_csv("data/costar_hsr_brent.csv") |> 
+costar_hsr_brent <- read_csv("data/costar_hsr_brent_nomidlo.csv") |> 
   clean_names() |> 
   mutate(period = case_when(
     period == "2022 Q3 QTD" ~ "2022 Q3",
