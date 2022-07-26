@@ -30,6 +30,7 @@ library(mapboxapi)
 library(rgdal)
 library(lehdr)
 library(scales)
+library(optiRum)
 
 ```
 
@@ -1082,24 +1083,13 @@ Chesterfield County has largely focused revitalization efforts on the northern s
 -   **Shared-Use Path** planned for Route 1 from Marina Drive to Elliham Avenue.
 -   **Falling Creek Ironworks Park** improvements in planning.
 
-Additionally, the Board of Supervisors approved the Route 1 Residential Overlay ordinance in 2019, which allows for high density multifamily development by-right in C3 and C5 zoned parcels with some restrictions. This ordinance also reduced parking requirements for apartments located within a quarter-mile of bus stops and encourages less auto-centric development, which has historically stifled revitalization of the corridor.
+Additionally, the Board of Supervisors approved the Route 1 Residential Overlay ordinance in 2019, which allows for high density multifamily development by-right in C3 and C5 zoned parcels with some restrictions. This ordinance also [reduced parking requirements for apartments located within a quarter-mile of bus stops](https://www.chesterfieldobserver.com/articles/county-offers-parking-credits-to-developers-on-route-1/) and encourages less auto-centric development, which has historically stifled revitalization of the corridor. The Board of Supervisors also extended the [Route 1 tax abatement policy](https://www.chesterfield.gov/CivicAlerts.aspx?AID=2448&ARC=3953). The policy provides the developer of a qualifying project with a grant equal to 80 percent of their increasing real estate taxes for the first seven years after completion of the project. Over the final three years, the grant reduces to 60, 40, and 20 percent, respectively. Better Housing Coalition's Winchester Forest development, which will result in 160 rental homes by early 2024, is the first development to utilize this incentive.
 
-The Board of Supervisors also extended the Route 1 tax abatement policy. The policy provides the developer of a qualifying project with a grant equal to 80 percent of their increasing real estate taxes for the first seven years after completion of the project. Over the final three years, the grant reduces to 60, 40, and 20 percent, respectively. 
+With these incentives, as well as the Route 1 GRTC pilot, the County has continued to invest in the corridor to spur much-needed development. With dwindling supply of market affordable housing and at-risk manufactured home communities, many low- and moderate-income families will have few to no options for safe and stable housing.
 
-With these incentives, as well as the Route 1 GRTC pilot, the County has continued to invest in the corridor to spur much-needed development. With dwindling supply of market affordable housing and at-risk manufactured home communities, many low- and moderate-income families will have few to no options for safe and stable housing. 
+Private development interest is also coming to the corridor with Thalhimer Realty Partners proposing a mixed-use project at the Bellwood Flea Market site at the southeast corner Route 1 and Willis Road. This redevelopment project would see 690 new residential units and commercial space across 40 acres --- bringing additional homeownership and rental opportunities to the corridor. Projects like this help bring new economic activity to the corridor and additional rooftops to justify additional commercial development along the corridor.
 
-https://www.chesterfieldobserver.com/articles/county-offers-parking-credits-to-developers-on-route-1/
-
-https://www.chesterfieldobserver.com/articles/county-pushes-transit-rehab-incentives-for-jeff-davis/
-
-https://www.chesterfield.gov/CivicAlerts.aspx?AID=2448&ARC=3953
-
-
-
--   Check CoStar for newest builds/renovations/transactions (commercial properties, too)
--   Ask Jessica for what county has had a hand in
-
-Route One Association for Revitalization, multifamily overlay district
+Nonprofit development interest has continued from Better Housing Coalition further down the corridor at the historic Colbrook Motel site south of Route 10. At this site, they plan to develop 156 rental homes in an apartment and townhome setting. Meanwhile, Maggie Walker Community Land Trust is in the early planning stages for an agricultural neighborhood development off of Swineford Road. MWCLT will offer homeownership opportunities under their community land trust model --- often serving first-time home buyers of color.
 
 ### Case study
 
@@ -1116,35 +1106,45 @@ Bermuda Estates or The Jane at Moore's Lake or most recent BHC phase (Colbrook)
 
 ## Single-family rental versus purchase
 
+For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
+
+In the last year, the median home sales price for a home along the corridor was \$265,000, which would require a monthly mortgage payment of \$1,707.60. This is nearly \$400 more than the price of a SFR in the area --- \$1,336.87 a month. In order to afford the median home sales price, a household would need to make \$73,183 annually, while an SFR would require \$53,475 --- almost \$20,000 less. Based on the most recent ACS estimates for renter household incomes, the typical renter in most Census tracts would not be able to either rent a SFR nor purchase the typical home in the area. Renters in southern Bellwood and northern Chester are more likely to afford a SFR, but with their incomes they are still nearly \$10,000 short of being able to purchase a home priced at \$265,000.
+
+With homeownership being out of reach for many in the area, the next best option is often renting a single-family home. Low supply of homes for sale is often being exacerbated by owners or investors converting potential starter home opportunities into rental properties. Although this is meeting a demand in the rental market, the opportunity to reach the first rung of the homeownership ladder is so often pushed further away when the cost to rent a home is only a few hundred dollars away from being able to afford a monthly mortgage.
+
+
+```{r sfr-mls-bar}
+
+x <- c("Census Tract 1003", "Census Tract 1004.04", "Census Tract 1004.05", "Census Tract 1004.06", "Census Tract 1004.07", "Census Tract 1004.09", "SFR", "Home Purchase")
+y <- c(35906, 32014, 39477, 25861, 64896, 63783, 53475, 73183)
+z <- c("Renter income", "Renter income","Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
+
+sfr_mls_bar <- data.frame(x, y, z)
+
+ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(title = "Renter income and income needed to afford SFR or homeownership",
+       x = NULL, y = NULL) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  scale_fill_discrete(name = "Legend") +
+  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
+
+
+```
+
 ```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
 
-r1_sales <- read_csv("data/routeone_mls.csv")
+r1_sales <- read_csv("data/mls_r1_sales_72622.csv")
 
-r1_sales_med <- r1_sales %>% 
-  filter(status != "ACT") %>%
-  select(salesprice, salesdate) %>% 
-  mutate(salesdate = mdy(salesdate),
-         year = floor_date(salesdate, "year"),
-         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>% 
-  group_by(year) %>%
-  summarise(median = median(salesprice))
+r1_sales_med <- r1_sales |> 
+  clean_names() |> 
+  select(sales_price, sales_date) %>% 
+  mutate(sales_date = mdy(sales_date),
+         year = floor_date(sales_date, "year"),
+         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
+  summarise(median = median(sales_price))
 
-gg_line(r1_sales_med,
-        x_var = year,
-        y_var = median,
-        alpha_point = 0,
-        size_line = 0.75,
-        title = "Median single-family home sales price in study area",
-        y_labels = label_dollar(),
-        y_title = "Median sales price",
-        x_title = element_blank(),
-        y_zero = TRUE,
-        x_labels = scales::date_format(format = "%Y")
-      ) +
-  ggplot2::scale_x_date(limits = c(as.Date("2012-01-01"), as.Date("2022-01-01")),
-                        breaks = "1 year",
-                        date_labels = "%Y")
-  
 ```
 
 
@@ -1200,12 +1200,12 @@ gg_line_col_facet(r1_sales_tract,
 
 ```{r r1-home-price}
 
-r1_msp <- 251000
+r1_msp <- 265000
 downpayment <- 0.05 # 5% downpayment
 r1_principal <- r1_msp - (r1_msp * downpayment)
 closingcosts <- 0.015 # 1.5% closing costs
 r1_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0442 # Current interest rate from Freddie Mac
+intrate <- 0.0554 # Current interest rate from Freddie Mac -- 7/26/22 rate is 5.54%
 utilities <- 250 # Assume $250/month for utilities
 
 r1_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
@@ -1221,14 +1221,14 @@ r1_labels <- c("Median sales price",
             "Monthly payment",
             "Income needed to buy home")
 
-r1_values <- c("$251,000",
+r1_values <- c("$265,000",
             "5.0%",
             "1.5%",
-            "$277,766",
-            "4.42%",
+            "$255,584",
+            "5.54%",
             "$250",
-            "$1,644.23",
-            "$62,790")
+            "$1,707.60",
+            "$73,183")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
   kable(caption = "Calculated income needed to buy median-priced home in the study area",
@@ -1237,6 +1237,58 @@ data.frame(x = r1_labels, y = r1_values) %>%
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(8, bold=TRUE)
+
+```
+
+```{r r1-sfr-price}
+
+# $1336.87 is the average price for SFR in the last year.
+
+avg_sfr_price <- 1336.87
+sfr_income <- ((avg_sfr_price*10)/3)*12
+
+
+```
+
+```{r r1-renter-income}
+
+b25119_vars <- load_variables(2020, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
+
+r1_b25119_raw <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = 2020,
+    survey = "acs5",
+    cache_table = TRUE
+  ) 
+
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure)%>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter",
+    TRUE ~ "All households"
+  ))
+
+r1_b25119_data <- r1_b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, tenure, estimate, moe)  %>%
+  separate(NAME, into = c("tract", "county", "state"), sep = ",")
+
+r1_tract_names <- c("Census Tract 1003", "Census Tract 1004.04",
+                    "Census Tract 1004.05", "Census Tract 1004.06",
+                    "Census Tract 1004.07", "Census Tract 1004.09")
+
+r1_medinc <- r1_b25119_data %>%
+  filter(tract %in% r1_tract_names) %>% 
+  filter(tenure == "Renter")
+
+
+
 
 ```
 -   Single-family rental prices from MLS records

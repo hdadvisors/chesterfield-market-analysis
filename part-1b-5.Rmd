@@ -336,9 +336,9 @@ Census estimates also show that most renters across the study area live in house
 
 ```{r r1-renter-income, fig.cap="Median renter income by tract in the study area"}
 
-years <- 2010:2019
+years <- 2010:2020
 
-b25119_vars <- load_variables(2010, "acs5") %>%
+b25119_vars <- load_variables(2020, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25119")
 
 r1_b25119_raw <- map_dfr(years, function(yr){
@@ -355,12 +355,12 @@ r1_b25119_raw <- map_dfr(years, function(yr){
   })
 
 b25119_vars_cleaned <- b25119_vars %>%
-  separate(label, into = c("est", "income", "tenure"), sep = "!!") %>% 
-  select(variable = name, tenure) %>%
+  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure)%>%
   mutate(tenure = case_when(
-    tenure == "Total" ~ "All households",
     tenure == "Owner occupied (dollars)" ~ "Homeowner",
-    tenure == "Renter occupied (dollars)" ~ "Renter"
+    tenure == "Renter occupied (dollars)" ~ "Renter",
+    TRUE ~ "All households"
   ))
 
 r1_b25119_data <- r1_b25119_raw %>%
@@ -391,10 +391,10 @@ r1_tract_names <- c("Census Tract 1003", "Census Tract 1004.04",
 
 r1_b25119_cpi <- r1_b25119_data %>%
   left_join(cpi, by = 'year') %>%
-  transform(dollars19 = ((376.5/priceindex)*estimate)) %>%
-  select(year, NAME, tenure, dollars19, moe, reliability) %>%
+  transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
+  select(year, NAME, tenure, dollars20, moe, reliability) %>%
   separate(NAME, into = c("tract", "county", "state"), sep = ",") %>%
-  select(year, tract, tenure, dollars19, moe, reliability)
+  select(year, tract, tenure, dollars20, moe, reliability)
 
 r1_medinc <- r1_b25119_cpi %>%
   filter(tract %in% r1_tract_names) %>% 
@@ -403,13 +403,13 @@ r1_medinc <- r1_b25119_cpi %>%
 gg_line_col(
   r1_medinc,
   x_var = year,
-  y_var = dollars19,
+  y_var = dollars20,
   col_var = tract,
   alpha_point = 0,
   size_line = 0.75,
   title = "Median renter income by tract in the study area",
   y_labels = label_dollar(),
-  y_title = "Median household income (2019 dollars)",
+  y_title = "Median household income (2020 dollars)",
   x_title = element_blank(),
   y_zero = TRUE,
   x_labels = label_number(accuracy = 1, big.mark = "")
