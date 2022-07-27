@@ -912,7 +912,7 @@ mean(r1_convenience_map$miles_to_convenience)
 
 Healthcare access is an important factor in improving not only individual health, but community health. Acute care general hospitals are open 24 hours a day, 365 days a year and provide patients with wellness services as well as emergency medical episodes that require intensive care. Urgent care facilities provide walk-in clinic services for minor illnesses and injuries outside a hospital setting. Access to both of these levels of care provide communities with a spectrum of care.
 
-Along the corridor, the closest acute care hospital is Hunter Holmes McGuire Hospital, while the Concentra Urgent Care located in the Bellwood area is the closest urgent care facility. The average drive-time for a resident in a multifamily property along the corridor to an acute care hospital is 13.5 minutes, while their average drive-time to an urgent care is 7.5 minutes. Nationally, the average travel time for residents in a suburban setting is 12 minutes, slightly below that of the multifamily residents along the corridor.^[https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/] 
+Along the corridor, the closest acute care hospital is Hunter Holmes McGuire Veterans Hospital, while the Concentra Urgent Care located in the Bellwood area is the closest urgent care facility. The average drive-time for a resident in a multifamily property along the corridor to an acute care hospital is 13.5 minutes, while their average drive-time to an urgent care is 7.5 minutes. Nationally, the average travel time for residents in a suburban setting to a hospital is 12 minutes, slightly below that of the multifamily residents along the corridor.^[https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/] 
 
 ```{r medical}
 # Hospital / urgent care
@@ -1032,12 +1032,12 @@ r1 <- read_csv("data/costar_r1_mf.csv") %>%
     TRUE ~ property_name
   ))
   
+# Removed time because depart at not allowed anymore?
 
 costar_isos <- mb_isochrone(
   location = r1,
   profile = "driving",
   time = 15,
-  depart_at = "2022-07-18T08:00",
   id_column = "property_id"
 )
 
@@ -1112,24 +1112,42 @@ In the last year, the median home sales price for a home along the corridor was 
 
 With homeownership being out of reach for many in the area, the next best option is often renting a single-family home. Low supply of homes for sale is often being exacerbated by owners or investors converting potential starter home opportunities into rental properties. Although this is meeting a demand in the rental market, the opportunity to reach the first rung of the homeownership ladder is so often pushed further away when the cost to rent a home is only a few hundred dollars away from being able to afford a monthly mortgage.
 
+```{r r1-renter-income}
 
-```{r sfr-mls-bar}
+b25119_vars <- load_variables(2020, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
 
-x <- c("Census Tract 1003", "Census Tract 1004.04", "Census Tract 1004.05", "Census Tract 1004.06", "Census Tract 1004.07", "Census Tract 1004.09", "SFR", "Home Purchase")
-y <- c(35906, 32014, 39477, 25861, 64896, 63783, 53475, 73183)
-z <- c("Renter income", "Renter income","Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
+r1_b25119_raw <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = 2020,
+    survey = "acs5",
+    cache_table = TRUE
+  ) 
 
-sfr_mls_bar <- data.frame(x, y, z)
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure)%>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter",
+    TRUE ~ "All households"
+  ))
 
-ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  labs(title = "Renter income and income needed to afford SFR or homeownership",
-       x = NULL, y = NULL) +
-  scale_y_continuous(labels = scales::dollar_format()) +
-  scale_fill_discrete(name = "Legend") +
-  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
+r1_b25119_data <- r1_b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, tenure, estimate, moe)  %>%
+  separate(NAME, into = c("tract", "county", "state"), sep = ",")
 
+r1_tract_names <- c("Census Tract 1003", "Census Tract 1004.04",
+                    "Census Tract 1004.05", "Census Tract 1004.06",
+                    "Census Tract 1004.07", "Census Tract 1004.09")
+
+r1_medinc <- r1_b25119_data %>%
+  filter(tract %in% r1_tract_names) %>% 
+  filter(tenure == "Renter")
 
 ```
 
@@ -1144,57 +1162,6 @@ r1_sales_med <- r1_sales |>
          year = floor_date(sales_date, "year"),
          sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
   summarise(median = median(sales_price))
-
-```
-
-
-```{r r1-sales-tract, fig.cap="Median single-family home sales price by Census tract", cache=TRUE}
-
-# Sys.getenv('GEOCODIO_API_KEY')
-# 
-# r1_geocode <- r1_sales %>%
-#   mutate(city = "Richmond",
-#          state = "VA") %>%
-#   mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
-#   geocode(address = fulladdress,
-#           method = 'geocodio',
-#           lat = latitude,
-#           long = longitude)
-# 
-# write_rds(r1_geocode, "r1_geocode.rds")
-
-r1_geocode <- read_rds("r1_geocode.rds")
-
-r1_sf <- r1_geocode %>%
-  st_as_sf(coords = c("longitude", "latitude"),
-           crs = 4326)
-
-r1_sales_tract <- st_join(
-  r1_tracts,
-  r1_sf) %>%
-  mutate(salesdate = mdy(salesdate),
-         year = floor_date(salesdate, "year"),
-         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>%
-  group_by(year, NAME) %>%
-  summarise(median = median(salesprice))
-  
-gg_line_col_facet(r1_sales_tract,
-                  x_var = year,
-                  y_var = median,
-                  col_var = NAME,
-                  facet_var = NAME,
-                  alpha_point = 0,
-                  size_line = 0.75,
-                  col_legend_none = TRUE,
-                  y_labels = label_dollar(),
-                  title = "Median single-family home sales price by Census tract",
-                  y_title = "Median sales price",
-                  x_title = element_blank(),
-                  x_labels = scales::date_format(format = "%Y")) +
-  ggplot2::scale_x_date(limits = c(as.Date("2012-01-01"), as.Date("2022-01-01")),
-                        breaks = "2 years",
-                        date_labels = "%Y") +
-  ggplot2::theme(axis.text.x = element_text(angle = 90))
 
 ```
 
@@ -1240,6 +1207,7 @@ data.frame(x = r1_labels, y = r1_values) %>%
 
 ```
 
+
 ```{r r1-sfr-price}
 
 # $1336.87 is the average price for SFR in the last year.
@@ -1247,51 +1215,77 @@ data.frame(x = r1_labels, y = r1_values) %>%
 avg_sfr_price <- 1336.87
 sfr_income <- ((avg_sfr_price*10)/3)*12
 
+```
+
+```{r sfr-mls-bar}
+
+x <- c("Census Tract 1003", "Census Tract 1004.04", "Census Tract 1004.05", "Census Tract 1004.06", "Census Tract 1004.07", "Census Tract 1004.09", "SFR", "Home Purchase")
+y <- c(35906, 32014, 39477, 25861, 64896, 63783, 53475, 73183)
+z <- c("Renter income", "Renter income","Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
+
+sfr_mls_bar <- data.frame(x, y, z)
+
+ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(title = "Renter income and income needed to afford SFR or homeownership",
+       x = NULL, y = NULL) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  scale_fill_discrete(name = "Legend") +
+  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
+
 
 ```
 
-```{r r1-renter-income}
-
-b25119_vars <- load_variables(2020, "acs5") %>%
-  filter(str_sub(name, end = 6) %in% "B25119")
-
-r1_b25119_raw <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25119",
-    year = 2020,
-    survey = "acs5",
-    cache_table = TRUE
-  ) 
-
-b25119_vars_cleaned <- b25119_vars %>%
-  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
-  select(variable = name, tenure)%>%
-  mutate(tenure = case_when(
-    tenure == "Owner occupied (dollars)" ~ "Homeowner",
-    tenure == "Renter occupied (dollars)" ~ "Renter",
-    TRUE ~ "All households"
-  ))
-
-r1_b25119_data <- r1_b25119_raw %>%
-  right_join(b25119_vars_cleaned, by = "variable") %>%
-  select(NAME, tenure, estimate, moe)  %>%
-  separate(NAME, into = c("tract", "county", "state"), sep = ",")
-
-r1_tract_names <- c("Census Tract 1003", "Census Tract 1004.04",
-                    "Census Tract 1004.05", "Census Tract 1004.06",
-                    "Census Tract 1004.07", "Census Tract 1004.09")
-
-r1_medinc <- r1_b25119_data %>%
-  filter(tract %in% r1_tract_names) %>% 
-  filter(tenure == "Renter")
 
 
 
+```{r r1-sales-tract, fig.cap="Median single-family home sales price by Census tract", cache=TRUE}
 
+# Sys.getenv('GEOCODIO_API_KEY')
+# 
+# r1_geocode <- r1_sales %>%
+#   mutate(city = "Richmond",
+#          state = "VA") %>%
+#   mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
+#   geocode(address = fulladdress,
+#           method = 'geocodio',
+#           lat = latitude,
+#           long = longitude)
+# 
+# write_rds(r1_geocode, "r1_geocode.rds")
+
+# r1_geocode <- read_rds("r1_geocode.rds")
+# 
+# r1_sf <- r1_geocode %>%
+#   st_as_sf(coords = c("longitude", "latitude"),
+#            crs = 4326)
+# 
+# r1_sales_tract <- st_join(
+#   r1_tracts,
+#   r1_sf) %>%
+#   mutate(salesdate = mdy(salesdate),
+#          year = floor_date(salesdate, "year"),
+#          salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>%
+#   group_by(year, NAME) %>%
+#   summarise(median = median(salesprice))
+#   
+# gg_line_col_facet(r1_sales_tract,
+#                   x_var = year,
+#                   y_var = median,
+#                   col_var = NAME,
+#                   facet_var = NAME,
+#                   alpha_point = 0,
+#                   size_line = 0.75,
+#                   col_legend_none = TRUE,
+#                   y_labels = label_dollar(),
+#                   title = "Median single-family home sales price by Census tract",
+#                   y_title = "Median sales price",
+#                   x_title = element_blank(),
+#                   x_labels = scales::date_format(format = "%Y")) +
+#   ggplot2::scale_x_date(limits = c(as.Date("2012-01-01"), as.Date("2022-01-01")),
+#                         breaks = "2 years",
+#                         date_labels = "%Y") +
+#   ggplot2::theme(axis.text.x = element_text(angle = 90))
+# 
 ```
--   Single-family rental prices from MLS records
--   Median home sales price from past 365 days
--   Calculate income needed to afford SFR and homeownership
--   Use same methodology from Part 1b-4 for homeownership affordability

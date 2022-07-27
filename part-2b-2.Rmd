@@ -25,6 +25,7 @@ library(mapboxapi)
 library(rgdal)
 library(optiRum)
 library(ggrepel)
+library(lehdr)
 
 ```
 
@@ -44,7 +45,7 @@ Opportunities exist for multifamily development along the Hull Street corridor, 
 
 ```{r hsr-base-map, fig.cap="Eastern Hull Street Road corridor", message=FALSE}
 
-hsr_tracts_list <- c("100205", "100206", "100208", "100209", "100210", "100211")
+hsr_tracts_list <- c("100206", "100208", "100209", "100210", "100211")
 
 hsr_tracts <- tracts("VA", "Chesterfield",
                     progress_bar = FALSE) |>  
@@ -130,11 +131,12 @@ plotly::ggplotly(hsr_renters_plot) %>%
 
   
 ```
-Based on a survey of CoStar listed multifamily properties in the Hull Street corridor study area, there are only 1,198 apartments --- accounting for only half of renter households in the area. This begs the question as to where many renter households find housing when there are so few options in a typical apartment setting. A large share of these apartments are oriented towards the Midlothian Turnpike corridor at the recently developed Element at Stonebridge apartments --- 400 mid-rise apartments built in 2016.
-
+Based on a survey of CoStar listed multifamily properties in the Hull Street corridor study area, there are only 1,198 apartments --- accounting for only half of renter households (53 percent) in the area. The low number of apartments along the corridor begs the question as to where many renter households find housing when there are so few options in a typical apartment setting. A large share of these apartments are oriented towards the Midlothian Turnpike corridor at the recently developed Element at Stonebridge apartments --- 400 mid-rise apartments built in 2016.
 ```{r costar-hsr-1, fig.cap= "Total number of multifamily units by property status"}
 
-# Load .csv of CoStar properties. Data was collected by hand drawing boundaries for the necessary census tracts in the CoStar platform. No filters were placed on the search aside from multi-family property. Need to filter out Sandler - it's a single condo.
+# Load .csv of CoStar properties. Data was collected by hand drawing boundaries for the necessary census tracts in the CoStar platform. No filters were placed on the search aside from multi-family property. Need to filter out Sandler - it's a single condo. 
+
+# Going to add in Wayside Townhouse Apartments in manually - but will not have accurate unit count - have asked CoStar to add this to their database.
 
 
 costar_hsr_mf <- read_csv("data/costar_hsr_mf.csv") |> 
@@ -146,7 +148,8 @@ costar_hsr_mf <- read_csv("data/costar_hsr_mf.csv") |>
     property_address == "6300 Pewter Ave" ~ "Hull Street",
     property_address == "6925 Starview Ct" ~ "Midlothian",
     property_address == "7660 Van Hoy Dr" ~ "Hull Street",
-    property_address == "3101 Danzler Cir" ~ "Hull Street"
+    property_address == "3101 Danzler Cir" ~ "Hull Street",
+    property_address == "2635 Wayside Dr" ~ "Hull Street"
   )) |> 
   mutate(property_name = case_when(
     property_address == "3101 Danzler Cir" ~ "Danzler Place Townhomes",
@@ -471,7 +474,7 @@ gg_sf_col(b25036_hsr_1980,
 
 Multifamily property construction has been rare in the corridor for much of the last half century. Only one development was completed in the 2000s --- Element at Stonebridge. This development was the result of the Cloverleaf Mall redevelopment and is oriented towards Midlothian Turnpike, rather than the Eastern Hull Street corridor. 
 
-More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978. Only one property (Element at Stonebridge) is rated at four stars, while all other properties are three stars or less. Although largely functional, these lower-tiered properties can expect to need renovations in the coming years.
+More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978. The only multifamily property located directly off of the Eastern Hull Street corridor is the Wayside Townhouse Apartmentsm which were built in 1967 --- the earliest multifamily development in the area. Only one property (Element at Stonebridge) is rated at four stars, while all other properties are three stars or less. Although largely functional, these lower-tiered properties can expect to need renovations in the coming years.
 
 ```{r costar-hsr-3}
 
@@ -491,8 +494,9 @@ costar_hsr_yrblt |>
 
 ```
 
-
 ## Proximity to amenities
+
+Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs. 
 
 ### Public transportation
 
@@ -502,7 +506,7 @@ To date, extension of GRTC down Hull Street through the county has only been exp
 
 For the four multifamily properties located closest to the Hull Street corridor, no properties are within a half mile walking distance to public transit. For individuals without a car, accessing public transit means walking an average of two miles to the Chippenham Mall stop of Route 1C. It also means walking down a portion of Hull Street that is a six-lane highway interchange that has no sidewalks.
 
-```{r r1-stops}
+```{r hsr-stops}
 
 costar_hsr_map <- costar_hsr_mf |>
   st_as_sf(coords = c("longitude", "latitude"),
@@ -534,7 +538,7 @@ nearest_stops <- st_nn(hsr_prj, stops, k = 20)
 ```
 
 
-```{r r1-mf-stops}
+```{r hsr-mf-stops}
 
 costar_stop_walking <- imap(nearest_stops, ~{
   
@@ -572,12 +576,9 @@ Nearby, but more oriented towards the Midlothian Turnpike are:
 - A.M. Davis Elementary School; and
 - Providence Middle School
 
-All four properties closest to the Eastern Hull Street corridor are within an ideal distance to a Chesterfield County Public School --- less than a five minute drive. This provides many families with a convenient drive to take their children to school. Properties north of Hull Street are zoned for either Davis Elementary or Providence Middle School --- but no multifamily properties exist on the northside of Hull Street.
+All five properties closest to the Eastern Hull Street corridor are within an ideal distance to a Chesterfield County Public School --- less than a five minute drive. This provides many families with a convenient drive to take their children to school. The average drive-time distance to a public school for these properties is 3.6 minutes. Properties north of Hull Street would be zoned for either Davis Elementary or Providence Middle School --- but no multifamily properties exist on the northside of Hull Street.
 
-Those properties that would be zoned for these schools would be more appropriately identified as being part of the Midlothian Turnpike corridor. 
-
-
-```{r r1-school-map}
+```{r hsr-school-map}
 
 schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
   st_transform(va_crs)
@@ -618,7 +619,7 @@ hsr_schools_map <- hsr_trans_map |>
 
 Several ethnic food stores exist at the 360 West Shopping Center at the northwest corner of Turner Road and Hull Street. But full service grocery stores like Food Lion and Kroger are located further west, outside of the study area. Although only a short drive down the road, multifamily properties in the study area are much closer to a convenience store or small market, rather than a full service grocery store.
 
-The average distance to a convenience or small market is about half a mile, while the average distance to a full service grocery store is 1.45 miles. This distance is negligible for those with a personal vehicle, but for those without a car or unable to drive due to an impairment (e.g. physical or mental disability), traveling to the nearest Food Lion or Kroger can be quite difficult. Those having to walk face a near mile and a half walk along a highway with no sidewalks and vehicles going over 55 mph. 
+The average distance to a convenience or small market is about half a mile (0.46 miles), while the average distance to a full service grocery store is 1.51 miles. This distance is negligible for those with a personal vehicle, but for those without a car or unable to drive due to an impairment (e.g. physical or mental disability), traveling to the nearest Food Lion or Kroger can be quite difficult. Those having to walk face a near mile and a half walk along a highway with no sidewalks and vehicles going over 55 mph. 
 
 
 ```{r hsr-grocery}
@@ -702,7 +703,9 @@ mean(hsr_convenience_map$miles_to_convenience)
 
 ### Healthcare
 
-Comparatively, multifamily properties along the Eastern Hull Street corridor are closer to 
+Comparatively, multifamily properties along the Eastern Hull Street corridor are closer to acute general hospitals (an average of 8.6 minutes driving distance away) than properties along the Route 1 corridor (13.5 minutes). Two acute general care hospitals are within close proximity to multifamily properties. This includes Hunter Holmes McGuire Veterans Hospital down Hull Street towards the city, as well as Chippenham Hospital, which is easily accessed by the Chippenham Parkway interchange at the city-county border. Urgent care access is similar to hospital access --- as the average drive-time distance is only 8 minutes. 
+
+Two Patient First urgent cares are located within close proximity to Eastern Hull Street corridor properties. One is located further west down Hull Street at the Genito Crossing Shopping Center, while the other is located on Midlothian Turnpike. The close proximity of these healthcare resources to existing, as well as potential, multifamily properties along the Eastern Hull Street corridor provides a significant benefit to households experiencing a health crisis or who are in need of on-going care. Both travel times are significantly below the national travel time to a hospital in a suburban setting (12 minutes).^[https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/] 
 
 ```{r medical}
 # Hospital / urgent care
@@ -773,11 +776,12 @@ mean(hsr_urgent_map$minutes_to_urgent)
 
 
 ```
-Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
-
-- Within or outside of 15 minute drive time
 
 ### Job centers
+
+There are very few commercial retail centers located along the Eastern Hull Street corridor. Furthermore, multifamily properties --- located off of Walmsley Boulevard, a secondary road --- are not adjacent to any major commercial uses. This means that many residents must walk quite a distance or more likely drive to work. There is little nuance in regards to property location to jobs as all properties are located within a mile of each other. 
+
+Of the jobs within a 15 minute drive of properties in the area, nearly half (49 percent) of those jobs pay more than \$3,333. The large share of jobs paying such high wages can be attributed to the proximity of the Chippenham Parkway interchange, which allows commuters to take Chippenham to the Powhite Parkway and into Downtown Richmond. 
 
 ```{r r1-jobs}
 
@@ -801,29 +805,30 @@ va_jobs_sf <- va_blocks %>%
   select(w_geocode = GEOID10) %>%
   inner_join(va_jobs, by = "w_geocode")
 
-r1 <- read_csv("data/costar_r1_mf.csv") %>%
+hsr <- read_csv("data/costar_hsr_mf.csv") %>%
   st_as_sf(coords = c("Longitude", "Latitude"), 
            crs = 4326) %>%
   mutate(property_id = 1:nrow(.)) |> 
   clean_names() |> 
-  filter(property_address != "8219 Jefferson Davis Hwy") |> 
-  filter(property_address != "9608 Jefferson Davis Hwy") |> 
-  filter(property_address != "2537 Norcliff Rd") |> 
-  filter(property_address != "12329-12331 Jefferson Davis Hwy") |> 
-  filter(property_address != "9701 Jefferson Davis Hwy")  |> 
+  mutate(corridor = case_when(
+    property_address == "301 Karl Linn Dr" ~ "Midlothian",
+    property_address == "3005 Lancers Blvd" ~ "Hull Street",
+    property_address == "6300 Pewter Ave" ~ "Hull Street",
+    property_address == "6925 Starview Ct" ~ "Midlothian",
+    property_address == "7660 Van Hoy Dr" ~ "Hull Street",
+    property_address == "3101 Danzler Cir" ~ "Hull Street",
+    property_address == "2635 Wayside Dr" ~ "Hull Street"
+  )) |> 
   mutate(property_name = case_when(
-    property_address == "3145 Parkdale Rd" ~ "Parkdale Maisonettes", 
-    property_address == "11240 Jefferson Davis Hwy" ~ "Chester Maisonettes",
-    property_address == "5400 Remuda Dr" ~ "Remuda Crossing",
+    property_address == "3101 Danzler Cir" ~ "Danzler Place Townhomes",
     TRUE ~ property_name
-  ))
-  
+  )) |> 
+  filter(corridor == "Hull Street")
 
 costar_isos <- mb_isochrone(
-  location = r1,
+  location = hsr,
   profile = "driving",
   time = 15,
-  depart_at = "2022-07-18T08:00",
   id_column = "property_id"
 )
 
@@ -841,16 +846,16 @@ reachable_jobs <- st_join(
             hs_jobs = sum(hs_jobs, na.rm = TRUE),
             ba_jobs = sum(ba_jobs, na.rm = TRUE))
 
-r1_jobs <- r1 |> 
+hsr_jobs <- hsr |> 
   mutate(id = property_id)|> 
   left_join(reachable_jobs, by = "id")
 
-r1_jobs_list <- r1_jobs |> 
+hsr_jobs_list <- hsr_jobs |> 
   select(property_name, property_address, total_jobs, hi_jobs, mid_jobs, lo_jobs, ba_jobs, hs_jobs) |> 
   transform(hi_percent = hi_jobs/total_jobs) |> 
   transform(lo_percent = lo_jobs/total_jobs)
 
-leaflet(r1_jobs_list) |>
+leaflet(hsr_jobs_list) |>
   addTiles() |>
   addCircleMarkers(
     radius = ~hi_percent*20,
@@ -858,23 +863,17 @@ leaflet(r1_jobs_list) |>
     stroke = FALSE, fillOpacity = 0.5
    )
 
-mean(r1_jobs_list$hi_percent)
+mean(hsr_jobs_list$hi_percent)
 ```
 
 
 ## Public and private investments
 
-The development patterns of the Eastern Hull Street corridor have largely been 
+The development patterns of the Eastern Hull Street corridor have largely been similar to that of the Route 1 corridor --- car-centric suburban development. However, the county portion of the Hull Street corridor does not have the storied interstate travel history of the Route 1 corridor. As such revitalization along the Eastern Hull Street corridor has not been a major priority.
 
-- Check CoStar for newest builds/renovations/transactions (commercial properties, too)
-- Ask Jessica for what county has had a hand in
+Nonetheless, the county has continued to invest in this part of the county as its population has grown. In the summer of 2020, the County completed construction on a brand new middle school facility --- Manchester Middle School. This replacement of the former 1964 building for $41 million now serves up to 1,100 students.
 
-This is recent but just to the west of the corridor area:
-https://richmondbizsense.com/2022/06/02/chesterfield-oks-plan-to-redevelop-rockwood-square-shopping-center/
-
-New Manchester Middle School - primary investment in the area in recent years - county investment in school - family growth - https://www.nbc12.com/2020/08/25/chesterfield-holds-virtual-ribbon-cutting-new-school/
-
-New townhome development near Elkhardt?
+Further down the corridor and outside the study area, the County is also encouraging the redevelopment of older retail shopping centers and strip malls like Rockwood Square Shopping Center. The County recently approved plans to develop Rockwood Square into 332 condominiums and townhomes.^[https://richmondbizsense.com/2022/06/02/chesterfield-oks-plan-to-redevelop-rockwood-square-shopping-center/]
 
 ### Case study
 
@@ -887,7 +886,138 @@ New townhome development near Elkhardt?
 
 ## Single-family rental versus purchase
 
-- Single-family rental prices from MLS records
-- Median home sales price from past 365 days
-- Calculate income needed to afford SFR and homeownership
-- Use same methodology from Part 1b-4 for homeownership affordability
+The typical renter in the study area requires an income of \$81,197 to afford the median home sales price of \$299,000 --- the median home sales price for homes sold in the last year. But median renter household incomes in the area top out at \$64,952, which are just over \$16,000 less than what is needed to purchase a home. With homeownership out of reach for many renter households in the area, SFRs are often the next best option.
+
+However, the typical listed rent for a SFR is \$1,497 --- only a few hundred dollars less than the monthly mortgage payment for a near \$300,000 home (\$1,895). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000. With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
+
+```{r r1-renter-income}
+
+# MOE for 100206 and 100209 are pretty high.
+
+b25119_vars <- load_variables(2020, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
+
+hsr_b25119_raw <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = 2020,
+    survey = "acs5",
+    cache_table = TRUE
+  ) 
+
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure)%>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter",
+    TRUE ~ "All households"
+  ))
+
+hsr_b25119_data <- hsr_b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, tenure, estimate, moe)  %>%
+  separate(NAME, into = c("tract", "county", "state"), sep = ",")
+
+hsr_tract_names <- c("Census Tract 1002.06",
+                    "Census Tract 1002.08", "Census Tract 1002.09",
+                    "Census Tract 1002.10", "Census Tract 1002.11")
+
+hsr_medinc <- hsr_b25119_data %>%
+  filter(tract %in% hsr_tract_names) %>% 
+  filter(tenure == "Renter")
+
+```
+
+```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
+
+hsr_sales <- read_csv("data/mls_hsr_sales_72622.csv")
+
+hsr_sales_med <- r1_sales |> 
+  clean_names() |> 
+  select(sales_price, sales_date) %>% 
+  mutate(sales_date = mdy(sales_date),
+         year = floor_date(sales_date, "year"),
+         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
+  summarise(median = median(sales_price))
+
+# Median is $299,000
+
+```
+```{r r1-home-price}
+
+hsr_msp <- 299000
+downpayment <- 0.05 # 5% downpayment
+hsr_principal <- r1_msp - (r1_msp * downpayment)
+closingcosts <- 0.015 # 1.5% closing costs
+hsr_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
+intrate <- 0.0554 # Current interest rate from Freddie Mac -- 7/26/22 rate is 5.54%
+utilities <- 250 # Assume $250/month for utilities
+
+hsr_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
+
+hsr_inc_needed <- ((r1_payment*10)/2.8)*12
+
+hsr_labels <- c("Median sales price",
+            "Downpayment",
+            "Closing costs",
+            "Loan amount",
+            "Interest rate",
+            "Monthly utilities",
+            "Monthly payment",
+            "Income needed to buy home")
+
+hsr_values <- c("$299,000",
+            "5.0%",
+            "1.5%",
+            "$288,376",
+            "5.54%",
+            "$250",
+            "$1,894.61",
+            "$81,197")
+
+data.frame(x = hsr_labels, y = hsr_values) %>% 
+  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(8, bold=TRUE)
+
+```
+
+```{r r1-sfr-price}
+
+# $1336.87 is the average price for SFR in the last year.
+
+hsr_sfr_price <- 1479
+hsr_sfr_income <- ((avg_sfr_price*10)/3)*12
+
+
+```
+
+```{r sfr-mls-bar}
+
+x <- c("Census Tract 1002.06",
+       "Census Tract 1002.09",
+       "Census Tract 1002.10", "Census Tract 1002.11",
+       "SFR", "Home Purchase")
+y <- c(54615, 44732, 64952, 33618, 59160, 81197)
+z <- c( "Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
+
+sfr_mls_bar <- data.frame(x, y, z)
+
+ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(title = "Renter income and income needed to afford SFR or homeownership",
+       x = NULL, y = NULL) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  scale_fill_discrete(name = "Legend") +
+  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
+
+
+```
+
