@@ -724,8 +724,7 @@ proposed <- gg_bar(
   y_var = n,
   x_title = "",
   y_title = "",
-  title = "Upcoming rental units in Chesterfield County by delivery year"
-)
+  title = "Upcoming rental units in Chesterfield County by delivery year")
 
 proposed
 
