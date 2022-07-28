@@ -25,7 +25,6 @@ From Q2 2020 to Q2 2022, average rent for recent properties has changed 3% --- f
 
 While average rents for recent properties has remained steady, existing property rents have risen dramatically. The COVID-19 pandemic has significantly impacted demand among the existing stock of rental housing in the county --- leading to complementary increases in rental prices. 
 
-
 ```{r price}
 
 # CoStar Recent Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Min Year Built: 2017
@@ -33,7 +32,8 @@ While average rents for recent properties has remained steady, existing property
 # Load in costar_rent_recent.csv; Average rents for all units and by bedrooms
 
 recent_price <- read_csv("data/costar_rent_recent.csv") |> 
-  mutate(market = "recent")
+  mutate(market = "recent") |> 
+  mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1))
 
 # CoStar Past Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Max Year Built: 2016
 
@@ -42,7 +42,8 @@ recent_price <- read_csv("data/costar_rent_recent.csv") |>
 # Load in costar_rent_past.csv; Average rents for all units and by bedrooms
 
 past_price <- read_csv("data/costar_rent_past.csv") |> 
-  mutate(market = "existing")
+  mutate(market = "existing") |> 
+  mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1))
 
 # Both files cover 2017 Q1 -> 2022 Q2
 
@@ -50,50 +51,79 @@ past_price <- read_csv("data/costar_rent_past.csv") |>
 
 price_comp <- rbind(recent_price, past_price)
 
+```
+
+```{r price-all}
+
 avg_rent_all <- price_comp |> 
   filter(bedrooms == "All") |> 
   mutate(rent_adj = parse_number(rent_adj),
-         rent = parse_number(rent),
-         period = as.yearqtr(period))
-
-avg_rent_br <- price_comp |> 
-  filter(bedrooms != "Studio") |> 
-  filter(bedrooms != "All") |> 
-  mutate(rent_adj = parse_number(rent_adj),
-         rent = parse_number(rent),
-         period = as.yearqtr(period))
+         rent = parse_number(rent))
 
 total_avg_rent <- gg_line_col(
   avg_rent_all,
   x_var = period,
   y_var = rent_adj,
-  col_var = market)
+  col_var = market,
+  alpha_point = 0,
+  size_line = 0.75,
+  x_title = "",
+  y_title = "",
+  col_title = "",
+  y_labels = scales::label_dollar(),
+  x_labels = scales::label_date(format = "%Y")) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+  legend.position = "top",
+  legend.direction = "horizontal",
+  legend.justification = "center")
+
+total_avg_rent
+
+```
+
+*Source: CoStar Group, Inc.*
+
+Price difference between recent and existing properties by number of bedrooms follows similar trends. But average rents for recent three-bedroom rentals experienced a significant increase in the middle of 2021 --- going from \$2,152 in Q2 2021 to \$2,337 in Q4 2021. In 2022, these rents began to decline somewhat, but still remained above \$2,000.
+
+```{r price-br}
+
+avg_rent_br <- price_comp |> 
+  filter(bedrooms != "Studio") |> 
+  filter(bedrooms != "All") |> 
+  mutate(rent_adj = parse_number(rent_adj),
+         rent = parse_number(rent))
 
 br_avg_rent <- gg_line_col_facet(
   avg_rent_br,
   x_var = period,
   y_var = rent_adj,
   col_var = market,
-  facet_var = bedrooms)
+  facet_var = bedrooms,
+  alpha_point = 0,
+  size_line = 0.75,
+  x_title = "",
+  y_title = "",
+  col_title = "",
+  y_labels = scales::label_dollar(),
+  x_labels = scales::label_date(format = "%Y")) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+  legend.position = "top",
+  legend.direction = "horizontal",
+  legend.justification = "center")
 
-plotly::ggplotly(total_avg_rent) |> 
-  plotly_camera()
+br_avg_rent
 
 ```
-*Source: CoStar Group, Inc.*
 
-Price difference between recent and existing properties by number of bedrooms follows similar trends. But average rents for recent three-bedroom rentals experienced a significant increase in the middle of 2021 --- going from \$2,152 in Q2 2021 to \$2,337 in Q4 2021. In 2022, these rents began to decline somewhat, but still remained above \$2,000.
+*Source: CoStar Group, Inc.*
 
 In all cases, the percent change in average rents for existing rental properties was three times that of recent properties no matter the bedroom count. One- and two-bedroom existing rentals had a near 20 percent increase in average rents from 2017 to 2022, while three-bedroom average rents increased by 16 percent. Average rents for recent rental properties only had an increase of 5 to 7 percent. The difference in rents between recent and existing properties as of Q2 2022 ranges from \$204 for one-bedrooms to \$552 for three-bedrooms.
-```{r br-rent}
-
-plotly::ggplotly(br_avg_rent) |> 
-  plotly_camera()
-
-```
-*Source: CoStar Group, Inc.*
 
 ## Unit mix
+
+### Building style
 
 Consumer preferences can change over time and those preference changes can impact market demand and prices. Multifamily building styles built in the late 20th century were largely in the garden-style apartments. The garden-style emphasizes lower densities and clustered development. Residents typically have ground floor access with no neighbors above. 
 
@@ -101,13 +131,13 @@ Existing rental properties are majority garden-style (85 percent). But the compo
 
 The shift towards these types of developments provides developers with greater economies of scale. More density makes it more financially possible to finance and develop properties. Without the density that comes through low- and mid-rise buildings, developers have to rely heavily on higher rents or substantial subsidies to make development possible.
 
-``` {r unit-mix}
+``` {r unit-mix, fig.cap="Share of units by type for existing and recent properties"}
 
 # Need list of existing, proposed, or under construction properties with... 
 
-#CoStar Filters: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise
+# CoStar Filters: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise
 
-#Updated 7420 Ashlake Pky with Name; Updated Maisonettes Apartments with 1966 Year Built; Updated Kenswick Apartments with 1984 Year Built; Updated 3101 Danzler Cir with Name
+# Updated 7420 Ashlake Pky with Name; Updated Maisonettes Apartments with 1966 Year Built; Updated Kenswick Apartments with 1984 Year Built; Updated 3101 Danzler Cir with Name
 
 # - Number of units
 # - Style (mid-rise, garden, etc)
@@ -117,7 +147,8 @@ The shift towards these types of developments provides developers with greater e
 unit_mix <- read_csv("data/costar_unit_mix.csv") |> 
   clean_names()
 
-#Remove single-family homes incorrectly categorized as Low-Rise; select variables needed
+# Remove single-family homes incorrectly categorized as Low-Rise; select variables needed
+
 unit_mix_clean <- unit_mix  |> 
   filter(property_address != "3201 Lady Marian Ln") |> 
   filter(property_address != "7626 Sandler Dr") |> 
@@ -131,37 +162,44 @@ unit_mix_clean <- unit_mix_clean |>
     year_built >= 2017 ~ "Recent",
     name == "Ashlake Crossing" ~ "Recent"))
 
-# BY STYLE
+# By style
 
 style_mix <- unit_mix_clean |> 
-  group_by(market) |> 
-  count(style)
-  
-style_mix <- transform(style_mix,
-                       percent = ave(n,
-                                     market,
-                                     FUN = prop.table))
+  group_by(market, style) |> 
+  summarise(units = sum(units)) |> 
+  mutate(pct = units/sum(units))
 
 # Percent of total properties by style.
 
-style_mix_bar <- gg_bar_col(style_mix,
-                            x_var = market,
-                            y_var = percent,
-                            col_var = style,
-                            stack = TRUE)
+style_mix_bar <- gg_bar_col_facet(
+  style_mix,
+  x_var = style,
+  y_var = pct,
+  col_var = market,
+  facet_var = market,
+  x_labels = function(x) x,
+  y_labels = scales::label_percent(),
+  y_title = "",
+  x_title = "",
+  col_legend_none = TRUE
+)
 
-plotly::ggplotly(style_mix_bar) |> 
-  plotly_camera()
+style_mix_bar
 
 ```
+
 *Source: CoStar Group, Inc.*
+
+### Bedrooms
 
 Existing rental development mainly consists of two-bedroom rental homes (55 percent) and one-bedrooms (27 percent). More recent developments have shifted towards to one-bedroom rentals (53 percent). The percent of larger rentals - two- and three-bedrooms - being produced has dropped to 36 percent and 9 percent, respectively. 
 
 One-bedroom rentals meets a growing demand among young professionals and aging seniors in the county, but the lack of larger rental homes leaves growing families out of the multifamily rental market. Single-family homes are increasingly meeting the demand for larger families in need of rentals. Although this often is preferred by families who want greater privacy and more in-home separation, the single-family rental market can impact opportunities for potential homebuyers.
 
-```{r br-mix}
-# BY BEDROOM
+```{r br-mix, fig.cap="Share of units by bedrooms for existing and recent properties"}
+
+# By bedroom
+
 br_mix_long <- unit_mix_clean |> 
   select(address, market, units0, units1, units2, units3, latitude, longitude) |> 
   pivot_longer(
@@ -173,29 +211,43 @@ br_mix_long <- unit_mix_clean |>
 br_mix <- br_mix_long |> 
   group_by(market, bedrooms) |> 
   na.omit() |> 
-  summarise(units = sum(units))
+  summarise(units = sum(units)) |> 
+  mutate(pct = units/sum(units)) |> 
+  mutate(bedrooms = case_when(
+    bedrooms == "units0" ~ "Studio",
+    bedrooms == "units1" ~ "1 bed",
+    bedrooms == "units2" ~ "2 bed",
+    bedrooms == "units3" ~ "3 bed",
+  ))
 
+# Percent of total units by bedroom by market
 
-br_mix <- transform(br_mix, 
-                    percent = ave(units,
-                                  market,
-                                  FUN = prop.table))
+br_mix_bar <- gg_bar_col_facet(
+  br_mix,
+  x_var = bedrooms,
+  y_var = pct,
+  col_var = market,
+  facet_var = market,
+  x_labels = function(x) x,
+  y_labels = scales::label_percent(),
+  y_title = "",
+  x_title = "",
+  col_legend_none = TRUE
+)
 
-# Percent of total units by bedroom by market.
-br_mix_bar <- gg_bar_col(br_mix,
-           x_var = market,
-           y_var = percent,
-           col_var = bedrooms,
-           stack = TRUE)
+br_mix_bar
 
-plotly::ggplotly(br_mix_bar) |> 
-  plotly_camera()
 ```
+
 *Source: CoStar Group, Inc.*
 
+### Size
 
-```{r sf-mix}
-# BY SQUARE FOOTAGE
+On average, the significant number of new one-bedroom apartments are close in size to the county's existing supply of one-bedroom units---around 750 square feet. New two- and three-bedroom apartments are noticeably larger than older units, however. Recently-built three-bedroom rentals are now approaching 1,500 square feet.
+
+```{r sf-mix, fig.cap="Share of units by size for existing and recent properties"}
+
+# By square footage
 
 sf_mix <- unit_mix_clean |> 
   select(address, market, sf0, sf1, sf2, sf3) |> 
@@ -207,39 +259,45 @@ sf_mix <- unit_mix_clean |>
   na.omit() |> 
   mutate(bedroom = case_when(
     bedroom == "sf0" ~ "Studio",
-    bedroom == "sf1" ~ "One Bedroom",
-    bedroom == "sf2" ~ "Two Bedroom",
-    bedroom == "sf3" ~ "Three Bedroom"
+    bedroom == "sf1" ~ "1 bed",
+    bedroom == "sf2" ~ "2 bed",
+    bedroom == "sf3" ~ "3 bed"
   )) |> 
   filter(bedroom != "Studio")
 
-# Histogram of average sf of bedrooms by properties.
-sf_mix_hist <- gg_histogram_col_facet(sf_mix,
-                       x_var = sf,
-                       col_var = market,
-                       facet_var = bedroom)
+# Box plot of average sf of bedrooms by properties
 
-plotly::ggplotly(sf_mix_hist) |> 
-  plotly_camera()
+sf_mix_box <- gg_boxplot_col_facet(
+  sf_mix,
+  y_var = sf,
+  x_var = market,
+  col_var = market,
+  facet_var = bedroom,
+  x_title = "",
+  y_title = "Average square footage",
+  col_title = "",
+  col_legend_none = TRUE)
+
+sf_mix_box
 
 ```
 
 *Source: CoStar Group, Inc.*
 
-- BAR CHART: PERCENT OF UNITS BY STYLE (COLORED OR FACETED BY RECENT/EXISTING)
-- BAR CHART: PERCENT OF TOTAL UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING)
-- BAR CHART: AVERAGE SIZE (SQFT) OF UNITS BY BEDROOM (COLORED OR FACETED BY RECENT/EXISTING) 
-- 
-
 ## Amenities
 
-Compare presence of common amenities:
-- "Clubhouse"
-- "Property Manager on Site"
-- "Pool"
-- "Fitness Center"
+The types of amenities and features on a rental property have also changed of time as consumer preferences and expectations have shifted. While there are many possible examples of "amenities", this analysis compares the prevalence of four common features across rental properties in the county.
 
-``` {r amenities}
+These amenities, which are included in property-level data from CoStar, include:
+
+- Clubhouse,
+- On-site property manager,
+- Pool, and
+- Fitness center.
+
+On average, newer apartment communities are much more likely to have at least two of these amenities compared to older properties. In fact, about 90 percent of all new developments have two or more amenities, versus just 71 percent of existing properties.
+
+``` {r amenities, fig.cap="Percent of existing and recent properties by number of amenities"}
 
 # Need list of existing, proposed, or under construction properties with "Amenities" field
 # Create new columns for each amenity that will show T/F
@@ -252,14 +310,14 @@ Compare presence of common amenities:
 amenities <- read_csv("data/costar_unit_mix.csv") |> 
   clean_names()
 
-amenities_clean <- amenities|> 
+amenities_clean <- amenities |> 
   filter(property_address != "3201 Lady Marian Ln") |> 
   filter(property_address != "7626 Sandler Dr") |> 
   filter(property_address != "21203 Orange Hill Ave") |>
   filter(property_address != "12020 Winfree St") |> 
   select("address" = property_address, "name" = property_name, "status" = building_status, style, "units" = number_of_units, avg_unit_sf, year_built, rent_type, amenities, latitude, longitude) |> 
   mutate(market = case_when(
-    year_built <= 2016 ~ "Past",
+    year_built <= 2016 ~ "Existing",
     year_built >= 2017 ~ "Recent",
     name == "Ashlake Crossing" ~ "Recent"))
 
@@ -274,41 +332,55 @@ amenity_count <- amenities_clean |>
   select(address, market, pool, clubhouse, fitness, propmanager) |> 
   na.omit() |> 
   rowwise() |> 
-  mutate(count = as.character(sum(c_across(pool:propmanager) == "TRUE")))
+  mutate(count = as.character(sum(c_across(pool:propmanager) == "TRUE")),
+         count = str_replace(count, "0", "None"))
 
 amenity_summary <- amenity_count |> 
-  group_by(market) |> 
-  count(count)
+  group_by(market, count) |> 
+  summarise(n = n()) |> 
+  mutate(pct = n / sum(n)) |>  
+  mutate(count = fct_relevel(count, "None"))
 
+amenity_bar <- gg_bar_col_facet(
+  amenity_summary,
+  x_var = count,
+  y_var = pct,
+  col_var = market,
+  facet_var = market,
+  x_labels = function(x) x,
+  y_labels = scales::label_percent(),
+  y_title = "",
+  x_title = "Number of amenities",
+  col_legend_none = TRUE
+)
+
+amenity_bar
 
 ```
 
-- BAR CHART: PERCENT OF UNITS BY PRESENCE OF AMENITY (COLORED OR FACETED BY RECENT/EXISTING)
+*Source: CoStar Group, Inc.*
 
 ## Location
 
-Copy / re-state what is already done in 2a-2?
+New rental development has occurred all across Chesterfield County in recent years. However, as the map below shows, much of that activity has been concentrated along Route 288 from Midlothian Turnpike south to Hull Street. This development is notable for being located in areas where multifamily housing is not already prevalent.
 
-Describe locations/neighborhoods where newer development is most common
+On the other side of the county, there are five new developments along Route 1, plus several more just to the west following Route 10. These recent properties, unlike those along Route 288, do not make up the majority of multifamily housing in the area.
 
-``` {r location}
+``` {r location, fig.cap="Map of recent and existing multifamily rental properties"}
 
 comp_map2 <- unit_mix_clean |> 
   mutate(market = case_when(
     year_built <= 2016 ~ "Existing",
     year_built >= 2017 ~ "Recent",
     name == "Ashlake Crossing" ~ "Recent")) |> 
-  select(address, name, status, year_built, market, style, units, rent_type, latitude, longitude)
+  select(address, name, status, year_built, market, style, units, rent_type, latitude, longitude) |> 
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
-pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
+# pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
 
-# comp_location_map <-leaflet(comp_map2) |>
-#   addTiles() |>
-#   addCircleMarkers(
-#     radius = 5,
-#     color = ~pal(market),
-#     stroke = FALSE, fillOpacity = 0.5
-#    )
+# comp_location_map <- leaf_sf_col(comp_map2,
+#                                  col_var = market,
+#                                  label_var = name)
 # 
 # saveWidget(comp_location_map, "maps/comp_location_map.html")
 
@@ -316,14 +388,7 @@ knitr::include_url("maps/comp_location_map.html", height = "500px")
 
 ```
 
-- MAP OF RECENT DEVELOPMENTS (COLORED BY EXISTING, UNDER CONSTRUCTION, AND PROPOSED)
-- BAR CHART: PERCENT OF UNITS BY MAGISTERIAL DISTRICT (COLORED OR FACETED BY RECENT/EXISTING)
-
 ### Proximity to public transportation
-
-Compare location of new multifamily development versus older multifamily relative to access to public transportation
-
-- Within or outside of 1/2 mile buffer from GRTC stop
 
 Within the county, there are only 20 out of 115 multifamily properties located within a half mile walking distance of a public transit stop. The majority of these properties are existing properties, while only six are recent developments (built in 2017 or later). 
 
@@ -331,8 +396,15 @@ These transit stops are mainly located at the city-county border along Midlothia
 
 One recent development (Commonwealth Apartments built in 2022) has taken advantage of an Express Service Park-N-Ride located at Commonwealth Centre Parkway. This transit service provides a direct route from Commonwealth Centre Parkway to Downtown Richmond --- whether for work or leisure.
 
+```
+MAP/ANALYSIS IN PROGRESS
+```
 
 ```{r transit}
+
+# Compare location of new multifamily development versus older multifamily relative to access to public transportation
+
+# Within or outside of 1/2 mile buffer from GRTC stop
 
 library(tidyverse)
 library(sf)
@@ -478,17 +550,22 @@ options(tigris_use_cache = TRUE)
 #
 # saveWidget(transit_map, "maps/transit_map.html")
 
-knitr::include_url("maps/transit_map.html", height = "500px")
+# knitr::include_url("maps/transit_map.html", height = "500px")
 
 ```
+
 ### Proximity to schools
 
-Compare location of new multifamily development versus older multifamily relative to access to public schools
-
-- Within or outside of 30 minute drive time
-
+```
+MAP/ANALYSIS IN PROGRESS
+```
 
 ```{r schools}
+
+# Compare location of new multifamily development versus older multifamily relative to access to public schools
+# 
+# - Within or outside of 30 minute drive time
+
 # Once this workflow is settled, you can reasonably reproduce it for the other datasets.  
 # schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") %>%
 #   st_transform(va_crs)
@@ -525,13 +602,21 @@ Compare location of new multifamily development versus older multifamily relativ
 
 
 ```
+
 ### Proximity to grocery stores
 
-Compare location of new multifamily development versus older multifamily relative to access to grocery stores
-
-- Within or outside of 1/2 mile buffer from grocery store
+```
+MAP/ANALYSIS IN PROGRESS
+```
 
 ```{r grocery}
+
+# Compare location of new multifamily development versus older multifamily relative to access to grocery stores
+# 
+# - Within or outside of 1/2 mile buffer from grocery store
+
+
+
 # Grocery stores: 
 # We'll use SNAP retailers from the USDA as a proxy here
 # This is not perfect so some filtering may be necessary
@@ -581,18 +666,23 @@ Compare location of new multifamily development versus older multifamily relativ
 # 
 # saveWidget(snap_map, "maps/snap_map.html")
 
-knitr::include_url("maps/snap_map.html", height = "500px")
+# knitr::include_url("maps/snap_map.html", height = "500px")
 
 ```
 
 ### Proximity to healthcare
 
-Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
-
-- Within or outside of 15 minute drive time
-
+```
+MAP/ANALYSIS IN PROGRESS
+```
 
 ```{r medical}
+
+# Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
+# 
+# - Within or outside of 15 minute drive time
+
+
 # Hospital / urgent care
 # I'm not filtering by type but you might consider doing so
 # There are some other datasets in HIFLD on care centers that may 
@@ -647,4 +737,6 @@ Compare location of new multifamily development versus older multifamily relativ
 
 ### Proximity to job centers
 
-TBD, waiting for feedback from county staff
+```
+MAP/ANALYSIS IN PROGRESS
+```
