@@ -272,7 +272,7 @@ cf_pums_summary <- cf_pums_svy %>%
 
 gg_hpointrange(cf_pums_summary,
               y_var = building,
-              x_var = pct,
+              xmiddle_var = pct,
               xmin_var = pct_low,
               xmax_var = pct_up,
               size_line = 0.75,
@@ -311,7 +311,7 @@ cf_pums_sf <- cf_pums_svy %>%
 
 gg_hpointrange(cf_pums_sf,
               y_var = tenure,
-              x_var = pct,
+              xmiddle_var = pct,
               xmin_var = pct_low,
               xmax_var = pct_up,
               size_line = 0.75,

@@ -1,12 +1,10 @@
-# COUNTYWIDE MARKET ANALYSIS {.unnumbered}
-
 # Outreach {#part-2a-4}
 
 This section summarizes interviews and additional outreach with non-profit and for-profit multifamily developers with existing or prospective projects in the county. 
 
 ## Process
 
-To gather additional details on the state of Chesterfield County's rental market, a total of ___ persons from ___ organizations were interviewed in early June 2022. These interviews collected input from:
+To gather additional details on the state of Chesterfield County's rental market, a total of nine persons from six organizations were interviewed in early June 2022. These interviews collected input from:
 
 * For-profit multifamily and mixed use developers,
 * Nonprofit multifamily developers and property managers, and
@@ -38,27 +36,18 @@ However, owners of lower cost, market-affordable rental properties (NOAH) have b
 
 In areas where property values may be lower, prevailing market and community conditions can make development unfavorable. The northern Route 1 corridor was noted as an important example: despite its proximity to downtown Richmond and I-95, crime issues were repeatedly noted as a turn-off for developers. Furthermore, several interviewees stated that the low incomes found along that corridor would not support new market-rate development.
 
-Second, various development regulations were listed as challenges imposed by the county.
+Second, various development regulations were listed as challenges imposed by the county. These primarily focused on utility connection and permit fees, which participants claimed were high relative to other localities, along with increasing costs associated with road and transportation proffers. Additionally, some developers identified first-floor commercial uses, which are encouraged by the county, as challenging for financing. Standalone multifamily development can be easier to obtain versus mixed-use.
 
-- 8 out of 10 calls (to broker) are from pure multifamily developers who don't do mixed use
-- Expectation for first-floor commerical component can make financing difficult (standalone multifamily is easier)
-- Utility connection and permit fees can be high relative to other localities, along with road proffers
-
-Finally, nearly all respondents mentioned increasing public and political concern about new rental housing, particularly focused on apartments using public subsidy to serve lower incomes.
-
-- Increasing political obstructions for affordable rental housing development, especially along Route 1 ("victim of its own success" following some successful developments)
+Finally, nearly all respondents mentioned increasing public and political concern about new rental housing, particularly focused on apartments using public subsidy to serve lower incomes. This is especially a factor along Route 1, which one respondent called a "victim of its own success" following recent successful developments.
 
 ## Opportunities
 
-Affordable
-- Getting sites designated by county as "revitalization areas" helps with LIHTC scoring, practice should continue
-- Even small amounts of tax abatement from county would increase LIHTC scoring
-- Despite some opposition, citizens and residents will demonstrate support for new affordable rental housing
-- Continued rental development in areas served by GRTC is ideal
+In spite of the listed challenges, interviewees noted that there were several opportunities to support rental housing development in the county, and specifically along the Route 1 and Eastern Hull St corridors. 
 
-Corridors
-- Hull Street likely to continue performing better than Route 1 (less of a "stigma" and strong western component)
-- Hull Street seeing more activity/interest, will continue to grow organically like Midlothian Turnpike
-- Chance to revive/reuse vacant commercial space in Route 1 / Chester / I-95 area
-- County would need to provide meaningful incentives to attract market-rate development in northern Route 1
+LIHTC developers benefit greatly in the competitive scoring process when proposed developments are located in officially designated "revitalization areas." This has helped support LIHTC development along the Route 1 corridor by Better Housing Coalition, but continuing this designation practice could help support LIHTC development in other parts of the county, where affordable rental housing is needed just as much. Tax abatements, even small amounts, like the recent Route 1 corridor tax abatement policy, also help in the LIHTC scoring process---increasing the likelihood of tax credit awards.
 
+Continued expansion of public transportation along major corridors in the county would also help support affordable rental housing development. Being within 1/2 mile distance of public transportation is another scoring criteria for many publicly-financed housing developments. 
+
+Interviewees also saw specific opportunities for each corridor. Many saw greater opportunities for rental housing development along the Hull Street corridor due it having less of a "stigma" and better socioeconomic conditions to support mixed-use and mixed-income developments. One interviewee felt that Hull Street will continue to see more development activity and interest, growing organically like the western Midlothian Turnpike. 
+
+Respondents *did* refer to opportunities along the Route 1 corridor, especially for the revitalization or reuse of vacant and underutilized commercial spaces near the Chester area. But interviewees felt that the county would need to provide meaningful incentives to attract market-rate development to the northern section of Route 1.

@@ -448,6 +448,7 @@ comp_by_district <- st_join(p_comp_sf, left = FALSE, districts["MagDistName"]) |
                                  "Affordable"))
 
 library(tigris)
+library(mapboxapi)
  
 ch_boundary <- counties("VA") |> 
   filter(NAME == "Chesterfield")

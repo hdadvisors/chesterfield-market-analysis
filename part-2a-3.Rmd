@@ -12,6 +12,7 @@ library(ggplot2)
 library(plotly)
 library(leaflet)
 library(htmlwidgets)
+library(sf)
 
 ```
 
@@ -374,7 +375,7 @@ comp_map2 <- unit_mix_clean |>
     year_built >= 2017 ~ "Recent",
     name == "Ashlake Crossing" ~ "Recent")) |> 
   select(address, name, status, year_built, market, style, units, rent_type, latitude, longitude) |> 
-  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+  sf::st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
 # pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
 
