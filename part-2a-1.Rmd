@@ -87,8 +87,10 @@ renters_plot <- gg_line(
   title = "Renter households",
   x_title = element_blank())
 
-plotly::ggplotly(renters_plot) %>% 
-  plotly_camera()
+renters_plot
+
+# plotly::ggplotly(renters_plot) %>% 
+#   plotly_camera()
 
 ```
 
@@ -154,272 +156,19 @@ structure_plot <- gg_bar_col(
   x_title = element_blank()
 )
 
-plotly::ggplotly(structure_plot) %>% 
-  plotly_camera()
+structure_plot
+
+# plotly::ggplotly(structure_plot) %>% 
+#   plotly_camera()
 
 
 ```
-
-#### Single-family rentals
-
-Single-family home rentals (SFRs) are a growing trend in the rental market as a result of lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked to avoid higher density apartments and have the space to work and learn remotely.^[https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/]
-
-SFR in the county have been on the rise---over 28 percent growth in the past decade, according to ACS estimates. This is the most substantial increase among all rental housing types.
-
-To obtain a better understanding of the scale and distribution of SFR across the county, parcel records can be used to cross-reference the property's address with the owner's address. Generally, these addresses will match for all owner-occupied homes. Those that do not match are most likely not occupied by the owner, which usually implies the house is being leased to other occupants.
-
-Based on an analysis of these address in the latest parcel records from the county, there are an estimated 13,205 single-family home rentals in the county. These comprise nearly 12 percent of all single-family homes.
-
-```{r sfr-setup}
-
-# Pull in Chesterfield County magisterial districts
-
-districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
-
-districts <- read_sf(districts_geojson)
-
-# View districts as simple map
-# plot(districts$geometry)
-
-# Pull in Chesterfield County parcel shapefile and convert polygons to points
-
-parcels <- st_read("data/ParcelsEnriched.shp") |>
-  st_point_on_surface()
-
-# Remove unneeded columns and spatially join to magisterial districts
-
-parcels_sub <- parcels %>%
-  select(
-    id = GPIN,
-    use_code = UseCode,
-    owner_address = OwnerAddre,
-    owner_city = OwnerCity,
-    owner_state = OwnerState,
-    owner_zip = OwnerZip,
-    address = Address,
-    zip = Zip,
-    year_built = Year_Built,
-    improvement = Improvemen
-  ) |> 
-  st_join(left = FALSE, districts["MagDistName"])
-
-# Check closeness between parcel address and owner address
-
-parcels_sub$match_score <- stringsim(parcels_sub$owner_address, parcels_sub$address)
-
-# Plot match scores
-
-# ggplot(parcels_sub, aes(x = match_score)) + 
-#  geom_histogram(bins = 30) + 
-#  theme_minimal()
-
-# Ensure consistency when sampling fuzzy address matches to manually inspect
-
-set.seed(1983)
-
-fuzzy_matches <- parcels_sub %>%
-  filter(match_score >= 0.75 & match_score <= 0.9) %>%
-  st_drop_geometry() %>%
-  slice_sample(n = 100)
-
-# Set owner-occupied SFH as those with match scores over 0.6 and whose address numbers match
-# Set renter-occupied SFH as all other single-family parcels
-# Assign all other parcels as "Multifamily" or "Other"
-
-parcels_ownership <- parcels_sub %>%
-  mutate(address_num = str_extract(address, "[0-9]+"),
-         owner_num = str_extract(owner_address, "[0-9]+")) %>%
-  mutate(ownership = case_when(
-    use_code == "SD" & match_score > 0.6 & address_num == owner_num ~ "Owner-occupied SFH",
-    use_code == "SD" ~ "Renter-occupied SFH",
-    use_code %in% c("CD", "CN", "DU", "QP", "RE", "TH", "TN", "TP", "100") ~ "Multifamily",
-    TRUE ~ "Other"
-  ))
-
-# table(parcels_ownership$ownership)
-
-# Filter parcels for only SFH
-
-ch_sfh <- filter(parcels_ownership, ownership %in% c("Owner-occupied SFH",
-                                                     "Renter-occupied SFH"))
-
-```
-
-```{r sfr-summary}
-
-# Total count and percent of SFR in the county
-
-ch_sfh_sum <- ch_sfh |> 
-  st_drop_geometry() |> 
-  group_by(ownership) |> 
-  summarise(cnt = n()) |> 
-  mutate(pct = percent(cnt / sum(cnt), 1),
-         cnt = comma(cnt, 0))
-
-ch_sfh_sum |> 
-  kable(caption = "Single-family rentals in Chesterfield County",
-        align = "lrr",
-        col.names = c("Ownership", "Number", "Percent")) |> 
-  kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")
-  )
-
-```
-
-Single-family homes for rent are not heavily concentrated in one portion of the county or another.
-
-```{r sfr-map}
-
-# library(tigris)
-# 
-# options(tigris_use_cache = TRUE)
-# 
-# ch_roads <- roads("VA", "Chesterfield", year = 2021)
-# ch_water <- area_water("VA", "Chesterfield", year = 2021)
-
-# table(ch_sfh$improvement == 0)
-
-cf_basemap <- layer_static_mapbox(
-  location = ch_sfh,
-  style_id = "light-v10",
-  username = "mapbox"
-)
-
-ggplot() +
-  geom_sf(data = ch_sfh, aes(color = ownership)) +
-  theme_void(base_size = 12) +
-  theme(legend.position = "bottom")
-
-
-sfh <- ggplot() + 
-  geom_sf(data = ch_sfh, aes(fill = ownership), color = NA) + 
-  geom_sf(data = ch_water, fill = "lightblue", color = NA) + 
-  geom_sf(data = ch_roads, alpha = 0.5, color = "grey80") + 
-  theme_void(base_size = 18) + 
-  scale_fill_manual(values = c("#00CED1", "#e38520")) + 
-  theme(legend.position = "bottom", plot.background = element_rect(fill = "#dcf5e0", color = NA),
-        panel.background = element_rect(fill = "#dcf5e0", color = NA)) + 
-  labs(fill = "")
-
-plotly::ggplotly(sfh) %>% 
-  plotly_camera()
-
-```
-
-```{r sfr-magisterial}
-
-# Determine percent of SHF that are renter-occupied by magisterial district
-
-ch_sfh_sum <- ch_sfh_drop_geom |> 
-  group_by(MagDistName, ownership) |> 
-  summarise(cnt = n()) |> 
-  mutate(pct = cnt / sum(cnt)) |> 
-  mutate(MagDistName = str_to_sentence(MagDistName)) |>
-  filter(ownership == "Renter-occupied SFH")
-
-gg_hbar(ch_sfh_sum,
-        y_var = MagDistName,
-        x_var = pct,
-        y_reorder = TRUE,
-        title = "Single-family rentals as percent of all single-family homes by magisterial district",
-        x_title = "",
-        y_title = "",
-        x_labels = percent_format())
-
-```
-
-The majority of SFR owners (61 percent) also live in the county, while 29 percent live somewhere else in Virginia. The remaining 10 percent of single-family rental owners live outside of the state.
-
-```{r sfr-owners}
-
-sf_use_s2(FALSE)
-zips <- zctas(cb = TRUE) %>%
-  st_point_on_surface()
-chesterfield <- counties("VA", cb = TRUE) %>%
-  filter(NAME == "Chesterfield")
-
-chesterfield_zips <- zips[chesterfield, ]
-
-zip_list <- chesterfield_zips$GEOID20
-
-rental_class <- ch_sfh %>%
-  filter(ownership == "Renter-occupied SFH") %>%
-  mutate(owner_location = case_when(
-    owner_zip %in% zip_list ~ "Owner in Chesterfield",
-    owner_state == "VA" ~  "Owner in Virginia",
-    TRUE ~ "Owner out of state"
-  ))
-
-rental_pct <- rental_class %>%
-  st_drop_geometry() %>%
-  group_by(owner_location) %>%
-  summarize(n = n()) %>%
-  ungroup() %>%
-  mutate(pct = 100 * (n / sum(n)))
-
-sfr_bar <- gg_bar_col(rental_pct,
-                      x_var = owner_location,
-                      y_var = n,
-                      col_var = owner_location)
-
-plotly::ggplotly(sfr_bar) |> 
-  plotly_camera()
-
-```
-
-The map below shows the spatial distribution of SFRs across the county. Much of the county's SFR is located between Chippenham Parkway (SR 150) and the World War II Veterans Memorial Highway (SR 288). This area is heavily single-family development from the last five decades. Additional densities of SFR can be seen along the Route One Corridor, as well as the Ettrick area of Chesterfield --- straddling Colonial Heights and Petersburg.
-
-```{r sfr-map, fig.cap= "Map of SFR in the county"}
-
-# sfr_pal <- colorFactor(c("green", "red", "blue"), domain = c("Owner in Chesterfield", "Owner in Virginia", "Owner out of state"))
-
-# sfr_map <- leaflet(rental_class) |> 
-#   addTiles() |> 
-#   addCircleMarkers(
-#     radius = 2,
-#     color = ~sfr_pal(owner_location),
-#     stroke = FALSE, fillOpacity = 0.5
-#   )
-# 
-# saveWidget(sfr_map, file = "maps/sfr_map.html")
-
-# ggplot() + 
-#   geom_sf(data = rental_class, aes(fill = owner_location), color = "red") + 
-#   geom_sf(data = ch_water, fill = "#8ecbe6", color = NA) + 
-#   geom_sf(data = ch_roads, color = "grey50", lwd = 0.05) +
-#   theme_void(base_size = 12) + 
-#   scale_fill_manual(values = c("#15a19c", "#ba150f","#482d61"),
-#                     labels = c("Chesterfield (61%)",
-#                                "Virginia (29%)",
-#                                "Out of state (10%)")) +
-#   # theme(legend.position = "bottom", plot.background = element_rect(fill = "#dcf5e0", color = NA),
-#   #       panel.background = element_rect(fill = "#dcf5e0", color = NA)) + 
-#   labs(fill = "Rental Owner Location")
-
-
-knitr::include_url("maps/sfr_map.html", height = "500px")
-
-```
-
-
-#### Manufactured homes
-
-While single-family homes saw a major increase in rentals, manufactured homes experienced a significant decrease. From 791 in 2010 to 527 in 2020, the reported number of manufactured homes in the county has been cut down by a third.
-
-This estimate from the U.S. Census Bureau's American Community Survey severely undercounts manufactured homes located in manufactured home communities.
-
-Manufactured home communities are a valuable source of affordable housing across Virginia. Chesterfield County is home to a significant amount of MHCs --- about 1,500 in total. However, a significant issue faces manufactured home community residents. MHCs often give residents two options, 1) a resident may rent both their home and the lot on which that home is placed, or 2) a resident may own their home and rent the lot on which that home is placed.
-
-In both cases, a resident is renting, but those residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. MHCs are increasingly at-risk of redevelopment. In 2021, Suburban Village, along the Midlothian Turnpike, entered the news after a Maryland-based investment firm purchased the community for $23 million. As the county's third largest MHC with nearly 220 households, residents and advocates fear for substantial lot rent increases or displacement.
-
-In contrast to growing investment firm interest in MHCs, local affordable housing nonprofit, project:HOMES, purchased a 52-unit MHC in 2021. Since the purchase, project:HOMES has made significant improvements to community infrastructure and has been working to replace distressed homes with new high-quality and energy efficient manufactured homes (with support from Virginia Tech's Virginia Center for Housing Research and Virginia Housing). project:HOMES's ultimate goal is to empower residents to take ownership of the community.
-
 
 ### Number of bedrooms
 
 Most rental housing in the county are two-bedroom and three-bedroom homes. This accounts for nearly half of all rental housing in the county (68 percent). 
 
-The number of four-bedroom rental homes has been on a steady increase since 2010 --- from 1,995 to 3,453 in 2020, a 73 percent increase. Although the increasing number of families in search of larger homes has led to a corresponding demand in larger rental homes, the impact can be felt among single adults, especially low-income adults, needing affordable rental opportunities. 
+The number of four-bedroom rental homes has been on a steady increase since 2010---from 1,995 to 3,453 in 2020, a 73 percent increase. Although the increasing number of families in search of larger homes has led to a corresponding demand in larger rental homes, the impact can be felt among single adults, especially low-income adults, needing affordable rental opportunities. 
 
 ```{r bedrooms}
 
@@ -465,17 +214,17 @@ bedroom_plot <- gg_bar_col_facet(
       legend.position = "none"
     )
 
-plotly::ggplotly(bedroom_plot) %>% 
-  plotly_camera()
+bedroom_plot
+
+# plotly::ggplotly(bedroom_plot) %>% 
+#   plotly_camera()
 
 
 ```
 
 ### Rental housing age
 
-The majority of existing rental housing (11,229 rental homes) in the county was built between 1960 and 1999. This represents a significant portion of rental housing that is at least 20 years of age. Aging rental homes often mean increasing maintenance costs or the need for significant renovations that get passed down to tenants. 
-
-
+The majority of existing rental housing in the county was built between 1960 and 1999. This represents a significant portion of rental housing that is at least 20 years of age. Aging rental homes often mean increasing maintenance costs or the need for significant renovations that get passed down to tenants.
 
 ```{r yearbuilt}
 
@@ -525,10 +274,261 @@ built_plot <- gg_bar(
       legend.position = "none"
     )
 
-plotly::ggplotly(built_plot) %>% 
-  plotly_camera()
+built_plot
+
+# plotly::ggplotly(built_plot) %>% 
+#   plotly_camera()
 
 ```
+
+## Special types of rental housing
+
+Two significant components of Chesterfield County's rental housing supply, single-family rentals and manufactured home communities, deserve special attention. This section explores available data and trends for these unique types of housing.
+
+### Single-family rentals
+
+Single-family home rentals (SFRs) are a growing trend in the rental market as a result of lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked to avoid higher density apartments and have the space to work and learn remotely.^[https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/]
+
+SFR in the county have been on the rise---over 28 percent growth in the past decade, according to ACS estimates. This is the most substantial increase among all rental housing types.
+
+To obtain a better understanding of the scale and distribution of SFR across the county, parcel records can be used to cross-reference the property's address with the owner's address. Generally, these addresses will match for all owner-occupied homes. Those that do not match are most likely not occupied by the owner, which usually implies the house is being leased to other occupants.
+
+Based on an analysis of these address in the latest parcel records from the county, there are an estimated 13,205 single-family home rentals in the county. These comprise nearly 12 percent of all single-family homes.
+
+```{r sfr-setup}
+
+# Pull in Chesterfield County magisterial districts
+
+# districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
+
+# districts <- read_sf(districts_geojson)
+
+# View districts as simple map
+# plot(districts$geometry)
+
+# Pull in Chesterfield County parcel shapefile and convert polygons to points
+
+# parcels <- st_read("data/ParcelsEnriched.shp") |>
+#   st_point_on_surface()
+
+# Remove unneeded columns and spatially join to magisterial districts
+
+# parcels_sub <- parcels %>%
+#   select(
+#     id = GPIN,
+#     use_code = UseCode,
+#     owner_address = OwnerAddre,
+#     owner_city = OwnerCity,
+#     owner_state = OwnerState,
+#     owner_zip = OwnerZip,
+#     address = Address,
+#     zip = Zip,
+#     year_built = Year_Built,
+#     improvement = Improvemen
+#   ) |> 
+#   st_join(left = FALSE, districts["MagDistName"])
+
+# Check closeness between parcel address and owner address
+
+# parcels_sub$match_score <- stringsim(parcels_sub$owner_address, parcels_sub$address)
+
+# Plot match scores
+
+# ggplot(parcels_sub, aes(x = match_score)) + 
+#  geom_histogram(bins = 30) + 
+#  theme_minimal()
+
+# Ensure consistency when sampling fuzzy address matches to manually inspect
+
+# set.seed(1983)
+# 
+# fuzzy_matches <- parcels_sub %>%
+#   filter(match_score >= 0.75 & match_score <= 0.9) %>%
+#   st_drop_geometry() %>%
+#   slice_sample(n = 100)
+
+# Set owner-occupied SFH as those with match scores over 0.6 and whose address numbers match
+# Set renter-occupied SFH as all other single-family parcels
+# Assign all other parcels as "Multifamily" or "Other"
+
+# parcels_ownership <- parcels_sub %>%
+#   mutate(address_num = str_extract(address, "[0-9]+"),
+#          owner_num = str_extract(owner_address, "[0-9]+")) %>%
+#   mutate(ownership = case_when(
+#     use_code == "SD" & match_score > 0.6 & address_num == owner_num ~ "Owner-occupied SFH",
+#     use_code == "SD" ~ "Renter-occupied SFH",
+#     use_code %in% c("CD", "CN", "DU", "QP", "RE", "TH", "TN", "TP", "100") ~ "Multifamily",
+#     TRUE ~ "Other"
+#   ))
+
+# table(parcels_ownership$ownership)
+
+# Filter parcels for only SFH
+
+# ch_sfh <- filter(parcels_ownership, ownership %in% c("Owner-occupied SFH",
+#                                                      "Renter-occupied SFH"))
+
+# ch_sfh |> 
+#   st_drop_geometry() |> 
+#   saveRDS("data/ch_sfh.rds")
+
+# ch_sfr <- filter(ch_sfh, ownership == "Renter-occupied SFH")
+
+# st_write(ch_sfr, "data/shp/ch_sfr.shp")
+
+
+```
+
+```{r sfr-summary}
+
+# Total count and percent of SFR in the county
+
+ch_sfh <- readRDS("data/ch_sfh.rds")
+
+ch_sfh_sum <- ch_sfh |> 
+  group_by(ownership) |> 
+  summarise(cnt = n()) |> 
+  mutate(pct = percent(cnt / sum(cnt), 1),
+         cnt = comma(cnt, 0))
+
+ch_sfh_sum |> 
+  kable(caption = "Single-family rentals in Chesterfield County",
+        align = "lrr",
+        col.names = c("Ownership", "Number", "Percent")) |> 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")
+  )
+
+```
+
+The map below shows the spatial distribution of SFRs across the county. They are found in nearly every community, but are most prevalent in Ettrick neighborhoods surrounding Petersburg and Colonial Heights, between Route 288 and Chippenham Parkway, the Route 1 corridor, and the Hull Street corridor.
+
+```{r sfr-map}
+
+library(tigris)
+ 
+options(tigris_use_cache = FALSE)
+
+ch_boundary <- counties("VA") |> 
+  filter(NAME == "Chesterfield")
+ 
+# ch_roads <- roads("VA", "Chesterfield", year = 2021)
+# ch_water <- area_water("VA", "Chesterfield", year = 2021)
+
+# table(ch_sfh$improvement == 0)
+
+ch_sfr <- st_read("data/shp/ch_sfr.shp")
+
+sf_use_s2(TRUE)
+
+cf_basemap <- layer_static_mapbox(
+  location = ch_boundary,
+  style_id = "light-v10",
+  username = "mapbox"
+)
+
+sfr_map <- ggplot() +
+  cf_basemap +
+  geom_sf(data = ch_sfr, fill = "brown1", size = 1, shape = 21, alpha = .1) +
+  labs(title = "Single-family rental homes in Chesterfield County",
+       caption = "Source: County parcel records") +
+  theme_void(base_size = 10)
+
+sfr_map
+
+```
+
+When aggregated to the county's five magisterial districts, single-family rentals are most common in the Bermuda and Dale districts. SFRs comprise more than 13 percent of the total single-family stock in these districts, but this is still not significantly above the county average. The Midlothian district has the lowest share of SFRs at 9 percent.
+
+```{r sfr-magisterial}
+
+# Determine percent of SHF that are renter-occupied by magisterial district
+
+ch_sfh_mag <- ch_sfh |> 
+  group_by(MagDistName, ownership) |> 
+  summarise(cnt = n()) |> 
+  mutate(pct = cnt / sum(cnt)) |> 
+  mutate(MagDistName = str_to_sentence(MagDistName)) |>
+  mutate(MagDistName = str_replace_all(MagDistName, "Cloverhill", "Clover Hill")) |> 
+  filter(ownership == "Renter-occupied SFH")
+
+sfr_mag <- gg_hbar(ch_sfh_mag,
+                   y_var = MagDistName,
+                   x_var = pct,
+                   y_reorder = TRUE,
+                   title = "Single-family rentals as percent of all single-family homes by magisterial district",
+                   x_title = "",
+                   y_title = "",
+                   x_labels = percent_format(),
+                   y_labels = function(x) x)
+
+sfr_mag
+
+```
+
+The majority of SFR owners (61 percent) also live in the county, while 29 percent live somewhere else in Virginia. The remaining 10 percent of single-family rental owners live outside of the state.
+
+```{r sfr-owners}
+
+sf_use_s2(FALSE)
+
+zips <- zctas(year = 2010, state = "VA") |> 
+  st_point_on_surface()
+
+chesterfield_zips <- zips[ch_boundary, ]
+
+zip_list <- chesterfield_zips$ZCTA5CE10
+
+rental_class <- ch_sfh %>%
+  filter(ownership == "Renter-occupied SFH") %>%
+  mutate(owner_location = case_when(
+    owner_zip %in% zip_list ~ "Owner in Chesterfield",
+    owner_state == "VA" ~  "Owner in Virginia",
+    TRUE ~ "Owner out of state"
+  ))
+
+rental_pct <- rental_class %>%
+  group_by(owner_location) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(pct = (n / sum(n)))
+
+sfr_bar <- gg_bar_col(rental_pct,
+                      x_var = owner_location,
+                      y_var = pct,
+                      col_var = owner_location,
+                      col_legend_none	= TRUE,
+                      y_title = "",
+                      x_title = "",
+                      x_labels = function(x) x,
+                      y_labels = percent_format())
+
+sfr_bar
+
+# plotly::ggplotly(sfr_bar) |> 
+#   plotly_camera()
+
+```
+
+### Manufactured homes
+
+While single-family homes saw a major increase in rentals, manufactured homes experienced a significant decrease. From 791 in 2010 to 527 in 2020, the reported number of manufactured homes in the county has been cut down by a third.
+
+This estimate from the U.S. Census Bureau's American Community Survey severely undercounts manufactured homes located in manufactured home communities (MHCs). Manufactured home communities are a valuable source of affordable housing across Virginia. Chesterfield County is home to a significant amount of MHCs---about 1,500 in total.
+
+::: {.rmdnote}
+
+Additional details and maps of the county's manufactured home communities can be found in [Chapter 3](#part-1a-3).
+
+:::
+
+However, a significant issue faces manufactured home community residents. MHCs often give residents two options, 1) a resident may rent both their home and the lot on which that home is placed, or 2) a resident may own their home and rent the lot on which that home is placed.
+
+In both cases, a resident is renting, but residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. MHCs are increasingly at-risk of redevelopment.
+
+In 2021, Suburban Village, a MHC along the Midlothian Turnpike, was [purchased](https://richmond.com/news/local/maryland-based-investment-firm-buys-chesterfield-mobile-home-park-for-22-5-million/article_41bd2656-0466-5643-9285-2715e88fee40.html) by a Maryland-based investment firm for $23 million. As the county's third largest MHC with nearly 220 households, residents and advocates fear for substantial lot rent increases or displacement.
+
+In contrast to growing investment firm interest in MHCs, local affordable housing nonprofit, project:HOMES, [purchased](https://www.projecthomes.org/bermuda-estates) Bermuda Estates, a 52 unit MHC in 2021. Since the purchase, project:HOMES has made significant improvements to community infrastructure and has been working to replace distressed homes with new high-quality and energy efficient manufactured homes (with support from Virginia Tech's Virginia Center for Housing Research and Virginia Housing). project:HOMES's ultimate goal is to empower residents to take ownership of the community.
 
 ## Rental housing costs
 
@@ -538,23 +538,21 @@ The following data are from CoStar's multifamily database, which includes 118 ex
 
 From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q3 2021, average asking rent in the county reached a two decade high of $1,510.
 
-Average market asking rent per unit is expected to climb in the county --- signalling an increasing demand, as well as the construction of higher end rental apartments.
+Average market asking rent per unit is expected to climb in the county---signalling an increasing demand, as well as the construction of higher end rental apartments.
 
 ```{r costar-rents}
 
 # This is pulling in average rents for all existing multifamily properties in the county. For some reason, this differs from the previous average rent calculations. I'd resolve this by updating the previous visualization in Part-1B-4.
 
-#CoStar filter: Multi-family, Chesterfield County, VA; Construction Status: Existing
+# CoStar filter: Multi-family, Chesterfield County, VA; Construction Status: Existing
 
-#Pulled quarterly Market Asking Rent Per Unit; Inflation Adjusted, No Forecast, History: All
-
+# Pulled quarterly Market Asking Rent Per Unit; Inflation Adjusted, No Forecast, History: All
 
 rent <- read_csv("data/costar_rent_existing_may_12.csv") |>
   pivot_longer(cols = 2:3, names_to = "type", values_to = "value") |> 
   mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) |> 
   mutate(type = str_replace_all(type, c("rent" = "Asking rent",
                                         "rent_adj" = "rent (inflation-adjusted)")))
-
 
 costar_rent <-gg_line_col(
   rent,
@@ -578,37 +576,31 @@ costar_rent <-gg_line_col(
     legend.justification = "center"
   )
 
-plotly::ggplotly(costar_rent) %>% 
-  plotly_camera()
+costar_rent
 
-
+# plotly::ggplotly(costar_rent) %>% 
+#   plotly_camera()
 
 ```
 
 ### Rent by bedrooms
 
-The number of bedrooms often impacts rental housing costs --- simply put, more bedrooms equals higher rent. But in Chesterfield County, studio apartments command a higher average asking rent than housing with more bedrooms. In Q1 2022, the average asking rent for a studio apartment was \$2,300, roughly \$600 more than a three-bedroom apartment. 
-
-```
-
-This section could use some work probably. I'm not sure if you want to address the studio rent prices or not. I'm not
-
-```
+The number of bedrooms often impacts rental housing costs---more bedrooms generally equals higher rent. As of 2022 Q1, there is an approximate difference of $420 between the average rent for a 1 bedroom (\$1,335) versus a three bedroom apartment (\$1,756). Average rent for a 2 bedroom apartment was right in the middle at \$1,532.
 
 ```{r bedroom-rents}
 
-#This uses the same filter as above from CoStar.
-
+# This uses the same filter as above from CoStar.
 
 bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
   pivot_longer(cols = 2:9, names_to = "type", values_to = "value") |>
   mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) |> 
   mutate(rent = sub(".*_", "", type)) |> 
   mutate(rent = str_replace_all(rent, c("rent" = "Asking rent",
-                                        "adj" = "rent (inflation-adjusted)")))
-bedroom_rent <- bedroom_rent |> 
+                                        "adj" = "rent (inflation-adjusted)"))) |> 
   filter(rent != "Asking rent") |> 
-  mutate(type = substr(type,1,1))
+  mutate(type = substr(type,1,1)) |> 
+  mutate(type = str_c(type, " bedroom")) |> 
+  filter(type != "0 bedroom")
 
 costar_br_rent <-gg_line_col(
   bedroom_rent,
@@ -619,7 +611,7 @@ costar_br_rent <-gg_line_col(
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County by bedroom",
   y_labels = label_dollar(),
-  y_title = "Average asking rent",
+  y_title = "Average asking rent (inflation-adjusted)",
   x_title = element_blank(),
   y_zero = TRUE,
   x_labels = scales::date_format(format = "%Y")
@@ -627,30 +619,27 @@ costar_br_rent <-gg_line_col(
   ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
   ggplot2::theme(
     legend.title = element_blank(),
-    legend.position = "top",
-    legend.direction = "horizontal",
-    legend.justification = "center"
+    legend.position = "right",
+    legend.direction = "vertical",
+    legend.justification = "left"
   )
 
-plotly::ggplotly(costar_br_rent) %>% 
-  plotly_camera()
+costar_br_rent
+
+# plotly::ggplotly(costar_br_rent) %>% 
+#   plotly_camera()
 
 ```
 
 ## Rental housing construction
 
-Like most of the country, the Great Recession negatively impacted home building in the county --- both in terms of single-family and multifamily housing. That impact was most felt among single-family home construction, however. Pre-recession, the average single-family residential construction permits numbered 2,050 and post-recession single-family home starts have been slow to recover to that pre-recession era. It was not until 2020 that the county exceeded that pre-recession average.
+Like most of the country, the Great Recession negatively impacted home building in the county. That impact was most felt among single-family home construction, however. Pre-recession, the number of single-family residential construction permits averaged 2,050 per year in Chesterfield County. This pace would not be seen again until 2020.
 
 ### Multifamily building permits
 
-Multifamily (five or more units) home starts were not as impacted by the recession due to the generally low number of multifamily construction permits. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466. 
+Multifamily (five or more units) home starts were not as impacted by the recession. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466. 
 
 Duplexes and smaller multifamily homes like tri-plexes and quads have not seen substantial construction in the county. These types of properties often make up what is called "[Missing Middle](https://missingmiddlehousing.com/)" housing, a term used to describe smaller multifamily and clustered single-family housing that often offers affordability by design (i.e., smaller homes typically mean lower price).
-
-```
-This could be fleshed out a lot more!!
-
-```
 
 ```{r permits}
 
@@ -699,23 +688,22 @@ permits <- gg_bar_col_facet(
   x_var = year,
   y_var = units,
   col_var = type,
-  facet_var = type)
+  facet_var = type,
+  x_title = "",
+  y_title = "",
+  col_title = "",
+  title = "Annual building permits in Chesterfield County by structure type")
 
-plotly::ggplotly(permits) |>  
-  plotly_camera()
+permits
+
+# plotly::ggplotly(permits) |>  
+#   plotly_camera()
 
 ```
 
 ### Proposed and in-progress developments
 
-There are currently 19 proposed or under construction multifamily developments in the county --- an estimated total of 5,039 rental homes^[Three properties do not have number of units listed and are slated for a 2027 completion date]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
-
-```
-This could be fleshed out a lot more!!
-
-The three properties slated for 2027 can probably be condensed into a single record. BizSense article refers to "150 low-rise multifamily units, 350 midrise units and 150 age-restricted units." Could maybe keep separate in this case. There are options!
-
-```
+There are currently 19 proposed or under construction multifamily developments in the county---an estimated total of 5,039 rental homes^[Three properties do not have number of units listed and are slated for a 2027 completion date]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
 
 ```{r costar-construction}
 
@@ -724,6 +712,22 @@ under_con <- read_csv("data/costar_under_con_may_13.csv") |>
 
 sum(under_con$number_of_units, na.rm = TRUE)
 
+under_con_yr <- under_con |> 
+  filter(!is.na(number_of_units)) |> 
+  group_by(year_built) |> 
+  summarise(n = sum(number_of_units)) |> 
+  mutate(year_built = as.character(year_built))
+
+proposed <- gg_bar(
+  under_con_yr,
+  x_var = year_built,
+  y_var = n,
+  x_title = "",
+  y_title = "",
+  title = "Upcoming rental units in Chesterfield County by delivery year"
+)
+
+proposed
 
 ```
 
