@@ -54,7 +54,7 @@ price_comp <- rbind(recent_price, past_price)
 
 ```
 
-```{r price-all}
+```{r price-all, fig.cap="Average rent of existing and recent rental units"}
 
 avg_rent_all <- price_comp |> 
   filter(bedrooms == "All") |> 
@@ -72,7 +72,8 @@ total_avg_rent <- gg_line_col(
   y_title = "",
   col_title = "",
   y_labels = scales::label_dollar(),
-  x_labels = scales::label_date(format = "%Y")) +
+  x_labels = scales::label_date(format = "%Y"),
+  title = "Average rent of existing and recent rental units") +
   ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
   ggplot2::theme(
   legend.position = "top",
@@ -87,7 +88,7 @@ total_avg_rent
 
 Price difference between recent and existing properties by number of bedrooms follows similar trends. But average rents for recent three-bedroom rentals experienced a significant increase in the middle of 2021 --- going from \$2,152 in Q2 2021 to \$2,337 in Q4 2021. In 2022, these rents began to decline somewhat, but still remained above \$2,000.
 
-```{r price-br}
+```{r price-br, fig.cap="Average rent of existing and recent rental units by bedroom"}
 
 avg_rent_br <- price_comp |> 
   filter(bedrooms != "Studio") |> 
@@ -107,7 +108,8 @@ br_avg_rent <- gg_line_col_facet(
   y_title = "",
   col_title = "",
   y_labels = scales::label_dollar(),
-  x_labels = scales::label_date(format = "%Y")) +
+  x_labels = scales::label_date(format = "%Y"),
+  title = "Average rent of existing and recent rental units by bedroom") +
   ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
   ggplot2::theme(
   legend.position = "top",
@@ -182,7 +184,8 @@ style_mix_bar <- gg_bar_col_facet(
   y_labels = scales::label_percent(),
   y_title = "",
   x_title = "",
-  col_legend_none = TRUE
+  col_legend_none = TRUE,
+  title = "Share of units by type for existing and recent properties"
 )
 
 style_mix_bar
@@ -233,7 +236,8 @@ br_mix_bar <- gg_bar_col_facet(
   y_labels = scales::label_percent(),
   y_title = "",
   x_title = "",
-  col_legend_none = TRUE
+  col_legend_none = TRUE,
+  title = "Share of units by bedrooms for existing and recent properties"
 )
 
 br_mix_bar
@@ -277,7 +281,8 @@ sf_mix_box <- gg_boxplot_col_facet(
   x_title = "",
   y_title = "Average square footage",
   col_title = "",
-  col_legend_none = TRUE)
+  col_legend_none = TRUE,
+  title = "Share of units by size for existing and recent properties")
 
 sf_mix_box
 
@@ -352,7 +357,8 @@ amenity_bar <- gg_bar_col_facet(
   y_labels = scales::label_percent(),
   y_title = "",
   x_title = "Number of amenities",
-  col_legend_none = TRUE
+  col_legend_none = TRUE,
+  title = "Percent of existing and recent properties by number of amenities"
 )
 
 amenity_bar

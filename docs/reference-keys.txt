@@ -50,7 +50,16 @@ tab:r1-jobs-price
 fig:r1-rents
 fig:rents-tract
 tab:r1-renter-affordability
+fig:bedrooms
+fig:yearbuilt
 tab:sfr-summary
+fig:sfr-map
+fig:sfr-magisterial
+fig:sfr-owners-map
+fig:costar-rents
+fig:bedroom-rents
+fig:permits
+fig:costar-construction
 fig:recent-mf
 fig:new-units
 fig:units-time
@@ -60,7 +69,10 @@ fig:affordable-map
 fig:aff-type
 fig:loss
 fig:price-comparison-map
+fig:pcomp-hist-county
 fig:pcomp-hist-dist
+fig:price-all
+fig:price-br
 fig:unit-mix
 fig:br-mix
 fig:sf-mix

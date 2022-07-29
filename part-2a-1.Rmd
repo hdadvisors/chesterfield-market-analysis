@@ -40,7 +40,7 @@ Over the past decade, the number of renter households in the county has steadily
 
 From 2019 to 2020, there was a two percent decline in the renting population. But this decrease of 633 renters may be attributed to [the collection challenges of the 2020 Census count](https://apnews.com/article/lifestyle-health-coronavirus-pandemic-census-2020-government-and-politics-9aebdfb9c1b834352676d4b95f2d9ea0) and [historical undercounting of renters](https://censuscounts.org/whats-at-stake/will-you-count-renters-in-the-2020-census/). As rising interest rates and home sales prices persist, the number of renters in the county can be expected to rise as well---further contributing to the need for a diverse mix of rental housing opportunities.
 
-```{r tenure}
+```{r tenure, fig.cap="Number of renter households in Chesterfield County"}
 
 # Pull number of renter households across time from ACS Table B25003.
 
@@ -100,7 +100,7 @@ The rise in renters in Chesterfield County has not led to a commensurate rise in
 
 The distribution of rental housing type has largely remained the same since 2010. The major increases in rental housing have been among single-family detached home rentals (2,502 added since 2010) and multifamily buildings containing 5 to 9 units (1,545 added). Although single-family rentals provide growing families with much needed space, multifamily development can more effectively address rapidly growing demand at scale.
 
-```{r structure}
+```{r structure, fig.cap="Rental housing units by structure type"}
 
 years <- 2010:2020
 
@@ -170,7 +170,7 @@ Most rental housing in the county are two-bedroom and three-bedroom homes. This 
 
 The number of four-bedroom rental homes has been on a steady increase since 2010---from 1,995 to 3,453 in 2020, a 73 percent increase. Although the increasing number of families in search of larger homes has led to a corresponding demand in larger rental homes, the impact can be felt among single adults, especially low-income adults, needing affordable rental opportunities. 
 
-```{r bedrooms}
+```{r bedrooms, fig.cap="Rental housing by bedrooms"}
 
 years <- 2010:2020
 
@@ -226,7 +226,7 @@ bedroom_plot
 
 The majority of existing rental housing in the county was built between 1960 and 1999. This represents a significant portion of rental housing that is at least 20 years of age. Aging rental homes often mean increasing maintenance costs or the need for significant renovations that get passed down to tenants.
 
-```{r yearbuilt}
+```{r yearbuilt, fig.cap="Rental housing by year built"}
 
 b25036_vars <- load_variables(2020, "acs5") |> 
   filter(str_sub(name, end = 6) %in% "B25036")
@@ -403,7 +403,7 @@ ch_sfh_sum |>
 
 The map below shows the spatial distribution of SFRs across the county. They are found in nearly every community, but are most prevalent in Ettrick neighborhoods surrounding Petersburg and Colonial Heights, between Route 288 and Chippenham Parkway, the Route 1 corridor, and the Hull Street corridor.
 
-```{r sfr-map}
+```{r sfr-basemap, include=FALSE}
 
 library(tigris)
  
@@ -427,6 +427,10 @@ cf_basemap <- layer_static_mapbox(
   username = "mapbox"
 )
 
+```
+
+```{r sfr-map, fig.cap="Single-family rental homes in Chesterfield County"}
+
 sfr_map <- ggplot() +
   cf_basemap +
   geom_sf(data = ch_sfr, fill = "brown1", size = 1, shape = 21, alpha = .1) +
@@ -440,7 +444,7 @@ sfr_map
 
 When aggregated to the county's five magisterial districts, single-family rentals are most common in the Bermuda and Dale districts. SFRs comprise more than 13 percent of the total single-family stock in these districts, but this is still not significantly above the county average. The Midlothian district has the lowest share of SFRs at 9 percent.
 
-```{r sfr-magisterial}
+```{r sfr-magisterial, fig.cap="Single-family rentals as percent of all single-family homes by magisterial district"}
 
 # Determine percent of SHF that are renter-occupied by magisterial district
 
@@ -468,7 +472,7 @@ sfr_mag
 
 The majority of SFR owners (61 percent) also live in the county, while 29 percent live somewhere else in Virginia. The remaining 10 percent of single-family rental owners live outside of the state.
 
-```{r sfr-owners}
+```{r sfr-owners, include=FALSE}
 
 sf_use_s2(FALSE)
 
@@ -493,6 +497,10 @@ rental_pct <- rental_class %>%
   ungroup() %>%
   mutate(pct = (n / sum(n)))
 
+```
+
+```{r sfr-owners-map, fig.cap="Location of single-family rental owners"}
+
 sfr_bar <- gg_bar_col(rental_pct,
                       x_var = owner_location,
                       y_var = pct,
@@ -501,12 +509,10 @@ sfr_bar <- gg_bar_col(rental_pct,
                       y_title = "",
                       x_title = "",
                       x_labels = function(x) x,
-                      y_labels = percent_format())
+                      y_labels = percent_format(),
+                      title = "Location of single-family rental owners")
 
 sfr_bar
-
-# plotly::ggplotly(sfr_bar) |> 
-#   plotly_camera()
 
 ```
 
@@ -540,7 +546,7 @@ From the early 2000s, rental housing costs had generally been declining in the c
 
 Average market asking rent per unit is expected to climb in the county---signalling an increasing demand, as well as the construction of higher end rental apartments.
 
-```{r costar-rents}
+```{r costar-rents, fig.cap="Average asking rent in Chesterfield County"}
 
 # This is pulling in average rents for all existing multifamily properties in the county. For some reason, this differs from the previous average rent calculations. I'd resolve this by updating the previous visualization in Part-1B-4.
 
@@ -578,16 +584,13 @@ costar_rent <-gg_line_col(
 
 costar_rent
 
-# plotly::ggplotly(costar_rent) %>% 
-#   plotly_camera()
-
 ```
 
 ### Rent by bedrooms
 
 The number of bedrooms often impacts rental housing costs---more bedrooms generally equals higher rent. As of 2022 Q1, there is an approximate difference of $420 between the average rent for a 1 bedroom (\$1,335) versus a three bedroom apartment (\$1,756). Average rent for a 2 bedroom apartment was right in the middle at \$1,532.
 
-```{r bedroom-rents}
+```{r bedroom-rents, fig.cap="Average asking rent in Chesterfield County by bedroom"}
 
 # This uses the same filter as above from CoStar.
 
@@ -626,9 +629,6 @@ costar_br_rent <-gg_line_col(
 
 costar_br_rent
 
-# plotly::ggplotly(costar_br_rent) %>% 
-#   plotly_camera()
-
 ```
 
 ## Rental housing construction
@@ -641,7 +641,7 @@ Multifamily (five or more units) home starts were not as impacted by the recessi
 
 Duplexes and smaller multifamily homes like tri-plexes and quads have not seen substantial construction in the county. These types of properties often make up what is called "[Missing Middle](https://missingmiddlehousing.com/)" housing, a term used to describe smaller multifamily and clustered single-family housing that often offers affordability by design (i.e., smaller homes typically mean lower price).
 
-```{r permits}
+```{r permits, fig.cap="Annual building permits in Chesterfield County by structure type"}
 
 years <- 2000:2020
 
@@ -696,21 +696,18 @@ permits <- gg_bar_col_facet(
 
 permits
 
-# plotly::ggplotly(permits) |>  
-#   plotly_camera()
-
 ```
 
 ### Proposed and in-progress developments
 
 There are currently 19 proposed or under construction multifamily developments in the county---an estimated total of 5,039 rental homes^[Three properties do not have number of units listed and are slated for a 2027 completion date]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
 
-```{r costar-construction}
+```{r costar-construction, fig.cap="Upcoming rental units in Chesterfield County by delivery year"}
 
 under_con <- read_csv("data/costar_under_con_may_13.csv") |> 
   clean_names()
 
-sum(under_con$number_of_units, na.rm = TRUE)
+# sum(under_con$number_of_units, na.rm = TRUE)
 
 under_con_yr <- under_con |> 
   filter(!is.na(number_of_units)) |> 

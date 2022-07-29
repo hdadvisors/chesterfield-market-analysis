@@ -16,13 +16,19 @@ While average rents for recent properties has remained steady, existing property
 
 
 
-<img src="part-2a-3_files/figure-html/price-all-1.png" width="100%" style="border:none;" />
+<div class="figure">
+<img src="part-2a-3_files/figure-html/price-all-1.png" alt="Average rent of existing and recent rental units" width="100%" style="border:none;" />
+<p class="caption">(\#fig:price-all)Average rent of existing and recent rental units</p>
+</div>
 
 *Source: CoStar Group, Inc.*
 
 Price difference between recent and existing properties by number of bedrooms follows similar trends. But average rents for recent three-bedroom rentals experienced a significant increase in the middle of 2021 --- going from \$2,152 in Q2 2021 to \$2,337 in Q4 2021. In 2022, these rents began to decline somewhat, but still remained above \$2,000.
 
-<img src="part-2a-3_files/figure-html/price-br-1.png" width="100%" style="border:none;" />
+<div class="figure">
+<img src="part-2a-3_files/figure-html/price-br-1.png" alt="Average rent of existing and recent rental units by bedroom" width="100%" style="border:none;" />
+<p class="caption">(\#fig:price-br)Average rent of existing and recent rental units by bedroom</p>
+</div>
 
 *Source: CoStar Group, Inc.*
 
