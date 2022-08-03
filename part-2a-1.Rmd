@@ -300,7 +300,7 @@ Based on an analysis of these address in the latest parcel records from the coun
 # Pull in Chesterfield County magisterial districts
 
 # districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
-
+# 
 # districts <- read_sf(districts_geojson)
 
 # View districts as simple map
@@ -309,7 +309,7 @@ Based on an analysis of these address in the latest parcel records from the coun
 # Pull in Chesterfield County parcel shapefile and convert polygons to points
 
 # parcels <- st_read("data/ParcelsEnriched.shp") |>
-#   st_point_on_surface()
+#    st_point_on_surface()
 
 # Remove unneeded columns and spatially join to magisterial districts
 
@@ -325,7 +325,7 @@ Based on an analysis of these address in the latest parcel records from the coun
 #     zip = Zip,
 #     year_built = Year_Built,
 #     improvement = Improvemen
-#   ) |> 
+#   ) |>
 #   st_join(left = FALSE, districts["MagDistName"])
 
 # Check closeness between parcel address and owner address
@@ -368,6 +368,8 @@ Based on an analysis of these address in the latest parcel records from the coun
 # ch_sfh <- filter(parcels_ownership, ownership %in% c("Owner-occupied SFH",
 #                                                      "Renter-occupied SFH"))
 
+# st_write(ch_sfh, "data/shp/ch_sfh.shp")
+
 # ch_sfh |> 
 #   st_drop_geometry() |> 
 #   saveRDS("data/ch_sfh.rds")
@@ -407,7 +409,7 @@ The map below shows the spatial distribution of SFRs across the county. They are
 
 library(tigris)
  
-options(tigris_use_cache = FALSE)
+options(tigris_use_cache = TRUE)
 
 ch_boundary <- counties("VA") |> 
   filter(NAME == "Chesterfield")
@@ -474,12 +476,17 @@ The majority of SFR owners (61 percent) also live in the county, while 29 percen
 
 ```{r sfr-owners, include=FALSE}
 
-sf_use_s2(FALSE)
+# sf_use_s2(FALSE)
+# 
+# zips <- zctas(year = 2010, state = "VA") |> 
+#   st_point_on_surface()
+# 
+# chesterfield_zips <- zips[ch_boundary, ] |> 
+#   st_drop_geometry()
+# 
+# write_rds(chesterfield_zips, "data/chesterfield_zips.rds")
 
-zips <- zctas(year = 2010, state = "VA") |> 
-  st_point_on_surface()
-
-chesterfield_zips <- zips[ch_boundary, ]
+chesterfield_zips <- read_rds("data/chesterfield_zips.rds")
 
 zip_list <- chesterfield_zips$ZCTA5CE10
 

@@ -30,13 +30,14 @@ library(mapboxapi)
 library(rgdal)
 library(lehdr)
 library(scales)
-library(optiRum)
+library(htmlwidgets)
+library(htmltools)
 
 ```
 
-## The Route One Corridor
+## The Route 1 Corridor
 
-U.S Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
+U.S. Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
 
 Current conditions on the northern section of Route 1 prevent significant reinvestment, but recent efforts by the County improve those conditions and incentivize new and much needed development. The 2018 Northern Jefferson Davis Special Area Plan and the 2019 Northern Jefferson Davis Real Estate Market Study provide Chesterfield County with initial tools to revitalize Route 1. Momentum has continued with the Route 1 Residential Overlay District, the Northern Jefferson Davis Incentive Program, and Greater Richmond Transit Company's Pilot Bus Service.
 
@@ -61,20 +62,24 @@ r1_tracts <- tracts("VA", "Chesterfield",
     TRACTCE == "100409" ~ "Northern Chester"
   ))
 
-hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
-  
-leaflet(r1_tracts) |> 
-  addTiles() |> 
-  addPolygons(color = ~hood_pal(neighborhood), 
-              weight = 3, 
-              label = ~r1_tracts$NAMELSAD,
-              labelOptions = labelOptions(noHide = F, 
-                                          direction = "auto",
-                                          textsize = "15px")) |> 
-  addLegend("topright",
-            pal = hood_pal,
-            values = ~neighborhood,
-            title = "Route 1 corridor neighborhoods")
+# hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
+#   
+# r1_neighborhoods <- leaflet(r1_tracts) |> 
+#   addTiles() |> 
+#   addPolygons(color = ~hood_pal(neighborhood), 
+#               weight = 3, 
+#               label = ~r1_tracts$NAMELSAD,
+#               labelOptions = labelOptions(noHide = F, 
+#                                           direction = "auto",
+#                                           textsize = "15px")) |> 
+#   addLegend("topright",
+#             pal = hood_pal,
+#             values = ~neighborhood,
+#             title = "Route 1 corridor neighborhoods")
+# 
+# saveWidget(r1_neighborhoods, "maps/r1_neighborhoods.html")
+
+knitr::include_url("maps/r1_neighborhoods.html", height = "500px")
 
 ```
 
@@ -86,7 +91,7 @@ The following describes the existing rental housing supply along the Route 1 cor
 
 The number of rental homes along the Route 1 corridor has increased by 26 percent between 2010 and 2020 - a total of 708 renter households. Much of this rental housing growth occurred in the latter half of the decade --- from 2014 and on. From 2010 to 2012, rental housing was in decline --- most likely a reflection of the latter year impacts from the Great Recession. During this timeframe, the construction industry struggled to keep pace with the growing demand for new rental housing. From 2019 to 2020, there was a higher estimated percent change (13 percent)in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market --- margins of error for the data in 2020 are also higher than previous years; and therefore, these changes should be interpreted with caution.
 
-```{r r1-rhh}
+```{r r1-rhh, fig.cap="Renter households in Route 1 corridor"}
 
 years <- 2010:2020
 
@@ -128,24 +133,27 @@ b25003_route1 <- b25003_r1 |>
   group_by(year) |> 
   summarise(estimate = sum(estimate))
   
-#Create line graph showing change in renter households across time.
+# Create line graph showing change in renter households across time.
+
 r1_renters_plot <- gg_line(
   b25003_route1,
   x_var = year,
   y_var = estimate,
   y_breaks_n = 5,
+  y_zero = TRUE,
   title = "Renter households",
   x_title = element_blank())
 
-plotly::ggplotly(r1_renters_plot) %>% 
-  plotly_camera()
+r1_renters_plot
 
   
 ```
 
-Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Bensley area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households. While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
+Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Bensley area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households.
 
-```{r r1-rhh-map-10}
+While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
+
+```{r r1-rhh-tract, fig.cap="Change in renter households by tract from 2010 to 2020"}
 
 b25003_r1_10 <- b25003_r1 |> 
   filter(year == 2010) |> 
@@ -157,9 +165,22 @@ b25003_r1_20 <- b25003_r1 |>
 
 b25003_r1_10_20 <- cbind(b25003_r1_10, b25003_r1_20) |> 
   select(NAME, fips, est10 = estimate, est20 = estimate.1, geometry) |> 
-  mutate(change = (est20-est10))
+  mutate(change = (est20-est10),
+         tract = sapply(strsplit(
+           as.character(
+             str_remove_all(NAME, "\\,")), " "), unlist)[3,],
+         tract = fct_reorder(tract, change, .desc = TRUE))
 
+r1_rhh_tract <- gg_hbar_col(b25003_r1_10_20,
+                            x_var = change,
+                            y_var = tract,
+                            col_var = change,
+                            title = "Change in renter households by tract from 2010 to 2020",
+                            y_labels = function(x) x,
+                            x_title = "",
+                            col_legend_none = TRUE)
 
+r1_rhh_tract
 
 ```
 
@@ -195,28 +216,36 @@ r1_unit_cnt_bar <- gg_bar_col(
   col_var = building_status
 )
 
-plotly::ggplotly(r1_unit_cnt_bar) %>% 
-  plotly_camera()
+r1_unit_cnt_bar
 
 ```
 
 The city-county border was located much further north before the annexation of Northern Chesterfield by the City of Richmond in 1970. In spite of this change, these older rental properties represent the extent to which rental housing development in the mid-20th century stretched into the county.
 
-```{r costar-mf-2, fig.cap="Map of multifamily properties along Route One Corridor"}
+```{r costar-mf-2, fig.cap="Map of multifamily properties along Route 1 Corridor"}
 
-r1_map <- costar_r1_mf |> 
-  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+# r1_map <- costar_r1_mf |> 
+#   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
+# 
+# r1_costar_map <- leaflet(r1_map) |> 
+#   addTiles() |> 
+#   addPolygons(data = r1_tracts,
+#               weight = 2,
+#               color = "#666666",
+#               fillColor = "#999999",
+#               fillOpacity = 0.3) |> 
+#   addCircleMarkers(radius = 3,
+#                    popup = r1_map$property_name)
+# 
+# r1_costar_map
+# 
+# saveWidget(r1_costar_map, "maps/r1_costar_map.html")
 
-leaflet(r1_map) |> 
-  addTiles() |> 
-  addCircleMarkers(
-    radius = 3) |> 
-  addPolygons(data=r1_tracts, weight = 2, fillColor = NULL)
-
+knitr::include_url("maps/r1_costar_map.html", height = "500px")
 
 ```
 
-### Manufactured Home Communities
+### Manufactured home communities
 
 Manufactured housing grew out of the "travel trailer" popularity of the mid-20th century. These trailers evolved into the manufactured housing when the U.S. Department of Housing and Urban Development developed standardized building codes and the the Federal Housing Administration began offering mortgage insurance on both homes and lots.
 
@@ -233,53 +262,60 @@ Accurate data on manufactured home communities is difficult to come by. Communit
 
 The northern Route 1 corridor has a substantial number of manufactured home communities --- specifically 10 out of the county's known 17 manufactured home communities are located in the area. This accounts for at least 514 individual manufactured homes, or 31 percent of all homes located in a manufactured home community. This includes the sixth largest manufactured home park in the county, Shady Hill, which was recently purchased in July 2022.
 
-```{r mhc-r1}
+```{r r1-mhc, fig.cap="Map of manufactured home communities along Route 1"}
 
 # Use MHCCV study instead; supplement additional MHCs.
 
-mhc <- read_csv("data/mhccv_chesterfield.csv") 
+# mhc <- read_csv("data/mhccv_chesterfield.csv") 
+# 
+# mhc <- mhc |> 
+#   transform(fulladdress = paste(mhc$address, mhc$county, mhc$state, mhc$zip, sep = ", "))|> 
+#   select(name, fulladdress, units, units_mhccv, corridor)
+# 
+# mhc_coded <- mhc |> 
+#   geocode(address = fulladdress,
+#           method = 'geocodio',
+#           full_results = TRUE,
+#           unique_only = FALSE,
+#           lat = Latitude,
+#           long = Longitude) |> 
+#   mutate(Latitude = case_when(
+#     name == "Holiday Mobile Home Park" ~ 37.393355,
+#     TRUE ~ Latitude
+#   )) |> 
+#   mutate(Longitude = case_when(
+#     name == "Holiday Mobile Home Park" ~ -77.427561,
+#     TRUE ~ Longitude
+#   ))
+# 
+# saveRDS(mhc_coded, file = "data/mhc_coded.rds")
 
-mhc <- mhc |> 
-  transform(fulladdress = paste(mhc$address, mhc$county, mhc$state, mhc$zip, sep = ", "))|> 
-  select(name, fulladdress, units, units_mhccv, corridor)
-
-mhc_coded <- mhc |> 
-  geocode(address = fulladdress,
-          method = 'geocodio',
-          full_results = TRUE,
-          unique_only = FALSE,
-          lat = Latitude,
-          long = Longitude)
-
-mhc_coded <- mhc_coded |> 
-  mutate(Latitude = case_when(
-    name == "Holiday Mobile Home Park" ~ 37.393355,
-    TRUE ~ Latitude
-  )) |> 
-  mutate(Longitude = case_when(
-    name == "Holiday Mobile Home Park" ~ -77.427561,
-    TRUE ~ Longitude
-  ))
+mhc_coded <- readRDS("data/mhc_coded.rds")
 
 mhc_coded_r1 <- mhc_coded |> 
   filter(corridor == "Route 1 - N")
 
+# sum(mhc_coded_r1$units_mhccv)
 
-leaflet(mhc_coded_r1) |> 
-  addTiles() |> 
-  addCircleMarkers(
-    radius = ~ (units_mhccv/5),
-    color = "orange",
-    stroke = FALSE, fillOpacity = 0.5
-  )
+# sum(mhc$units_mhccv)
 
-sum(mhc_coded_r1$units_mhccv)
+# r1_mhc_map <- leaflet(mhc_coded_r1) |> 
+#   addTiles() |> 
+#   addCircleMarkers(
+#     radius = ~ (units_mhccv/5),
+#     color = "orangered",
+#     stroke = TRUE,
+#     fillOpacity = 0.5,
+#     popup = ~paste(name, "<br> Units:", units_mhccv)
+#   )
+# 
+# saveWidget(r1_mhc_map, "maps/r1_mhc_map.html")
 
-sum(mhc$units_mhccv)
+knitr::include_url("maps/r1_mhc_map.html", height = "500px")
 
 ```
 
-Notable among these communities is Bermuda Estates, which was purchased by affordable housing nonprofit, project:HOMES, in September 2020. Only one of two nonprofit owned and managed manufactured home communities in the Commonwealth, Bermuda Estates has seen signficant infrastructure improvements and the replacement of homes with new energy efficient manufactured home models by project:HOMES.
+Notable among these communities is Bermuda Estates, which was purchased by affordable housing nonprofit, project:HOMES, in September 2020. Only one of two nonprofit owned and managed manufactured home communities in the Commonwealth, Bermuda Estates has seen significant infrastructure improvements and the replacement of homes with new energy efficient manufactured home models by project:HOMES.
 
 ```{r r1-mhc-list}
 
@@ -290,12 +326,11 @@ mhc_coded_r1 |>
         align = "lr",
         col.names = c("Name", "Estimated homes")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(8, bold=TRUE)
+    bootstrap_options = c("condensed", "hover", "striped"))
 
 ```
 
-### Single-Family Rentals (SFR)
+### Single-family rentals
 
 As mentioned previously in [Chapter 11](#part-2a-1), the growth of the single-family home rental (SFR) market is impacting all parts of the county. And the Route 1 corridor is no exception.
 
@@ -305,64 +340,79 @@ Along the northern Route 1 corridor, there is an estimated 1,008 single-family h
 
 SFR is a growing demand among renters as homeownership continues to be out of reach for many, but it also serves a growing demand among households looking for greater space and privacy not offered in apartments. As seen in [Chapter 13](#part-2a-3), nearly 54 percent of recent multifamily housing is two-bedrooms or less, leaving many larger households competing for less supply. SFR is filling the gap where multifamily developers are often falling short due to increasing construction costs and public opposition.
 
-```{r sfr-r1}
+```{r sfr-r1, fig.cap="Percent of single-family homes that are renter-occupied by tract"}
 
-# Choropleth map of percent of SFR by census tract. Perhaps include a chart as well. Might be interesting to compare to change in homeownership rate for each.
+# ch_sfh <- st_read("data/shp/ch_sfh.shp")
+# 
+# sfr_r1 <- ch_sfh |> 
+#   st_join(left = FALSE, r1_tracts["NAMELSAD"]) |> 
+#   select(address, imprvmn, ownrshp, ownr_zp, ownr_st, tract = NAMELSAD, geometry) |> 
+#   filter(imprvmn > 0)
+# 
+# sfr_r1_summary <- sfr_r1 |> 
+#   st_drop_geometry() |> 
+#   group_by(tract, ownrshp) |> 
+#   summarise(count = n_distinct(address)) |> 
+#   mutate(total_sfh = case_when(
+#     tract == tract ~ sum(count))
+#   ) |> 
+#   mutate(percent_sfh = count/total_sfh,
+#          tract = sapply(strsplit(
+#            as.character(
+#              str_remove_all(tract, "\\,")), " "), unlist)[3,]) |> 
+#   filter(ownrshp == "Renter-occupied SFH") |> 
+#   ungroup() |> 
+#   mutate(tract = fct_reorder(tract, percent_sfh, .desc = TRUE))
+# 
+# write_rds(sfr_r1_summary, "data/sfr_r1_summary.rds")
 
-sfr_r1 <- ch_sfh |> 
-  st_join(left = FALSE, r1_tracts["NAMELSAD"]) |> 
-  select(address, year_built, improvement, ownership, owner_zip, owner_state, NAMELSAD, geometry) |> 
-  filter(improvement > 0)
+sfr_r1_summary <- read_rds("data/sfr_r1_summary.rds")
+  
+sfr_r1_pct <- gg_hbar_col(sfr_r1_summary,
+                          x_var = percent_sfh,
+                          y_var = tract,
+                          col_var = percent_sfh,
+                          title = "Percent of single-family homes that are renter-occupied by tract",
+                          x_labels = label_percent(),
+                          y_labels = function(x) x,
+                          col_legend_none = TRUE,
+                          x_title = "")
 
-sfr_r1_summary <- sfr_r1 |> 
-  group_by(NAMELSAD, ownership) |> 
-  summarise(count = n_distinct(address)) |> 
-  mutate(total_sfh = case_when(
-    NAMELSAD == NAMELSAD ~ sum(count))
-  ) |> 
-  mutate(percent_sfh = count/total_sfh) |> 
-  filter(ownership == "Renter-occupied SFH") |> 
-  st_drop_geometry()
+sfr_r1_pct
 
-sfr_r1_tracts <- r1_tracts |> 
-  left_join(sfr_r1_summary, by = "NAMELSAD")
-
-leaf_sf_col(sfr_r1_tracts,
-            col_var = percent_sfh)
-
-sum(sfr_r1_summary$count)
-
-sum(sfr_r1_tracts$total_sfh)
 ```
 
-The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Only 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida.
+The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Fewer than 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida.
 
 ```{r sfr_r1_owners}
 
-sf_use_s2(FALSE)
-zips <- zctas(cb = TRUE) %>%
-  st_point_on_surface()
-chesterfield <- counties("VA", cb = TRUE) %>%
-  filter(NAME == "Chesterfield")
+chesterfield_zips <- read_rds("data/chesterfield_zips.rds")
 
-chesterfield_zips <- zips[chesterfield, ]
-
-zip_list <- chesterfield_zips$GEOID20
+zip_list <- chesterfield_zips$ZCTA5CE10
 
 # There is a duplicate address that I end up filtering out with a distinct count.
 
-rental_class_r1 <- sfr_r1|> 
-  filter(ownership == "Renter-occupied SFH") %>%
+rental_class_r1 <- sfr_r1 |> 
+  st_drop_geometry() |> 
+  filter(ownrshp == "Renter-occupied SFH") %>%
   mutate(owner_location = case_when(
-    owner_zip %in% zip_list ~ "Owner in Chesterfield",
-    owner_state == "VA" ~  "Owner in Virginia",
+    ownr_zp %in% zip_list ~ "Owner in Chesterfield",
+    ownr_st == "VA" ~  "Owner in Virginia",
     TRUE ~ "Owner out of state"
   ))
 
-rental_class_r1_summary <- rental_class_r1 |> 
+rental_class_r1_sum <- rental_class_r1 |> 
   group_by(owner_location) |> 
-  summarise(count = n_distinct(address))
+  summarise(count = n_distinct(address)) |> 
+  mutate(pct = percent(count/sum(count), 1))
 
+rental_class_r1_sum |> 
+  kable(caption = "Single-family rentals in Route 1 corridor by owner location",
+        align = "lrr",
+        col.names = c("Ownership", "Number", "Percent")) |> 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")
+  )
 
 ```
 
@@ -370,7 +420,7 @@ rental_class_r1_summary <- rental_class_r1 |>
 
 Median rents in the northern Route 1 corridor have fluctuated in the last decade. But increases in the typical rent have most significantly occurred in the southern part of Bellwood (Census Tract 1004.07) where Colony Village was developed. In this part of the corridor, median rent has increased by 24 percent from 2010 to 2020.
 
-```{r acs-r1-rent}
+```{r acs-r1-rent, fig.cap="Median inflation-adjusted rent by tract: 2010 to 2020"}
 
 years <- 2010:2020
 
@@ -409,31 +459,35 @@ r1_rent_cpi <- b25064_r1_raw |>
 
 r1_rent_change <- r1_rent_cpi |> 
   select(NAMELSAD, year, dollars20) |> 
-  st_drop_geometry() |> 
-  pivot_wider(
-    names_from = year,
-    values_from = dollars20
-  )
+  mutate(tract = sapply(strsplit(
+           as.character(
+             str_remove_all(NAMELSAD, "\\,")), " "), unlist)[3,]) |> 
+  st_drop_geometry()
 
-r1_rent_change_map <- r1_tracts |>
-  left_join(r1_rent_change, by = "NAMELSAD") |> 
-  clean_names() |> 
-  select(tract = namelsad, x2010:x2020) |> 
-  transform(change =(x2020-x2010)/x2010)
-
-# Not sure about the best visualization. Ideally a Shiny app that can tab across years to show the change in median rent.
-
-leaf_sf_col(r1_rent_change_map,
-            col_var = change)
-
+gg_line_col_facet(r1_rent_change,
+                  x_var = year,
+                  y_var = dollars20,
+                  col_var = tract,
+                  facet_var = tract,
+                  alpha_point = 0,
+                  size_line = 0.75,
+                  col_legend_none = TRUE,
+                  y_labels = label_dollar(),
+                  facet_labels = function(x) x,
+                  title = "Median inflation-adjusted rent by tract: 2010 to 2020",
+                  y_title = "Median inflation-adjusted rent",
+                  x_title = ""
+                  )
 
 ```
 
-There are clear differences in median rents between the northern and southern sections of the Route 1 corridor. Northern Chester and southern Bellwood had median rents above \$1,300 in 2020 --- \$1,314 and \$1,367, respectively. Median rents in the northern part of the corridor ranged from \$780 to \$1,059 -- hundreds of dollars less in all cases than the southern part of the corridor. Much of this difference in rental markets is no doubt a result of newer developments like Colony Village and The Jane at Moore's Lake. There have been few new multifamily developments in the northern section aside from Better Housing Coalition developments.
+There are clear differences in median rents between the northern and southern sections of the Route 1 corridor. Northern Chester and southern Bellwood had median rents above \$1,300 in 2020 --- \$1,314 and \$1,367, respectively. Median rents in the northern part of the corridor ranged from \$780 to \$1,059 -- hundreds of dollars less in all cases than the southern part of the corridor.
+
+Much of this difference in rental markets is no doubt a result of newer developments like Colony Village and The Jane at Moore's Lake. There have been few new multifamily developments in the northern section aside from Better Housing Coalition developments.
 
 ```{r acs-r1-rent1}
 
-r1_rent_cpi <- r1_rent_cpi |> 
+r1_rent_nhood <- r1_rent_cpi |> 
   mutate(neighborhood = case_when(
     NAMELSAD == "Census Tract 1003" ~ "Bensley",
     NAMELSAD == "Census Tract 1004.05" ~ "Bensley",
@@ -441,23 +495,38 @@ r1_rent_cpi <- r1_rent_cpi |>
     NAMELSAD == "Census Tract 1004.06" ~ "Bellwood",
     NAMELSAD == "Census Tract 1004.07" ~ "Bellwood",
     NAMELSAD == "Census Tract 1004.09" ~ "Northern Chester",
-  ))
+  )) |> 
+  select(NAMELSAD, neighborhood, year, dollars20) |> 
+  mutate(tract = sapply(strsplit(
+           as.character(
+             str_remove_all(NAMELSAD, "\\,")), " "), unlist)[3,]) |> 
+  st_drop_geometry()
 
-gg_line_col_facet(r1_rent_cpi,
+gg_line_col_facet(r1_rent_nhood,
             x_var = year,
             y_var = dollars20,
-            col_var = NAMELSAD,
-            facet_var = neighborhood
+            col_var = tract,
+            facet_var = neighborhood,
+            alpha_point = 0,
+            size_line = 0.75,
+            y_labels = label_dollar(),
+            col_labels = function(x) x,
+            facet_labels = function(x) x,
+            title = "Median inflation-adjusted rent by neighborhood: 2010 to 2020",
+            y_title = "Median inflation-adjusted rent",
+            x_title = ""
             )
 
 
 ```
 
-#### Multifamily Rents
+#### Multifamily rents
 
-CoStar's analytics allows for a broad snapshot of average rent data along Route 1 on a quarter-by-quarter basis. Average rent per apartment was on a steady decline from 2002 until the rental market began to recover in 2013. It was not until Q3 2014 that average rent began to experience consistent increases quarter over quarter from \$1,109 to \$1,214 in the most recent 2022 quarter. From 2017 to early 2020, the typical average rent increase was about \$3 but between Q1 2020 and Q2 2020 the average rent jumped \$15 from \$1,195 to \$1,210. It was during this timeframe that the pandemic began to impact housing markets, leading to significantly low rental vacancy rates as the eviction moratorium was put in place and increasing demand for housing away from the denser urban environment.
+CoStar's analytics allows for a broad snapshot of average rent data along Route 1 on a quarter-by-quarter basis. Average rent per apartment was on a steady decline from 2002 until the rental market began to recover in 2013. It was not until Q3 2014 that average rent began to experience consistent increases quarter over quarter from \$1,109 to \$1,214 in the most recent 2022 quarter.
 
-```{r costar-r1-rent}
+From 2017 to early 2020, the typical average rent increase was about \$3 but between Q1 2020 and Q2 2020 the average rent jumped \$15 from \$1,195 to \$1,210. It was during this timeframe that the pandemic began to impact housing markets, leading to significantly low rental vacancy rates as the eviction moratorium was put in place and increasing demand for housing away from the denser urban environment.
+
+```{r costar-r1-rent, fig.cap="CoStar average asking rent for Route 1 corridor"}
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
 
@@ -472,23 +541,27 @@ costar_r1_rent <- read_csv("data/costar_r1_rent.csv") |>
 
 colnames(costar_r1_rent)[2] <- "rent"
 
-costar_r1_rent_line <- gg_line(costar_r1_rent,
+gg_line(costar_r1_rent,
         x_var = period,
-        y_var = rent) + 
-  scale_x_date()
-
-plotly::ggplotly(costar_r1_rent_line) |> 
-  plotly_camera()
+        y_var = rent,
+        y_zero = TRUE,
+        alpha_point = 0,
+        size_line = 0.75,
+        x_labels = label_date(format = "%Y"),
+        y_labels = label_dollar(),
+        x_title = "",
+        y_title = "Average asking rent (inflation-adjusted)",
+        title = "CoStar average asking rent for Route 1 corridor") +
+  ggplot2::scale_x_date(limits = c(as.Date("1999-12-01"), as.Date("2022-07-31")))
 
 
 ```
 
-Average rent disaggregated by number of bedrooms shows fairly steady increases for all bedroom types, especially one- and two-bedroom apartments. Studios and three-bedroom apartments in the area have seen decreasing rents in recent years. In fact, average rent for three bedroom apartments are now \$56 cheaper (\$1,431) than they were at the start of 2012 (\$1,487). While we can only speculate as to reason for this, there has been a growing shift investor
+Average rent disaggregated by number of bedrooms shows fairly steady increases for all bedroom types, especially one- and two-bedroom apartments. Studios and three-bedroom apartments in the area have seen decreasing rents in recent years. In fact, average rent for three bedroom apartments are now \$56 cheaper (\$1,431) than they were at the start of 2012 (\$1,487).
 
-```{r costar-r1-brent}
+```{r costar-r1-brent, fig.cap="CoStar average asking rent for Route 1 corridor by bedroom"}
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
-
 
 costar_r1_brent <- read_csv("data/costar_r1_brent.csv") |> 
   clean_names() |> 
@@ -502,24 +575,30 @@ costar_r1_brent <- read_csv("data/costar_r1_brent.csv") |>
   ) |> 
   mutate(br = case_when(
     br == "studio" ~ "Studio",
-    br == "x1_bed" ~ "One bedroom",
-    br == "x2_beds" ~ "Two bedroom",
-    br == "x3_beds" ~ "Three bedroom"
+    br == "x1_bed" ~ "1 bedroom",
+    br == "x2_beds" ~ "2 bedroom",
+    br == "x3_beds" ~ "3 bedroom"
   )) |> 
   mutate(period = yq(period)) |> 
   mutate(year = year(period)) |> 
   mutate(rent = parse_number(rent)) |> 
-  filter(year > 2011)
+  filter(year > 2011) |> 
+  mutate(br = fct_reorder(br, rent, .fun = max, .desc = TRUE))
 
-r1_br_line<- gg_line_col_facet(costar_r1_brent,
-        x_var = period,
-        y_var = rent,
-        col_var = br,
-        facet_var = br) + 
-  scale_x_date()
-
-plotly::ggplotly(r1_br_line) |> 
-  plotly_camera()
+gg_line_col(costar_r1_brent,
+            x_var = period,
+            y_var = rent,
+            col_var = br,
+            alpha_point = 0,
+            size_line = 0.75,
+            title = "CoStar average asking rent for Route 1 corridor by bedroom",
+            y_labels = label_dollar(),
+            x_labels = label_date(format = "%Y"),
+            y_title = "Average asking rent (inflation-adjusted)",
+            x_title = "",
+            y_zero = TRUE,
+            col_title = "") +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date())))
 
 ```
 
@@ -529,26 +608,36 @@ Single-family rentals are not often listed via sources that provide consistent o
 
 The average listed rent for one of these SFR was \$1,336 --- nearly \$100 less the average rent for a three-bedroom apartment. Single-family detached homes fetch higher rental prices versus condominiums or duplexes.
 
-```{r mls-sfr}
+```{r mls-sfr, fig.cap="Listed MLS rents in Route 1 corridor"}
 
 # Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export. From July 2022.
 
 mls_r1_sfr <- read_csv("data/mls_r1_sfr.csv") |> 
   clean_names() |> 
-  mutate(sales_date = mdy(sales_date)) |> 
-  mutate(list_price = parse_number(list_price))
+  mutate(sales_date = mdy(sales_date),
+         list_price = parse_number(list_price),
+         year = as.numeric(year(sales_date)),
+         day = as.numeric(yday(sales_date)),
+         date = year + day/365)
 
-gg_point_col(mls_r1_sfr,
-         x_var = sales_date,
+# mean(mls_r1_sfr$list_price, na.rm = TRUE)
+
+gg_smooth_col(mls_r1_sfr,
+         x_var = date,
          y_var = list_price,
-         col_var = type)
+         col_var = type,
+         y_labels = label_dollar(),
+         col_labels = function(x) x,
+         x_title = "",
+         y_title = "Listed rent",
+         title = "Listed MLS rents in Route 1 corridor") +
+  ggplot2::scale_x_continuous(limits = c(2017.5, 2022.3))
 
-mean(mls_r1_sfr$list_price, na.rm = TRUE)
 ```
 
 The majority of SFR listed through MLS are three-bedroom homes (54 percent), while 18 percent are four-bedrooms or more --- an option that apartments do not often offer.
 
-```{r mls-sfr1}
+```{r mls-sfr1, fig.cap="Percent of MLS-listed SFR by bedrooms in Route 1 corridor"}
 
 # Spread of bedrooms
 
@@ -561,7 +650,12 @@ mls_r1_sfr_br <- mls_r1_sfr |>
 gg_bar_col(mls_r1_sfr_br,
            x_var = number_bedrooms,
            y_var = percent,
-           col_var = number_bedrooms)
+           col_var = number_bedrooms,
+           x_title = "Number of bedrooms",
+           y_title = "",
+           y_labels = label_percent(),
+           col_legend_none = TRUE,
+           title = "Percent of MLS-listed SFR by bedrooms in Route 1 corridor")
 
 
 ```
@@ -570,7 +664,7 @@ gg_bar_col(mls_r1_sfr_br,
 
 Aging rental properties require substantial capital in order to maintain properties. Even properties built in the 1980s are approaching half a century in age. Along the Route 1 corridor, there are 1,812 rental homes that were built before 1980. The largest share of these homes are located in the Bensley area (Census Tracts 1003 and 1004.04).
 
-```{r acs-yrblt}
+```{r acs-yrblt, fig.cap="Percent of rental units built before 1980 by tract"}
 
 b25036_vars <- load_variables(2020, "acs5") |> 
   filter(str_sub(name, end = 6) %in% "B25036")
@@ -582,8 +676,7 @@ b25036_raw <- get_acs(
   table = "B25036",
   year = 2020,
   survey = "acs5",
-  cache_table = TRUE,
-  geometry = TRUE
+  cache_table = TRUE
   )
 
 b25036_r1_raw <- b25036_raw |> 
@@ -628,29 +721,46 @@ b25036_r1_grp <- b25036_r1_grp |>
   group_by(yrgrp, NAME) |> 
   summarise(estimate = sum(estimate)) |> 
   filter(yrgrp == "Pre-1980") |> 
-  transform(percent = estimate/3376)
-
-# Map showing concentration of pre-1980 rentals.
-
-gg_sf_col(b25036_r1_grp,
-          col_var = percent) +
-  scale_fill_viridis_c(option = "magma")
+  transform(percent = estimate/3376) |> 
+  ungroup() |> 
+  mutate(tract = sapply(strsplit(
+           as.character(
+             str_remove_all(NAME, "\\,")), " "), unlist)[3,],
+         tract = fct_reorder(tract, percent, .desc = TRUE))
   
 
+gg_hbar_col(b25036_r1_grp,
+            x_var = percent,
+            y_var = tract,
+            col_var = percent,
+            title = "Percent of rental units built before 1980 by tract",
+            x_labels = label_percent(),
+            y_labels = function(x) x,
+            col_legend_none = TRUE,
+            x_title = "")
 
 ```
 
 Of the 23 CoStar-listed multifamily properties, 14 (61 percent) were constructed before 1980. There was no major multifamily development activity again until 2000 when Better Housing Coalition constructed Winchester Green Apartments' first phase. There has been little new multifamily development along the corridor during the last two decades --- activity has largely been spearheaded by Better Housing Coalition and Emerson Companies. With few newer developments, there are fewer options for those who are looking to rent along the corridor --- either having to choose a pre-1980s apartment, which are often in need of renovation, or among new luxury apartments that are often outside the budgets of existing renters along the corridor.
 
-```{r costar-mf-3}
-
-# Histogram or chart?
+```{r costar-mf-3, fig.cap="Multifamily units in Route 1 corridor by year built"}
 
 costar_r1_yrblt <- costar_r1_mf |> 
-  select(year_built, property_address, building_status)
+  select(year_built, property_address, building_status, number_of_units)
 
-gg_histogram(costar_r1_yrblt,
-             x_var = year_built)
+gg_bar_col(costar_r1_yrblt,
+           x_var = year_built,
+           y_var = number_of_units,
+           col_var = building_status,
+           size_width = 1,
+           x_labels = label_date(format = "%Y"),
+           x_title = "",
+           y_title = "Number of units",
+           title = "Multifamily units in Route 1 corridor by year built") +
+  ggplot2::scale_x_continuous(
+    limits = c(1956, 2024),
+    breaks = c(1960, 1970, 1980, 1990, 2000, 2010, 2020)
+  )
 
 ```
 
@@ -659,20 +769,23 @@ CoStar's building rating system also provides a snapshot of condition of multifa
 ```{r costar-mf-4}
 
 costar_r1_stars <- costar_r1_mf |> 
-  select(star_rating, property_address, building_status) |> 
-  mutate(star_rating = as.character(star_rating)) |> 
+  select(star_rating, property_address, building_status, number_of_units) |> 
+  mutate(star_rating = paste(star_rating, " stars")) |> 
   group_by(star_rating) |> 
-  summarise(count = n_distinct(property_address))
+  summarise(units = sum(number_of_units)) |> 
+  mutate(pct = units/sum(units))
 
   
-r1_star_bar <- gg_bar_col(costar_r1_stars,
+gg_bar_col(costar_r1_stars,
            x_var = star_rating,
-           y_var = count,
-           col_var = star_rating
+           y_var = pct,
+           col_var = star_rating,
+           x_title = "",
+           y_title = "Number of units",
+           col_legend_none = TRUE,
+           y_labels = label_percent(),
+           title = "Number of rental units in Route 1 corridor by CoStar star rating"
            )
-
-plotly::ggplotly(r1_star_bar) |> 
-  plotly_camera()
 
 ```
 
@@ -687,8 +800,22 @@ Of the ten communities located along the corridor, six are either obsolete or un
 ```{r mhccv-condition}
 
 mhc_con <- read_csv("data/mhccv_chesterfield.csv") |> 
-  filter(corridor == "Route 1 - N")
+  filter(corridor == "Route 1 - N") |> 
+  group_by(typology) |> 
+  summarise(units = sum(units)) |> 
+  mutate(pct = units/sum(units),
+         fct_reorder(typology, pct, .desc = TRUE))
 
+gg_bar_col(mhc_con,
+           x_var = typology,
+           y_var = pct,
+           col_var = typology,
+           x_title = "",
+           y_title = "Number of units",
+           col_legend_none = TRUE,
+           y_labels = label_percent(),
+           title = "Number of MH units in Route 1 corridor by typology"
+           )
 
 ```
 
