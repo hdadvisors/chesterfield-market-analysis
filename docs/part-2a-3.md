@@ -118,24 +118,47 @@ One recent development (Commonwealth Apartments built in 2022) has taken advanta
 
 
 
+
+<div class="figure">
+<img src="part-2a-3_files/figure-html/transit-chart-1.png" alt="Percent of units in Chesterfield County near transit by market" width="100%" style="border:none;" />
+<p class="caption">(\#fig:transit-chart)Percent of units in Chesterfield County near transit by market</p>
+</div>
 ### Proximity to schools
 
     MAP/ANALYSIS IN PROGRESS
 
 
 
+
+
+<div class="figure">
+<img src="part-2a-3_files/figure-html/schools-chart-1.png" alt="Driving time to schools in Chesterfield County by market" width="100%" style="border:none;" />
+<p class="caption">(\#fig:schools-chart)Driving time to schools in Chesterfield County by market</p>
+</div>
+
 ### Proximity to grocery stores
 
-    MAP/ANALYSIS IN PROGRESS
+    ANALYSIS IN PROGRESS
+
+
 
 
 
 ### Proximity to healthcare
 
-    MAP/ANALYSIS IN PROGRESS
+    ANALYSIS IN PROGRESS
+
+
 
 
 
 ### Proximity to job centers
 
-    MAP/ANALYSIS IN PROGRESS
+    ANALYSIS IN PROGRESS
+    
+
+
+<div class="figure">
+<img src="part-2a-3_files/figure-html/jobs-chart-1.png" alt="Percent of jobs by wage within 15 minute drive by rent type in Chesterfield County" width="100%" style="border:none;" />
+<p class="caption">(\#fig:jobs-chart)Percent of jobs by wage within 15 minute drive by rent type in Chesterfield County</p>
+</div>

@@ -755,7 +755,7 @@ gg_bar_col(costar_r1_yrblt,
            x_var = year_built,
            y_var = number_of_units,
            col_var = building_status,
-           size_width = 1,
+           width = 1,
            x_labels = label_date(format = "%Y"),
            x_title = "",
            y_title = "Number of units",
@@ -1528,7 +1528,7 @@ knitr::include_graphics("images/thejane.jpg")
 
 ```
 
-[The] Jane at Moore's Lake](https://www.thejanemooreslake.com/) is an upscale apartment complex located off Route 1 in northern Chester. The property developed by Emerson Companies was once an interstate vacation retreat during the early to mid-20th century. Brick cottages surrounded a recreational lake that was incredibly popular and brought thousands to during the warm summer travel months. 
+[The Jane at Moore's Lake](https://www.thejanemooreslake.com/) is an upscale apartment complex located off Route 1 in northern Chester. The property developed by Emerson Companies was once an interstate vacation retreat during the early to mid-20th century. Brick cottages surrounded a recreational lake that was incredibly popular and brought thousands to during the warm summer travel months. 
 
 But the development I-95 brought interstate travel away from Route 1 and also business. Later the site was converted to a mobile home park during the latter half of the 20th century and investments in improvements and maintenance began to wane. Cue developers George Emerson and Phil Roper who began the redevelopment process in the mid-2010s after the success of their Colony Village complex just up the road.
 

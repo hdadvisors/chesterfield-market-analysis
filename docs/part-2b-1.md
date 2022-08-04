@@ -473,11 +473,26 @@ Nonprofit development interest has continued from Better Housing Coalition furth
 
 ### Case study
 
-```
-Bermuda Estates or The Jane at Moore's Lake
+**The Jane at Moore's Lake**
 
--   Add a photo
--   Describe development and market it serves
--   Rent/sale prices
-```
+<div class="figure">
+<img src="images/thejane.jpg" alt="The Jane at Moore's Lake. Credit: Apartment Finder." width="100%" style="border:none;" />
+<p class="caption">(\#fig:the-jane)The Jane at Moore's Lake. Credit: Apartment Finder.</p>
+</div>
 
+[The Jane at Moore's Lake](https://www.thejanemooreslake.com/) is an upscale apartment complex located off Route 1 in northern Chester. The property developed by Emerson Companies was once an interstate vacation retreat during the early to mid-20th century. Brick cottages surrounded a recreational lake that was incredibly popular and brought thousands to during the warm summer travel months. 
+
+But the development I-95 brought interstate travel away from Route 1 and also business. Later the site was converted to a mobile home park during the latter half of the 20th century and investments in improvements and maintenance began to wane. Cue developers George Emerson and Phil Roper who began the redevelopment process in the mid-2010s after the success of their Colony Village complex just up the road.
+
+The Jane at Moore's Lake is only a small part of a phased development envisioned by Emerson and Roper. This first phase brings $60 million in investment to the corridor and with it, 385 new apartments --- ranging from one- to three-bedrooms and rents from \$1,200 to near \$2,000. The first building was completed in 2019, while the third and final building was completed recently. Amenities include a clubhouse, pool, fitness centers, and Wi-Fi, as well as rentable garage space. Apartments at The Jane largely serve young professionals working in the county, as well as the region.
+
+A one-bedroom, one-bath apartment at 636 square feet now rents for as low as \$1,512 a month.^[Based on a review of available apartments at The Jane's leasing website on August 4, 2022.] According to CoStar data, The Jane has a vacancy rate of 3.9 percent, which is below the overall market vacancy of 5.2 percent.  
+
+The second phase of Moore's Lake is coming and has the potential to create an additional 1,200 new housing opportunities --- including 500 apartments, 238 condos, 62 single-family homes, and 30 townhomes.
+
+<div class="figure">
+<img src="images/mooreslakesite.jpg" alt="Proposed site plan for Moore's Lake development. Credit: Richmond BizSense." width="100%" style="border:none;" />
+<p class="caption">(\#fig:moores-lake)Proposed site plan for Moore's Lake development. Credit: Richmond BizSense.</p>
+</div>
+
+Development in this section of the corridor has benefited from the close location of the 288 and I-95 interchanges, as well as dense commercial development at the crossroads of Route 10 and Route 1. In addition, developers have noted that negative associations with Route 1 have largely prevented market rate development north of Willis Road. 

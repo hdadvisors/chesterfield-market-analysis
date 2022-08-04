@@ -13,6 +13,13 @@ library(plotly)
 library(leaflet)
 library(htmlwidgets)
 library(sf)
+library(mapview)
+library(crsuggest)
+library(tigris)
+library(mapboxapi)
+library(scales)
+library(nngeo)
+options(tigris_use_cache = TRUE)
 
 ```
 
@@ -405,335 +412,474 @@ One recent development (Commonwealth Apartments built in 2022) has taken advanta
 
     MAP/ANALYSIS IN PROGRESS
 
-```{r transit}
+```{r transit-setup, eval=FALSE}
 
-# Compare location of new multifamily development versus older multifamily relative to access to public transportation
+# Load CoStar properties and change 'Market/Affordable' to just 'Affordable'
 
-# Within or outside of 1/2 mile buffer from GRTC stop
+comp <- unit_mix_clean |> 
+  mutate(market = case_when(
+    year_built <= 2016 ~ "Existing",
+    year_built >= 2017 ~ "Recent",
+    name == "Ashlake Crossing" ~ "Recent")) |> 
+  select(address, name, status, year_built, market, style, units, rent_type, latitude, longitude) |> 
+  sf::st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)|> 
+  mutate(property_id = 1:nrow(unit_mix_clean))
 
-library(tidyverse)
-library(sf)
-library(mapview)
-library(crsuggest)
-library(tigris)
-options(tigris_use_cache = TRUE)
+va_crs <- suggest_top_crs(comp, units = "m",
+                          inherit_gcs = FALSE)
 
-# # Let's take the CoStar properties as an example; the same workflow
-# # will apply for the other properties as well.  
-# # First, we convert to a spatial object: 
-# comp_map_sf <- comp_map2 |>
-#   st_as_sf(coords = c("longitude", "latitude"),
-#            crs = 4326)
-# 
-# # Map the properties:
-# mapview(comp_map_sf)
-# 
-# # Identify an appropriate coordinate reference system:
-# va_crs <- suggest_top_crs(comp_map_sf, units = "m",
-#                           inherit_gcs = FALSE)
-# 
-# # We'll use the Virginia South state plane CRS (6594)
-# comp_prj <- st_transform(comp_map_sf, va_crs)
-# 
-# # Grab VA Census tracts and identify those that overlap the properties:
-# chesterfield_tracts <- tracts("VA", "Chesterfield", year = 2021) |>
-#   st_transform(va_crs)
-# 
-# costar_tracts <- st_filter(chesterfield_tracts, comp_prj)
-# 
-# # Options for computing proximity include:
-# # - "As the crow flies" straight-line distances, which are handled in sf;
-# # - Network distances / travel-times, which are easiest to compute using
-# # - my mapboxapi R package.
-# 
-# # Transportation data (GRTC stops):
-# stops <- st_read("data/grtc/Stops_May2022.shp") %>%
-#   st_transform(va_crs)
-# 
-# # Take a quick look:
-# mapview(stops)
-# 
-# # We can use st_distance() to compute the distance between properties and stops,
-# # then find the minimum distance to determine the nearest stop
-# costar_to_stops <- st_distance(comp_prj, stops)
-# 
-# costar_stop_distance <- apply(costar_to_stops, 1, min) %>%
-#   magrittr::divide_by(1609.34)
-# 
-# # Alternatively, we can compute a 0.5 mile buffer around properties
-# # and either count up bus stops or identify whether a bus stop is
-# # accessible
-# costar_buffer <- st_buffer(comp_prj, 804.67)
-# 
-# mapview(costar_buffer)
-# 
-# # Travel-times are another way to look at this.  We'll use my mapboxapi R package
-# # to calculate network buffers (also called "isodistances"), travel-time matrices,
-# # and also travel-time isochrones.
-# #
-# # I'm working on a couple updates to the package so we'll need the
-# # development version from GitHub:
-# remotes::install_github("walkerke/mapboxapi")
-# library(mapboxapi)
-# 
-# # You'll need a Mapbox account + an access token to use its services.
-# # Head over to https://account.mapbox.com/ and sign up for the service, then
-# # grab your default access token.  Set it in R as follows, and install it
-# # if you'd like:
-# mb_access_token(MAPBOX_PUBLIC_TOKEN)
-# 
-# # You'll now be able to compute network buffers and distance/travel-times
-# # based on a road network and typical traffic (or a given travel mode).
-# # costar_network_buffer <- mb_isochrone(costar_prj, profile = "walking",
-# #                                       distance = 805)
-# #
-# # mapview(costar_network_buffer)
-# # Note how different the 0.5 mile network buffers are from the straight-line buffers.
-# 
-# # To get the shortest walking distance, we can compute a travel-distance matrix
-# # Due to internal limitations of the Mapbox matrix API, the volume of stops, and the increased complexity of building network-based matrices
-# # this will be slow to get the dense matrix.  This took me a few minutes to compute.
-# # costar_stop_walking <- costar_prj %>%
-# #   mutate(chunk = ntile(n = 2)) %>%
-# #   split(~chunk) %>%
-# #   map(~{
-# #     mb_matrix(origins = .x,
-# #               destinations = stops,
-# #               profile = "walking",
-# #               output = "distance")
-# #   }) %>%
-# #   reduce(rbind) %>%
-# #   apply(1, min) %>%
-# #   magrittr::divide_by(1609.34)
-# 
-# # A (much!) faster way to handle this is be to iterate through the apartments, find the nearest n stops by straight-line distance, then calculate the network distance to them.  That would look like this for the nearest 20 stops:
-# library(nngeo)
-# 
-# nearest_stops <- st_nn(comp_prj, stops, k = 20)
-# 
-# costar_stop_walking <- imap(nearest_stops, ~{
-#   # Get the specific property (the list index)
-#   property <- comp_prj[.y,]
-# 
-#   # Get the nearby stops (the indices in the list element)
-#   nearby_stops <- stops[.x, ]
-# 
-#   # Calculate the matrix
-#   mb_matrix(origins = property,
-#             destinations = nearby_stops,
-#             profile = "walking",
-#             output = "distance")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min) %>%
-#   magrittr::divide_by(1609.34)
-# 
-# # Interestingly, the walking distances are reasonably different from the straight-line distances,
-# # and sometimes far exceed them.
-# 
-# # From here, you can readily append both the minimum walking distance to
-# # a transit stop to the CoStar data, then determine which properties are
-# # within 0.5 miles of a transit stop
-# comp_map_sf <- comp_map_sf |>
-#   mutate(
-#     walk_to_transit = costar_stop_walking,
-#     transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
-#   )
-# 
-# comp_transit <- comp_map_sf |>
-#   filter(transit_nearby >= 1)
+comp_prj <- st_transform(comp, va_crs)
 
-# pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
-#
-# transit_map <-leaflet(comp_transit) |>
-#   addTiles() |>
-#   addCircleMarkers(
-#     radius = 5,
-#     color = ~pal(market),
-#     stroke = FALSE, fillOpacity = 0.5
-#    )
-#
-# saveWidget(transit_map, "maps/transit_map.html")
+tracts_map <- tracts("VA", "Chesterfield", year = 2021) |>
+  st_transform(va_crs)
 
-# knitr::include_url("maps/transit_map.html", height = "500px")
+comp_tracts <- st_filter(tracts_map, comp_prj)
 
+stops <- st_read("data/grtc/Stops_May2022.shp") |> 
+  st_transform(va_crs)
+
+network_buffer <- mb_isochrone(comp_prj,
+                                  profile = "walking",
+                                  distance = 805)
+
+
+nearest_stops <- st_nn(comp_prj, stops, k = 20)
 ```
 
+```{r transit-analysis, eval=FALSE}
+
+comp_stop_walking <- imap(nearest_stops, ~{
+  
+  property <- comp_prj[.y,]
+  
+  nearby_stops <- stops[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_stops,
+            profile = "walking",
+            output = "distance")}) |> 
+  reduce(rbind) |> 
+  apply(1, min) |> 
+  magrittr::divide_by(1609.34)
+
+trans_map <- comp |>
+   mutate(
+     walk_to_transit = comp_stop_walking,
+     transit_nearby = case_when(
+       walk_to_transit <= 0.5 ~ "1/2 mile or less",
+       walk_to_transit > 0.5 ~ "More than 1/2 mile"),
+     name = fct_reorder(name, walk_to_transit)
+   )
+
+write_rds(trans_map, "data/trans_map.rds")
+
+# mean(trans_map$walk_to_transit)
+# 3.207206
+
+```
+```{r transit-chart, fig.cap="Percent of units in Chesterfield County near transit by market"}
+
+trans_map <- read_rds("data/trans_map.rds")
+
+trans_sum <- trans_map |> 
+  st_drop_geometry() |>
+  group_by(market, transit_nearby) |> 
+  summarise(units = sum(units)) |> 
+  drop_na() |> 
+  mutate(pct = units/sum(units))
+
+gg_bar_col_facet(trans_sum,
+                 x_var = transit_nearby,
+                 y_var = pct,
+                 col_var = transit_nearby,
+                 facet_var = market,
+                 x_title = "",
+                 y_title = "",
+                 x_labels = element_blank(),
+                 col_labels = function(x) x,
+                 y_labels = label_percent(),
+                 y_breaks_n = 5,
+                 title = "Percent of units in Chesterfield County near transit by market"
+                 )
+
+```
 ### Proximity to schools
 
     MAP/ANALYSIS IN PROGRESS
 
-```{r schools}
+```{r school-map, eval=FALSE}
 
-# Compare location of new multifamily development versus older multifamily relative to access to public schools
-# 
-# - Within or outside of 30 minute drive time
+schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
+  st_transform(va_crs)
 
-# Once this workflow is settled, you can reasonably reproduce it for the other datasets.  
-# schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") %>%
-#   st_transform(va_crs)
-# 
-# nearest_schools <- st_nn(comp_prj, schools, k = 20)
-# 
-# costar_school_driving <- imap(nearest_schools, ~{
-#   # Get the specific property (the list index)
-#   property <- comp_prj[.y,]
-#   
-#   # Get the nearby schools (the indices in the list element)
-#   nearby_schools <- schools[.x, ]
-#   
-#   # Calculate the matrix (drive-times here instead)
-#   # Minutes are returned by default
-#   # There is also a "driving-traffic" profile but unfortunately 
-#   # the Matrix API doesn't allow you to specify a time of day, so it 
-#   # gives you a mix of historical and live traffic instead.
-#   mb_matrix(origins = property,
-#             destinations = nearby_schools,
-#             profile = "driving",
-#             output = "duration")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min)
-# 
-# comp_map_sf <- comp_map_sf |> 
-#   mutate(
-#     minutes_to_school = costar_school_driving,
-#     school_nearby = ifelse(minutes_to_school <= 30, 1, 0))
+nearest_schools <- st_nn(comp_prj, schools, k = 20)
 
-# All properties are within a distance of at least one school. Maybe further analysis required to determine what time of school?
+```
 
+```{r schools-setup, eval=FALSE}
 
+# I think I would want to understand the number of schools within a distance of certain properties and what schools those are. 
+
+school_driving <- imap(nearest_schools, ~{
+  
+  property <- comp_prj[.y,]
+
+  nearby_schools <- schools[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_schools,
+            profile = "driving",
+            output = "duration")
+}) |> 
+  reduce(rbind) |> 
+  apply(1, min)
+
+schools_map <- comp |>
+  st_drop_geometry() |> 
+  mutate(
+    minutes_to_school = school_driving,
+    school_nearby = ifelse(minutes_to_school <= 30, 1, 0),
+    ) |> 
+  drop_na(market) |> 
+  mutate(address = fct_reorder(address, minutes_to_school))
+
+write_rds(schools_map, "data/schools_map.rds")
+
+# mean(schools_map$minutes_to_school)
+# 5.360217
+
+```
+
+```{r schools-chart, fig.cap="Driving time to schools in Chesterfield County by market"}
+
+schools_map <- read_rds("data/schools_map.rds")
+
+gg_bar_col(schools_map,
+           x_var = address,
+           y_var = minutes_to_school,
+           col_var = market,
+           x_labels = element_blank(),
+           x_title = "Properties",
+           title = "Driving time to schools in Chesterfield County by market")
 
 ```
 
 ### Proximity to grocery stores
 
-    MAP/ANALYSIS IN PROGRESS
+    ANALYSIS IN PROGRESS
 
-```{r grocery}
+```{r grocery-setup, eval=FALSE}
 
-# Compare location of new multifamily development versus older multifamily relative to access to grocery stores
-# 
-# - Within or outside of 1/2 mile buffer from grocery store
-
-
-
-# Grocery stores: 
+# Grocery stores:
 # We'll use SNAP retailers from the USDA as a proxy here
 # This is not perfect so some filtering may be necessary
 # as it picks up on convenience stores as well
-# snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b2deb56d_0.csv") %>%
-#   filter(State == "VA") %>%
-#   st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
-#   st_transform(va_crs)
-# 
-# nearest_snap <- st_nn(comp_prj, snap, k = 20)
-# 
-# 
-# comp_grocery <- imap(nearest_snap, ~{
-#   # Get the specific property (the list index)
-#   property <- comp_prj[.y,]
-#   
-#   # Get the nearby stops (the indices in the list element)
-#   nearby_snap <- snap[.x, ]
-#   
-#   # Calculate the matrix
-#   mb_matrix(origins = property,
-#             destinations = nearby_snap,
-#             profile = "walking",
-#             output = "distance")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min) %>%
-#   magrittr::divide_by(1609.34)
-# 
-# comp_map_sf <- comp_map_sf |> 
-#   mutate(
-#     miles_to_snap = comp_grocery,
-#     snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
-# 
-# comp_snap <- comp_map_sf |> 
-#   filter(snap_nearby >= 1)
 
-# pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
-# 
-# snap_map <- leaflet(comp_snap) |> 
-#   addTiles() |> 
-#   addCircleMarkers(
-#     radius = 5,
-#     color = ~pal(market),
-#     stroke = FALSE, fillOpacity = 0.5
-#    )
-# 
-# saveWidget(snap_map, "maps/snap_map.html")
+snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b2deb56d_0.csv") %>%
+  filter(State == "VA") %>%
+  st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
+  st_transform(va_crs)
 
-# knitr::include_url("maps/snap_map.html", height = "500px")
+snap_fullservice <- snap |> 
+  filter(str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+
+snap_convenience <- snap |> 
+  filter(!str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+  
+# Full service grocery filter
+
+nearest_snap <- st_nn(comp_prj, snap_fullservice, k = 20)
+
+snap <- imap(nearest_snap, ~{
+
+  property <- comp_prj[.y,]
+
+  nearby_snap <- snap_fullservice[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snap,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+snap_map <- comp |>
+  mutate(
+    miles_to_snap = snap,
+    snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
+
+# Convenience store filter
+
+nearest_snapconvenience <- st_nn(comp_prj, snap_convenience, k = 20)
+
+convenience <- imap(nearest_snapconvenience, ~{
+
+  property <- comp_prj[.y,]
+
+  nearby_snapconvenience <- snap_convenience[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snapconvenience,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+grocery_map <- snap_map |>
+  mutate(
+    miles_to_convenience = convenience,
+    convenience_nearby = ifelse(miles_to_convenience <= 0.5, 1, 0))
+
+write_rds(grocery_map, "data/grocery_map.rds")
+
+# mean(r1_grocery_map$miles_to_snap)
+# 1.352853
+
+# mean(r1_convenience_map$miles_to_convenience)
+# 0.3977947
+
+```
+
+```{r grocery-chart, fig.cap="Mean distance from apartments in Chesterfield County to food stores by type", eval=FALSE}
+
+grocery_map <- read_rds("data/grocery_map.rds")
+
+grocery_sum <- grocery_map |> 
+  st_drop_geometry() |> 
+  drop_na(market) |> 
+  group_by(market) |> 
+  summarise(mean_snap = mean(miles_to_snap),
+            mean_convenience = mean(miles_to_convenience)) |> 
+  pivot_longer(2:3,
+               names_to = 'store_type',
+               values_to = 'miles') |> 
+  mutate(store_type = case_when(
+    store_type == "mean_snap" ~ "SNAP retailer",
+    store_type == "mean_convenience" ~ "Convenience store"
+  ))
+
+gg_bar_col_facet(grocery_sum,
+                 x_var = store_type,
+                 y_var = miles,
+                 col_var = store_type,
+                 facet_var = market,
+                 x_title = "",
+                 y_title = "Miles",
+                 x_labels = element_blank(),
+                 col_labels = function(x) x,
+                 title = "Mean distance from apartments in Chesterfield County to food stores by type"
+                 )
 
 ```
 
 ### Proximity to healthcare
 
-    MAP/ANALYSIS IN PROGRESS
+    ANALYSIS IN PROGRESS
 
-```{r medical}
-
-# Compare location of new multifamily development versus older multifamily relative to access to hospitals and urgent care facilities
-# 
-# - Within or outside of 15 minute drive time
-
+```{r medical-setup, eval=FALSE}
 
 # Hospital / urgent care
 # I'm not filtering by type but you might consider doing so
 # There are some other datasets in HIFLD on care centers that may 
 # be relevant as well.
-# hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
-#   filter(STATE == "VA") %>%
-#   st_transform(va_crs)
-# 
-# nearest_hospitals <- st_nn(comp_prj, hospitals, k = 20)
-# 
-# costar_hospital_driving <- imap(nearest_hospitals, ~{
-#   # Get the specific property (the list index)
-#   property <- comp_prj[.y,]
-#   
-#   # Get the nearby hospitals (the indices in the list element)
-#   nearby_hospitals <- hospitals[.x, ]
-#   
-#   # Calculate the matrix (drive-times here instead)
-#   # Minutes are returned by default
-#   mb_matrix(origins = property,
-#             destinations = nearby_hospitals,
-#             profile = "driving",
-#             output = "duration")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min) 
-# 
-# comp_map_sf <- comp_map_sf |> 
-#   mutate(
-#     minutes_to_hospital = costar_hospital_driving,
-#     hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
-    
-# Jobs are pending in the Google Doc (though I can show you how to 
-# create jobs clusters with LODES data)
 
-# Finally, we can put all the data back together with minimum travel times
-# and critical distance / duration flags.
-# costar_output <- costar %>%
-#   mutate(
-#     miles_to_transit = costar_stop_walking,
-#     transit_nearby = ifelse(miles_to_transit <= 0.5, 1, 0),
-#     minutes_to_school = costar_school_driving,
-#     school_nearby = ifelse(minutes_to_school <= 30, 1, 0),
-#     miles_to_snap = costar_snap_walking,
-#     snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0),
-#     minutes_to_hospital = costar_hospital_driving,
-#     hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0)
-#   )
+hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
+  st_transform(va_crs) |> 
+  filter(STATUS == "OPEN") |> 
+  filter(TYPE == "GENERAL ACUTE CARE")
 
+urgentcare <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Urgent_Care_Facilities/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
+  st_transform(va_crs)
+
+nearest_hospitals <- st_nn(comp_prj, hospitals, k = 20)
+
+hospital_driving <- imap(nearest_hospitals, ~{
+  # Get the specific property (the list index)
+  property <- comp_prj[.y,]
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_hospitals <- hospitals[.x, ]
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_hospitals,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+hospital_map <- comp |>
+  mutate(
+    minutes_to_hospital = hospital_driving,
+    hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
+
+nearest_urgent <- st_nn(comp_prj, urgentcare, k = 20)
+
+urgent_driving <- imap(nearest_urgent, ~{
+  # Get the specific property (the list index)
+  property <- comp_prj[.y,]
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_urgent <- urgentcare[.x, ]
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_urgent,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+health_map <- hospital_map |>
+  mutate(
+    minutes_to_urgent = costar_urgent_driving,
+    urgent_nearby = ifelse(minutes_to_urgent <= 15, 1, 0))
+
+write_rds(health_map, "data/health_map.rds")
+
+# mean(r1_health_map$minutes_to_hospital)
+# 13.5442
+
+# mean(r1_health_map$minutes_to_urgent)
+# 7.530435
+
+```
+
+```{r r1-health-chart, fig.cap="Mean driving time from apartments in Chesterfield County to healthcare facility by market", eval=FALSE}
+
+health_map <- read_rds("data/health_map.rds")
+
+health_sum <- health_map |> 
+  st_drop_geometry() |> 
+  drop_na(market) |> 
+  group_by(market) |> 
+  summarise(mean_hospital = mean(minutes_to_hospital),
+            mean_urgent = mean(minutes_to_urgent)) |> 
+  pivot_longer(2:3,
+               names_to = 'health_type',
+               values_to = 'minutes') |> 
+  mutate(health_type = case_when(
+    health_type == "mean_hospital" ~ "Hospital",
+    health_type == "mean_urgent" ~ "Urgent care"
+  ))
+
+gg_bar_col_facet(health_sum,
+                 x_var = health_type,
+                 y_var = minutes,
+                 col_var = health_type,
+                 facet_var = rent_type,
+                 x_title = "",
+                 y_title = "Minutes",
+                 col_title = "Facility",
+                 x_labels = element_blank(),
+                 col_labels = function(x) x,
+                 title = "Mean driving time from apartments in Chesterfield County to healthcare facility by market"
+                 )
 
 ```
 
 ### Proximity to job centers
 
-    MAP/ANALYSIS IN PROGRESS
+    ANALYSIS IN PROGRESS
+    
+```{r jobs, eval=FALSE}
+
+va_wac <- grab_lodes(
+  state = "va",
+  year = 2019,
+  lodes_type = "wac",
+  use_cache = TRUE
+)
+
+# Jobs with earnings more than $3333/month.
+
+va_jobs <- va_wac %>%
+  select(w_geocode, total_jobs = C000, hi_paying_jobs = CE03, mid_paying_jobs = CE02, lo_paying_jobs = CE01, hs_jobs = CD02, ba_jobs = CD04)
+
+options(tigris_use_cache = TRUE)
+
+va_blocks <- blocks("VA", year = 2019)
+
+va_jobs_sf <- va_blocks %>%
+  select(w_geocode = GEOID10) %>%
+  inner_join(va_jobs, by = "w_geocode")
+
+# Removed time because depart at not allowed anymore?
+
+comp_isos <- mb_isochrone(
+  location = comp,
+  profile = "driving",
+  time = 15,
+  id_column = "property_id"
+)
+
+reachable_jobs <- st_join(
+  st_transform(comp_isos, 6594),
+  st_centroid(st_transform(va_jobs_sf, 6594)),
+  left = FALSE
+) %>%
+  st_drop_geometry() %>%
+  group_by(id) %>%
+  summarize(hi_jobs = sum(hi_paying_jobs, na.rm = TRUE),
+            mid_jobs = sum(mid_paying_jobs, na.rm = TRUE),
+            lo_jobs = sum(lo_paying_jobs, na.rm = TRUE),
+            total_jobs = sum(total_jobs, na.rm = TRUE),
+            hs_jobs = sum(hs_jobs, na.rm = TRUE),
+            ba_jobs = sum(ba_jobs, na.rm = TRUE))
+
+jobs <- comp |> 
+  mutate(id = property_id)|> 
+  left_join(reachable_jobs, by = "id") |> 
+  select(name, address, market,
+         total_jobs, hi_jobs, mid_jobs, lo_jobs, ba_jobs, hs_jobs) |> 
+  transform(hi_percent = hi_jobs/total_jobs) |> 
+  transform(lo_percent = lo_jobs/total_jobs) |> 
+  drop_na(market)
+
+write_rds(jobs, "data/jobs.rds")
+
+# mean(r1_jobs_list$hi_percent)
+# 0.5403631
+
+```
+
+```{r jobs-chart, fig.cap="Percent of jobs by wage within 15 minute drive by rent type in Chesterfield County"}
+
+jobs <- read_rds("data/jobs.rds")
+
+jobs_sum <- jobs |>
+  st_drop_geometry() |> 
+  group_by(market) |> 
+  summarise(lo_jobs = sum(lo_jobs)/sum(total_jobs),
+            mid_jobs = sum(mid_jobs)/sum(total_jobs),
+            hi_jobs = sum(hi_jobs)/sum(total_jobs)) |> 
+  pivot_longer(2:4,
+               names_to = "wage",
+               values_to = "pct") |> 
+  mutate(wage = case_when(
+    wage == "lo_jobs" ~ "$15,000 or less",
+    wage == "mid_jobs" ~ "$15,000 to $39,996",
+    wage == "hi_jobs" ~ "More than $39,996"
+  ))
+
+gg_bar_col_facet(jobs_sum,
+                 x_var = wage,
+                 y_var = pct,
+                 col_var = wage,
+                 facet_var = market,
+                 x_title = "",
+                 y_title = "Percent",
+                 col_title = "Annualized wage",
+                 x_labels = element_blank(),
+                 y_labels = label_percent(),
+                 col_labels = function(x) x,
+                 title = "Percent of jobs by wage within 15 minute drive of apartments by rent type in Chesterfield County"
+                 )
+
+```

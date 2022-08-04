@@ -28,6 +28,7 @@ library(htmlwidgets)
 library(pals)
 library(mapboxapi)
 
+
 ```
 
 ## Rental housing stock
@@ -408,6 +409,7 @@ The map below shows the spatial distribution of SFRs across the county. They are
 ```{r sfr-basemap, include=FALSE}
 
 library(tigris)
+library(ggspatial)
  
 options(tigris_use_cache = TRUE)
 
