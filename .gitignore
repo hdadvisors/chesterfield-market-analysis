@@ -47,4 +47,4 @@ rsconnect/
 
 # Bookdown files
 _bookdown_files/
-*.dbf
+data/shp/ch_sfh.dbf

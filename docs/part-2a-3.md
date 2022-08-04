@@ -10,9 +10,9 @@ For much of the past five years, the difference in rental prices between recent 
 
 Both recent and existing properties experienced a jump in average rent in the second quarter of 2020. While recent properties experienced a 1% increase in average rents, existing property average rents increased by 4% --- closing the gap to \$352. This difference in percent of change over time has continued to Q2 2022.
 
-From Q2 2020 to Q2 2022, average rent for recent properties has changed 3% --- from \$1,696 to \$1,743. Existing property average rent growth was three times (9%) that of recent properties --- going from \$1,344 to \$1,460. From Q2 2017 to Q2 2022, the difference in average rent between recent and existing properties has gone from \$410 to \$285. 
+From Q2 2020 to Q2 2022, average rent for recent properties has changed 3% --- from \$1,696 to \$1,743. Existing property average rent growth was three times (9%) that of recent properties --- going from \$1,344 to \$1,460. From Q2 2017 to Q2 2022, the difference in average rent between recent and existing properties has gone from \$410 to \$285.
 
-While average rents for recent properties has remained steady, existing property rents have risen dramatically. The COVID-19 pandemic has significantly impacted demand among the existing stock of rental housing in the county --- leading to complementary increases in rental prices. 
+While average rents for recent properties has remained steady, existing property rents have risen dramatically. The COVID-19 pandemic has significantly impacted demand among the existing stock of rental housing in the county --- leading to complementary increases in rental prices.
 
 
 
@@ -38,9 +38,9 @@ In all cases, the percent change in average rents for existing rental properties
 
 ### Building style
 
-Consumer preferences can change over time and those preference changes can impact market demand and prices. Multifamily building styles built in the late 20th century were largely in the garden-style apartments. The garden-style emphasizes lower densities and clustered development. Residents typically have ground floor access with no neighbors above. 
+Consumer preferences can change over time and those preference changes can impact market demand and prices. Multifamily building styles built in the late 20th century were largely in the garden-style apartments. The garden-style emphasizes lower densities and clustered development. Residents typically have ground floor access with no neighbors above.
 
-Existing rental properties are majority garden-style (85 percent). But the composition of recent multifamily development is much more diverse. Although though garden-style apartments are still being produced, the majority (82 percent) of newer multifamily properties are low- or mid-rise buildings. 
+Existing rental properties are majority garden-style (85 percent). But the composition of recent multifamily development is much more diverse. Although though garden-style apartments are still being produced, the majority (82 percent) of newer multifamily properties are low- or mid-rise buildings.
 
 The shift towards these types of developments provides developers with greater economies of scale. More density makes it more financially possible to finance and develop properties. Without the density that comes through low- and mid-rise buildings, developers have to rely heavily on higher rents or substantial subsidies to make development possible.
 
@@ -53,7 +53,7 @@ The shift towards these types of developments provides developers with greater e
 
 ### Bedrooms
 
-Existing rental development mainly consists of two-bedroom rental homes (55 percent) and one-bedrooms (27 percent). More recent developments have shifted towards to one-bedroom rentals (53 percent). The percent of larger rentals - two- and three-bedrooms - being produced has dropped to 36 percent and 9 percent, respectively. 
+Existing rental development mainly consists of two-bedroom rental homes (55 percent) and one-bedrooms (27 percent). More recent developments have shifted towards to one-bedroom rentals (53 percent). The percent of larger rentals - two- and three-bedrooms - being produced has dropped to 36 percent and 9 percent, respectively.
 
 One-bedroom rentals meets a growing demand among young professionals and aging seniors in the county, but the lack of larger rental homes leaves growing families out of the multifamily rental market. Single-family homes are increasingly meeting the demand for larger families in need of rentals. Although this often is preferred by families who want greater privacy and more in-home separation, the single-family rental market can impact opportunities for potential homebuyers.
 
@@ -81,10 +81,10 @@ The types of amenities and features on a rental property have also changed of ti
 
 These amenities, which are included in property-level data from CoStar, include:
 
-- Clubhouse,
-- On-site property manager,
-- Pool, and
-- Fitness center.
+-   Clubhouse,
+-   On-site property manager,
+-   Pool, and
+-   Fitness center.
 
 On average, newer apartment communities are much more likely to have at least two of these amenities compared to older properties. In fact, about 90 percent of all new developments have two or more amenities, versus just 71 percent of existing properties.
 
@@ -108,44 +108,34 @@ On the other side of the county, there are five new developments along Route 1, 
 
 ### Proximity to public transportation
 
-Within the county, there are only 20 out of 115 multifamily properties located within a half mile walking distance of a public transit stop. The majority of these properties are existing properties, while only six are recent developments (built in 2017 or later). 
+Within the county, there are only 20 out of 115 multifamily properties located within a half mile walking distance of a public transit stop. The majority of these properties are existing properties, while only six are recent developments (built in 2017 or later).
 
 These transit stops are mainly located at the city-county border along Midlothian Turnpike or along Route One, where the Greater Richmond Transit Company (GRTC) began local bus service from Falling Creek to John Tyler Community College in March 2020.
 
 One recent development (Commonwealth Apartments built in 2022) has taken advantage of an Express Service Park-N-Ride located at Commonwealth Centre Parkway. This transit service provides a direct route from Commonwealth Centre Parkway to Downtown Richmond --- whether for work or leisure.
 
-```
-MAP/ANALYSIS IN PROGRESS
-```
+    MAP/ANALYSIS IN PROGRESS
 
 
 
 ### Proximity to schools
 
-```
-MAP/ANALYSIS IN PROGRESS
-```
+    MAP/ANALYSIS IN PROGRESS
 
 
 
 ### Proximity to grocery stores
 
-```
-MAP/ANALYSIS IN PROGRESS
-```
+    MAP/ANALYSIS IN PROGRESS
 
 
 
 ### Proximity to healthcare
 
-```
-MAP/ANALYSIS IN PROGRESS
-```
+    MAP/ANALYSIS IN PROGRESS
 
 
 
 ### Proximity to job centers
 
-```
-MAP/ANALYSIS IN PROGRESS
-```
+    MAP/ANALYSIS IN PROGRESS
