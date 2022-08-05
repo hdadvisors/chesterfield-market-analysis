@@ -27,6 +27,7 @@ library(leaflet)
 library(htmlwidgets)
 library(pals)
 library(mapboxapi)
+library(ggspatial)
 
 
 ```

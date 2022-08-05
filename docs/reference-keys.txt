@@ -80,6 +80,8 @@ fig:amenities
 fig:location
 fig:transit-chart
 fig:schools-chart
+fig:grocery-chart
+fig:r1-health-chart
 fig:jobs-chart
 fig:r1-rhh
 fig:r1-rhh-tract
@@ -103,7 +105,6 @@ fig:sfr-mls-bar
 fig:r1-transit-chart
 fig:r1-schools-chart
 fig:r1-grocery-chart
-fig:r1-health-chart
 fig:r1-jobs-chart
 fig:the-jane
 fig:moores-lake

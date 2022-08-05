@@ -126,12 +126,14 @@ hsr_renters_plot <- gg_line(
   title = "Renter households",
   x_title = element_blank())
 
-plotly::ggplotly(hsr_renters_plot) %>% 
-  plotly_camera()
+hsr_renters_plot
 
-  
 ```
+
+### Multifamily properties
+
 Based on a survey of CoStar listed multifamily properties in the Hull Street corridor study area, there are only 1,198 apartments --- accounting for only half of renter households (53 percent) in the area. The low number of apartments along the corridor begs the question as to where many renter households find housing when there are so few options in a typical apartment setting. A large share of these apartments are oriented towards the Midlothian Turnpike corridor at the recently developed Element at Stonebridge apartments --- 400 mid-rise apartments built in 2016.
+
 ```{r costar-hsr-1, fig.cap= "Total number of multifamily units by property status"}
 
 # Load .csv of CoStar properties. Data was collected by hand drawing boundaries for the necessary census tracts in the CoStar platform. No filters were placed on the search aside from multi-family property. Need to filter out Sandler - it's a single condo. 
@@ -164,7 +166,9 @@ costar_hsr_mf |>
         col.names = c("Name", "Corridor", "Estimated apartment homes")) |> 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped"))
+
 ```
+
 No multifamily properties actually front the Eastern Hull Street corridor. The four multifamily properties in closest proximity to the corridor are more closely associated with the Walmsley Boulevard (State Route 647) corridor.
 
 ```{r costar-hsr-2, fig.cap="Map of multifamily properties in Eastern Hull Street study area"}
@@ -172,11 +176,16 @@ No multifamily properties actually front the Eastern Hull Street corridor. The f
 hsr_map <- costar_hsr_mf |> 
   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
-leaflet(hsr_map) |> 
+hsr_map <- leaflet(hsr_map) |> 
   addTiles() |> 
   addCircleMarkers(
     radius = 3) |> 
   addPolygons(data=hsr_tracts, weight = 2, fillColor = NULL)
+
+saveWidget(hsr_map, "maps/hsr_map.html")
+
+knitr::include_url("maps/hsr_map.html", height = "500px")
+
 
 
 ```

@@ -110,22 +110,28 @@ On the other side of the county, there are five new developments along Route 1, 
 
 Within the county, there are only 20 out of 115 multifamily properties located within a half mile walking distance of a public transit stop. The majority of these properties are existing properties, while only six are recent developments (built in 2017 or later).
 
-These transit stops are mainly located at the city-county border along Midlothian Turnpike or along Route One, where the Greater Richmond Transit Company (GRTC) began local bus service from Falling Creek to John Tyler Community College in March 2020.
-
-One recent development (Commonwealth Apartments built in 2022) has taken advantage of an Express Service Park-N-Ride located at Commonwealth Centre Parkway. This transit service provides a direct route from Commonwealth Centre Parkway to Downtown Richmond --- whether for work or leisure.
-
-    MAP/ANALYSIS IN PROGRESS
+These transit stops are mainly located at the city-county border along Midlothian Turnpike or along Route One, where the Greater Richmond Transit Company (GRTC) began local bus service from Falling Creek to John Tyler Community College in March 2020. One recent development (Commonwealth Apartments built in 2022) has taken advantage of an Express Service Park-N-Ride located at Commonwealth Centre Parkway. This transit service provides a direct route from Commonwealth Centre Parkway to Downtown Richmond --- whether for work or leisure. 
 
 
 
+
+
+
+
+The overwhelming majority of both recent and existing multifamily properties in the county are located more than a half mile walking distance of a transit stop. On average, the walking distance for all multifamily properties in the county to a transit stop is 3.2 miles --- which would take most people nearly an hour to walk. There is little difference between recent and existing properties in terms of distance to transit, but undoubtedly any new multifamily development on the Route 1 corridor will continue to benefit from public transit access.
 
 <div class="figure">
 <img src="part-2a-3_files/figure-html/transit-chart-1.png" alt="Percent of units in Chesterfield County near transit by market" width="100%" style="border:none;" />
 <p class="caption">(\#fig:transit-chart)Percent of units in Chesterfield County near transit by market</p>
 </div>
+
 ### Proximity to schools
 
-    MAP/ANALYSIS IN PROGRESS
+Across the entire county, there are 64 schools within the Chesterfield County Public Schools (CCPS) system serving more than 63,000 students. As the county continues to attract more and more families, the desire to be in close proximity to schools at all levels will continue to grow.
+
+In the county, there are 39 elementary schools, 12 middle schools, and 11 high schools. 
+
+All 115 multimfamily properties are within a 30 minute drive to a CCPS school. More specifically, all properties are less than an eight minute drive of a CCPS school. The average drive time for all multifamily properties to a CCPS school is only about 5 minutes, and there is hardly any difference between recent and existing properties in the average drive time --- 4.7 and 4.9 minutes, respectively.
 
 
 
@@ -138,23 +144,45 @@ One recent development (Commonwealth Apartments built in 2022) has taken advanta
 
 ### Proximity to grocery stores
 
-    ANALYSIS IN PROGRESS
+Convenient access to affordable and healthy foods helps support family and individual health. When households have access to food options like fresh fruits and vegetables, they can potentially lower their risk for chronic disease. Close proximity to full service groceries that accept [Supplemental Nutrition Assistance Program (SNAP)](https://www.cbpp.org/research/food-assistance/the-supplemental-nutrition-assistance-program-snap) helps keep low-income families and individuals out of hunger, but also helps save time and money in commuting.
+
+While many convenience stores accept SNAP, the food options are not always the healthiest. Highly processed foods and other snacks do not provide the nutritional value of many food products found at full service grocery retailers.
 
 
 
+<div class="figure">
+<img src="part-2a-3_files/figure-html/grocery-chart-1.png" alt="Mean distance from apartments in Chesterfield County to food stores by type" width="100%" style="border:none;" />
+<p class="caption">(\#fig:grocery-chart)Mean distance from apartments in Chesterfield County to food stores by type</p>
+</div>
+The prevalence of convenience stores across the county accounts for their closer proximity to both recent and existing multifamily properties. But the average distance to a full service grocery is over a mile for existing properties and has only increased to just over 1.5 miles for recent multifamily properties.
 
+The increasing distance of recent multifamily to full service groceries increases the likelihood of food deserts --- low-income, low-access areas. Food access should continue to considered as new multifamily development grows across the county.
 
 ### Proximity to healthcare
 
-    ANALYSIS IN PROGRESS
+Healthcare access is important to growing communities as households age and new family members are added. Healthy communities are maintained when residents can not only afford healthcare, but also reasonably reach healthcare. 
+[General acute care hospitals](https://www.vhi.org/Hospital-Guide/general-hospitals.asp) provide 24-hour patient care and conduct many of the major procedures that help 
+treat chronic illnesses, as well as save people in an emergency situation. Urgent care facilities, on the other hand, provide easy walk-in access for non-emergency healthcare. Often less expensive than a hospital visit, urgent care offers patients help when they are unsure of their illness.
+
+Being within a short driving distance to a hospital or urgent care can be lifesaving, but it can also mean more frequent care to support a longer life. In the county, the average drive time to a hospital from a multifamily property is about 12 minutes, while it is 9 minutes to an urgent care.
+
+More recent development has been closer to hospitals (10 minutes) than existing development (12 minutes). But recent development has been getting further away from urgent cares (10 minutes) compared to 9 minutes for existing development. This has implications for low- and moderate-income households who can more likely afford urgent care compared to hospital visits.
 
 
 
-
+<div class="figure">
+<img src="part-2a-3_files/figure-html/r1-health-chart-1.png" alt="Mean driving time from apartments in Chesterfield County to healthcare facility by market" width="100%" style="border:none;" />
+<p class="caption">(\#fig:r1-health-chart)Mean driving time from apartments in Chesterfield County to healthcare facility by market</p>
+</div>
 
 ### Proximity to job centers
 
-    ANALYSIS IN PROGRESS
+With transportation being many households second highest expense after housing, a daily commute to work can quickly eat into a households budget the longer it is. Job centers are located all across the region, but areas with the highest paying jobs are located in Downtown Richmond and business parks like West Creek in Henrico County or Meadowville in Chesterfield County. 
+With many multifamily properties located along major corridors and near the city-county border, proximity to job centers is not a problem for those commuters with personal vehicles. A commute to the city is made easier with the Powhite Parkway and I-95 access. But an assortment of jobs are necessary for a diverse and thriving economy. For any income household shorter commutes help save money, which can be used on housing and life's other necessities. However, fewer job opportunities for low-income households in close proximity to home mean longer commutes and more money spent on transportation --- especially in localities where public transportation isn't available. 
+
+In the county, the share of jobs paying more than \$39,996 within a 15 minute drive of multifamily properties is near 50 percent for both recent and existing properties --- 47 and 49 percent, respectively. Recent multifamily development is increasingly located in areas wherein there are lower paying jobs (below \$39,996). This means greater job opportunities for low- and moderate-income households within a short distance. But mixed-use developments, or live-work-play communities, are increasingly desired by diverse households. 
+
+Meeting the needs of houesholds all within a walking distance is a growing trend and is being seen across the region. The Midlothian Special Area Plan helps support development like this which helps households of all kind find employment opportunities with having to depend on a car.
     
 
 
