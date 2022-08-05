@@ -662,7 +662,7 @@ write_rds(grocery_map, "data/grocery_map.rds")
 
 ```
 
-```{r grocery-chart, fig.cap="Mean distance from apartments in Chesterfield County to food stores by type"}
+```{r grocery-chart, fig.cap="Mean distance from apartments in Chesterfield County to food stores by market"}
 
 grocery_map <- read_rds("data/grocery_map.rds")
 
@@ -887,7 +887,7 @@ write_rds(jobs, "data/jobs.rds")
 
 ```
 
-```{r jobs-chart, fig.cap="Percent of jobs by wage within 15 minute drive by rent type in Chesterfield County"}
+```{r jobs-chart, fig.cap="Percent of jobs by wage within 15 minute drive by market in Chesterfield County"}
 
 jobs <- read_rds("data/jobs.rds")
 
@@ -917,7 +917,7 @@ gg_bar_col_facet(jobs_sum,
                  x_labels = element_blank(),
                  y_labels = label_percent(),
                  col_labels = function(x) x,
-                 title = "Percent of jobs by wage within 15 minute drive of apartments by rent type in Chesterfield County"
+                 title = "Percent of jobs by wage within 15 minute drive of apartments by market in Chesterfield County"
                  )
 
 ```

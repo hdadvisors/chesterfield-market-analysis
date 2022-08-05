@@ -151,8 +151,8 @@ While many convenience stores accept SNAP, the food options are not always the h
 
 
 <div class="figure">
-<img src="part-2a-3_files/figure-html/grocery-chart-1.png" alt="Mean distance from apartments in Chesterfield County to food stores by type" width="100%" style="border:none;" />
-<p class="caption">(\#fig:grocery-chart)Mean distance from apartments in Chesterfield County to food stores by type</p>
+<img src="part-2a-3_files/figure-html/grocery-chart-1.png" alt="Mean distance from apartments in Chesterfield County to food stores by market" width="100%" style="border:none;" />
+<p class="caption">(\#fig:grocery-chart)Mean distance from apartments in Chesterfield County to food stores by market</p>
 </div>
 The prevalence of convenience stores across the county accounts for their closer proximity to both recent and existing multifamily properties. But the average distance to a full service grocery is over a mile for existing properties and has only increased to just over 1.5 miles for recent multifamily properties.
 
@@ -187,6 +187,6 @@ Meeting the needs of houesholds all within a walking distance is a growing trend
 
 
 <div class="figure">
-<img src="part-2a-3_files/figure-html/jobs-chart-1.png" alt="Percent of jobs by wage within 15 minute drive by rent type in Chesterfield County" width="100%" style="border:none;" />
-<p class="caption">(\#fig:jobs-chart)Percent of jobs by wage within 15 minute drive by rent type in Chesterfield County</p>
+<img src="part-2a-3_files/figure-html/jobs-chart-1.png" alt="Percent of jobs by wage within 15 minute drive by market in Chesterfield County" width="100%" style="border:none;" />
+<p class="caption">(\#fig:jobs-chart)Percent of jobs by wage within 15 minute drive by market in Chesterfield County</p>
 </div>
