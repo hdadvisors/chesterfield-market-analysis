@@ -93,6 +93,29 @@ tenure_income_chas <- tenure %>%
 
 ```{r tenure-owner-img, fig.cap="Homeowner cost burden"}
 
+oo_cb <- tenure_income_chas |> 
+  select(year, tenure, income, costburden, estimate) |> 
+  filter(tenure == "Homeowner") |> 
+  mutate(cb_group = case_when(
+    costburden == "Cost-burdened" ~ "Cost-burdened",
+    costburden == "No or negative income" ~ "Cost-burdened",
+    costburden == "Severely cost-burdened" ~ "Cost-burdened",
+    costburden == "Not cost-burdened" ~ "Not cost-burdened"
+  )) |> 
+  filter(year == 2012 | year == 2018) |> 
+  group_by(year, income, cb_group) |> 
+  summarise(estimate = sum(estimate)) |> 
+  mutate(percent = estimate/sum(estimate))
+  
+# ggplot(oo_cb, aes(x = income, y = percent, fill = cb_group)) +
+#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+#   facet_wrap(~year) + 
+#   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
+#   theme(axis.title = element_blank(),
+#     axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+#   scale_y_continuous(labels = percent_format()) +
+#   labs(title = "Homeowner cost burden", fill = "Cost burden")
+
 knitr::include_graphics("images/homeownercb_income.png")
 
 ```

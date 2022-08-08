@@ -47,9 +47,15 @@ library(zoo)
 library(formattable)
 library(simplevis)
 library(knitr)
+library(leaflet)
+library(htmlwidgets)
 
-costar_noah <- read_csv("data/chesterfield_noah_coded.csv")
-costar_noah_rent <- read_csv("data/costar_noah_rent_bedroom.csv")
+costar_noah <- read_csv("data/chesterfield_noah_coded_8.8.csv") |> 
+  clean_names() |> 
+  filter(property_address != "3201 Lady Marian Ln") |> 
+  filter(style != "Single-Family Home")
+
+costar_noah_rent <- read_csv("data/costar_noah_rent_bedroom_8.8.csv")
 
 ```
 
@@ -58,7 +64,9 @@ The following analysis on NOAH inventory in Chesterfield County uses data from C
 * Existing multifamily properties with active leases,
 * Classified as Class B or C,
 * No public subsidy, rent caps, or other income-based restrictions, and
-* *CoStar Building Rating* of three or fewer stars out of five.^[Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.]
+* *CoStar Building Rating* of two or fewer stars out of five.^[Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.]
+* Built before 2000
+* Excluding single-family homes
 
 :::{.rmdcaution}
 
@@ -74,16 +82,16 @@ The analysis below _includes_ all manufactured home communities in Chesterfield 
 
 ### Amount
 
-Chesterfield County is home to 11,915 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
+Chesterfield County is home to 5,155 market-affordable rental units as of August 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
 
 ```{r noah-amount}
 
-costar_noah %>% 
-  select(style, units) %>% 
-  mutate(properties = 1) %>% 
-  group_by(style) %>% 
+costar_noah |> 
+  select(style, number_of_units) |>  
+  mutate(properties = 1) |>  
+  group_by(style) |>  
   summarise(properties = sum(properties),
-            units = sum(units)) %>% 
+            units = sum(number_of_units)) %>% 
   arrange(desc(units)) %>% 
   adorn_totals() %>% 
   kable(caption = "NOAH properties and units by style",
@@ -97,9 +105,7 @@ costar_noah %>%
 ```
 *Source: CoStar Group, Inc.*
 
-This NOAH inventory is approximately 34 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
-
-NOAH units account for a much larger share (80 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
+This NOAH inventory is approximately 16 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
 
 ### Location
 
@@ -107,13 +113,27 @@ NOAH properties are spread throughout all parts of Chesterfield County, but like
 
 ```{r noah-map, fig.cap="Location and type of NOAH"}
 
-knitr::include_graphics("images/noah_map.png")
+# pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
+# 
+# noah_map <-leaflet(costar_noah) |> 
+#   addTiles() |> 
+#   addCircleMarkers(
+#     radius = 4,
+#     color = ~pal(style),
+#     stroke = FALSE, fillOpacity = 0.5
+#   ) |> 
+#   addLegend("bottomright", pal = pal, values = ~style,
+#             title = "NOAH style", opacity = 1)
+# 
+# saveWidget(noah_map, "maps/noah_map.html")
+
+knitr::include_url("maps/noah_map.html", height = "500px")
 
 ```
 
 ### Rent levels
 
-As of early 2022, average rents in Chesterfield's NOAH units range from \$862 to \$1,462 depending on the number of bedrooms. The minimum gross annual income to afford the average 2-bedroom market-affordable apartment is \$51,000.
+As of early 2022, average rents in Chesterfield's NOAH units range from \$744 to \$1,491 depending on the number of bedrooms. The minimum gross annual income to afford the average 2-bedroom market-affordable apartment is \$47,560.
 
 ```{r noah-rent-table}
 
@@ -125,7 +145,7 @@ rent <- costar_noah_rent %>%
 rent %>% 
   group_by(Bedrooms) %>% 
   top_n(1, Period) %>% 
-  mutate(Rent = dollar(Rent)) %>% 
+  mutate(Rent = dollar(parse_number(Rent))) %>% 
   select(-Period) %>% 
   kable(caption = "Current rent by bedroom in NOAH properties",
        align = "lr") %>% 
@@ -136,19 +156,22 @@ rent %>%
 
 *Source: CoStar Group, Inc.*
 
-Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,000 per month.
+Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,200 per month.
 
-```{r noah-rent-plot, fig.cap="Median asking rent by bedroom for NOAH properties"}
+```{r noah-rent-plot, fig.cap="Average asking rent by bedroom for NOAH properties"}
 
-gg_line_col(rent,
+rent_line <- rent |> 
+  mutate(Rent = parse_number(Rent))
+
+gg_line_col(rent_line,
             x_var = Period,
             y_var = Rent,
             col_var = Bedrooms,
             alpha_point = 0,
             size_line = 0.75,
-            title = "Median asking rent by bedroom for NOAH properties",
+            title = "Average asking rent by bedroom for NOAH properties",
             y_labels = label_dollar(),
-            y_title = "Median asking rent",
+            y_title = "Average asking rent",
             x_title = element_blank(),
             x_labels = scales::date_format(format = "%Y")
           ) +
@@ -162,26 +185,25 @@ gg_line_col(rent,
 
 ### Age
 
-The majority of Chesterfield's NOAH properties are older than 20 years. These buildings were primarily constructed in three major production cycles:
+The majority of Chesterfield's NOAH properties are older than 40 years. These buildings were primarily constructed in two major production cycles:
 
-* The mid 1960s to the mid 1970s,
-* The late 1980s and early 1990s, and
-* The early 2000s.
+* The mid 1960s to the mid 1970s, and
+* The late 1980s and early 1990s.
 
-The median age of the county's NOAH units is 48 years. (Built in 1974.)
+The median age of the county's NOAH units is 53 years. (Built in 1969.)
 
 ```{r noah-age, fig.cap="NOAH units by year built"}
 
 gg_histogram(costar_noah,
-             x_var = yearbuilt,
+             x_var = year_built,
              x_title = "Year built",
              x_bins_n = 18,
              title = "NOAH units by year built",
              x_labels = scales::label_number(accuracy = 1, big.mark = ""),
              y_title = "Number of properties",
              y_labels = scales::label_number(accuracy = 1)) +
-  ggplot2::scale_x_continuous(limits = c(1950, 2020),
-                              breaks = seq(1950, 2020, 10))
+  ggplot2::scale_x_continuous(limits = c(1950, 2000),
+                              breaks = seq(1950, 2000, 10))
 
 ```
 *Source: CoStar Group, Inc.*

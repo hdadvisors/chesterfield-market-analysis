@@ -1,0 +1,40 @@
+Property Address,County Name,State,Zip,Property Name,Building Status,Number Of Units,Style,Star Rating,Market Name,Year Built,Year Renovated,Building Park,Total Buildings,Zoning,Number Of Stories,Vacancy %,Avg Unit SF,Avg Asking/Unit,Rent Type,Affordable Type,Market Segment,Latitude,Longitude
+11800 Lake Falls Dr,Chesterfield,VA,23831,Waterside at Ironbridge,Existing,265,Garden,2,Richmond,1987,,,22,R7,3,2.38,893,1363,Market,,All,37.3572442,-77.4906285
+12051 Chestertowne Rd,Chesterfield,VA,23831,Chester Townhomes,Existing,152,Garden,2,Richmond,1969,,,18,R7,2,0.39,874,1260,Market,,All,37.356051,-77.447804
+1500 Concord Ave,Chesterfield,VA,23834-3059,Concord Apartments,Existing,32,Low-Rise,2,Richmond,1985,,,1,R4,2,,1000,778,Market,,All,37.254604,-77.415906
+16415 Jefferson Davis Hwy,Chesterfield,VA,23834-5378,,Existing,12,Garden,2,Richmond,1940,,,6,A,3,3.76,,,Market,,All,37.296501,-77.409271
+1701 Irondale Rd,Chesterfield,VA,23235-3766,Summit at Bon Air,Existing,296,Garden,2,Richmond,1975,2017,,37,R7,2,4.74,1018,1661,Market,,All,37.516606,-77.612727
+20900 Riverterrace Rd,Chesterfield,VA,23803-1834,River Road Terrace,Existing,128,Garden,2,Richmond,1973,,,16,R7,2,6.37,950,1302,Market,,All,37.2370347,-77.4335841
+2507 Alcott Rd,Chesterfield,VA,23237,Huntwood Apartments,Existing,48,Low-Rise,2,Richmond,1974,,,7,C-3,1,3.76,550,800,Market,,All,37.423032,-77.4366379
+2530 Marina Dr,Chesterfield,VA,23234-5139,Falling Creek,Existing,348,Garden,2,Richmond,1964,2017,,31,RMF,2,2.1,568,867,Market,,All,37.4378792,-77.4393993
+3005 Lancers Blvd,Chesterfield,VA,23224,Amber Leaves Apartments,Existing,67,Garden,2,Richmond,1973,,,9,R7,2,0.27,750,895,Market,,All,37.4675151,-77.5188814
+3101 Danzler Cir,Chesterfield,VA,23224,,Existing,18,Garden,2,Richmond,1969,,,9,R7,2,3.76,,,Market,,All,37.4665308,-77.5154124
+3145 Parkdale Rd,Chesterfield,VA,23234-6357,,Existing,12,Low-Rise,2,Richmond,1956,,,3,R7,1,3.76,,,Market,,All,37.4379419,-77.4518733
+3201 Lady Marian Ln,Chesterfield,VA,23113,,Existing,1,Low-Rise,2,Richmond,1989,,,1,R40,2,4.09,4139,,Market,,All,37.5379157,-77.6108209
+3304 Light St,Chesterfield,VA,23803-2412,,Existing,1,Single-Family Home,2,Richmond,1920,,,1,,1,3.36,1159,,Market,,All,37.23392,-77.42257
+3306 Light St,Chesterfield,VA,23803-2412,,Existing,1,Single-Family Home,2,Richmond,1920,2002,,1,,,3.36,,,Market,,All,37.233964,-77.42284
+3501 Meadowdale Blvd,Chesterfield,VA,23234,Crystal Lakes,Existing,716,Garden,2,Richmond,1967,2020,,95,R7,2,4.19,944,918,Market,,All,37.436979,-77.458757
+5002 Alan Dr,Chesterfield,VA,23234,Oakwood Apartments,Existing,32,Garden,2,Richmond,1975,,,8,R-7,1,3.76,,870,Market,,All,37.453624,-77.446765
+5201-5223 Collindale Rd,Chesterfield,VA,23234,Collindale Apartments,Existing,20,Garden,2,Richmond,1964,1990,,6,R7,2,3.76,950,807,Market,,All,37.4525867,-77.4445528
+5314 Whetstone Rd,Chesterfield,VA,23234,Meadowbrook Apartments,Existing,493,Garden,2,Richmond,1973,,,54,,2,3.09,1057,1470,Market,,All,37.451721,-77.458023
+5400 Remuda Dr,Chesterfield,VA,23234,,Existing,26,Garden,2,Richmond,1963,,,,R7,2,3.76,,,Market,,All,37.4495076,-77.4440923
+5403 Remuda Dr,Chesterfield,VA,23234-4470,Remuda Crossing,Existing,86,Garden,2,Richmond,1958,,,5,R7,2,0.36,880,925,Market,,All,37.4496538,-77.443458
+6100 Strathmore Rd,Chesterfield,VA,23234,Parkway Gardens,Existing,44,Garden,2,Richmond,1965,,,11,,1,3.76,675,636,Market,,All,37.4417441,-77.4503715
+6300 Pewter Ave,Chesterfield,VA,23224,Chesterfield Flats,Existing,278,Garden,2,Richmond,1975,2006,,27,R7,3,5.12,895,1206,Market,,All,37.4658015,-77.5107295
+6533 S Beulah Rd,Chesterfield,VA,23237-1070,,Existing,24,Low-Rise,2,Richmond,1965,,,3,A,2,6.92,511,,Market,,All,37.4340498,-77.4557458
+6925 Starview Ct,Chesterfield,VA,23225,Cloverleaf Lake Townhouse Apartments,Existing,210,Garden,2,Richmond,1972,,,20,R7,2,2.86,1061,1356,Market,,All,37.490205,-77.522548
+705 Pool Rd,Chesterfield,VA,23236,Aston Ridge,Existing,229,Garden,2,Richmond,1975,2016,,24,R7,2,7.86,929,1338,Market,,All,37.5041728,-77.5900471
+9111 N Arch Village Ct,Chesterfield,VA,23236,North Arch Village,Existing,128,Garden,2,Richmond,1973,,,8,R-7,2,,952,1301,Market,,All,37.4952631,-77.5682884
+9701 Jefferson Davis Hwy,Chesterfield,VA,23237-4666,Holiday Mobile Home Park,Existing,140,Manufactured Home Community,2,Richmond,1967,,,,MH1,1,3.76,498,,Market,,All,37.3937053,-77.4259763
+10000 Midlothian Tpke,Chesterfield,VA,23235,Suburban Village MHC,Existing,220,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.507005,-77.578991
+14006 Stevenhurst Dr,Chesterfield,VA,23831,Greenleigh,Existing,502,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.333061,-77.407056
+17210 Jefferson Davis Hwy,Chesterfield,VA,23834,Plantation,Existing,48,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.285734,-77.412208
+6750 Jefferson Davis Hwy,Chesterfield,VA,23237,Parkway,Existing,28,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.432105,-77.440428
+6811 Jefferson Davis Highway,Chesterfield,VA,23237,Shady Hill,Existing,110,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.431387,-77.438358
+6919 Jefferson Davis Hwy,Chesterfield,VA,23237,Falling Creek,Existing,35,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.429867,-77.439408
+7611 Jefferson Davis Hwy,Chesterfield,VA,23237,Bellwood,Existing,41,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.420147,-77.436961
+7725 Jefferson Davis Hwy,Chesterfield,VA,23237,Ponderosa,Existing,27,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.419156,-77.436607
+7748 Midlothian Turnpike,Chesterfield,VA,23235,El Rancho Trailer Court,Existing,55,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.499475,-77.540569
+800 West Hundred Road,Chesterfield,VA,23836,Harbour East Village,Existing,260,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.350964,-77.375573
+8219 Jefferson Davis Hwy,Chesterfield,VA,23237,NA,Existing,12,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.413111,-77.435152
+9612 Jefferson Davis Hwy,Chesterfield,VA,23238,NA,Existing,13,Manufactured Home Community,,Richmond,NA,,,,,,,,,Market,,All,37.393058,-77.429344

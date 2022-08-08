@@ -46,7 +46,50 @@ Based on data from the National Housing Preservation Database (NHPD), affordable
 
 ```{r subsidy-map, fig.cap="Federally assisted rental properties in Chesterfield County"}
 
-knitr::include_graphics("images/assisted_prop_map.png")
+nhpd <- read_csv("data/nhpd_chesterfield.csv") |> 
+  clean_names() |> 
+  filter(subsidy_status != "Inactive")
+
+# pal <- colorFactor(palette = c("blue", "red", "green", "orange"), levels = c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236"))
+# 
+# nhpd_map <-leaflet(nhpd) |>
+#   addTiles() |>
+#   addCircleMarkers(
+#     lng = ~long,
+#     lat = ~lat,
+#     radius = 4,
+#     color = ~pal(subsidy),
+#     stroke = FALSE, fillOpacity = 0.5
+#   ) |>
+#   addLegend("bottomright", pal = pal, values = ~subsidy,
+#             title = "Federal program", opacity = 1)
+# 
+# saveWidget(nhpd_map, "maps/nhpd_map.html")
+
+knitr::include_url("maps/nhpd_map.html", height = "500px")
+
+# knitr::include_graphics("images/assisted_prop_map.png")
+
+```
+
+```{r subsidy-chart, fig.cap="Federally assisted units by subsidy type in Chesterfield County"}
+
+nhpd_units <- nhpd |> 
+  select(fulladdress, property_name, subsidy, assisted_units) |> 
+  group_by(subsidy) |> 
+  summarise(units = sum(assisted_units))
+
+set <-c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")
+
+nhpd_units <- nhpd_units |> arrange(sapply(subsidy, function(y) which(y == set)))
+
+ggplot(nhpd_units, aes(x = reorder(subsidy, -units), y = units, fill = subsidy))+
+  geom_bar(stat = "identity") + 
+  scale_fill_manual(values = c("blue", "red", "green", "orange"), breaks = c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")) +
+  labs(title = "Federally assisted units by subsidy type in Chesterfield County", fill = "Subsidy name") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank())
 
 ```
 
@@ -56,7 +99,9 @@ Naturally-occuring affordable housing (NOAH) is much more prevalent across the c
 
 ```{r noah-map, fig.cap="Naturally occurring affordable rental properties in Chesterfield County"}
 
-knitr::include_graphics("images/noah_map.png")
+knitr::include_url("maps/noah_map.html", height = "500px")
+
+# knitr::include_graphics("images/noah_map.png")
 
 ```
 
