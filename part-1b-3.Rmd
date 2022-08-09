@@ -27,6 +27,8 @@ library(mapview)
 library(htmltools)
 library(htmlwidgets)
 library(leaflet)
+library(scales)
+
 
 ```
 
@@ -93,19 +95,19 @@ tenure_income_chas <- tenure %>%
 
 ```{r tenure-owner-img, fig.cap="Homeowner cost burden"}
 
-oo_cb <- tenure_income_chas |> 
-  select(year, tenure, income, costburden, estimate) |> 
-  filter(tenure == "Homeowner") |> 
-  mutate(cb_group = case_when(
-    costburden == "Cost-burdened" ~ "Cost-burdened",
-    costburden == "No or negative income" ~ "Cost-burdened",
-    costburden == "Severely cost-burdened" ~ "Cost-burdened",
-    costburden == "Not cost-burdened" ~ "Not cost-burdened"
-  )) |> 
-  filter(year == 2012 | year == 2018) |> 
-  group_by(year, income, cb_group) |> 
-  summarise(estimate = sum(estimate)) |> 
-  mutate(percent = estimate/sum(estimate))
+# oo_cb <- tenure_income_chas |> 
+#   select(year, tenure, income, costburden, estimate) |> 
+#   filter(tenure == "Homeowner") |> 
+#   mutate(cb_group = case_when(
+#     costburden == "Cost-burdened" ~ "Cost-burdened",
+#     costburden == "No or negative income" ~ "Cost-burdened",
+#     costburden == "Severely cost-burdened" ~ "Cost-burdened",
+#     costburden == "Not cost-burdened" ~ "Not cost-burdened"
+#   )) |> 
+#   filter(year == 2012 | year == 2018) |> 
+#   group_by(year, income, cb_group) |> 
+#   summarise(estimate = sum(estimate)) |> 
+#   mutate(percent = estimate/sum(estimate))
   
 # ggplot(oo_cb, aes(x = income, y = percent, fill = cb_group)) +
 #   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
@@ -125,6 +127,31 @@ With the share of renters increasing in Chesterfield County, the share of renter
 Separating out by income group shows that declining cost burden is not a shared experience. Income groups making less than 80 percent AMI have seen an increasing share of cost-burdened renters. Those increases have been greatest among extremely low-income renters (85 percent to 90 percent) and low-income renters (58 percent to 64 percent) between 2012 and 2018. The decrease in higher income renters (80 percent AMI or more) experiencing cost burden shows an increasing number of higher earning renters entering the county rental market, nearly 4,000 higher earning renters without cost burden by 2018.
 
 ```{r tenure-renter-img, fig.cap="Renter cost burden"}
+
+# ro_cb <- tenure_income_chas |> 
+#   select(year, tenure, income, costburden, estimate) |> 
+#   filter(tenure == "Renter") |> 
+#   mutate(cb_group = case_when(
+#     costburden == "Cost-burdened" ~ "Cost-burdened",
+#     costburden == "No or negative income" ~ "Cost-burdened",
+#     costburden == "Severely cost-burdened" ~ "Cost-burdened",
+#     costburden == "Not cost-burdened" ~ "Not cost-burdened"
+#   )) |> 
+#   filter(year == 2012 | year == 2018) |> 
+#   group_by(year, income, cb_group) |> 
+#   summarise(estimate = sum(estimate)) |> 
+#   mutate(percent = estimate/sum(estimate))
+#   
+# ggplot(ro_cb, aes(x = income, y = percent, fill = cb_group)) +
+#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+#   facet_wrap(~year) +
+#   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
+#   theme(axis.title = element_blank(),
+#     axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+#   scale_y_continuous(labels = percent_format()) +
+#   labs(title = "Renter cost burden", fill = "Cost burden")'
+
+# The above visualization needs some editing. Trying to figure out how to add percent labels just to cost burden and having some trouble with that. Otherwise it could replace the TABLEAU viz.
 
 knitr::include_graphics("images/rentercb_income.png")
 
@@ -209,22 +236,48 @@ race_chas <- read_csv("data/Table9_2012to2018.csv") %>%
   select(year = Year, estimate = Estimate, moe = MOE, tenure = Tenure, race = `Race/ethnicity`, costburden = `Cost burden`)
 
 race_clean <- race_chas %>%
-  mutate(across(.fns = ~str_remove_all(.x, "alone, non-Hispanic"))) %>% # I haven't figured out how to retain this for White
+  mutate(across(.fns = ~str_remove_all(.x, "alone, non-Hispanic"))) %>% 
   mutate(race = case_when(
-    race == "other (including multiple races, non-Hispanic)" ~ "Another race incuding multiracial",
+    race == "other (including multiple races, non-Hispanic)" ~ "Another race including multiracial",
+    race == "American Indian or Alaska Native " ~ "Another race including multiracial",
+    race == "Pacific Islander " ~ "Another race including multiracial",
+    race == "White " ~ "White, non-Hispanic",
     TRUE ~ race
   )) %>%
     mutate(costburden = case_when(
     costburden == "less than or equal to 30%" ~ "Not cost-burdened",
     costburden == "greater than 30% but less than or equal to 50%" ~ "Cost-burdened",
-    costburden == "greater than 50%" ~ "Severely cost-burdened",
-    costburden == "not computed (household has no/negative income)" ~ "No or negative income"
+    costburden == "greater than 50%" ~ "Cost-burdened",
+    costburden == "not computed (no/negative income)" ~ "Cost-burdened"
+  )) |> 
+  mutate(tenure = case_when(
+    tenure == "Owner occupied" ~ "Homeowner",
+    tenure == "Renter occupied" ~ "Renter"
   ))
   
   
 ```
 
 ```{r race-img, fig.cap="Race and ethnicity cost burden"}
+
+# race_cb <- race_clean |> 
+#   mutate(estimate = parse_number(estimate)) |> 
+#   group_by(year, race, costburden) |> 
+#   summarise(estimate = sum(estimate)) |> 
+#   mutate(percent = estimate/sum(estimate)) |> 
+#   filter(year == 2012 | year == 2018)
+# 
+# 
+# ggplot(race_cb,
+#                       aes(x = year, y = percent, fill = costburden)) +
+#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+#   facet_wrap(~race) + 
+#   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) + 
+#   theme(axis.title = element_blank(),
+#         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+#   scale_y_continuous(labels = percent_format()) +
+#   labs(title = "Renter cost burden", fill = "Cost burden")
+#   
 
 knitr::include_graphics("images/racecb.png")
 

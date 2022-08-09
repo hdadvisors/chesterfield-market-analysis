@@ -46,6 +46,9 @@ Based on data from the National Housing Preservation Database (NHPD), affordable
 
 ```{r subsidy-map, fig.cap="Federally assisted rental properties in Chesterfield County"}
 
+library(janitor)
+library(tidyverse)
+
 nhpd <- read_csv("data/nhpd_chesterfield.csv") |> 
   clean_names() |> 
   filter(subsidy_status != "Inactive")

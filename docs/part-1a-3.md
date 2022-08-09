@@ -45,7 +45,9 @@ The following analysis on NOAH inventory in Chesterfield County uses data from C
 * Existing multifamily properties with active leases,
 * Classified as Class B or C,
 * No public subsidy, rent caps, or other income-based restrictions, and
-* *CoStar Building Rating* of three or fewer stars out of five.^[Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.]
+* *CoStar Building Rating* of two or fewer stars out of five.^[Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.]
+* Built before 2000
+* Excluding single-family homes
 
 :::{.rmdcaution}
 
@@ -61,7 +63,7 @@ The analysis below _includes_ all manufactured home communities in Chesterfield 
 
 ### Amount
 
-Chesterfield County is home to 11,915 market-affordable rental units as of March 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
+Chesterfield County is home to 5,155 market-affordable rental units as of August 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:noah-amount)NOAH properties and units by style</caption>
@@ -75,44 +77,42 @@ Chesterfield County is home to 11,915 market-affordable rental units as of March
 <tbody>
   <tr>
    <td style="text-align:left;"> Garden </td>
-   <td style="text-align:right;"> 47 </td>
-   <td style="text-align:right;"> 10,035 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 3,548 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Manufactured Home Park </td>
+   <td style="text-align:left;"> Manufactured Home Community </td>
    <td style="text-align:right;"> 13 </td>
    <td style="text-align:right;"> 1,491 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Low-Rise </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 389 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 116 </td>
   </tr>
   <tr>
    <td style="text-align:left;font-weight: bold;"> Total </td>
-   <td style="text-align:right;font-weight: bold;"> 69 </td>
-   <td style="text-align:right;font-weight: bold;"> 11,915 </td>
+   <td style="text-align:right;font-weight: bold;"> 36 </td>
+   <td style="text-align:right;font-weight: bold;"> 5,155 </td>
   </tr>
 </tbody>
 </table>
 *Source: CoStar Group, Inc.*
 
-This NOAH inventory is approximately 34 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
-
-NOAH units account for a much larger share (80 percent) of the county's traditional multifamily rental market, as tracked by CoStar.^[As of March 31, 2022, CoStar's total multifamily unit inventory in Chesterfield County was 14,905.] This is in line to the estimated share of NOAH across all multifamily properties in the nation calculated by CoStar in 2016.
+This NOAH inventory is approximately 16 percent of the county's total number of rental units according to the latest Census Bureau estimates.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
 
 ### Location
 
 NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
 
 <div class="figure">
-<img src="images/noah_map.png" alt="Location and type of NOAH" width="100%" style="border:none;" />
+<iframe src="maps/noah_map.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
 <p class="caption">(\#fig:noah-map)Location and type of NOAH</p>
 </div>
 
 ### Rent levels
 
-As of early 2022, average rents in Chesterfield's NOAH units range from \$862 to \$1,462 depending on the number of bedrooms. The minimum gross annual income to afford the average 2-bedroom market-affordable apartment is \$51,000.
+As of early 2022, average rents in Chesterfield's NOAH units range from \$744 to \$1,491 depending on the number of bedrooms. The minimum gross annual income to afford the average 2-bedroom market-affordable apartment is \$47,560.
 
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:noah-rent-table)Current rent by bedroom in NOAH properties</caption>
@@ -125,42 +125,41 @@ As of early 2022, average rents in Chesterfield's NOAH units range from \$862 to
 <tbody>
   <tr>
    <td style="text-align:left;"> Studio </td>
-   <td style="text-align:right;"> $862 </td>
+   <td style="text-align:right;"> $744 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> 1 Bed </td>
-   <td style="text-align:right;"> $1,108 </td>
+   <td style="text-align:right;"> $1,023 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> 2 Beds </td>
-   <td style="text-align:right;"> $1,275 </td>
+   <td style="text-align:right;"> $1,189 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> 3 Beds </td>
-   <td style="text-align:right;"> $1,462 </td>
+   <td style="text-align:right;"> $1,491 </td>
   </tr>
 </tbody>
 </table>
 
 *Source: CoStar Group, Inc.*
 
-Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,000 per month.
+Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than $1,200 per month.
 
 <div class="figure">
-<img src="part-1a-3_files/figure-html/noah-rent-plot-1.png" alt="Median asking rent by bedroom for NOAH properties" width="100%" style="border:none;" />
-<p class="caption">(\#fig:noah-rent-plot)Median asking rent by bedroom for NOAH properties</p>
+<img src="part-1a-3_files/figure-html/noah-rent-plot-1.png" alt="Average asking rent by bedroom for NOAH properties" width="100%" style="border:none;" />
+<p class="caption">(\#fig:noah-rent-plot)Average asking rent by bedroom for NOAH properties</p>
 </div>
 *Source: CoStar Group, Inc.*
 
 ### Age
 
-The majority of Chesterfield's NOAH properties are older than 20 years. These buildings were primarily constructed in three major production cycles:
+The majority of Chesterfield's NOAH properties are older than 40 years. These buildings were primarily constructed in two major production cycles:
 
-* The mid 1960s to the mid 1970s,
-* The late 1980s and early 1990s, and
-* The early 2000s.
+* The mid 1960s to the mid 1970s, and
+* The late 1980s and early 1990s.
 
-The median age of the county's NOAH units is 48 years. (Built in 1974.)
+The median age of the county's NOAH units is 53 years. (Built in 1969.)
 
 <div class="figure">
 <img src="part-1a-3_files/figure-html/noah-age-1.png" alt="NOAH units by year built" width="100%" style="border:none;" />

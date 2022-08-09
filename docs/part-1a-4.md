@@ -45,8 +45,13 @@ A full analysis of the spatial concentration of affordable housing in Chesterfie
 Based on data from the National Housing Preservation Database (NHPD), affordable housing properties supported by the federal government are spread throughout the suburban parts of the county. There are 32 federally assisted properties in Chesterfield County, compared to 60 in Henrico County and 134 in the City of Richmond. In Chesterfield, the majority of assisted units are supported by the Low Income Housing Tax Credit program, where market-rate units are often included in the development.
 
 <div class="figure">
-<img src="images/assisted_prop_map.png" alt="Federally assisted rental properties in Chesterfield County" width="100%" style="border:none;" />
+<iframe src="maps/nhpd_map.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
 <p class="caption">(\#fig:subsidy-map)Federally assisted rental properties in Chesterfield County</p>
+</div>
+
+<div class="figure">
+<img src="part-1a-4_files/figure-html/subsidy-chart-1.png" alt="Federally assisted units by subsidy type in Chesterfield County" width="100%" style="border:none;" />
+<p class="caption">(\#fig:subsidy-chart)Federally assisted units by subsidy type in Chesterfield County</p>
 </div>
 
 ### Without public subsidy
@@ -54,7 +59,7 @@ Based on data from the National Housing Preservation Database (NHPD), affordable
 Naturally-occuring affordable housing (NOAH) is much more prevalent across the county than its income-restricted counterparts, as discussed in [Chapter 3](#part-1a-3). These properties can be found throughout most populated areas, with the highest concentrations within several miles of the border with the City of Richmond, particularly between Hull Street and Route 1.
 
 <div class="figure">
-<img src="images/noah_map.png" alt="Naturally occurring affordable rental properties in Chesterfield County" width="100%" style="border:none;" />
+<iframe src="maps/noah_map.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
 <p class="caption">(\#fig:noah-map)Naturally occurring affordable rental properties in Chesterfield County</p>
 </div>
 
