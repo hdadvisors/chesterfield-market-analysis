@@ -48,6 +48,8 @@ Based on data from the National Housing Preservation Database (NHPD), affordable
 
 library(janitor)
 library(tidyverse)
+library(simplevis)
+library(plotly)
 
 nhpd <- read_csv("data/nhpd_chesterfield.csv") |> 
   clean_names() |> 

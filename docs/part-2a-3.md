@@ -1,6 +1,7 @@
 # Market comparison {#part-2a-3}
 
-This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, "recent" developers are those built in the past five years, are under construction, or are proposed. This analysis does not include single-family rentals, nor manufactured home communities.
+This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, "recent" developments are those built in the past five years, are under construction, or are proposed. This analysis does not include single-family rentals, nor manufactured home communities.
+
 
 
 

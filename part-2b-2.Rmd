@@ -28,6 +28,7 @@ library(ggrepel)
 library(lehdr)
 library(scales)
 library(htmlwidgets)
+library(zoo)
 
 ```
 
@@ -1099,9 +1100,9 @@ Stanley Martin Homes is proposing the development of the Rockwood Square Shoppin
 
 ## Single-family rental versus purchase
 
-The typical renter in the study area requires an income of \$81,197 to afford the median home sales price of \$299,000 --- the median home sales price for homes sold in the last year. But median renter household incomes in the area top out at \$64,952, which are just over \$16,000 less than what is needed to purchase a home. With homeownership out of reach for many renter households in the area, SFRs are often the next best option.
+The typical renter in the study area requires an income of \$74,441 to afford the median home sales price of \$299,000 --- the median home sales price for homes sold in the last year. But median renter household incomes in the area top out at \$64,952, which are just over \$9,000 less than what is needed to purchase a home. With homeownership out of reach for many renter households in the area, SFRs are often the next best option.
 
-However, the typical listed rent for a SFR is \$1,497 --- only a few hundred dollars less than the monthly mortgage payment for a near \$300,000 home (\$1,895). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000. With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
+However, the typical listed rent for a SFR is \$1,497 --- only a few hundred dollars less than the monthly mortgage payment for a near \$300,000 home (\$1,736). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000. With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
 
 ```{r hsr-renter-income, eval=FALSE}
 
@@ -1167,7 +1168,7 @@ downpayment <- 0.05 # 5% downpayment
 hsr_principal <- hsr_msp - (hsr_msp * downpayment)
 closingcosts <- 0.015 # 1.5% closing costs
 hsr_loanamt <- hsr_principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0554 # Current interest rate from Freddie Mac -- 7/26/22 rate is 5.54%
+intrate <- 0.0465 # Current interest rate from Freddie Mac -- annual average as of 8.10.22 is 4.65%
 utilities <- 250 # Assume $250/month for utilities
 
 hsr_payment <- abs(PMT((intrate/12), 360, hsr_loanamt)) + 250
@@ -1187,10 +1188,10 @@ hsr_values <- c("$299,000",
             "5.0%",
             "1.5%",
             "$288,376",
-            "5.54%",
+            "4.65%",
             "$250",
-            "$1,894.61",
-            "$81,197")
+            "$1,736.97",
+            "$74,441")
 
 data.frame(x = hsr_labels, y = hsr_values) %>% 
   kable(caption = "Calculated income needed to buy median-priced home in the study area",
@@ -1204,7 +1205,6 @@ data.frame(x = hsr_labels, y = hsr_values) %>%
 
 ```{r hsr-sfr-price, eval=FALSE}
 
-# $1336.87 is the average price for SFR in the last year.
 
 hsr_sfr_price <- 1479
 hsr_sfr_income <- ((avg_sfr_price*10)/3)*12
@@ -1218,7 +1218,7 @@ x <- c("Census Tract 1002.06",
        "Census Tract 1002.09",
        "Census Tract 1002.10", "Census Tract 1002.11",
        "SFR", "Home Purchase")
-y <- c(54615, 44732, 64952, 33618, 59160, 81197)
+y <- c(54615, 44732, 64952, 33618, 59160, 74441)
 z <- c( "Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
 
 sfr_mls_bar <- data.frame(x, y, z)

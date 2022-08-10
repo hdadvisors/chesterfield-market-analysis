@@ -34,6 +34,7 @@ library(tidyverse)
 library(tidycensus)
 library(simplevis)
 library(scales)
+library(plotly)
 
 b25038_vars <- load_variables(2020, "acs5", cache = T) %>% 
   filter(str_detect(name, "B25038")) %>% 

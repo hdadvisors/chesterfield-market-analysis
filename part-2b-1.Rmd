@@ -32,6 +32,7 @@ library(lehdr)
 library(scales)
 library(htmlwidgets)
 library(htmltools)
+library(zoo)
 
 ```
 
@@ -43,7 +44,7 @@ Current conditions on the northern section of Route 1 prevent significant reinve
 
 Much of the new rental housing development has occurred at the southern end of the study area --- pulled towards the intersection of W. Hundred Road (State Route 10) and Route 1, where there is a dense concentration of retail shopping options.
 
-This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester.
+This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester neighborhoods.
 
 ```{r route-one-map}
 
@@ -825,168 +826,6 @@ gg_bar_col(mhc_con,
 
 ```
 
-## Single-family rental versus purchase
-
-For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
-
-```{r r1-renter-income}
-
-b25119_vars <- load_variables(2020, "acs5") %>%
-  filter(str_sub(name, end = 6) %in% "B25119")
-
-r1_b25119_raw <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25119",
-    year = 2020,
-    survey = "acs5",
-    cache_table = TRUE
-  ) 
-
-b25119_vars_cleaned <- b25119_vars %>%
-  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
-  select(variable = name, tenure)%>%
-  mutate(tenure = case_when(
-    tenure == "Owner occupied (dollars)" ~ "Homeowner",
-    tenure == "Renter occupied (dollars)" ~ "Renter",
-    TRUE ~ "All households"
-  ))
-
-r1_b25119_data <- r1_b25119_raw %>%
-  right_join(b25119_vars_cleaned, by = "variable") %>%
-  select(NAME, tenure, estimate, moe)  %>%
-  separate(NAME, into = c("tract", "county", "state"), sep = ",")
-
-r1_tract_names <- c("Census Tract 1003", "Census Tract 1004.04",
-                    "Census Tract 1004.05", "Census Tract 1004.06",
-                    "Census Tract 1004.07", "Census Tract 1004.09")
-
-r1_medinc <- r1_b25119_data %>%
-  filter(tract %in% r1_tract_names) %>% 
-  filter(tenure == "Renter")
-
-```
-
-```{r r1-med-sales}
-
-r1_sales <- read_csv("data/mls_r1_sales_72622.csv")
-
-r1_sales_med <- r1_sales |> 
-  clean_names() |> 
-  select(sales_price, sales_date) %>% 
-  mutate(sales_date = mdy(sales_date),
-         year = floor_date(sales_date, "year"),
-         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
-  summarise(median = median(sales_price))
-
-```
-
-In the last year, the median home sales price for a home along the corridor was \$265,000, which would require a monthly mortgage payment of \$1,707.60. This is nearly \$400 more than the price of a SFR in the area --- \$1,336.87 a month.
-
-```{r r1-home-price}
-
-library(optiRum)
-
-r1_msp <- 265000
-downpayment <- 0.05 # 5% downpayment
-r1_principal <- r1_msp - (r1_msp * downpayment)
-closingcosts <- 0.015 # 1.5% closing costs
-r1_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0554 # Current interest rate from Freddie Mac -- 7/26/22 rate is 5.54%
-utilities <- 250 # Assume $250/month for utilities
-
-r1_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
-
-r1_inc_needed <- ((r1_payment*10)/2.8)*12
-
-r1_labels <- c("Median sales price",
-            "Downpayment",
-            "Closing costs",
-            "Loan amount",
-            "Interest rate",
-            "Monthly utilities",
-            "Monthly payment",
-            "Income needed to buy home")
-
-r1_values <- c("$265,000",
-            "5.0%",
-            "1.5%",
-            "$255,584",
-            "5.54%",
-            "$250",
-            "$1,707.60",
-            "$73,183")
-
-data.frame(x = r1_labels, y = r1_values) %>% 
-  kable(caption = "Calculated income needed to buy median-priced home in the study area",
-        align = "lr",
-        col.names = c("Variable", "Value")) %>% 
-  kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(8, bold=TRUE)
-
-```
-
-In order to afford the median home sales price, a household would need to make \$73,183 annually, while an SFR would require \$53,475 --- almost \$20,000 less.
-
-```{r r1-sfr-price}
-
-# $1336.87 is the average price for SFR in the last year.
-
-avg_sfr_price <- 1336.87
-sfr_income <- ((avg_sfr_price*10)/3)*12
-
-sfr_labels <- c("Average rent for single-family home",
-                "Income needed")
-
-sfr_values <- formattable::currency(c(avg_sfr_price, sfr_income))
-
-data.frame(x = sfr_labels, y = sfr_values) %>% 
-  kable(caption = "Calculated income needed to rent single-family home in the Route 1 corridor",
-        align = "lr",
-        col.names = c("Variable", "Value")) %>% 
-  kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(2, bold=TRUE)
-
-```
-
-Based on the most recent ACS estimates for renter household incomes, the typical renter in most Census tracts would not be able to either rent a SFR nor purchase the typical home in the area. Renters in southern Bellwood and northern Chester are more likely to afford a SFR, but with their incomes they are still nearly \$10,000 short of being able to purchase a home priced at \$265,000.
-
-```{r sfr-mls-bar, fig.cap="Renter income and income needed to purchase or rent single-family home in Route 1 corridor"}
-
-x <- c("Census Tract 1003", "Census Tract 1004.04", "Census Tract 1004.05", "Census Tract 1004.06", "Census Tract 1004.07", "Census Tract 1004.09", "Rent single-family home", "Purchase single-family home")
-y <- c(35906, 32014, 39477, 25861, 64896, 63783, 53475, 73183)
-z <- c("Median renter income", "Median renter income","Median renter income","Median renter income","Median renter income","Median renter income", "Income needed", "Income needed")
-
-sfr_mls_bar <- data.frame(x, y, z) |> 
-  mutate(x = fct_reorder(x, y, .desc = TRUE))
-
-gg_hbar_col(sfr_mls_bar,
-            x_var = y,
-            y_var = x,
-            col_var = z,
-            x_labels = label_dollar(),
-            y_labels = function(x) x,
-            x_title = "",
-            y_title = "",
-            col_title = "",
-            title = "Renter income and income needed to purchase or rent single-family home"
-            ) +
-  ggplot2::geom_text(
-    aes(x = x, y = (y - 7500), label = label_dollar()(y)),
-    size = 3.5, color = "white") +
-  ggplot2::theme(
-    legend.position = "top",
-    legend.justification = "center",
-    legend.direction = "horizontal"
-  )
-
-```
-
-With homeownership being out of reach for many in the area, the next best option is often renting a single-family home. Low supply of homes for sale is often being exacerbated by owners or investors converting potential starter home opportunities into rental properties. Although this is meeting a demand in the rental market, the opportunity to reach the first rung of the homeownership ladder is so often pushed further away when the cost to rent a home is only a few hundred dollars away from being able to afford a monthly mortgage.
-
 ## Proximity to amenities
 
 Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs. 
@@ -1548,3 +1387,166 @@ knitr::include_graphics("images/mooreslakesite.jpg")
 ```
 
 Development in this section of the corridor has benefited from the close location of the 288 and I-95 interchanges, as well as dense commercial development at the crossroads of Route 10 and Route 1. In addition, developers have noted that negative associations with Route 1 have largely prevented market rate development north of Willis Road. 
+
+
+## Single-family rental versus purchase
+
+For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
+
+```{r r1-renter-income}
+
+b25119_vars <- load_variables(2020, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
+
+r1_b25119_raw <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = 2020,
+    survey = "acs5",
+    cache_table = TRUE
+  ) 
+
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure)%>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter",
+    TRUE ~ "All households"
+  ))
+
+r1_b25119_data <- r1_b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, tenure, estimate, moe)  %>%
+  separate(NAME, into = c("tract", "county", "state"), sep = ",")
+
+r1_tract_names <- c("Census Tract 1003", "Census Tract 1004.04",
+                    "Census Tract 1004.05", "Census Tract 1004.06",
+                    "Census Tract 1004.07", "Census Tract 1004.09")
+
+r1_medinc <- r1_b25119_data %>%
+  filter(tract %in% r1_tract_names) %>% 
+  filter(tenure == "Renter")
+
+```
+
+```{r r1-med-sales}
+
+r1_sales <- read_csv("data/mls_r1_sales_72622.csv")
+
+r1_sales_med <- r1_sales |> 
+  clean_names() |> 
+  select(sales_price, sales_date) %>% 
+  mutate(sales_date = mdy(sales_date),
+         year = floor_date(sales_date, "year"),
+         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
+  summarise(median = median(sales_price))
+
+```
+
+In the last year, the median home sales price for a home along the corridor was \$274,470, which would require a monthly mortgage payment of \$1,614.98. This is nearly \$300 more than the price of a SFR in the area --- \$1,336.87 a month.
+
+```{r r1-home-price}
+
+library(optiRum)
+
+r1_msp <- 274470
+downpayment <- 0.05 # 5% downpayment
+r1_principal <- r1_msp - (r1_msp * downpayment)
+closingcosts <- 0.015 # 1.5% closing costs
+r1_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
+intrate <- 0.0465 # Current average interest as of 8.10.22
+utilities <- 250 # Assume $250/month for utilities
+
+r1_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
+
+r1_inc_needed <- ((r1_payment*10)/2.8)*12
+
+r1_labels <- c("Median sales price",
+            "Downpayment",
+            "Closing costs",
+            "Loan amount",
+            "Interest rate",
+            "Monthly utilities",
+            "Monthly payment",
+            "Income needed to buy home")
+
+r1_values <- c("$274,470",
+            "5.0%",
+            "1.5%",
+            "$264,717",
+            "4.65%",
+            "$250",
+            "$1,614.98",
+            "$69,213")
+
+data.frame(x = r1_labels, y = r1_values) %>% 
+  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(8, bold=TRUE)
+
+```
+
+In order to afford the median home sales price, a household would need to make \$69,213 annually, while an SFR would require \$53,475 --- almost \$16,000 less.
+
+```{r r1-sfr-price}
+
+# $1336.87 is the average price for SFR in the last year.
+
+avg_sfr_price <- 1336.87
+sfr_income <- ((avg_sfr_price*10)/3)*12
+
+sfr_labels <- c("Average rent for single-family home",
+                "Income needed")
+
+sfr_values <- formattable::currency(c(avg_sfr_price, sfr_income))
+
+data.frame(x = sfr_labels, y = sfr_values) %>% 
+  kable(caption = "Calculated income needed to rent single-family home in the Route 1 corridor",
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(2, bold=TRUE)
+
+```
+
+Based on the most recent ACS estimates for renter household incomes, the typical renter in most Census tracts would not be able to either rent a SFR nor purchase the typical home in the area. Renters in southern Bellwood and northern Chester are more likely to afford a SFR, but with their incomes they are still nearly \$30,000 short of being able to purchase a home priced at \$274,470.
+
+```{r sfr-mls-bar, fig.cap="Renter income and income needed to purchase or rent single-family home in Route 1 corridor"}
+
+x <- c("Bensley (1003)", "Bellwood (1004.04)", "Bensley (1004.05)", "Bellwood (1004.06)", "Bellwood (1004.07)", "Northern Chester (1004.09)", "Rent single-family home", "Purchase single-family home")
+y <- c(35906, 32014, 39477, 25861, 64896, 63783, 53475, 69213)
+z <- c("Median renter income", "Median renter income","Median renter income","Median renter income","Median renter income","Median renter income", "Income needed", "Income needed")
+
+sfr_mls_bar <- data.frame(x, y, z) |> 
+  mutate(x = fct_reorder(x, y, .desc = TRUE))
+
+gg_hbar_col(sfr_mls_bar,
+            x_var = y,
+            y_var = x,
+            col_var = z,
+            x_labels = label_dollar(),
+            y_labels = function(x) x,
+            x_title = "",
+            y_title = "",
+            col_title = "",
+            title = "Renter income and income needed to purchase or rent single-family home"
+            ) +
+  ggplot2::geom_text(
+    aes(x = x, y = (y - 7500), label = label_dollar()(y)),
+    size = 3.5, color = "white") +
+  ggplot2::theme(
+    legend.position = "top",
+    legend.justification = "center",
+    legend.direction = "horizontal"
+  )
+
+```
+
+With homeownership being out of reach for many in the area, the next best option is often renting a single-family home. Low supply of homes for sale is often being exacerbated by owners or investors converting potential starter home opportunities into rental properties. Although this is meeting a demand in the rental market, the opportunity to reach the first rung of the homeownership ladder is so often pushed further away when the cost to rent a home is only a few hundred dollars away from being able to afford a monthly mortgage.

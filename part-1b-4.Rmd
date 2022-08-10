@@ -15,6 +15,7 @@ library(lubridate)
 library(patchwork)
 library(knitr)
 library(zoo)
+library(plotly)
 
 ```
 
@@ -71,7 +72,7 @@ Understanding the ability of a range of job types to afford housing in a county 
 
 Homeownership is more difficult to achieve in Chesterfield County The COVID-19 pandemic further tightened the housing market across America, and the Richmond region was no exception. The low supply of homes-for-sale coupled with record low mortgage interest rates placed pressure on local housing markets, especially in the suburbs.
 
-The median home sale price in Chesterfield County has increased by 39 percent since before the pandemic in 2019---from $269,000 to $372,860 in 2022 year-to-date.
+The median home sale price in Chesterfield County has increased by 39 percent since before the pandemic in 2019---from $269,000 to $372,860 in 2022 year-to-date.^[As of August 10, 2022.]
 
 ``` {r cf-med-sales, fig.cap="Median single-family home sales price in Chesterfield County"}
 
@@ -117,9 +118,9 @@ ggplotly(sales_bar) |>
 
 ```
 
-*Source: CVR MLS. 2022 includes all sales through March.*
+*Source: CVR MLS. 2022 includes all sales through August 10, 2022.*
 
-In order to afford a home at this price, a household would need to make **\$81,048** at current interest rates. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at this price, a household would need to make **\$81,048** at the current average annual interest rate.^[Freddie Mac 30-Year Fixed Rate Mortgage Annual Average as of August 10, 2022.] The table below shows the assumptions made to calculate this figure.
 
 ``` {r cf-home-price}
 

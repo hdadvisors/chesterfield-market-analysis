@@ -40,7 +40,7 @@ A growing Hispanic population along the corridor has helped reignite commercial 
 
 ## Study area
 
-For the purposes of this analysis, the study area is defined as the Census tracts 1003, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09. These tracts all border Route 1 from Northern Chesterfield to Route 10.
+For the purposes of this analysis, the study area is defined as the Census tracts 1003, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09. These tracts all border Route 1 from Northern Chesterfield to Route 10. This encompasses portions of the Bensley, Bellwood, and northern Chester neighborhoods.
 
 ```{r r1-base-map, fig.cap="Route 1 study area", message=FALSE}
 
@@ -313,7 +313,7 @@ gg_line_col_facet(r1_sales_tract,
 
 ```
 
-*Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
+*Source: CVR MLS. 2022 includes all sales through August 10, 2022.*
 
 In order to afford a home at median price across the study area, a household would need to make **\$69,213**. While this is \$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 

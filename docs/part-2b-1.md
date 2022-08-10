@@ -16,7 +16,7 @@ Current conditions on the northern section of Route 1 prevent significant reinve
 
 Much of the new rental housing development has occurred at the southern end of the study area --- pulled towards the intersection of W. Hundred Road (State Route 10) and Route 1, where there is a dense concentration of retail shopping options.
 
-This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester.
+This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester neighborhoods.
 
 <iframe src="maps/r1_neighborhoods.html" width="100%" height="500px" data-external="1" style="border:none;"></iframe>
 
@@ -270,91 +270,6 @@ Of the ten communities located along the corridor, six are either obsolete or un
 <p class="caption">(\#fig:mhccv-condition)Percent of MH units in Route 1 corridor by park typology</p>
 </div>
 
-## Single-family rental versus purchase
-
-For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
-
-
-
-
-
-In the last year, the median home sales price for a home along the corridor was \$265,000, which would require a monthly mortgage payment of \$1,707.60. This is nearly \$400 more than the price of a SFR in the area --- \$1,336.87 a month.
-
-<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:r1-home-price)Calculated income needed to buy median-priced home in the study area</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Variable </th>
-   <th style="text-align:right;"> Value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Median sales price </td>
-   <td style="text-align:right;"> $265,000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Downpayment </td>
-   <td style="text-align:right;"> 5.0% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Closing costs </td>
-   <td style="text-align:right;"> 1.5% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Loan amount </td>
-   <td style="text-align:right;"> $255,584 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Interest rate </td>
-   <td style="text-align:right;"> 5.54% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Monthly utilities </td>
-   <td style="text-align:right;"> $250 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Monthly payment </td>
-   <td style="text-align:right;"> $1,707.60 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;font-weight: bold;"> Income needed to buy home </td>
-   <td style="text-align:right;font-weight: bold;"> $73,183 </td>
-  </tr>
-</tbody>
-</table>
-
-In order to afford the median home sales price, a household would need to make \$73,183 annually, while an SFR would require \$53,475 --- almost \$20,000 less.
-
-<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:r1-sfr-price)Calculated income needed to rent single-family home in the Route 1 corridor</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Variable </th>
-   <th style="text-align:right;"> Value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Average rent for single-family home </td>
-   <td style="text-align:right;"> $1,336.87 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;font-weight: bold;"> Income needed </td>
-   <td style="text-align:right;font-weight: bold;"> $53,474.80 </td>
-  </tr>
-</tbody>
-</table>
-
-Based on the most recent ACS estimates for renter household incomes, the typical renter in most Census tracts would not be able to either rent a SFR nor purchase the typical home in the area. Renters in southern Bellwood and northern Chester are more likely to afford a SFR, but with their incomes they are still nearly \$10,000 short of being able to purchase a home priced at \$265,000.
-
-<div class="figure">
-<img src="part-2b-1_files/figure-html/sfr-mls-bar-1.png" alt="Renter income and income needed to purchase or rent single-family home in Route 1 corridor" width="100%" style="border:none;" />
-<p class="caption">(\#fig:sfr-mls-bar)Renter income and income needed to purchase or rent single-family home in Route 1 corridor</p>
-</div>
-
-With homeownership being out of reach for many in the area, the next best option is often renting a single-family home. Low supply of homes for sale is often being exacerbated by owners or investors converting potential starter home opportunities into rental properties. Although this is meeting a demand in the rental market, the opportunity to reach the first rung of the homeownership ladder is so often pushed further away when the cost to rent a home is only a few hundred dollars away from being able to afford a monthly mortgage.
-
 ## Proximity to amenities
 
 Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs. 
@@ -496,3 +411,89 @@ The second phase of Moore's Lake is coming and has the potential to create an ad
 </div>
 
 Development in this section of the corridor has benefited from the close location of the 288 and I-95 interchanges, as well as dense commercial development at the crossroads of Route 10 and Route 1. In addition, developers have noted that negative associations with Route 1 have largely prevented market rate development north of Willis Road. 
+
+
+## Single-family rental versus purchase
+
+For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
+
+
+
+
+
+In the last year, the median home sales price for a home along the corridor was \$274,470, which would require a monthly mortgage payment of \$1,614.98. This is nearly \$300 more than the price of a SFR in the area --- \$1,336.87 a month.
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:r1-home-price)Calculated income needed to buy median-priced home in the study area</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variable </th>
+   <th style="text-align:right;"> Value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Median sales price </td>
+   <td style="text-align:right;"> $274,470 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Downpayment </td>
+   <td style="text-align:right;"> 5.0% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Closing costs </td>
+   <td style="text-align:right;"> 1.5% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Loan amount </td>
+   <td style="text-align:right;"> $264,717 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Interest rate </td>
+   <td style="text-align:right;"> 4.65% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Monthly utilities </td>
+   <td style="text-align:right;"> $250 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Monthly payment </td>
+   <td style="text-align:right;"> $1,614.98 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> Income needed to buy home </td>
+   <td style="text-align:right;font-weight: bold;"> $69,213 </td>
+  </tr>
+</tbody>
+</table>
+
+In order to afford the median home sales price, a household would need to make \$69,213 annually, while an SFR would require \$53,475 --- almost \$16,000 less.
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:r1-sfr-price)Calculated income needed to rent single-family home in the Route 1 corridor</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variable </th>
+   <th style="text-align:right;"> Value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Average rent for single-family home </td>
+   <td style="text-align:right;"> $1,336.87 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> Income needed </td>
+   <td style="text-align:right;font-weight: bold;"> $53,474.80 </td>
+  </tr>
+</tbody>
+</table>
+
+Based on the most recent ACS estimates for renter household incomes, the typical renter in most Census tracts would not be able to either rent a SFR nor purchase the typical home in the area. Renters in southern Bellwood and northern Chester are more likely to afford a SFR, but with their incomes they are still nearly \$30,000 short of being able to purchase a home priced at \$274,470.
+
+<div class="figure">
+<img src="part-2b-1_files/figure-html/sfr-mls-bar-1.png" alt="Renter income and income needed to purchase or rent single-family home in Route 1 corridor" width="100%" style="border:none;" />
+<p class="caption">(\#fig:sfr-mls-bar)Renter income and income needed to purchase or rent single-family home in Route 1 corridor</p>
+</div>
+
+With homeownership being out of reach for many in the area, the next best option is often renting a single-family home. Low supply of homes for sale is often being exacerbated by owners or investors converting potential starter home opportunities into rental properties. Although this is meeting a demand in the rental market, the opportunity to reach the first rung of the homeownership ladder is so often pushed further away when the cost to rent a home is only a few hundred dollars away from being able to afford a monthly mortgage.

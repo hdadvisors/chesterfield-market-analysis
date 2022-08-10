@@ -101,14 +101,14 @@ fig:acs-yrblt
 fig:costar-mf-3
 fig:costar-mf-4
 fig:mhccv-condition
-tab:r1-sfr-price
-fig:sfr-mls-bar
 fig:r1-transit-chart
 fig:r1-schools-chart
 fig:r1-grocery-chart
 fig:r1-jobs-chart
 fig:the-jane
 fig:moores-lake
+tab:r1-sfr-price
+fig:sfr-mls-bar
 fig:hsr-base-map
 fig:hsr-rhh
 tab:costar-hsr-1
@@ -254,7 +254,6 @@ rental-prices
 multifamily-rents
 single-family-rents
 conditions
-single-family-rental-versus-purchase
 proximity-to-amenities
 public-transportation
 schools
@@ -263,6 +262,7 @@ healthcare
 job-centers
 public-and-private-investments
 case-study
+single-family-rental-versus-purchase
 part-2b-2
 the-hull-street-corridor
 rental-housing-supply-1
