@@ -71,9 +71,11 @@ Understanding the ability of a range of job types to afford housing in a county 
 
 Homeownership is more difficult to achieve in Chesterfield County The COVID-19 pandemic further tightened the housing market across America, and the Richmond region was no exception. The low supply of homes-for-sale coupled with record low mortgage interest rates placed pressure on local housing markets, especially in the suburbs.
 
-The median home sale price in Chesterfield County has increased by 23 percent since before the pandemic in 2019---from $269,000 to $330,000 in 2021.
+The median home sale price in Chesterfield County has increased by 39 percent since before the pandemic in 2019---from $269,000 to $372,860 in 2022 year-to-date.
 
 ``` {r cf-med-sales, fig.cap="Median single-family home sales price in Chesterfield County"}
+
+# CHESTERFIELD COUNTY - SINGLE FAMILY/CONDO/TOWN - 8.10.22
 
 medsales <- read_csv("data/cvrmls_medsales.csv")
 
@@ -95,7 +97,7 @@ medsales_adjusted <- medsales %>%
   rename(cpi = mean) %>%
   mutate(sales20 = ((235.67550/cpi)*medsales))
 
-gg_line(medsales,
+sales_bar <- gg_line(medsales,
         x_var = year,
         y_var = medsales,
         alpha_point = 0,
@@ -110,20 +112,23 @@ gg_line(medsales,
   ggplot2::scale_x_continuous(limits = c(2011.5, 2022.5),
                               breaks = seq(2012, 2022, 1))
 
+ggplotly(sales_bar) |> 
+  plotly_camera()
+
 ```
 
 *Source: CVR MLS. 2022 includes all sales through March.*
 
-In order to afford a home at this price, a household would need to make **\$79,181**. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at this price, a household would need to make **\$81,048** at current interest rates. The table below shows the assumptions made to calculate this figure.
 
 ``` {r cf-home-price}
 
-msp <- 330000
+msp <- 372860
 downpayment <- 0.05 # 5% downpayment
 principal <- msp - (msp * downpayment)
 closingcosts <- 0.015 # 1.5% closing costs
 loanamt <- principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0442 # Current interest rate from Freddie Mac
+intrate <- 0.0465 # Current interest rate from Freddie Mac - ANNUAL AVERAGE AS OF 8.10.22
 utilities <- 250 # Assume $250/month for utilities
 
 # Calculate monthly payment
@@ -143,14 +148,14 @@ labels <- c("Median sales price",
             "Monthly payment",
             "Income needed to buy home")
 
-values <- c("$330,000",
+values <- c("$372,860",
             "5.0%",
             "1.5%",
-            "$318,274",
-            "4.42%",
+            "$359,611",
+            "4.65%",
             "$250",
-            "$1,847.55",
-            "$79,181")
+            "$2,104.29",
+            "$90,183")
 
 data.frame(x = labels, y = values) %>% 
   kable(caption = "Calculated income needed to buy median-priced home in Chesterfield County",
@@ -164,51 +169,55 @@ data.frame(x = labels, y = values) %>%
 
 *Sources: CVR MLS and Freddie Mac Primary Mortgage Market Survey.*
 
-This minimum income is about \$25,000 more than the 2020 median household income for renters in Chesterfield. In fact, through 2020, the average renter household income is unable to support a home sales price above $250,000.
+This minimum income is about \$37,000 more than the 2020 median household income for renters in Chesterfield (\$53,147). In fact, through 2020, the average renter household income is unable to support a home sales price above $250,000.
 
 ```{r cf-renter-income}
 
-years <- 2010:2020
+# years <- 2010:2020
+# 
+# b25119_vars <- load_variables(2010, "acs5") %>%
+#   filter(str_sub(name, end = 6) %in% "B25119")
+# 
+# b25119_raw <- map_dfr(years, function(yr){
+#   b25119_pull <- get_acs(
+#     geography = "county",
+#     county = "Chesterfield County",
+#     state = "VA",
+#     table = "B25119",
+#     year = yr,
+#     cache = TRUE
+#   ) %>%
+#     mutate(year = yr)
+#   })
+# 
+# b25119_vars_cleaned <- b25119_vars %>%
+#   separate(label, into = c("est", "income", "tenure"), sep = "!!") %>% 
+#   select(variable = name, tenure) %>%
+#   mutate(tenure = case_when(
+#     tenure == "Total" ~ "All households",
+#     tenure == "Owner occupied (dollars)" ~ "Homeowner",
+#     tenure == "Renter occupied (dollars)" ~ "Renter"
+#   ))
+# 
+# b25119_data <- b25119_raw %>%
+#   right_join(b25119_vars_cleaned, by = "variable") %>%
+#   select(NAME, year, tenure, estimate, moe) %>%
+#   group_by(year, tenure) %>%
+#   summarise(
+#     estimate = sum(estimate),
+#     moe = moe_sum(moe, estimate)
+#   ) %>% 
+#   ungroup() %>% 
+#   mutate(cv = ((moe/1.645)/estimate)*100) %>% 
+#   mutate(reliability = case_when(
+#     cv < 15 ~ "High reliability",
+#     cv >= 15 & cv <= 30 ~ "Medium reliability",
+#     cv > 30 ~ "Low reliability")
+#   )
+# 
+# write_rds(b25119_data, "data/b25119_data.rds")
 
-b25119_vars <- load_variables(2010, "acs5") %>%
-  filter(str_sub(name, end = 6) %in% "B25119")
-
-b25119_raw <- map_dfr(years, function(yr){
-  b25119_pull <- get_acs(
-    geography = "county",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25119",
-    year = yr,
-    cache = TRUE
-  ) %>%
-    mutate(year = yr)
-  })
-
-b25119_vars_cleaned <- b25119_vars %>%
-  separate(label, into = c("est", "income", "tenure"), sep = "!!") %>% 
-  select(variable = name, tenure) %>%
-  mutate(tenure = case_when(
-    tenure == "Total" ~ "All households",
-    tenure == "Owner occupied (dollars)" ~ "Homeowner",
-    tenure == "Renter occupied (dollars)" ~ "Renter"
-  ))
-
-b25119_data <- b25119_raw %>%
-  right_join(b25119_vars_cleaned, by = "variable") %>%
-  select(NAME, year, tenure, estimate, moe) %>%
-  group_by(year, tenure) %>%
-  summarise(
-    estimate = sum(estimate),
-    moe = moe_sum(moe, estimate)
-  ) %>% 
-  ungroup() %>% 
-  mutate(cv = ((moe/1.645)/estimate)*100) %>% 
-  mutate(reliability = case_when(
-    cv < 15 ~ "High reliability",
-    cv >= 15 & cv <= 30 ~ "Medium reliability",
-    cv > 30 ~ "Low reliability")
-  )
+b25119_data <- read_rds("data/b25119_data.rds")
 
 cpi <- read_excel("data/CPI_U_RS.xlsx") %>% 
   rename(year = Year,
@@ -260,7 +269,9 @@ plot_afford <- gg_bar(
   y_labels = scales::label_dollar()
   )
 
-plot_inc + plot_afford
+library(gridExtra)
+
+grid.arrange(plot_inc,plot_afford, ncol =2)
 
 ```
 
@@ -293,7 +304,7 @@ cf_wages %>%
 
 *Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
 
-Among public sector employees working for the county, maximum home sales prices are higher, reflecting the stronger wages they command. However, most of these prices are at or below \$300,000, still well under the county's current median sales price of $330,000.
+Among public sector employees working for the county, maximum home sales prices are higher, reflecting the stronger wages they command. However, most of these prices are at or below \$300,000, still well under the county's current median sales price of $372,860.
 
 ``` {r cf-public-price}
 
@@ -322,11 +333,13 @@ cf_wages %>%
 
 The housing supply shortage is also being felt in the rental housing market. Small landlords exiting the rental market and low supply are exacerbating the challenges renters were facing even before the pandemic.  For many renters in low paying jobs, the pandemic impacts were heightened for those that could not work-from-home and depended on shuttered service industry jobs. Slow wage growth and increasing rental prices combined to put pressure on the housing stability of essential workers.
 
-Post-recession average asking rent in the county hit a low of \$1,150 in 2012 (adjusted to current dollars), but has been on the rise ever since. From 2012 to 2019, average rents rose an average of 2 percent each year until 2020, the year of the pandemic. Between 2019 and 2020, average rent in the county rose by 5 percent (\$69)---from \$1,290 to \$1,359, a substantial increase for individuals and families on tight budgets. In 2021, average rent continued to rise to over \$1,400. 
+Post-recession average asking rent in the county hit a low of \$1,207 in 2012 (adjusted to current dollars), but has been on the rise ever since. From 2012 to 2019, average rents rose an average of 0.5 percent each year until 2020, the year of the pandemic. Between 2019 and 2020, average rent in the county rose by 4 percent (\$61)---from \$1,366 to \$1,427, a substantial increase for individuals and families on tight budgets. In 2021, average rent continued to rise to over \$1,500. 
 
 ```{r cf-rents, fig.cap="Average asking rent in Chesterfield County"}
 
 #CoStar calculated average and not median. Amended to reflect these changes. May need to consider changing this to match Part 2a-1.
+
+# REPULLED AVERAGE RENT ON 8.10.22 FOR CHESTERFIELD COUNTY MULTIFAMILY - EXISTING
 
 cf_rents <- read_csv("data/costar_rent_avg.csv") %>% 
   pivot_longer(cols = 2:3, names_to = "type", values_to = "value") %>% 

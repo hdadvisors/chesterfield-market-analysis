@@ -24,6 +24,10 @@ library(mapview)
 library(tidygeocoder)
 library(tmap)
 library(sp)
+library(janitor)
+library(leaflet)
+library(lubridate)
+
 ```
 
 ## Background
@@ -43,19 +47,34 @@ For the purposes of this analysis, the study area is defined as the Census tract
 r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
 r1_tracts <- tracts("VA", "Chesterfield",
-                    progress_bar = FALSE) %>% 
-  filter(TRACTCE %in% r1_tracts_list) %>% 
-  st_transform(4326)
+                    progress_bar = FALSE) |> 
+  filter(TRACTCE %in% r1_tracts_list) |> 
+  st_transform(4326) |> 
+  mutate(neighborhood = case_when(
+    TRACTCE == "100300" ~ "Bensley",
+    TRACTCE == "100404" ~ "Bellwood",
+    TRACTCE == "100405" ~ "Bensley",
+    TRACTCE == "100406" ~ "Bellwood",
+    TRACTCE == "100407" ~ "Bellwood",
+    TRACTCE == "100409" ~ "Northern Chester"
+  ))
 
-# r1_map <- mapview(r1_tracts,
-#           alpha = 0.5,
-#           col.regions = "cornflowerblue",
-#           legend = F,
-#           popup = F,
-#           label = "NAMELSAD",
-#           layer.name = "Study area census tracts")
-# 
-# htmlwidgets::saveWidget(r1_map@map, "maps/r1_map.html")
+hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
+
+r1_neighborhoods <- leaflet(r1_tracts) |>
+  addTiles() |>
+  addPolygons(color = ~hood_pal(neighborhood),
+              weight = 3,
+              label = ~r1_tracts$NAMELSAD,
+              labelOptions = labelOptions(noHide = F,
+                                          direction = "auto",
+                                          textsize = "15px")) |>
+  addLegend("topright",
+            pal = hood_pal,
+            values = ~neighborhood,
+            title = "Route 1 corridor neighborhoods")
+
+htmlwidgets::saveWidget(r1_neighborhoods, "maps/r1_maps.html")
 
 knitr::include_url("maps/r1_map.html", height = "500px")
 
@@ -194,20 +213,32 @@ gg_bar_col(
 
 ## Homeowner affordability
 
-Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2021, the median sale price was \$251,000, a 109 percent increase from 2012 when the median home sale price was \$120,250.
+Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2022, the median sale price was \$274,470, a 137 percent increase from 2012 when the median home sale price was \$116,000.^[Not adjusted for inflation.]
 
 ```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
 
-r1_sales <- read_csv("data/routeone_mls.csv")
+# SALES OF SINGLE-FAMILY/CONDO FOR AREA FROM 1/1/2012 TO 8/10/22
+
+r1_sales <- read_csv("data/routeone_mls.csv") |> 
+  clean_names()
+
+r1_sales_average <- r1_sales |> 
+  select(address, sales_date) |> 
+  mutate(sales_date = mdy(sales_date),
+         year = floor_date(sales_date, "year"),
+         quarter = floor_date(sales_date, "quarter")) |> 
+  group_by(quarter) |> 
+  summarise(n = n())
+
+# mean(r1_sales_average$n)
 
 r1_sales_med <- r1_sales %>% 
-  filter(status != "ACT") %>%
-  select(salesprice, salesdate) %>% 
-  mutate(salesdate = mdy(salesdate),
-         year = floor_date(salesdate, "year"),
-         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>% 
+  select(sales_price, sales_date) %>% 
+  mutate(sales_date = mdy(sales_date),
+         year = floor_date(sales_date, "year"),
+         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
   group_by(year) %>%
-  summarise(median = median(salesprice))
+  summarise(median = median(sales_price))
 
 gg_line(r1_sales_med,
         x_var = year,
@@ -227,11 +258,11 @@ gg_line(r1_sales_med,
   
 ```
 
-*Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
+*Source: CVR MLS. 2022 includes all sales through August 10, 2022.*
 
 Sales prices have risen in every part of the study area. The graph below shows median sales price from 2012 through 2022 year-to-date by each of the six Census tracts. The tracts are ordered, roughly, from north to south.
 
-Some of the highest price growth occurred in tract 1003, which covers the Bensley area between the city line and Chippenham Parkway. Since 2012, the median sales price in that tract rose four-fold, from \$63,100 to \$270,250. To the south, tract 1004.09---bewteen Route 288 and Route 10---had the highest sales price in both 2012 (\$160,170) and 2022 (\$307,500). It is the first tract to exceed the \$300,000 sales price. However, tracts 1004.06 and 1004.07 (which contain much of Bellwood) are on track to also break that ceiling within a year if current market conditions continue.
+Some of the highest price growth occurred in Bellwood neighborhood --- particularly in tracts 1004.04 and 1004.07. Since 2012, the median sales price in both tracts has risen two-fold; tract 1004.04 rose from \$75,100 to \$260,000, while tract 1004.07 rose from \$87,500 to \$259,750. To the south, northern Chester (tract 1004.09) had the highest sales price in both 2012 (\$160,170) and 2022 (\$300,000). It is the first tract to reach the \$300,000 sales price. However, tracts 1004.04 and 1004.07 (which contain much of Bellwood) are on track to also break that ceiling within a year if current market conditions continue.
 
 ```{r r1-sales-tract, fig.cap="Median single-family home sales price by Census tract", cache=TRUE}
 
@@ -257,20 +288,19 @@ r1_sf <- r1_geocode %>%
 r1_sales_tract <- st_join(
   r1_tracts,
   r1_sf) %>%
-  mutate(salesdate = mdy(salesdate),
+  mutate(salesdate = mdy(sales_date),
          year = floor_date(salesdate, "year"),
-         salesprice = as.numeric(gsub('[\\$|,]','', salesprice))) %>%
-  group_by(year, NAME) %>%
+         salesprice = as.numeric(gsub('[\\$|,]','', sales_price))) %>%
+  group_by(year, neighborhood, NAME) %>%
   summarise(median = median(salesprice))
   
 gg_line_col_facet(r1_sales_tract,
                   x_var = year,
                   y_var = median,
-                  col_var = NAME,
+                  col_var = neighborhood,
                   facet_var = NAME,
                   alpha_point = 0,
                   size_line = 0.75,
-                  col_legend_none = TRUE,
                   y_labels = label_dollar(),
                   title = "Median single-family home sales price by Census tract",
                   y_title = "Median sales price",
@@ -285,17 +315,17 @@ gg_line_col_facet(r1_sales_tract,
 
 *Source: CVR MLS. 2022 includes all sales through April 13, 2022.*
 
-In order to afford a home at median price across the study area, a household would need to make **\$62,790**. While this is \$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at median price across the study area, a household would need to make **\$69,213**. While this is \$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 
 ```{r r1-home-price}
 
-r1_msp <- 251000
+r1_msp <- 274470
 downpayment <- 0.05 # 5% downpayment
 r1_principal <- r1_msp - (r1_msp * downpayment)
 closingcosts <- 0.015 # 1.5% closing costs
 r1_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0442 # Current interest rate from Freddie Mac
+intrate <- 0.0465 # Current average interest as of 8.10.22
 utilities <- 250 # Assume $250/month for utilities
 
 r1_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
@@ -311,14 +341,14 @@ r1_labels <- c("Median sales price",
             "Monthly payment",
             "Income needed to buy home")
 
-r1_values <- c("$251,000",
+r1_values <- c("$274,470",
             "5.0%",
             "1.5%",
-            "$277,766",
-            "4.42%",
+            "$264,717",
+            "4.65%",
             "$250",
-            "$1,644.23",
-            "$62,790")
+            "$1,614.98",
+            "$69,213")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
   kable(caption = "Calculated income needed to buy median-priced home in the study area",
@@ -398,24 +428,30 @@ r1_b25119_cpi <- r1_b25119_data %>%
 
 r1_medinc <- r1_b25119_cpi %>%
   filter(tract %in% r1_tract_names) %>% 
-  filter(tenure == "Renter")
+  filter(tenure == "Renter") |> 
+  mutate(label = case_when(
+    tract == "Census Tract 1003" ~ "Bensley (1003)",
+    tract =="Census Tract 1004.04" ~ "Bellwood (1004.04)",
+    tract == "Census Tract 1004.05" ~ "Bensley (1004.05)", 
+    tract == "Census Tract 1004.06" ~ "Bellwood (1004.06)",
+    tract == "Census Tract 1004.07" ~ "Bellwood (1004.07)", 
+    tract == "Census Tract 1004.09" ~ "Northern Chester (1004.09)"
+  ))
 
-gg_line_col(
-  r1_medinc,
-  x_var = year,
-  y_var = dollars20,
-  col_var = tract,
-  alpha_point = 0,
-  size_line = 0.75,
-  title = "Median renter income by tract in the study area",
-  y_labels = label_dollar(),
-  y_title = "Median household income (2020 dollars)",
-  x_title = element_blank(),
-  y_zero = TRUE,
-  x_labels = label_number(accuracy = 1, big.mark = "")
-) +
-  ggplot2::scale_x_continuous(limits = c(2009.5, 2019.5),
-                              breaks = seq(2010, 2019, 1))
+r1_medinc_line <- ggplot(r1_medinc,
+                         aes(x=year,
+                             y=dollars20,
+                             colour=label)) +
+  geom_line(stat="identity") +
+  labs(title="Median renter income by tract in the study area", color = "Neighborhood/Tract") +
+  scale_y_continuous(labels = dollar_format()) +
+  scale_x_continuous(breaks = c(2010, 2015, 2020)) +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+
+
+ggplotly(r1_medinc_line) |> 
+  plotly_camera()
 
 ```
 
@@ -446,44 +482,48 @@ r1_otm %>%
 
 ## Renter affordability
 
-There are at least 2,076 existing rental units across 22 properties along the Route 1 corridor, with 204 additional units proposed. This does not include a significant amount of mobile home park units like Shady Hill, which contains at least 110 units alone. Thirty-seven percent of these units are located in a development with some rent restrictions that help ensure affordability. 
+There are at least 2,805 existing rental units across 25 properties along the Route 1 corridor, with 405 additional units proposed or under construction. This does not include a significant amount of mobile home park units like Shady Hill, which contains at least 110 units alone. Thirty-seven percent of these units are located in a development with some rent restrictions that help ensure affordability. 
 
-Since 2010, rents along the corridor have been on the rise, from a low of \$973 in 2011 to a 2022 year-to-date high of \$1,085. The increasing average rent can be attributed to the entry of several higher-end rentals into the market, like Colony Village.
+Since 2010, rents along the corridor have been on the rise, from a low of \$1,108 in 2012 to a decade high of \$1,225, when adjusting for inflation. The increasing average rent can be attributed to the entry of several higher-end rentals into the market, like Colony Village.
 
 ```{r r1-rents, fig.cap="Median asking rent in the study area"}
 
-r1_rents <- read_csv("data/routeone_avgrent.csv") %>% 
+# UTILIZE THE SAME FROM 2B-1 - WHICH IS CURRENT AS OF 8.2022
+
+
+costar_r1_rent <- read_csv("data/costar_r1_rent.csv") |> 
+  clean_names() |> 
+  mutate(period = case_when(
+    period == "2022 Q3 QTD" ~ "2022 Q3",
+    TRUE ~ period)) |> 
   pivot_longer(cols = 2:3, names_to = "type", values_to = "value") %>% 
   mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) %>% 
   mutate(type = str_replace_all(type, c("rent" = "Asking rent",
-                                        "rent_adj" = "rent (inflation-adjusted)")))
+                                        "rent_adj" = "rent (inflation-adjusted)"))) |> 
+  mutate(year = year(period))
 
-gg_line_col(
-  r1_rents,
-  x_var = period,
-  y_var = value,
-  col_var = type,
-  alpha_point = 0,
-  size_line = 0.75,
-  title = "Median asking rent in the study area",
-  y_labels = label_dollar(),
-  y_title = "Median asking rent",
-  x_title = element_blank(),
-  y_zero = TRUE,
-  x_labels = scales::date_format(format = "%Y")
-  ) +
-  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
-  ggplot2::theme(
-    legend.title = element_blank(),
-    legend.position = "top",
-    legend.direction = "horizontal",
-    legend.justification = "center"
-  )
+colnames(costar_r1_rent)[2] <- "rent"
 
+r1_rent_line<-gg_line_col(costar_r1_rent,
+        x_var = period,
+        y_var = value,
+        y_zero = TRUE,
+        col_var = rent,
+        alpha_point = 0,
+        size_line = 0.75,
+        x_labels = label_date(format = "%Y"),
+        y_labels = label_dollar(),
+        x_title = "",
+        y_title = "Average asking rent",
+        title = "CoStar average asking rent for Route 1 corridor") +
+  ggplot2::scale_x_date(limits = c(as.Date("1999-12-01"), as.Date("2022-07-31")))
+
+ggplotly(r1_rent_line) |> 
+  plotly_camera()
 ```
 *Source: CoStar Group, Inc.*
 
-The rise in rental demand---and subsequently, prices---along the corridor is putting significant pressure on workers who live in the area. In order to afford the average rent of \$1,083 in 2021, a single individual would need to make \$43,320 a year, or $20.83 an hour.
+The rise in rental demand---and subsequently, prices---along the corridor is putting significant pressure on workers who live in the area. In order to afford the average rent of \$1,225 in 2022, a single individual would need to make \$49,000 a year, or $25.13 an hour.
 
 Like the single-family market, the rental market in the study area varies by neighborhood. The map below shows the average asking rent for 17 multifamily properties for which data is available. Rents range from roughly \$700 to \$1,400. However, the only communities with rents well above \$1,000 are the two Colony Village properties just north of Route 288, at the far southern end of the study area.
 

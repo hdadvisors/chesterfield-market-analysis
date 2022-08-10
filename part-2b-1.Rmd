@@ -62,20 +62,20 @@ r1_tracts <- tracts("VA", "Chesterfield",
     TRACTCE == "100409" ~ "Northern Chester"
   ))
 
-# hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
-#   
-# r1_neighborhoods <- leaflet(r1_tracts) |> 
-#   addTiles() |> 
-#   addPolygons(color = ~hood_pal(neighborhood), 
-#               weight = 3, 
-#               label = ~r1_tracts$NAMELSAD,
-#               labelOptions = labelOptions(noHide = F, 
-#                                           direction = "auto",
-#                                           textsize = "15px")) |> 
-#   addLegend("topright",
-#             pal = hood_pal,
-#             values = ~neighborhood,
-#             title = "Route 1 corridor neighborhoods")
+hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
+
+r1_neighborhoods <- leaflet(r1_tracts) |>
+  addTiles() |>
+  addPolygons(color = ~hood_pal(neighborhood),
+              weight = 3,
+              label = ~r1_tracts$NAMELSAD,
+              labelOptions = labelOptions(noHide = F,
+                                          direction = "auto",
+                                          textsize = "15px")) |>
+  addLegend("topright",
+            pal = hood_pal,
+            values = ~neighborhood,
+            title = "Route 1 corridor neighborhoods")
 # 
 # saveWidget(r1_neighborhoods, "maps/r1_neighborhoods.html")
 
@@ -537,22 +537,25 @@ costar_r1_rent <- read_csv("data/costar_r1_rent.csv") |>
   mutate(period = case_when(
     period == "2022 Q3 QTD" ~ "2022 Q3",
     TRUE ~ period)) |> 
-  mutate(period = yq(period)) |> 
-  mutate(current_search = parse_number(current_search)) |> 
+  pivot_longer(cols = 2:3, names_to = "type", values_to = "value") %>% 
+  mutate(period = as.Date(as.yearqtr(period, format = "%Y Q%q"), frac = 1)) %>% 
+  mutate(type = str_replace_all(type, c("rent" = "Asking rent",
+                                        "rent_adj" = "rent (inflation-adjusted)"))) |> 
   mutate(year = year(period))
 
 colnames(costar_r1_rent)[2] <- "rent"
 
-gg_line(costar_r1_rent,
+gg_line_col(costar_r1_rent,
         x_var = period,
-        y_var = rent,
+        y_var = value,
         y_zero = TRUE,
+        col_var = rent,
         alpha_point = 0,
         size_line = 0.75,
         x_labels = label_date(format = "%Y"),
         y_labels = label_dollar(),
         x_title = "",
-        y_title = "Average asking rent (inflation-adjusted)",
+        y_title = "Average asking rent",
         title = "CoStar average asking rent for Route 1 corridor") +
   ggplot2::scale_x_date(limits = c(as.Date("1999-12-01"), as.Date("2022-07-31")))
 

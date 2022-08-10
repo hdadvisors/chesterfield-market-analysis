@@ -86,13 +86,16 @@ set <-c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")
 
 nhpd_units <- nhpd_units |> arrange(sapply(subsidy, function(y) which(y == set)))
 
-ggplot(nhpd_units, aes(x = reorder(subsidy, -units), y = units, fill = subsidy))+
+nhpd_plot <- ggplot(nhpd_units, aes(x = reorder(subsidy, -units), y = units, fill = subsidy))+
   geom_bar(stat = "identity") + 
   scale_fill_manual(values = c("blue", "red", "green", "orange"), breaks = c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")) +
   labs(title = "Federally assisted units by subsidy type in Chesterfield County", fill = "Subsidy name") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+  theme(axis.text.x = element_text(),
         axis.title.x = element_blank(),
         axis.title.y = element_blank())
+
+ggplotly(nhpd_plot) |> 
+  plotly_camera()
 
 ```
 
