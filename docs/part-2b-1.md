@@ -10,7 +10,9 @@ The Route 1 corridor used in this section uses the same six census tracts from t
 
 ## The Route 1 Corridor
 
-U.S. Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
+U.S. Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization.
+
+As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
 
 Current conditions on the northern section of Route 1 prevent significant reinvestment, but recent efforts by the County improve those conditions and incentivize new and much needed development. The 2018 Northern Jefferson Davis Special Area Plan and the 2019 Northern Jefferson Davis Real Estate Market Study provide Chesterfield County with initial tools to revitalize Route 1. Momentum has continued with the Route 1 Residential Overlay District, the Northern Jefferson Davis Incentive Program, and Greater Richmond Transit Company's Pilot Bus Service.
 
@@ -26,7 +28,11 @@ The following describes the existing rental housing supply along the Route 1 cor
 
 ### Number of rental homes
 
-The number of rental homes along the Route 1 corridor has increased by 26 percent between 2010 and 2020 - a total of 708 renter households. Much of this rental housing growth occurred in the latter half of the decade --- from 2014 and on. From 2010 to 2012, rental housing was in decline --- most likely a reflection of the latter year impacts from the Great Recession. During this timeframe, the construction industry struggled to keep pace with the growing demand for new rental housing. From 2019 to 2020, there was a higher estimated percent change (13 percent)in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market --- margins of error for the data in 2020 are also higher than previous years; and therefore, these changes should be interpreted with caution.
+The number of rental homes along the Route 1 corridor has increased by 26 percent between 2010 and 2020---a total of 708 renter households. Much of this rental housing growth occurred in the latter half of the decade, from 2014 and onward.
+
+From 2010 to 2012, rental housing was in decline---most likely a reflection of the latter year's impacts from the Great Recession. During this timeframe, the construction industry struggled to keep pace with the growing demand for new rental housing.
+
+From 2019 to 2020, there was a higher estimated percent change (13 percent) in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market, margins of error for the data in 2020 are also higher than previous years; therefore, these changes should be interpreted with caution.
 
 <div class="figure">
 <img src="part-2b-1_files/figure-html/r1-rhh-1.png" alt="Renter households in Route 1 corridor" width="100%" style="border:none;" />

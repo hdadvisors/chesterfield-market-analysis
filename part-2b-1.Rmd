@@ -38,7 +38,9 @@ library(zoo)
 
 ## The Route 1 Corridor
 
-U.S. Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization. As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
+U.S. Route 1 once served as the major north-south corridor that connected East Coast states. However, the completion of Interstate 95 in the late 1950s drew traffic and business away from the highway. Since then, areas up and down the entirety of U.S. Route 1 have experienced decline and significant change that present challenges to revitalization.
+
+As a home to residents and businesses, the Route 1 corridor in Chesterfield County is well-positioned to be one of the county's most vibrant suburban communities to existing and future generations. In close proximity to the City of Richmond and with convenient access to Interstate 95, the corridor is centrally located in the Richmond metro area and could play a pivotal role in the growth and development of the entire region.
 
 Current conditions on the northern section of Route 1 prevent significant reinvestment, but recent efforts by the County improve those conditions and incentivize new and much needed development. The 2018 Northern Jefferson Davis Special Area Plan and the 2019 Northern Jefferson Davis Real Estate Market Study provide Chesterfield County with initial tools to revitalize Route 1. Momentum has continued with the Route 1 Residential Overlay District, the Northern Jefferson Davis Incentive Program, and Greater Richmond Transit Company's Pilot Bus Service.
 
@@ -48,37 +50,41 @@ This study focuses its research on the six census tracts that straddle the Route
 
 ```{r route-one-map}
 
-r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
-
-r1_tracts <- tracts("VA", "Chesterfield",
-                    progress_bar = FALSE) |> 
-  filter(TRACTCE %in% r1_tracts_list) |> 
-  st_transform(4326) |> 
-  mutate(neighborhood = case_when(
-    TRACTCE == "100300" ~ "Bensley",
-    TRACTCE == "100404" ~ "Bellwood",
-    TRACTCE == "100405" ~ "Bensley",
-    TRACTCE == "100406" ~ "Bellwood",
-    TRACTCE == "100407" ~ "Bellwood",
-    TRACTCE == "100409" ~ "Northern Chester"
-  ))
-
-hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
-
-r1_neighborhoods <- leaflet(r1_tracts) |>
-  addTiles() |>
-  addPolygons(color = ~hood_pal(neighborhood),
-              weight = 3,
-              label = ~r1_tracts$NAMELSAD,
-              labelOptions = labelOptions(noHide = F,
-                                          direction = "auto",
-                                          textsize = "15px")) |>
-  addLegend("topright",
-            pal = hood_pal,
-            values = ~neighborhood,
-            title = "Route 1 corridor neighborhoods")
+# r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
+# 
+# r1_tracts <- tracts("VA", "Chesterfield",
+#                     progress_bar = FALSE) |>
+#   filter(TRACTCE %in% r1_tracts_list) |>
+#   st_transform(4326) |>
+#   mutate(neighborhood = case_when(
+#     TRACTCE == "100300" ~ "Bensley",
+#     TRACTCE == "100404" ~ "Bellwood",
+#     TRACTCE == "100405" ~ "Bensley",
+#     TRACTCE == "100406" ~ "Bellwood",
+#     TRACTCE == "100407" ~ "Bellwood",
+#     TRACTCE == "100409" ~ "Northern Chester"
+#   ))
+# 
+# write_rds(r1_tracts, "data/r1_tracts.rds")
+#
+# hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
+# 
+# r1_neighborhoods <- leaflet(r1_tracts) |>
+#   addTiles() |>
+#   addPolygons(color = ~hood_pal(neighborhood),
+#               weight = 3,
+#               label = ~r1_tracts$NAMELSAD,
+#               labelOptions = labelOptions(noHide = F,
+#                                           direction = "auto",
+#                                           textsize = "15px")) |>
+#   addLegend("topright",
+#             pal = hood_pal,
+#             values = ~neighborhood,
+#             title = "Route 1 corridor neighborhoods")
 # 
 # saveWidget(r1_neighborhoods, "maps/r1_neighborhoods.html")
+
+r1_tracts <- read_rds("data/r1_tracts.rds")
 
 knitr::include_url("maps/r1_neighborhoods.html", height = "500px")
 
@@ -90,45 +96,62 @@ The following describes the existing rental housing supply along the Route 1 cor
 
 ### Number of rental homes
 
-The number of rental homes along the Route 1 corridor has increased by 26 percent between 2010 and 2020 - a total of 708 renter households. Much of this rental housing growth occurred in the latter half of the decade --- from 2014 and on. From 2010 to 2012, rental housing was in decline --- most likely a reflection of the latter year impacts from the Great Recession. During this timeframe, the construction industry struggled to keep pace with the growing demand for new rental housing. From 2019 to 2020, there was a higher estimated percent change (13 percent)in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market --- margins of error for the data in 2020 are also higher than previous years; and therefore, these changes should be interpreted with caution.
+The number of rental homes along the Route 1 corridor has increased by 26 percent between 2010 and 2020---a total of 708 renter households. Much of this rental housing growth occurred in the latter half of the decade, from 2014 and onward.
+
+From 2010 to 2012, rental housing was in decline---most likely a reflection of the latter year's impacts from the Great Recession. During this timeframe, the construction industry struggled to keep pace with the growing demand for new rental housing.
+
+From 2019 to 2020, there was a higher estimated percent change (13 percent) in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market, margins of error for the data in 2020 are also higher than previous years; therefore, these changes should be interpreted with caution.
 
 ```{r r1-rhh, fig.cap="Renter households in Route 1 corridor"}
 
-years <- 2010:2020
+# years <- 2010:2020
+# 
+# b25003_vars <- load_variables(2020, "acs5") |> 
+#   filter(str_sub(name, end = 7) %in% "B25003_")
+# 
+# b25003_raw <- map_dfr(years, function(yr){
+#   b25003_pull <- get_acs(
+#     geography = "tract",
+#     county = "Chesterfield County",
+#     state = "VA",
+#     table = "B25003",
+#     year = yr,
+#     survey = "acs5",
+#     cache_table = TRUE,
+#     geometry = TRUE
+#   ) |> 
+#     mutate(year = yr)
+#   })
+# 
+# b25003_r1_raw <- b25003_raw |> 
+#   subset(GEOID %in% r1_tracts$GEOID)
+# 
+# b25003_vars_cleaned <- b25003_vars |> 
+#   separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
+#   select(variable = name, tenure) |> 
+#   drop_na() |> 
+#   mutate(tenure = case_when(
+#     tenure == "Owner occupied" ~ "Homeowner",
+#     tenure == "Renter occupied" ~ "Renter"
+#   )) |> 
+#   filter(tenure == "Renter")
+# 
+# b25003_r1 <- b25003_r1_raw |> 
+#   right_join(b25003_vars_cleaned, by = "variable") |> 
+#   select(NAME, fips = GEOID, year, tenure, estimate, moe) |> 
+#   mutate(NAME = str_remove_all(NAME, ", Chesterfield County, Virginia")) |> 
+#   mutate(neighborhood = case_when(
+#       NAME == "Census Tract 1003" ~ "Bensley",
+#       NAME == "Census Tract 1004.05" ~ "Bensley",
+#       NAME == "Census Tract 1004.04" ~ "Bellwood",
+#       NAME == "Census Tract 1004.06" ~ "Bellwood",
+#       NAME == "Census Tract 1004.07" ~ "Bellwood",
+#       NAME == "Census Tract 1004.09" ~ "Northern Chester",
+#     ))
+# 
+# write_rds(b25003_r1, "data/b25003_r1.rds")
 
-b25003_vars <- load_variables(2020, "acs5") |> 
-  filter(str_sub(name, end = 7) %in% "B25003_")
-
-b25003_raw <- map_dfr(years, function(yr){
-  b25003_pull <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25003",
-    year = yr,
-    survey = "acs5",
-    cache_table = TRUE,
-    geometry = TRUE
-  ) |> 
-    mutate(year = yr)
-  })
-
-b25003_r1_raw <- b25003_raw |> 
-  subset(GEOID %in% r1_tracts$GEOID)
-
-b25003_vars_cleaned <- b25003_vars |> 
-  separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
-  select(variable = name, tenure) |> 
-  drop_na() |> 
-  mutate(tenure = case_when(
-    tenure == "Owner occupied" ~ "Homeowner",
-    tenure == "Renter occupied" ~ "Renter"
-  )) |> 
-  filter(tenure == "Renter")
-
-b25003_r1 <- b25003_r1_raw |> 
-  right_join(b25003_vars_cleaned, by = "variable") |> 
-  select(NAME, fips = GEOID, year, tenure, estimate, moe)
+b25003_r1 <- read_rds("data/b25003_r1.rds")
 
 b25003_route1 <- b25003_r1 |> 
   group_by(year) |> 
@@ -158,18 +181,19 @@ While unable to determine the causes or from where these renter households came 
 
 b25003_r1_10 <- b25003_r1 |> 
   filter(year == 2010) |> 
-  select(NAME, fips, year, estimate)
+  select(NAME, fips, year, estimate, neighborhood)
 
 b25003_r1_20 <- b25003_r1 |> 
   filter(year == 2020) |> 
-  select(NAME, fips, year, estimate)
+  select(NAME, fips, year, estimate, neighborhood)
 
 b25003_r1_10_20 <- cbind(b25003_r1_10, b25003_r1_20) |> 
-  select(NAME, fips, est10 = estimate, est20 = estimate.1, geometry) |> 
+  select(NAME, fips, est10 = estimate, est20 = estimate.1, geometry, neighborhood) |> 
   mutate(change = (est20-est10),
          tract = sapply(strsplit(
            as.character(
              str_remove_all(NAME, "\\,")), " "), unlist)[3,],
+         tract = paste0(tract, " (", neighborhood, ")"), 
          tract = fct_reorder(tract, change, .desc = TRUE))
 
 r1_rhh_tract <- gg_hbar_col(b25003_r1_10_20,
@@ -179,6 +203,7 @@ r1_rhh_tract <- gg_hbar_col(b25003_r1_10_20,
                             title = "Change in renter households by tract from 2010 to 2020",
                             y_labels = function(x) x,
                             x_title = "",
+                            y_title = "",
                             col_legend_none = TRUE)
 
 r1_rhh_tract
@@ -344,33 +369,44 @@ SFR is a growing demand among renters as homeownership continues to be out of re
 
 ```{r sfr-r1, fig.cap="Percent of single-family homes that are renter-occupied by tract", message=FALSE}
 
-ch_sfh <- st_read("data/shp/ch_sfh.shp",
-                  quiet = TRUE)
-
-sfr_r1 <- ch_sfh |>
-  st_join(left = FALSE, r1_tracts["NAMELSAD"]) |>
-  select(address, imprvmn, ownrshp, ownr_zp, ownr_st, tract = NAMELSAD, geometry) |>
-  filter(imprvmn > 0)
-
-# sfr_r1_summary <- sfr_r1 |> 
-#   st_drop_geometry() |> 
-#   group_by(tract, ownrshp) |> 
-#   summarise(count = n_distinct(address)) |> 
+# ch_sfh <- st_read("data/shp/ch_sfh.shp",
+#                   quiet = TRUE)
+# 
+# sfr_r1 <- ch_sfh |>
+#   st_join(left = FALSE, r1_tracts["NAMELSAD"]) |>
+#   select(address, imprvmn, ownrshp, ownr_zp, ownr_st, tract = NAMELSAD, geometry) |>
+#   filter(imprvmn > 0)
+# 
+# write_rds(sfr_r1, "data/sfr_r1.rds")
+# 
+# sfr_r1_summary <- sfr_r1 |>
+#   st_drop_geometry() |>
+#   group_by(tract, ownrshp) |>
+#   summarise(count = n_distinct(address)) |>
 #   mutate(total_sfh = case_when(
 #     tract == tract ~ sum(count))
-#   ) |> 
+#   ) |>
 #   mutate(percent_sfh = count/total_sfh,
 #          tract = sapply(strsplit(
 #            as.character(
-#              str_remove_all(tract, "\\,")), " "), unlist)[3,]) |> 
-#   filter(ownrshp == "Renter-occupied SFH") |> 
-#   ungroup() |> 
+#              str_remove_all(tract, "\\,")), " "), unlist)[3,]) |>
+#   filter(ownrshp == "Renter-occupied SFH") |>
+#   ungroup() |>
+#   mutate(neighborhood = case_when(
+#       tract == "1003" ~ "Bensley",
+#       tract == "1004.05" ~ "Bensley",
+#       tract == "1004.04" ~ "Bellwood",
+#       tract == "1004.06" ~ "Bellwood",
+#       tract == "1004.07" ~ "Bellwood",
+#       tract == "1004.09" ~ "Northern Chester",
+#     )) |> 
+#   mutate(tract = paste0(tract, " (", neighborhood, ")")) |> 
 #   mutate(tract = fct_reorder(tract, percent_sfh, .desc = TRUE))
 # 
 # write_rds(sfr_r1_summary, "data/sfr_r1_summary.rds")
 
 sfr_r1_summary <- read_rds("data/sfr_r1_summary.rds")
-  
+
 sfr_r1_pct <- gg_hbar_col(sfr_r1_summary,
                           x_var = percent_sfh,
                           y_var = tract,
@@ -379,7 +415,8 @@ sfr_r1_pct <- gg_hbar_col(sfr_r1_summary,
                           x_labels = label_percent(),
                           y_labels = function(x) x,
                           col_legend_none = TRUE,
-                          x_title = "")
+                          x_title = "",
+                          y_title = "")
 
 sfr_r1_pct
 
@@ -394,6 +431,8 @@ chesterfield_zips <- read_rds("data/chesterfield_zips.rds")
 zip_list <- chesterfield_zips$ZCTA5CE10
 
 # There is a duplicate address that I end up filtering out with a distinct count.
+
+sfr_r1 <- read_rds("data/sfr_r1.rds")
 
 rental_class_r1 <- sfr_r1 |> 
   st_drop_geometry() |> 
@@ -425,40 +464,52 @@ Median rents in the northern Route 1 corridor have fluctuated in the last decade
 
 ```{r acs-r1-rent, fig.cap="Median inflation-adjusted rent by tract: 2010 to 2020"}
 
-years <- 2010:2020
+# years <- 2010:2020
+# 
+# b25064_vars <- load_variables(2020, "acs5") |> 
+#   filter(str_sub(name, end =6) %in% "B25064")
+# 
+# b25064_raw <- map_dfr(years, function(yr){
+#   b25064_pull <- get_acs(
+#     geography = "tract",
+#     county = "Chesterfield County",
+#     state = "VA",
+#     table = "B25064",
+#     year = yr,
+#     survey = "acs5",
+#     cache_table = TRUE,
+#     geometry = TRUE
+#   ) %>%
+#     mutate(year = yr)
+#   })
+# 
+# b25064_r1_raw <- b25064_raw |> 
+#   subset(GEOID %in% r1_tracts$GEOID)
+# 
+# cpi <- read_excel("data/CPI_U_RS.xlsx")
+# cpi <- cpi |>  
+#   rename(year = Year,
+#          priceindex = Index) |> 
+#   transform(year = as.numeric(year))
+# 
+# r1_rent_cpi <- b25064_r1_raw |> 
+#     left_join(cpi, by = 'year') |> 
+#   transform(dollars20 = ((381.2/priceindex)*estimate)) |> 
+#   select(GEOID, NAME, year, dollars20) |> 
+#   separate(NAME, into = c("NAMELSAD", "county", "state"), sep = ",") |> 
+#   transform(year_char = as.character(year)) |> 
+#   mutate(neighborhood = case_when(
+#     NAMELSAD == "Census Tract 1003" ~ "Bensley",
+#     NAMELSAD == "Census Tract 1004.05" ~ "Bensley",
+#     NAMELSAD == "Census Tract 1004.04" ~ "Bellwood",
+#     NAMELSAD == "Census Tract 1004.06" ~ "Bellwood",
+#     NAMELSAD == "Census Tract 1004.07" ~ "Bellwood",
+#     NAMELSAD == "Census Tract 1004.09" ~ "Northern Chester",
+#   ))
+# 
+# write_rds(r1_rent_cpi, "data/r1_rent_cpi.rds")
 
-b25064_vars <- load_variables(2020, "acs5") |> 
-  filter(str_sub(name, end =6) %in% "B25064")
-
-b25064_raw <- map_dfr(years, function(yr){
-  b25064_pull <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25064",
-    year = yr,
-    survey = "acs5",
-    cache_table = TRUE,
-    geometry = TRUE
-  ) %>%
-    mutate(year = yr)
-  })
-
-b25064_r1_raw <- b25064_raw |> 
-  subset(GEOID %in% r1_tracts$GEOID)
-
-cpi <- read_excel("data/CPI_U_RS.xlsx")
-cpi <- cpi |>  
-  rename(year = Year,
-         priceindex = Index) |> 
-  transform(year = as.numeric(year))
-
-r1_rent_cpi <- b25064_r1_raw |> 
-    left_join(cpi, by = 'year') |> 
-  transform(dollars20 = ((381.2/priceindex)*estimate)) |> 
-  select(GEOID, NAME, year, dollars20) |> 
-  separate(NAME, into = c("NAMELSAD", "county", "state"), sep = ",") |> 
-  transform(year_char = as.character(year))
+r1_rent_cpi <- read_rds("data/r1_rent_cpi.rds")
 
 r1_rent_change <- r1_rent_cpi |> 
   select(NAMELSAD, year, dollars20) |> 
@@ -673,33 +724,46 @@ Aging rental properties require substantial capital in order to maintain propert
 
 ```{r acs-yrblt, fig.cap="Percent of rental units built before 1980 by tract"}
 
-b25036_vars <- load_variables(2020, "acs5") |> 
-  filter(str_sub(name, end = 6) %in% "B25036")
+# b25036_vars <- load_variables(2020, "acs5") |> 
+#   filter(str_sub(name, end = 6) %in% "B25036")
+# 
+# b25036_raw <- get_acs(
+#   geography = "tract",
+#   county = "Chesterfield County",
+#   state = "VA",
+#   table = "B25036",
+#   year = 2020,
+#   survey = "acs5",
+#   cache_table = TRUE
+#   )
+# 
+# b25036_r1_raw <- b25036_raw |> 
+#   subset(GEOID %in% r1_tracts$GEOID)
+# 
+# # Maybe keep all households in order to do percentages across entire housing stock? Or just rental housing stock?
+# 
+# b25036_vars_cleaned <- b25036_vars |> 
+#   separate(label, into = c("est", "total", "tenure", "yrblt"), sep = "!!") |> 
+#   select(variable = name, tenure, yrblt) |> 
+#   filter(tenure == "Renter occupied:") |> 
+#   drop_na() |> 
+#   mutate(tenure = "Renter")
+# 
+# b25036_r1 <- b25036_r1_raw |>
+#   right_join(b25036_vars_cleaned, by = "variable") |>
+#   mutate(NAME = str_remove_all(NAME, ", Chesterfield County, Virginia")) |>
+#   mutate(neighborhood = case_when(
+#       NAME == "Census Tract 1003" ~ "Bensley",
+#       NAME == "Census Tract 1004.05" ~ "Bensley",
+#       NAME == "Census Tract 1004.04" ~ "Bellwood",
+#       NAME == "Census Tract 1004.06" ~ "Bellwood",
+#       NAME == "Census Tract 1004.07" ~ "Bellwood",
+#       NAME == "Census Tract 1004.09" ~ "Northern Chester",
+#     ))
+# 
+# write_rds(b25036_r1, "data/b25036_r1.rds")
 
-b25036_raw <- get_acs(
-  geography = "tract",
-  county = "Chesterfield County",
-  state = "VA",
-  table = "B25036",
-  year = 2020,
-  survey = "acs5",
-  cache_table = TRUE
-  )
-
-b25036_r1_raw <- b25036_raw |> 
-  subset(GEOID %in% r1_tracts$GEOID)
-
-# Maybe keep all households in order to do percentages across entire housing stock? Or just rental housing stock?
-
-b25036_vars_cleaned <- b25036_vars |> 
-  separate(label, into = c("est", "total", "tenure", "yrblt"), sep = "!!") |> 
-  select(variable = name, tenure, yrblt) |> 
-  filter(tenure == "Renter occupied:") |> 
-  drop_na() |> 
-  mutate(tenure = "Renter")
-
-b25036_r1 <- b25036_r1_raw |> 
-  right_join(b25036_vars_cleaned, by = "variable")
+b25036_r1 <-  read_rds("data/b25036_r1.rds")
 
 b25036_r1_grp <- b25036_r1 |> 
   mutate(yrblt = case_when(
@@ -725,7 +789,7 @@ b25036_r1_grp <- b25036_r1 |>
 # Total renter households is 3,376
 
 b25036_r1_grp <- b25036_r1_grp |> 
-  group_by(yrgrp, NAME) |> 
+  group_by(yrgrp, neighborhood, NAME) |> 
   summarise(estimate = sum(estimate)) |> 
   filter(yrgrp == "Pre-1980") |> 
   transform(percent = estimate/3376) |> 
@@ -733,6 +797,7 @@ b25036_r1_grp <- b25036_r1_grp |>
   mutate(tract = sapply(strsplit(
            as.character(
              str_remove_all(NAME, "\\,")), " "), unlist)[3,],
+         tract = paste0(tract, " (", neighborhood, ")"),
          tract = fct_reorder(tract, percent, .desc = TRUE))
   
 
@@ -744,7 +809,8 @@ gg_hbar_col(b25036_r1_grp,
             x_labels = label_percent(),
             y_labels = function(x) x,
             col_legend_none = TRUE,
-            x_title = "")
+            x_title = "",
+            y_title = "")
 
 ```
 

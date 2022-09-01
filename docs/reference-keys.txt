@@ -36,6 +36,7 @@ fig:cf-renter-income-afford
 tab:cf-jobs-price
 tab:cf-public-price
 fig:cf-rents
+tab:cf-rents-br
 tab:cf-renter-affordability
 tab:cf-renter-public-affordability
 fig:r1-base-map
