@@ -142,6 +142,8 @@ r1_otm %>%
 
 ```
 
+*Source: U.S. Bureau of Labor Statistics. (2021). Occupational Employment and Wage Statistics (OEWS). May 2021 Metropolitan and Nonmetropolitan Area Occupational Employment and Wage Estimates.*
+
 ## Cost burden
 
 Households in the Route 1 corridor experience cost burden at a much higher rate than those in other parts of the county. All six census tracts in the study area have cost burden rates (with homeowners and renters combined) higher than the county average. In fact, three of the study area's tracts are among the ten tracts with highest rates of cost burden in Chesterfield.
@@ -213,11 +215,11 @@ gg_bar_col(
 
 ## Homeowner affordability
 
-Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2022, the median sale price was \$274,470, a 137 percent increase from 2012 when the median home sale price was \$116,000.^[Not adjusted for inflation.]
+Along the Route 1 corridor, there have been about 51 home sales each quarter between 2012 and 2021. Like the rest of the county, the pandemic has impacted home prices in one of the county’s most affordable areas. As of 2022, the median sale price was \$285,000, a 146 percent increase from 2012 when the median home sale price was \$116,000.^[Not adjusted for inflation.]
 
 ```{r r1-med-sales, fig.cap="Median single-family home sales price in study area"}
 
-# SALES OF SINGLE-FAMILY/CONDO FOR AREA FROM 1/1/2012 TO 8/10/22
+# SALES OF SINGLE-FAMILY/CONDO FOR AREA FROM 1/1/2012 TO 9/6/2022
 
 r1_sales <- read_csv("data/routeone_mls.csv") |> 
   clean_names()
@@ -258,25 +260,25 @@ gg_line(r1_sales_med,
   
 ```
 
-*Source: CVR MLS. 2022 includes all sales through August 10, 2022.*
+*Source: CVR MLS. 2022 includes all sales through September 6, 2022.*
 
 Sales prices have risen in every part of the study area. The graph below shows median sales price from 2012 through 2022 year-to-date by each of the six Census tracts. The tracts are ordered, roughly, from north to south.
 
-Some of the highest price growth occurred in Bellwood neighborhood --- particularly in tracts 1004.04 and 1004.07. Since 2012, the median sales price in both tracts has risen two-fold; tract 1004.04 rose from \$75,100 to \$260,000, while tract 1004.07 rose from \$87,500 to \$259,750. To the south, northern Chester (tract 1004.09) had the highest sales price in both 2012 (\$160,170) and 2022 (\$300,000). It is the first tract to reach the \$300,000 sales price. However, tracts 1004.04 and 1004.07 (which contain much of Bellwood) are on track to also break that ceiling within a year if current market conditions continue.
+Some of the highest price growth occurred in Bellwood neighborhood --- particularly in tracts 1004.04 and 1004.07. Since 2012, the median sales price in both tracts has risen two-fold; tract 1004.04 rose from \$75,000 to \$240,000, while tract 1004.07 rose from \$87,500 to \$256,000. To the south, northern Chester (tract 1004.09) had the highest sales price in both 2012 (\$160,170) and 2022 (\$300,000). It is the first tract to reach the \$300,000 sales price. However, tracts 1004.04 and 1004.07 (which contain much of Bellwood) are on track to also break that ceiling within a year if current market conditions continue.
 
 ```{r r1-sales-tract, fig.cap="Median single-family home sales price by Census tract", cache=TRUE}
 
 # Sys.getenv('GEOCODIO_API_KEY')
-# 
+# # 
 # r1_geocode <- r1_sales %>%
-#   mutate(city = "Richmond",
+#   mutate(city = "Chesterfield County",
 #          state = "VA") %>%
 #   mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
 #   geocode(address = fulladdress,
 #           method = 'geocodio',
 #           lat = latitude,
 #           long = longitude)
-# 
+# # 
 # write_rds(r1_geocode, "r1_geocode.rds")
 
 r1_geocode <- read_rds("r1_geocode.rds")
@@ -313,19 +315,19 @@ gg_line_col_facet(r1_sales_tract,
 
 ```
 
-*Source: CVR MLS. 2022 includes all sales through August 10, 2022.*
+*Source: CVR MLS. 2022 includes all sales through September 5, 2022.*
 
-In order to afford a home at median price across the study area, a household would need to make **\$69,213**. While this is \$16,391 (21 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
+In order to afford a home at median price across the study area, a household would need to make **\$71,952**. While this is \$17,937 (20 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 
 ```{r r1-home-price}
 
-r1_msp <- 274470
+r1_msp <- 285000
 downpayment <- 0.05 # 5% downpayment
 r1_principal <- r1_msp - (r1_msp * downpayment)
 closingcosts <- 0.015 # 1.5% closing costs
 r1_loanamt <- r1_principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0465 # Current average interest as of 8.10.22
+intrate <- 0.0472 # Current average interest as of 9.6.22 (https://www.freddiemac.com/pmms/pmms30)
 utilities <- 250 # Assume $250/month for utilities
 
 r1_payment <- abs(PMT((intrate/12), 360, r1_loanamt)) + 250
@@ -341,14 +343,14 @@ r1_labels <- c("Median sales price",
             "Monthly payment",
             "Income needed to buy home")
 
-r1_values <- c("$274,470",
+r1_values <- c("$285,000",
             "5.0%",
             "1.5%",
-            "$264,717",
-            "4.65%",
+            "$270,750",
+            "4.72%",
             "$250",
-            "$1,614.98",
-            "$69,213")
+            "$1,678.90",
+            "$71,952")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
   kable(caption = "Calculated income needed to buy median-priced home in the study area",
@@ -357,6 +359,9 @@ data.frame(x = r1_labels, y = r1_values) %>%
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(8, bold=TRUE)
+
+
+# County income needed is $89,889
 
 ```
 
@@ -529,14 +534,9 @@ Like the single-family market, the rental market in the study area varies by nei
 
 ```{r rents-tract, fig.cap="Asking rent by rental property"}
 
+# Hand draw outline of study area. Filter for Multi-family and existing buildings.
+
 r1_rentals <- read_csv("data/routeone_costar.csv") %>% 
-  mutate(city = "Richmond", .before = 2) %>%
-  mutate(fulladdress = paste(address, city, state, zip, sep = ", ")) %>%
-  geocode(address = fulladdress,
-          method = 'geocodio',
-          lat = latitude,
-          long = longitude) %>% 
-  select(propertyname, units, askingrent, rent, latitude, longitude) %>% 
   drop_na(askingrent) %>% 
   st_as_sf(coords = c("longitude", "latitude"),
            crs = 4326)
@@ -559,7 +559,7 @@ knitr::include_url("maps/r1_rentals_map.html", height = "500px")
 
 ```
 
-*Source: CoStar Group, Inc. Data as of March 31, 2022.*
+*Source: CoStar Group, Inc. Data as of September 6, 2022.*
 
 Some of the most common jobs occupied by corridor residents pay an hourly wage that is nearly half that needed to afford the typical rent. Fast wood workers, home health aides, and childcare workers all have an average hourly wage less than \$12.00. In order to afford a rental on a single income, they would need a monthly rent closer to \$600---a rent that is becoming harder and harder to find even in older properties like the Bellwood Maisonettes that now list their one bedroom apartments at $1,000 a month.
 

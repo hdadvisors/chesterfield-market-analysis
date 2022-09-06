@@ -95,30 +95,37 @@ tenure_income_chas <- tenure %>%
 
 ```{r tenure-owner-img, fig.cap="Homeowner cost burden"}
 
-# oo_cb <- tenure_income_chas |> 
-#   select(year, tenure, income, costburden, estimate) |> 
-#   filter(tenure == "Homeowner") |> 
-#   mutate(cb_group = case_when(
-#     costburden == "Cost-burdened" ~ "Cost-burdened",
-#     costburden == "No or negative income" ~ "Cost-burdened",
-#     costburden == "Severely cost-burdened" ~ "Cost-burdened",
-#     costburden == "Not cost-burdened" ~ "Not cost-burdened"
-#   )) |> 
-#   filter(year == 2012 | year == 2018) |> 
-#   group_by(year, income, cb_group) |> 
-#   summarise(estimate = sum(estimate)) |> 
-#   mutate(percent = estimate/sum(estimate))
+oo_cb <- tenure_income_chas |>
+  select(year, tenure, income, costburden, estimate) |>
+  filter(tenure == "Homeowner") |>
+  mutate(cb_group = case_when(
+    costburden == "Cost-burdened" ~ "Cost-burdened",
+    costburden == "No or negative income" ~ "Cost-burdened",
+    costburden == "Severely cost-burdened" ~ "Cost-burdened",
+    costburden == "Not cost-burdened" ~ "Not cost-burdened"
+  )) |>
+  filter(year == 2012 | year == 2018) |>
+  group_by(year, income, cb_group) |>
+  summarise(estimate = sum(estimate)) |>
+  mutate(percent = estimate/sum(estimate)) |> 
+  filter(cb_group == "Cost-burdened")
   
-# ggplot(oo_cb, aes(x = income, y = percent, fill = cb_group)) +
-#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
-#   facet_wrap(~year) + 
-#   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
-#   theme(axis.title = element_blank(),
-#     axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
-#   scale_y_continuous(labels = percent_format()) +
-#   labs(title = "Homeowner cost burden", fill = "Cost burden")
 
-knitr::include_graphics("images/homeownercb_income.png")
+ggplot(oo_cb, aes(x = income, y = percent, fill = cb_group)) +
+  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+  facet_wrap(~year) +
+  scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
+  theme(axis.title = element_blank(),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    legend.position = "none")+
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "Homeowner cost burden", 
+       fill = "Cost burden",
+       subtitle = "2012 and 2018",
+       caption = "Source: HUD Comprehensive Housing Affordability Strategy") +
+  geom_text(aes(label = scales::percent(percent, accuracy = 1), vjust = -.1), color = "red")
+
+# knitr::include_graphics("images/homeownercb_income.png")
 
 ```
 
@@ -128,32 +135,39 @@ Separating out by income group shows that declining cost burden is not a shared 
 
 ```{r tenure-renter-img, fig.cap="Renter cost burden"}
 
-# ro_cb <- tenure_income_chas |> 
-#   select(year, tenure, income, costburden, estimate) |> 
-#   filter(tenure == "Renter") |> 
-#   mutate(cb_group = case_when(
-#     costburden == "Cost-burdened" ~ "Cost-burdened",
-#     costburden == "No or negative income" ~ "Cost-burdened",
-#     costburden == "Severely cost-burdened" ~ "Cost-burdened",
-#     costburden == "Not cost-burdened" ~ "Not cost-burdened"
-#   )) |> 
-#   filter(year == 2012 | year == 2018) |> 
-#   group_by(year, income, cb_group) |> 
-#   summarise(estimate = sum(estimate)) |> 
-#   mutate(percent = estimate/sum(estimate))
+ro_cb <- tenure_income_chas |>
+  select(year, tenure, income, costburden, estimate) |>
+  filter(tenure == "Renter") |>
+  mutate(cb_group = case_when(
+    costburden == "Cost-burdened" ~ "Cost-burdened",
+    costburden == "No or negative income" ~ "Cost-burdened",
+    costburden == "Severely cost-burdened" ~ "Cost-burdened",
+    costburden == "Not cost-burdened" ~ "Not cost-burdened"
+  )) |>
+  filter(year == 2012 | year == 2018) |>
+  group_by(year, income, cb_group) |>
+  summarise(estimate = sum(estimate)) |>
+  mutate(percent = estimate/sum(estimate)) |> 
+  filter(cb_group == "Cost-burdened")
 #   
-# ggplot(ro_cb, aes(x = income, y = percent, fill = cb_group)) +
-#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
-#   facet_wrap(~year) +
-#   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
-#   theme(axis.title = element_blank(),
-#     axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
-#   scale_y_continuous(labels = percent_format()) +
-#   labs(title = "Renter cost burden", fill = "Cost burden")'
+ggplot(ro_cb, aes(x = income, y = percent, fill = cb_group)) +
+  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+  facet_wrap(~year) +
+  scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
+  theme(axis.title = element_blank(),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    legend.position = "none")+
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "Renter cost burden", 
+       fill = "Cost burden",
+       subtitle = "2012 and 2018",
+       caption = "Source: HUD Comprehensive Housing Affordability Strategy") +
+  geom_text(aes(label = scales::percent(percent, accuracy = 1), vjust = -.1), color = "red")
+    
 
 # The above visualization needs some editing. Trying to figure out how to add percent labels just to cost burden and having some trouble with that. Otherwise it could replace the TABLEAU viz.
 
-knitr::include_graphics("images/rentercb_income.png")
+# knitr::include_graphics("images/rentercb_income.png")
 
 ```
 
@@ -216,7 +230,38 @@ hhtype_cb <- hhtype %>%
 
 ```{r hhtype-img, fig.cap="Household type cost burden"}
 
-knitr::include_graphics("images/hhtypecb.png")
+hh_cb <- hhtype_cb |>
+  select(year, hhtype, costburden, estimate) |>
+  mutate(cb_group = case_when(
+    costburden == "Cost-burdened" ~ "Cost-burdened",
+    costburden == "No or negative income" ~ "Cost-burdened",
+    costburden == "Severely cost-burdened" ~ "Cost-burdened",
+    costburden == "Not cost-burdened" ~ "Not cost-burdened"
+  )) |>
+  filter(year == 2012 | year == 2018) |>
+  group_by(year, hhtype, cb_group) |>
+  summarise(estimate = sum(estimate)) |>
+  mutate(percent = estimate/sum(estimate)) |> 
+  filter(cb_group == "Cost-burdened")
+
+ggplot(hh_cb, 
+       aes(x = reorder(hhtype, -percent), 
+           y = percent, 
+           fill = cb_group)) +
+  geom_bar(stat = "identity", 
+           position = position_stack(reverse = TRUE)) +
+  facet_wrap(~year) +
+  scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
+  theme(axis.title = element_blank(),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    legend.position = "none") +
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "Houshold cost burden by type", 
+       fill = "Cost burden",
+       subtitle = "2012 and 2018",
+       caption = "Source: HUD Comprehensive Housing Affordability Strategy") +
+  geom_text(aes(label = scales::percent(percent, accuracy = 1), vjust = -.1), color = "red")
+# knitr::include_graphics("images/hhtypecb.png")
 
 ```
 
@@ -260,23 +305,23 @@ race_clean <- race_chas %>%
 
 ```{r race-img, fig.cap="Race and ethnicity cost burden"}
 
-# race_cb <- race_clean |> 
-#   mutate(estimate = parse_number(estimate)) |> 
-#   group_by(year, race, costburden) |> 
-#   summarise(estimate = sum(estimate)) |> 
-#   mutate(percent = estimate/sum(estimate)) |> 
-#   filter(year == 2012 | year == 2018)
+race_cb <- race_clean |>
+  mutate(estimate = parse_number(estimate)) |>
+  group_by(year, race, costburden) |>
+  summarise(estimate = sum(estimate)) |>
+  mutate(percent = estimate/sum(estimate)) |>
+  filter(year == 2012 | year == 2018)
 # 
 # 
-# ggplot(race_cb,
-#                       aes(x = year, y = percent, fill = costburden)) +
-#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
-#   facet_wrap(~race) + 
-#   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) + 
-#   theme(axis.title = element_blank(),
-#         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-#   scale_y_continuous(labels = percent_format()) +
-#   labs(title = "Renter cost burden", fill = "Cost burden")
+ggplot(race_cb,
+                      aes(x = year, y = percent, fill = costburden)) +
+  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+  facet_wrap(~race) +
+  scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
+  theme(axis.title = element_blank(),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "Renter cost burden", fill = "Cost burden")
 #   
 
 knitr::include_graphics("images/racecb.png")
@@ -346,17 +391,34 @@ cf_pums_summary <- cf_pums_svy %>%
   filter(cost_burden == "Cost burdened") %>% 
   arrange(desc(pct))
 
-gg_hpointrange(cf_pums_summary,
-              y_var = building,
-              x_var = pct,
-              xmin_var = pct_low,
-              xmax_var = pct_up,
-              size_line = 0.75,
-              size_point = 3,
-              y_title = "",
-              caption = "Lines show 90% confidence interval.",
-              x_labels = scales::percent_format()
-              )
+
+ggplot(cf_pums_summary,
+       aes(x = pct, y = reorder(building, pct))) +
+  geom_errorbar(aes(y = building, xmin = pct_low, xmax = pct_up), 
+                height = 0, 
+                width = .2,
+                size = 0.75, 
+                color = "blue") +
+  geom_point(size = 3, color = "blue") +
+  theme(axis.title = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major.x = element_line(color ="grey"),
+        panel.border = element_rect(color = "grey", fill = NA)) +
+  scale_x_continuous(labels = percent_format(), breaks = c(.1, .2, .3, .4, .5, .6)) +
+  labs(title = "Percent of households with cost burden by structure type")
+
+
+# gg_hpointrange(cf_pums_summary,
+#               y_var = building,
+#               x_var = pct,
+#               xmin_var = pct_low,
+#               xmax_var = pct_up,
+#               size_line = 0.75,
+#               size_point = 3,
+#               y_title = "",
+#               caption = "Lines show 90% confidence interval.",
+#               x_labels = scales::percent_format()
+#               )
 
 ```
 
@@ -385,17 +447,33 @@ cf_pums_sf <- cf_pums_svy %>%
   filter(cost_burden == "Cost burdened") %>% 
   arrange(desc(pct))
 
-gg_hpointrange(cf_pums_sf,
-              y_var = tenure,
-              x_var = pct,
-              xmin_var = pct_low,
-              xmax_var = pct_up,
-              size_line = 0.75,
-              size_point = 3,
-              y_title = "",
-              caption = "Lines show 90% confidence interval.",
-              x_labels = scales::percent_format()
-              )
+ggplot(cf_pums_sf,
+       aes(x = pct, y = reorder(tenure, pct))) +
+  geom_errorbar(aes(y = tenure, xmin = pct_low, xmax = pct_up), 
+                height = 0, 
+                width = .2,
+                size = 0.75, 
+                color = "blue") +
+  geom_point(size = 3, color = "blue") +
+  theme(axis.title = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major.x = element_line(color ="grey"),
+        panel.border = element_rect(color = "grey", fill = NA)) +
+  scale_x_continuous(labels = percent_format(), breaks = c(.1, .2, .3, .4, .5, .6)) +
+  labs(title = "Percent of households in single-family detached homes \nwith cost burden by tenure")
+
+
+# gg_hpointrange(cf_pums_sf,
+#               y_var = tenure,
+#               x_var = pct,
+#               xmin_var = pct_low,
+#               xmax_var = pct_up,
+#               size_line = 0.75,
+#               size_point = 3,
+#               y_title = "",
+#               caption = "Lines show 90% confidence interval.",
+#               x_labels = scales::percent_format()
+#               )
 
 
 ```

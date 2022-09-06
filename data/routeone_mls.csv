@@ -1,6 +1,7 @@
 ,PID,Prop Type,Status,Area,Address,Subdivision,Type,# Bedrooms,Total Baths,# Rooms,Fin SF,List Price,Sales Price,Days On Market,Sales Date,Zip,MLS
 1515730,S0090538003,Single Family,CLOSD,50,2702 Walmsley BLVD,Grindall Creek Park,Detached,4,1,6,"1,048","$18,000 ","$18,000 ",35,7/30/2015,23234,CVR
 1933410,S009-0538-004,Single Family,CLOSD,50,2704 Walmsley BLVD,Grindall Creek Park,Detached,4,1,7,"1,048","$99,950 ","$105,000 ",2,10/28/2019,23234,CVR
+2208743,S009-0538-002,Single Family,CLOSD,50,2700 Walmsley BLVD,Oak Crest,Detached,4,1.1,7,"1,152","$149,950 ","$149,950 ",6,8/4/2022,23234,CVR
 1634003,C008-0427-055,Single Family,CLOSD,50,2808 Grindall,Stephens Glen,Detached,3,2,6,"1,293","$154,630 ","$154,630 ",35,2/21/2017,23234,CVR
 1130911,789-692-32-02-00000,Single Family,CLOSD,52,4905 Oriole AVE,Grindall Creek Park,Detached,3,1,6,792,"$21,000 ","$25,000 ",12,2/22/2012,23234,CVR
 1208504,789-692-29-07-00000,Single Family,CLOSD,52,4903 Oriole AVE,Grindall Creek Park,Detached,3,1,6,"1,028","$28,500 ","$35,000 ",24,5/15/2012,23234,CVR
@@ -335,6 +336,7 @@
 1313145,791-666-32-37-00000,Single Family,CLOSD,52,3049 Rushton RD,Quail Oaks,Detached,3,1,6,"1,040","$109,950 ","$100,000 ",51,8/19/2013,23237,CVR
 1302405,787-689-55-50-00000,Single Family,CLOSD,52,3019 Goolsby AVE,Dupont Square,Detached,4,1,6,"1,035","$109,950 ","$92,000 ",73,6/14/2013,23234,CVR
 1208096,786-693-11-33-00000,Single Family,CLOSD,52,3018 Dulwich DR,Falling Creek,Detached,3,1.1,6,"1,275","$109,999 ","$99,000 ",45,5/30/2012,23234,CVR
+2217161,786-68-93-10-600-033,Condo/Town,CLOSD,52,5206 Castlewood RD Unit#C,Treetop,Condominium,2,1,4,859,"$110,000 ","$100,000 ",16,8/12/2022,23234,CVR
 2217158,786-68-93-10-600-090,Condo/Town,CLOSD,52,5228 Castlewood RD Unit#A,Tree Top Condominium,Condominium,2,1,4,860,"$110,000 ","$103,000 ",8,7/22/2022,23234,CVR
 2005411,793-66-55-68-600-000,Single Family,CLOSD,52,10112 Brandywine AVE,Central Park,Detached,2,1,4,"1,084","$110,000 ","$95,000 ",36,5/26/2020,23237,CVR
 1819208,792-67-15-17-500-000,Single Family,CLOSD,52,8910 Perrymont RD,Crescent Park,Detached,3,1,5,"1,125","$110,000 ","$80,000 ",16,6/22/2018,23237,CVR
@@ -666,6 +668,7 @@
 1302797,791-660-59-67-00000,Single Family,CLOSD,52,3607 E Chagford TER,Mineola,Detached,3,2,6,"1,249","$149,900 ","$143,500 ",54,4/15/2013,23831,CVR
 1302044,792-660-79-38-00000,Single Family,CLOSD,52,3426 Castlebury DR,Cameron Run,Detached,3,2.1,5,"1,456","$149,900 ","$148,000 ",19,3/14/2013,23831,CVR
 1207294,791-662-63-55-00000,Single Family,CLOSD,52,10906 Stilton DR,Mineola,Detached,4,2,6,"1,320","$149,900 ","$149,900 ",26,5/25/2012,23831,CVR
+2217125,789-68-92-26-900-000,Single Family,CLOSD,52,2741 Goolsby AVE,Dupont Square,Detached,2,1,5,886,"$149,950 ","$165,500 ",6,8/5/2022,23234,CVR
 2125234,789-69-13-24-000-000,Single Family,CLOSD,52,5002 Oriole AVE,Falling Creek Court,Detached,2,1,4,768,"$149,950 ","$150,000 ",29,10/28/2021,23234,CVR
 2024257,792-68-10-67-200-000,Single Family,CLOSD,52,2518 Merriewood Ridge CT,Merriewood,Detached,3,1,6,"1,056","$149,950 ","$165,000 ",2,10/9/2020,23237,CVR
 1938636,789-68-22-17-800-000,Single Family,CLOSD,52,6811 Strathmore CT,Glen Conner,Detached,3,1,5,"1,092","$149,950 ","$147,950 ",124,6/2/2020,23237,CVR
@@ -972,6 +975,7 @@
 1317698,792-662-60-59-00000,Single Family,CLOSD,52,10818 Drayton RD,Chipchase At Mineola,Detached,3,2,7,"1,671","$169,950 ","$167,000 ",3,8/28/2013,23831,CVR
 1126366,790-666-81-43-00000,Single Family,CLOSD,52,9725 Ransom Hills Terrace,Proctors Point,Detached,4,2.1,8,"1,920","$169,950 ","$155,000 ",91,2/24/2012,23237,CVR
 1816745,792-66-73-83-900-000,Single Family,CLOSD,52,2908 Gaffney RD,Quail Oaks,Detached,3,2,7,"1,424","$169,999 ","$166,000 ",75,9/6/2018,23237,CVR
+2219040,793-66-14-62-100-000,Single Family,CLOSD,52,11042 Rufford RD,Cameron Run,Detached,3,2,5,"1,332","$170,000 ","$225,000 ",5,8/24/2022,23831,CVR
 2017149,788-68-40-90-600-000,Single Family,CLOSD,52,3012 Bensley RD,Wentworth Home Sites,Detached,3,1,8,"1,240","$170,000 ","$166,000 ",8,7/28/2020,23237,CVR
 1925116,797-65-80-21-500-000,Condo/Town,CLOSD,52,2704 Goyne LOOP,Westchester Townhouses,Townhouse,3,1.1,5,"1,280","$170,000 ","$167,000 ",96,12/19/2019,23831,CVR
 1921786,784-69-37-74-600-000,Single Family,CLOSD,52,4610 Falling Creek CIR,Amber Heights,Detached,3,2,6,"1,818","$170,000 ","$170,000 ",64,10/31/2019,23234,CVR
@@ -1038,6 +1042,7 @@
 1627346,789-67-72-76-600-000,Single Family,CLOSD,52,3001 Libwood AVE,Rayon Park,Detached,4,2.1,6,"1,640","$174,950 ","$175,000 ",27,12/22/2016,23237,CVR
 1610362,792-66-02-58-700-000,Single Family,CLOSD,52,3502 E Chagford TER,Mineola,Detached,4,2,9,"1,606","$174,950 ","$181,075 ",2,5/27/2016,23831,CVR
 1515692,790-666-01-62-00000,Single Family,CLOSD,52,3252 Ransom Hills RD,Proctors Point,Detached,4,2.1,9,"1,920","$174,950 ","$170,000 ",9,7/31/2015,23237,CVR
+2219471,792-66-63-33-900-000,Single Family,CLOSD,52,9901 Proctors RD,Quail Oaks,Detached,3,1,5,"1,040","$175,000 ","$170,000 ",6,8/10/2022,23237,CVR
 2211520,791-66-68-96-100-000,Single Family,CLOSD,52,3001 Rushton RD,Quail Oaks,Detached,3,1,6,"1,040","$175,000 ","$175,000 ",0,6/30/2022,23237,CVR
 2205020,788-68-22-35-700-000,Single Family,CLOSD,52,6819 Strathmore RD,Sherbourne Heights,Detached,4,1,6,"1,670","$175,000 ","$180,000 ",25,5/20/2022,23237,CVR
 2123297,791-66-68-96-100-000,Single Family,CLOSD,52,3001 Rushton RD,Quail Oaks,Detached,3,1,6,"1,040","$175,000 ","$160,000 ",3,8/30/2021,23237,CVR
@@ -1325,6 +1330,7 @@
 1511141,789-661-64-68-00000,Single Family,CLOSD,52,10811 Erin Green CT,Erin Green,Detached,4,2.1,7,"1,964","$199,900 ","$195,500 ",74,9/18/2015,23831,CVR
 1424250,789-660-36-67-00000,Single Family,CLOSD,52,3810 Kingstream LN,Ascot Forest,Detached,3,2.1,7,"2,100","$199,900 ","$196,500 ",33,11/7/2014,23831,CVR
 1224659,791-659-31-21-00000,Single Family,CLOSD,52,11430 Driscoll RD,Trueheart Heights,Detached,3,2,7,"2,220","$199,900 ","$187,500 ",35,11/28/2012,23831,CVR
+2217739,792-66-76-45-700-000,Single Family,CLOSD,52,9709 Kerwin RD,Quail Oaks,Detached,3,1,7,"1,360","$199,950 ","$212,000 ",5,8/10/2022,23237,CVR
 2127446,788-68-37-89-600-000,Single Family,CLOSD,52,6518 Wentworth ST,Wentworth Home Sites,Detached,3,1.1,7,"1,260","$199,950 ","$205,000 ",3,10/28/2021,23237,CVR
 2124621,792-65-92-06-400-000,Single Family,CLOSD,52,3537 NE Castlebury DR,Cameron Run,Detached,3,1,5,960,"$199,950 ","$199,950 ",14,9/27/2021,23831,CVR
 2114123,787-67-00-20-400-000,Single Family,CLOSD,52,8916 Firethorne LN,Squarefield Park,Detached,3,1.1,6,"1,056","$199,950 ","$205,000 ",4,5/28/2021,23237,CVR
@@ -1346,6 +1352,7 @@
 1710514,791-66-27-40-200-000,Single Family,CLOSD,52,11007 Stilton DR,Mineola,Detached,3,2,7,"1,938","$199,990 ","$195,000 ",82,7/10/2017,23831,CVR
 2127885,788-68-33-84-700-000,Single Family,CLOSD,52,2931 Sherbourne RD,Sherbourne Heights,Detached,3,1.1,7,"1,238","$199,999 ","$203,000 ",5,10/26/2021,23237,CVR
 1909208,796-65-73-75-700-000,Condo/Town,CLOSD,52,3212 Perdue Springs LN,Westchester Townhouses,Townhouse,3,2.1,8,"2,040","$199,999 ","$207,000 ",4,6/7/2019,23831,CVR
+2219199,791-66-65-44-800-000,Single Family,CLOSD,52,3031 Rushton RD,Quail Oaks,Detached,3,1,6,"1,040","$200,000 ","$210,000 ",4,8/25/2022,23237,CVR
 2134622,789-68-24-05-800-000,Single Family,CLOSD,52,6906 Westwood ST,Glen Conner,Detached,3,1,5,"1,092","$200,000 ","$225,000 ",7,1/12/2022,23237,CVR
 2122743,792-67-98-93-400-000,Single Family,CLOSD,52,2507 Alcott RD,Patterson Park Resub,Detached,3,1.1,6,"1,431","$200,000 ","$200,000 ",10,10/29/2021,23237,CVR
 2109926,790-65-85-98-500-000,Single Family,CLOSD,52,11450 Old Centralia RD,Terjo Village,Detached,3,1.1,6,"1,224","$200,000 ","$230,000 ",5,7/8/2021,23831,CVR
@@ -1456,6 +1463,7 @@
 1401737,791-659-88-46-00000,Single Family,CLOSD,52,11415 Marsden RD,Trueheart Heights,Detached,4,2.1,9,"2,615","$214,900 ","$214,900 ",190,8/22/2014,23831,CVR
 1221236,792-661-60-25-00000,Single Family,CLOSD,52,11008 Crofton CIR,Chipchase At Mineola,Detached,4,2.1,8,"2,100","$214,900 ","$209,900 ",91,12/21/2012,23831,CVR
 1214233,788-661-87-19-00000,Single Family,CLOSD,52,3902 Old Cheshire DR,Cheshire,Detached,3,2.1,7,"2,182","$214,900 ","$212,000 ",91,10/5/2012,23831,CVR
+2220888,791-68-29-61-300-000,Single Family,CLOSD,52,6830 Merriewood Ridge DR,Merriewood,Detached,3,1,6,"1,056","$214,950 ","$220,000 ",4,8/30/2022,23237,CVR
 2105267,798-66-04-46-200-000,Single Family,CLOSD,52,2324 Buena Vista BLVD,Normandale Terrace,Detached,3,1.1,5,"1,000","$214,950 ","$210,000 ",5,4/22/2021,23831,CVR
 1922163,791-66-29-02-000-000,Single Family,CLOSD,52,10930 Belvoir RD,Carrisbrook At Mineola,Detached,3,2.1,7,"1,508","$214,950 ","$212,000 ",6,8/20/2019,23831,CVR
 1832397,789-67-72-53-200-000,Single Family,CLOSD,52,3009 Rycliff AVE,Rayon Park,Detached,4,2.1,7,"1,706","$214,950 ","$212,500 ",106,1/18/2019,23237,CVR
@@ -1611,6 +1619,7 @@
 1601945,792-676-73-83-00000,Single Family,CLOSD,52,2512 Dwight AVE,Bellwood Addition,Detached,5,4,11,"3,473","$229,900 ","$229,900 ",96,6/30/2016,23237,CVR
 1511163,794-657-29-11-00000,Single Family,CLOSD,52,3300 Osborne RD,Chester Heights,Detached,4,2.1,7,"2,025","$229,900 ","$229,000 ",38,7/10/2015,23831,CVR
 1426534,789-660-00-82-00000,Single Family,CLOSD,52,11004 Royal Mews CT,Ascot Forest,Detached,4,2.1,7,"2,247","$229,900 ","$229,000 ",15,11/20/2014,23831,CVR
+2210983,791-67-01-58-900-000,Single Family,CLOSD,52,9100 Omaha ST,Crescent Park,Detached,3,2,8,"1,028","$229,950 ","$235,000 ",30,8/19/2022,23237,CVR
 2127734,791-66-32-62-400-000,Single Family,CLOSD,52,10730 Timonium DR,Mineola,Detached,3,2,5,"1,100","$229,950 ","$240,000 ",3,10/28/2021,23831,CVR
 2103420,795-66-68-44-700-000,Single Family,CLOSD,52,9968 Reymet CT,Rachels Way,Detached,3,2,6,"1,649","$229,950 ","$247,000 ",2,3/18/2021,23237,CVR
 2102712,784-69-28-42-800-000,Single Family,CLOSD,52,3137 Grahamwood DR,Falling Creek Court,Detached,3,2,8,"2,322","$229,950 ","$235,000 ",10,3/19/2021,23234,CVR
@@ -1725,6 +1734,7 @@
 1224161,792-658-97-07-00000,Single Family,CLOSD,52,11700 Dewberry LN,Thompson Estates,Detached,5,3,11,"3,158","$239,950 ","$236,000 ",113,2/25/2013,23831,CVR
 1131862,789-664-87-06-000000,Single Family,CLOSD,52,9919 Williams Mill,Brooks Chapel,Detached,4,2.1,6,"2,309","$239,950 ","$243,000 ",93,4/26/2012,23831,CVR
 1927523,790-66-83-69-700-000,Single Family,CLOSD,52,3201 Kingsdale RD,None,Detached,4,2,6,"1,938","$239,999 ","$239,000 ",23,11/4/2019,23237,CVR
+2219112,795-66-07-06-400-000,Single Family,CLOSD,52,11408 Canterbury RD,Fan Court,Detached,3,2,5,"1,428","$240,000 ","$300,000 ",5,8/19/2022,23831,CVR
 2203877,792-66-15-03-700-000,Single Family,CLOSD,52,11101 Crofton RD,Chipchase At Mineola,Detached,3,2,6,"1,256","$240,000 ","$265,000 ",4,3/22/2022,23831,CVR
 2131503,7.86689E+14,Single Family,CLOSD,52,5101 Trace CT,Shady Creek,Detached,4,2,6,"1,584","$240,000 ","$245,000 ",18,3/1/2022,23234,CVR
 2117976,787-66-37-59-100-000,Single Family,CLOSD,52,10141 Hilltop Farms DR,Hilltop Farms,Detached,3,2,5,"1,313","$240,000 ","$235,000 ",4,8/27/2021,23831,CVR
@@ -1778,6 +1788,7 @@
 1818613,794-65-72-91-100-000,Single Family,CLOSD,52,3300 Osborne RD,Chester Heights,Detached,4,2.1,7,"2,025","$249,900 ","$249,900 ",18,7/18/2018,23831,CVR
 1812510,791-65-96-06-000-000,Single Family,CLOSD,52,11400 Marsden RD,Trueheart Heights,Detached,3,2,8,"1,946","$249,900 ","$245,000 ",6,6/1/2018,23831,CVR
 1302515,796-659-13-78-00000,Single Family,CLOSD,52,11612 Hillside RD,Holly Trail,Detached,4,2,7,"1,929","$249,900 ","$249,000 ",23,2/28/2013,23831,CVR
+2217861,793-66-82-67-000-000,Single Family,CLOSD,52,2642 Galena AVE,Quail Oaks,Detached,3,2,5,"1,152","$249,950 ","$256,000 ",2,8/2/2022,23237,CVR
 2204485,789-67-77-74-900-000,Single Family,CLOSD,52,2915 Rycliff AVE,Rayon Park,Detached,3,1.1,7,"1,602","$249,950 ","$249,000 ",16,6/10/2022,23237,CVR
 2125435,794-66-01-98-500-000,Single Family,CLOSD,52,3106 New Found LN,Cameron Run,Detached,3,2.1,6,"1,358","$249,950 ","$274,000 ",5,11/5/2021,23831,CVR
 2115671,789-68-23-54-200-000,Single Family,CLOSD,52,6919 Strathmore CT,Glen Conner,Detached,3,3,7,"2,164","$249,950 ","$260,000 ",5,7/19/2021,23237,CVR
@@ -1860,6 +1871,8 @@
 1920096,789-66-43-86-000-000,Single Family,CLOSD,52,10000 Brooks Point TER,Brooks Chapel,Detached,4,2.1,9,"2,332","$259,995 ","$259,000 ",48,10/21/2019,23831,CVR
 2128156,792-67-64-55-100-000,Single Family,CLOSD,52,2521 Dwight AVE,Bellwood Addition,Detached,3,2.1,5,"1,400","$259,999 ","$251,000 ",2,10/29/2021,23237,CVR
 2123812,796-65-85-57-400-000,Single Family,CLOSD,52,2730 Perdue AVE,Warfield Estates,Detached,3,2,6,"1,413","$259,999 ","$267,000 ",16,10/6/2021,23831,CVR
+2220594,788-68-19-78-700-000,Single Family,CLOSD,52,2913 Swineford RD,Swineford Road Sub,Detached,4,2,6,"1,296","$260,000 ","$280,000 ",3,8/26/2022,23237,CVR
+2219801,789-65-70-23-100-000,Single Family,CLOSD,52,11606 Chester Station DR,Chester Station,Detached,3,2,6,"1,400","$260,000 ","$285,000 ",6,8/18/2022,23831,CVR
 2204647,788-69-16-87-200-000,Single Family,CLOSD,52,2715 Addington AVE,Grindall Creek Park,Detached,4,2,6,"1,366","$260,000 ","$255,000 ",6,4/13/2022,23234,CVR
 2118789,794-66-71-00-400-000,Single Family,CLOSD,52,2704 General BLVD,Central Park,Detached,3,2.1,6,"1,400","$260,000 ","$255,000 ",45,9/3/2021,23237,CVR
 2109624,793-66-08-84-300-000,Single Family,CLOSD,52,3230 Castlebury DR,Cameron Run,Detached,3,2.1,6,"1,488","$260,000 ","$273,500 ",5,5/26/2021,23831,CVR
@@ -1966,10 +1979,12 @@
 2125096,796-66-44-64-100-000,Single Family,CLOSD,52,10502 Ramona AVE,Belmeade,Detached,3,2.1,6,"1,440","$275,720 ","$272,860 ",98,3/10/2022,23237,CVR
 1833499,7.90671E+14,Single Family,CLOSD,52,9201 Clovis ST,Oak Dale,Detached,3,2.1,7,"1,801","$275,910 ","$245,990 ",39,12/14/2018,23237,CVR
 1507053,789-663-91-53-00000,Single Family,CLOSD,52,3648 Ethens Point LN,Brooks Chapel,Detached,3,2.1,9,"2,142","$276,990 ","$277,990 ",29,6/5/2015,23831,CVR
+2112056,786-67-63-21-100-000,Condo/Town,CLOSD,52,3201 Argent LN,Silverleaf,Townhouse,3,2.1,6,"1,634","$277,000 ","$278,000 ",4,7/2/2021,23237,CVR
 1836368,7.9067E+14,Single Family,CLOSD,52,9206 Clovis ST,Oak Dale,Detached,4,2.1,9,"2,192","$277,780 ","$277,780 ",0,1/3/2019,23237,CVR
 2202131,791-66-24-63-600-000,Single Family,CLOSD,52,10917 Timonium DR,Mineola,Detached,3,2,6,"1,548","$278,000 ","$288,000 ",7,3/25/2022,23831,CVR
 2115640,794-65-75-58-900-000,Single Family,CLOSD,52,11809 Holly Hill RD,Holly Hills,Detached,3,2,7,"2,160","$278,000 ","$306,000 ",6,7/14/2021,23831,CVR
 1625672,790-66-33-50-400-000,Single Family,CLOSD,52,3513 Ethens Point LN,Brooks Chapel,Detached,4,4,7,"2,415","$279,000 ","$277,000 ",45,10/28/2016,23831,CVR
+2218272,790-65-90-68-600-000,Single Family,CLOSD,52,3824 Randall DR,Castlebury Hills,Detached,3,2,6,"1,680","$279,500 ","$285,000 ",5,9/1/2022,23831,CVR
 2133007,788-66-13-70-500-000,Single Family,CLOSD,52,10903 Old Cheshire CT,Cheshire,Detached,4,2,6,"1,404","$279,900 ","$295,717 ",6,12/30/2021,23831,CVR
 2125995,788-68-42-87-400-000,Single Family,CLOSD,52,2950 Parkdale RD,Falling Creek Hills,Detached,3,1.1,7,"1,469","$279,900 ","$275,000 ",11,12/1/2021,23234,CVR
 2034022,788-65-97-35-500-000,Single Family,CLOSD,52,4107 Heathstead CT,Ascot Pointe,Detached,3,2.1,6,"2,021","$279,900 ","$295,000 ",6,12/29/2020,23831,CVR
@@ -1982,12 +1997,14 @@
 2125712,792-66-57-35-700-000,Single Family,CLOSD,52,10102 S General BLVD,Central Park,Detached,4,2.1,6,"1,740","$279,950 ","$282,000 ",2,10/18/2021,23237,CVR
 2032657,789-66-14-83-600-000,Single Family,CLOSD,52,10818 Erin Green CT,Erin Green,Detached,3,2.1,7,"2,221","$279,950 ","$275,000 ",2,11/10/2020,23831,CVR
 2109872,788-66-43-97-900-000,Single Family,CLOSD,52,3919 Hamlin Creek CT,Hamlin Estates,Detached,4,2.1,7,"2,068","$279,990 ","$300,000 ",6,6/14/2021,23831,CVR
+2111424,786-67-61-51-500-000,Condo/Town,CLOSD,52,3225 Argent LN,Silverleaf,Townhouse,3,2.1,6,"1,634","$280,000 ","$280,000 ",11,6/22/2021,23237,CVR
 2106855,794-65-71-01-400-000,Single Family,CLOSD,52,11824 Boyd RD,Chester Heights,Detached,4,3,8,"2,793","$280,000 ","$280,000 ",17,5/17/2021,23831,CVR
 1740946,795-66-17-83-200-000,Single Family,CLOSD,52,11301 Canterbury RD,Fan Court,Detached,4,3,9,"2,716","$280,000 ","$284,000 ",82,3/19/2018,23831,CVR
 1734196,793-65-77-30-100-000,Single Family,CLOSD,52,3331 Grove AVE,Chester Heights,Detached,3,3,7,"1,868","$280,000 ","$256,500 ",26,11/20/2017,23831,CVR
 1634966,7896 699 659 00000,Single Family,CLOSD,52,9400 S Carswell ST,Oak Dale,Detached,4,2.1,8,"2,385","$280,630 ","$280,630 ",65,5/1/2017,23237,CVR
 1426605,7.90664E+14,Single Family,CLOSD,52,10007 Ethen's Castle DR,Brooks Chapel,Detached,4,2.1,9,"2,265","$280,990 ","$291,440 ",0,7/20/2015,23831,CVR
 1635520,7896 698 231 00000,Single Family,CLOSD,52,9424 S Carswell ST,Oak Dale,Detached,4,2.1,8,"2,385","$282,070 ","$282,070 ",0,3/3/2017,23237,CVR
+2037363,7.86675E+14,Condo/Town,CLOSD,52,7845 Vermeil ST Unit#IA-B,Silverleaf,Townhouse,3,2.1,7,"1,943","$282,180 ","$282,180 ",0,10/8/2021,23237,CVR
 1723495,7906 690 796 00000,Single Family,CLOSD,52,9301 Margo CT,Oak Dale,Detached,4,2.1,8,"2,385","$282,895 ","$282,895 ",0,12/8/2017,23237,CVR
 1816258,7.90671E+14,Single Family,CLOSD,52,9136 Carswell ST,Oak Dale,Detached,3,2.1,8,"2,113","$283,960 ","$283,960 ",0,10/23/2018,23237,CVR
 1705879,7896 698 846 00000,Single Family,CLOSD,52,9412 S Carswell CT,Oak Dale,Detached,3,2.1,8,"2,193","$283,980 ","$283,980 ",14,10/18/2017,23237,CVR
@@ -2038,6 +2055,7 @@
 1800861,7.8967E+14,Single Family,CLOSD,52,9336 Margo CT,Oak Dale,Detached,3,2.1,9,"2,539","$293,465 ","$296,465 ",0,7/10/2018,23237,CVR
 1834515,791-66-02-71-600-000,Single Family,CLOSD,52,3630 Hemlock RD,Trueheart Heights,Detached,4,2,10,"2,358","$293,630 ","$293,000 ",75,1/31/2019,23831,CVR
 1902860,788-66-49-89-600-000,Single Family,CLOSD,52,3807 Hamlin Creek PKY,Brooks Chapel,Detached,5,3.1,8,"2,420","$294,700 ","$294,700 ",5,3/14/2019,23831,CVR
+2128642,786-67-51-39-200-000,Condo/Town,CLOSD,52,7825 Old Guild RD,Silverleaf,Townhouse,3,2.1,7,"1,725","$294,950 ","$295,000 ",2,10/29/2021,23237,CVR
 1916269,789-66-40-48-900-000,Single Family,CLOSD,52,10000 Hamlin Creek PL,Brooks Chapel,Detached,5,3.1,8,"2,438","$294,950 ","$294,950 ",9,7/16/2019,23831,CVR
 2135903,792-66-28-81-400-000,Single Family,CLOSD,52,10900 Crofton RD,Chipchase At Mineola,Detached,3,2.1,7,"1,968","$295,000 ","$300,000 ",7,1/31/2022,23831,CVR
 2131754,788-68-85-55-600-000,Single Family,CLOSD,52,2909 Emblem DR,Ranch Acres,Detached,4,2.1,8,"2,840","$295,000 ","$315,000 ",5,12/14/2021,23234,CVR
@@ -2045,7 +2063,9 @@
 2017023,789-66-39-02-800-000,Single Family,CLOSD,52,3618 Ethens Point LN,Brooks Chapel,Attached,4,2.1,8,"2,389","$295,000 ","$295,000 ",3,7/20/2020,23831,CVR
 2013546,795-65-77-48-000-000,Single Family,CLOSD,52,3018 Warfield Estates TER,Warfield Estates,Detached,4,2.1,8,"2,348","$295,500 ","$290,000 ",15,7/31/2020,23831,CVR
 2201055,789-68-36-39-800-000,Single Family,CLOSD,52,2741 Dundas RD,Bensley,Detached,4,2,7,"2,174","$297,500 ","$300,000 ",3,3/8/2022,23237,CVR
+2216996,788-68-84-46-000-000,Single Family,CLOSD,52,2917 Emblem DR,Ranch Acres,Detached,4,2,8,"2,548","$297,950 ","$310,000 ",3,8/5/2022,23234,CVR
 2117538,789-66-43-73-600-000,Single Family,CLOSD,52,10018 Brooks Point TER,Brooks Chapel,Detached,4,2.1,7,"2,120","$297,999 ","$325,000 ",5,7/22/2021,23831,CVR
+2220528,792-66-85-92-300-000,Single Family,CLOSD,52,2807 Galena AVE,Quail Oaks,Detached,3,2,7,"1,954","$299,000 ","$302,000 ",3,8/26/2022,23237,CVR
 2213043,795-65-76-41-700-000,Single Family,CLOSD,52,3019 Warfield Estates PL,Warfield Estates,Detached,4,2.1,6,"1,690","$299,000 ","$300,000 ",6,7/6/2022,23831,CVR
 2208982,788-66-02-97-500-000,Single Family,CLOSD,52,4101 Old Cheshire DR,Cheshire,Detached,4,2,6,"1,410","$299,000 ","$338,000 ",4,5/16/2022,23831,CVR
 2204697,789-65-95-30-200-000,Single Family,CLOSD,52,3912 Terjo LN,Terjo Village,Detached,3,2,6,"1,405","$299,000 ","$290,000 ",22,4/19/2022,23831,CVR
@@ -2060,11 +2080,14 @@
 2135741,795-65-73-42-300-000,Single Family,CLOSD,52,12100 Warfield Estates DR,Warfield Estates,Detached,3,2.1,7,"1,842","$299,900 ","$310,000 ",0,1/6/2022,23831,CVR
 2110471,793-66-23-16-600-000,Single Family,CLOSD,52,10731 Surry RD,None,Detached,4,2.1,7,"2,547","$299,900 ","$299,900 ",28,7/12/2021,23831,CVR
 1717345,788-66-06-56-400-000,Single Family,CLOSD,52,4000 Kings Gate RD,Hamlins Reach,Detached,3,2.1,8,"2,708","$299,900 ","$290,000 ",69,8/23/2017,23831,CVR
+2219046,787-68-97-72-500-000,Single Family,CLOSD,52,5226 Shady LN,None,Detached,3,2.1,8,"1,750","$299,950 ","$300,000 ",16,8/19/2022,23234,CVR
+2215139,789-68-61-60-200-000,Single Family,CLOSD,52,6040 Gainford RD,Falling Creek Hills,Detached,4,2.1,10,"1,836","$299,950 ","$321,225 ",11,8/24/2022,23234,CVR
 2130917,793-66-21-43-300-000,Single Family,CLOSD,52,10811 Crofton RD,Chipchase At Mineola,Detached,4,2.1,8,"2,130","$299,950 ","$325,000 ",3,12/3/2021,23831,CVR
 2116158,792-66-05-28-600-000,Single Family,CLOSD,52,11220 Eagle Point RD,Chipchase At Mineola,Detached,3,3,8,"2,176","$299,950 ","$300,000 ",13,9/7/2021,23831,CVR
 2011061,789-66-46-90-500-000,Single Family,CLOSD,52,10001 Williams Mill RD,Brooks Chapel,Detached,4,3,8,"2,344","$299,950 ","$295,000 ",7,5/22/2020,23831,CVR
 1905875,795-65-96-05-500-000,Single Family,CLOSD,52,2809 Banbury RD,Fan Court,Detached,4,3,7,"3,072","$299,950 ","$302,950 ",25,5/2/2019,23831,CVR
 1713010,790-66-33-87-000-000,Single Family,CLOSD,52,9924 Ethens Castle DR,Brooks Chapel,Detached,4,2.1,10,"3,263","$299,950 ","$295,000 ",9,6/2/2017,23831,CVR
+2218027,792-65-94-46-400-000,Single Family,CLOSD,52,3519 Castlebury DR,Cameron Run,Detached,3,2,6,"1,822","$299,990 ","$299,990 ",5,8/26/2022,23831,CVR
 1726733,790-66-22-08-100-000,Single Family,CLOSD,52,10724 Ethens Mill RD,Brooks Chapel,Attached,4,2.1,7,"2,283","$299,990 ","$292,000 ",23,9/12/2017,23831,CVR
 2022453,789-65-83-60-500-000,Single Family,CLOSD,52,11500 Chester RD,None,Detached,5,3,10,"2,754","$299,999 ","$295,000 ",20,10/15/2020,23831,CVR
 2209174,799-65-95-07-600-000,Single Family,CLOSD,52,2319 China Cat TER,None,Detached,4,3.1,7,"1,686","$300,000 ","$351,000 ",6,6/13/2022,23831,CVR
@@ -2089,6 +2112,7 @@
 2123385,795-65-74-95-000-000,Single Family,CLOSD,52,3037 Warfield Estates TER,Warfield Estates,Detached,4,3.1,7,"2,028","$309,900 ","$329,900 ",5,9/22/2021,23831,CVR
 1905718,794-65-78-11-500-000,Single Family,CLOSD,52,3207 Osborne RD,None,Detached,4,3,6,"2,142","$309,900 ","$300,000 ",30,5/2/2019,23831,CVR
 1813629,7.90671E+14,Single Family,CLOSD,52,9149 Carswell ST,Oak Dale,Detached,3,2.1,8,"2,462","$309,945 ","$309,945 ",0,9/14/2018,23237,CVR
+2219447,790-66-73-34-000-000,Single Family,CLOSD,52,9604 Ransom Hills TER,Proctors Point,Detached,3,2.1,7,"1,778","$309,950 ","$305,000 ",8,8/31/2022,23237,CVR
 2112051,796-65-83-96-600-000,Single Family,CLOSD,52,11709 Perdue TER,Warfield Estates,Detached,3,2.1,8,"2,208","$309,950 ","$320,000 ",4,6/17/2021,23831,CVR
 1919304,795-66-07-35-100-000,Single Family,CLOSD,52,11416 Canterbury RD,Fan Court,Detached,4,3.1,10,"3,294","$309,950 ","$310,950 ",11,8/20/2019,23831,CVR
 2134934,790-66-07-41-400-000,Single Family,CLOSD,52,3670 Hemlock RD,Trueheart Heights,Detached,4,2.1,8,"2,056","$310,000 ","$315,000 ",3,12/21/2021,23831,CVR
@@ -2099,6 +2123,7 @@
 2118625,790-66-26-17-800-000,Single Family,CLOSD,52,10018 Ethens Castle DR,Brooks Chapel,Detached,4,2.1,8,"2,264","$314,900 ","$340,000 ",5,8/16/2021,23831,CVR
 2116808,796-65-91-46-800-000,Single Family,CLOSD,52,11616 Hillside RD,Holly Trail,Detached,3,2,7,"1,759","$314,900 ","$337,000 ",5,7/9/2021,23831,CVR
 2118736,795-65-60-97-400-000,Single Family,CLOSD,52,3100 Poinsetta DR,Pleasant Dale,Detached,4,2.1,7,"2,007","$314,990 ","$325,000 ",9,7/29/2021,23831,CVR
+2214802,790-66-15-21-800-000,Single Family,CLOSD,52,3700 Dalhart CT,Mineola Heights,Detached,3,2,6,"1,432","$315,000 ","$320,000 ",9,8/23/2022,23831,CVR
 2105981,789-66-95-32-200-000,Single Family,CLOSD,52,3328 Kingsdale RD,None,Detached,4,2.1,8,"2,146","$315,000 ","$317,000 ",8,4/16/2021,23237,CVR
 2020863,7.88662E+13,Single Family,CLOSD,52,4007 Walters Drive,Glen Oaks,Detached,4,2.1,9,"2,614","$315,000 ","$315,000 ",2,8/28/2020,23831,CVR
 2204291,792-66-08-34-800-000,Single Family,CLOSD,52,3420 Castlebury DR,Cameron Run,Detached,4,2,6,"1,368","$315,500 ","$312,000 ",14,4/11/2022,23831,CVR
@@ -2110,6 +2135,7 @@
 2206276,792-66-34-21-600-000,Single Family,CLOSD,52,10519 Surry RD,Carrisbrook At Mineola,Detached,4,2.1,8,"2,200","$319,900 ","$345,000 ",5,5/27/2022,23831,CVR
 1907289,790-66-90-52-100-000,Single Family,CLOSD,52,3226 Kingsdale RD,None,Detached,5,4.1,8,"3,470","$319,950 ","$319,000 ",2,4/27/2019,23237,CVR
 2107344,789-66-46-17-100-000,Single Family,CLOSD,52,3636 Hamlin Creek PKY,Brooks Chapel,Detached,5,3.1,9,"2,429","$319,999 ","$331,500 ",5,6/1/2021,23831,CVR
+2130822,786-67-65-32-300-000,Single Family,CLOSD,52,3100 Argent LN,Silverleaf,Detached,4,2.1,6,"1,854","$320,000 ","$348,500 ",3,11/17/2021,23237,CVR
 1711426,7896 698 339 00000,Single Family,CLOSD,52,9418 S Carswell ST,Oak Dale,Detached,4,2.1,8,"2,385","$320,260 ","$315,000 ",19,12/15/2017,23237,CVR
 1224755,7.90664E+14,Single Family,CLOSD,52,9931 Ethens Castle DR,Brooks Chapel,Detached,4,2,12,"3,964","$322,000 ","$334,775 ",719,2/19/2015,23832,CVR
 1300200,790-663-52-05-00000,Single Family,CLOSD,52,10000 Ethens Castle DR,Brooks Chapel,Detached,5,2.1,10,"3,345","$322,645 ","$322,645 ",211,10/17/2013,23831,CVR
@@ -2119,8 +2145,11 @@
 1431993,7.90663E+14,Single Family,CLOSD,52,9918 Ethens Castle DR,Brooks Chapel,Detached,4,2.1,9,"3,233","$326,190 ","$337,428 ",0,4/10/2015,23831,CVR
 2207808,793-65-72-25-600-000,Single Family,CLOSD,52,11733 Dewberry LN,Thompson Estates,Detached,4,3,7,"2,349","$326,950 ","$368,750 ",7,5/20/2022,23831,CVR
 1633684,7906 692 489 00000,Single Family,CLOSD,52,3101 Margo LN,Oak Dale,Detached,5,3.1,13,"3,796","$327,710 ","$331,445 ",15,3/29/2017,23237,CVR
+2218394,795-65-75-36-800-000,Single Family,CLOSD,52,3030 Warfield Estates TER,Warfield Estates,Detached,3,2.1,6,"1,948","$329,000 ","$340,000 ",4,8/5/2022,23831,CVR
+2217534,788-66-40-21-700-000,Single Family,CLOSD,52,4019 Hilltop Field DR,Hilltop Farms,Detached,3,2,6,"1,772","$329,900 ","$350,000 ",5,8/19/2022,23831,CVR
 2125913,7.91659E+14,Single Family,CLOSD,52,11410 Driscoll RD,Trueheart Heights,Detached,3,2.1,10,"2,364","$329,900 ","$330,000 ",11,9/30/2021,23831,CVR
 2023915,790-66-48-60-500-000,Single Family,CLOSD,52,3412 Midhurst DR,Brooks Chapel,Detached,4,2.1,7,"2,224","$329,950 ","$330,000 ",24,10/21/2020,23831,CVR
+2216793,794-65-69-98-200-000,Single Family,CLOSD,52,12137 Warfield Estates DR,Warfield Estates,Detached,3,2.1,6,"1,726","$330,000 ","$350,000 ",4,7/27/2022,23831,CVR
 2213787,789-66-40-46-000-000,Single Family,CLOSD,52,10018 Hamlin Creek PL,Brooks Chapel,Detached,4,2.1,7,"2,120","$330,000 ","$350,000 ",2,7/6/2022,23831,CVR
 2205977,795-65-88-32-600-000,Single Family,CLOSD,52,2904 Perdue AVE,Goynes,Detached,4,2.1,6,"1,932","$330,000 ","$380,000 ",6,4/13/2022,23831,CVR
 2111690,7.97661E+14,Single Family,CLOSD,52,11360 Elokomin AVE,Rolling Ridge,Detached,4,2.1,8,"2,345","$330,000 ","$417,585 ",0,7/1/2022,23831,CVR
@@ -2144,7 +2173,9 @@
 1908879,790-66-31-35-700-000,Single Family,CLOSD,52,10601 Ethens Point CT,Brooks Chapel,Detached,5,3,11,"3,362","$349,900 ","$342,000 ",19,5/15/2019,23831,CVR
 2123571,788-66-05-04-600-000,Single Family,CLOSD,52,4005 Kings Gate RD,Hamlins Reach,Detached,6,2.1,9,"2,397","$349,950 ","$355,000 ",5,9/30/2021,23831,CVR
 2201413,793-65-90-69-100-000,Single Family,CLOSD,52,11318 Ludgate PL,Summit Point,Attached,3,2.1,8,"1,868","$349,999 ","$360,000 ",6,2/25/2022,23831,CVR
+2219635,7.90671E+14,Single Family,CLOSD,52,9143 Carswell ST,Oakdale,Detached,4,2.1,8,"1,944","$350,000 ","$350,000 ",3,8/11/2022,23237,CBRAR
 2208695,793-65-73-99-400-000,Single Family,CLOSD,52,11716 Boyd RD,Chester Heights,Detached,3,2.1,7,"1,834","$350,000 ","$285,000 ",29,6/6/2022,23831,CVR
+2207954,794-66-18-68-200-000,Single Family,CLOSD,52,11103 Surry RD,Shady Springs,Detached,4,2.1,9,"2,248","$350,000 ","$360,000 ",12,7/27/2022,23831,CVR
 2203396,789-66-02-50-100-000,Single Family,CLOSD,52,11102 Churchill CT,Ascot Pointe,Detached,4,2.1,8,"2,232","$350,000 ","$340,000 ",4,3/22/2022,23831,CVR
 2128927,795-65-80-82-200-000,Single Family,CLOSD,52,11756 Cliff Lawn DR,Clifflawn,Detached,4,2,8,"2,603","$350,000 ","$358,000 ",30,11/30/2021,23831,CVR
 2034362,792-65-97-35-900-000,Single Family,CLOSD,52,11406 Ludgate PL,Summit Point,Detached,5,4,11,"3,300","$350,000 ","$348,000 ",83,3/25/2021,23831,CVR
@@ -2164,6 +2195,7 @@
 2135764,794-65-64-50-800-000,Single Family,CLOSD,52,3231 W Grove AVE,Pleasant Dale,Detached,4,2.1,8,"2,588","$369,900 ","$360,000 ",21,1/27/2022,23831,CVR
 2129050,790-66-37-53-600-000,Single Family,CLOSD,52,9949 Ethens Castle DR,Brooks Chapel,Detached,5,2.1,10,"2,792","$369,900 ","$375,000 ",2,11/1/2021,23831,CVR
 2130226,790-66-37-20-100-000,Single Family,CLOSD,52,10007 Ethens Castle DR,Brooks Chapel,Detached,4,2.1,9,"2,462","$369,950 ","$370,000 ",3,11/3/2021,23831,CVR
+2216966,789-66-11-02-200-000,Single Family,CLOSD,52,10726 Hamlin WAY,Hamlin Estates,Detached,4,2.1,7,"2,526","$369,990 ","$365,000 ",7,8/2/2022,23831,CVR
 1408881,7.90663E+14,Single Family,CLOSD,52,10600 Ethens Point CT,Brooks Chapel,Detached,4,2.2,14,"3,999","$372,435 ","$374,193 ",0,9/19/2014,23831,CVR
 2205618,791-65-94-68-100-000,Single Family,CLOSD,52,3610 Castlebury DR,Trueheart Heights,Detached,4,2.1,9,"2,700","$375,000 ","$385,000 ",4,4/20/2022,23831,CVR
 2118233,789-66-36-66-100-000,Single Family,CLOSD,52,3649 Ethens Point LN,Brooks Chapel,Detached,3,2.1,7,"2,528","$375,000 ","$380,000 ",3,7/21/2021,23831,CVR
@@ -2173,12 +2205,15 @@
 1704467,793-65-66-64-700-000,Single Family,CLOSD,52,3410 Osborne RD,Chester Heights,Detached,4,4,12,"4,614","$399,900 ","$399,900 ",22,4/6/2017,23831,CVR
 2129149,789-66-39-36-700-000,Single Family,CLOSD,52,3654 Ethens Point LN,Brooks Chapel,Detached,4,2.1,10,"3,264","$399,950 ","$410,000 ",3,11/15/2021,23831,CVR
 2028205,794-65-63-63-200-000,Single Family,CLOSD,52,3300 W Grove AVE,Pleasant Dale,Detached,4,2.2,10,"3,594","$399,950 ","$375,000 ",88,1/28/2021,23831,CVR
+2220542,794-65-71-85-800-000,Single Family,CLOSD,52,3221 Grove AVE,Chester Heights,Detached,4,2.1,8,"3,360","$400,000 ","$370,000 ",17,9/1/2022,23831,CVR
 2122606,794-65-62-53-600-000,Single Family,CLOSD,52,3310 Grove AVE,Pleasant Dale,Detached,5,3,9,"2,900","$400,000 ","$388,000 ",6,8/31/2021,23831,CVR
 2122540,7.98661E+14,Single Family,CLOSD,52,11306 Ridge Mill CT,Rolling Ridge,Detached,4,2.1,10,"2,979","$411,675 ","$451,110 ",55,4/28/2022,23831,CVR
 1921138,793-65-84-64-200-000,Single Family,CLOSD,52,11700 Holly Hill RD,Chester Heights,Detached,4,3,8,"2,750","$424,900 ","$420,000 ",5,8/6/2019,23831,CVR
 2212185,792-65-79-59-500-000,Single Family,CLOSD,52,11708 Dewberry LN,Thompson Estates,Detached,4,2.1,8,"2,982","$424,950 ","$425,000 ",6,6/24/2022,23831,CVR
 1926957,7.70675E+14,Single Family,CLOSD,52,6800 Rouseaux DR,Watermark,Detached,5,5,11,"3,530","$429,300 ","$564,825 ",0,10/29/2020,23234,CVR
+2127607,7.8568E+14,Single Family,CLOSD,52,3531 Patina WAY,Silverleaf,Detached,4,3,10,"3,010","$441,395 ","$441,395 ",0,5/4/2022,23237,CVR
 2213505,790-66-35-20-500-000,Single Family,CLOSD,52,10000 Ethens Castle DR,Brooks Chapel,Detached,5,3,11,"3,344","$449,000 ","$465,000 ",4,6/27/2022,23831,CVR
+2221075,794-65-81-23-700-000,Single Family,CLOSD,52,3200 Holly Hill CT,Holly Hills,Detached,4,3,6,"2,724","$450,000 ","$475,000 ",1,9/1/2022,23831,CVR
 2205152,794-65-83-00-500-000,Single Family,CLOSD,52,3200 Grove AVE,Chester Heights,Detached,5,3,11,"3,564","$450,000 ","$501,000 ",5,5/18/2022,23831,CVR
 2128286,788-67-18-25-900-000,Single Family,CLOSD,52,3430 Hunter LN,None,Detached,5,3,6,"2,900","$465,000 ","$510,000 ",7,11/1/2021,23237,CVR
 1800318,786-68-93-10-600-077,Condo/Town,CLOSD,54,5224 Castlewood RD Unit#B,Tree Top Condominium,Condominium,2,1,4,858,"$61,000 ","$59,000 ",13,1/29/2018,23234,CVR

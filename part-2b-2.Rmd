@@ -548,6 +548,145 @@ costar_hsr_yrblt |>
 
 ```
 
+## Single-family rental versus purchase
+
+The typical renter in the study area requires an income of \$74,441 to afford the median home sales price of \$299,000 --- the median home sales price for homes sold in the last year. But median renter household incomes in the area top out at \$64,952, which are just over \$9,000 less than what is needed to purchase a home. With homeownership out of reach for many renter households in the area, SFRs are often the next best option.
+
+However, the typical listed rent for a SFR is \$1,497 --- only a few hundred dollars less than the monthly mortgage payment for a near \$300,000 home (\$1,736). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000. With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
+
+```{r hsr-renter-income, eval=FALSE}
+
+# MOE for 100206 and 100209 are pretty high.
+
+b25119_vars <- load_variables(2020, "acs5") %>%
+  filter(str_sub(name, end = 6) %in% "B25119")
+
+hsr_b25119_raw <- get_acs(
+    geography = "tract",
+    county = "Chesterfield County",
+    state = "VA",
+    table = "B25119",
+    year = 2020,
+    survey = "acs5",
+    cache_table = TRUE
+  ) 
+
+b25119_vars_cleaned <- b25119_vars %>%
+  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
+  select(variable = name, tenure)%>%
+  mutate(tenure = case_when(
+    tenure == "Owner occupied (dollars)" ~ "Homeowner",
+    tenure == "Renter occupied (dollars)" ~ "Renter",
+    TRUE ~ "All households"
+  ))
+
+hsr_b25119_data <- hsr_b25119_raw %>%
+  right_join(b25119_vars_cleaned, by = "variable") %>%
+  select(NAME, tenure, estimate, moe)  %>%
+  separate(NAME, into = c("tract", "county", "state"), sep = ",")
+
+hsr_tract_names <- c("Census Tract 1002.06",
+                    "Census Tract 1002.08", "Census Tract 1002.09",
+                    "Census Tract 1002.10", "Census Tract 1002.11")
+
+hsr_medinc <- hsr_b25119_data %>%
+  filter(tract %in% hsr_tract_names) %>% 
+  filter(tenure == "Renter")
+
+```
+
+```{r hsr-med-sales, fig.cap="Median single-family home sales price in study area", eval=FALSE}
+
+hsr_sales <- read_csv("data/mls_hsr_sales_72622.csv")
+
+hsr_sales_med <- hsr_sales |> 
+  clean_names() |> 
+  select(sales_price, sales_date) %>% 
+  mutate(sales_date = mdy(sales_date),
+         year = floor_date(sales_date, "year"),
+         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
+  summarise(median = median(sales_price))
+
+# Median is $299,000
+
+# Updated median for 2022 is $316,750 - NOT IN DATA
+
+```
+
+```{r hsr-home-price, fig.cap="Income needed to afford median priced home in Eastern Hull Street area"}
+
+hsr_msp <- 316750
+downpayment <- 0.05 # 5% downpayment
+hsr_principal <- hsr_msp - (hsr_msp * downpayment)
+closingcosts <- 0.015 # 1.5% closing costs
+hsr_loanamt <- hsr_principal/(1 - closingcosts) # Closing costs added to loan amount 
+intrate <- 0.0472 # Current interest rate from Freddie Mac -- annual average as of 8.10.22 is 4.65%
+utilities <- 250 # Assume $250/month for utilities
+
+hsr_payment <- abs(PMT((intrate/12), 360, hsr_loanamt)) + 250
+
+hsr_inc_needed <- ((hsr_payment*10)/2.8)*12
+
+hsr_labels <- c("Median sales price",
+            "Downpayment",
+            "Closing costs",
+            "Loan amount",
+            "Interest rate",
+            "Monthly utilities",
+            "Monthly payment",
+            "Income needed to buy home")
+
+hsr_values <- c("$316,750",
+            "5.0%",
+            "1.5%",
+            "$300,912",
+            "4.72%",
+            "$250",
+            "$1,838.09",
+            "$78,775")
+
+data.frame(x = hsr_labels, y = hsr_values) %>% 
+  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(8, bold=TRUE)
+
+```
+
+```{r hsr-sfr-price, eval=FALSE}
+
+
+hsr_sfr_price <- 1479
+hsr_sfr_income <- ((avg_sfr_price*10)/3)*12
+
+
+```
+
+```{r sfr-mls-bar, fig.cap="Renter income of census tracts and income needed to afford SFR and homeownership"}
+
+x <- c("Census Tract 1002.06",
+       "Census Tract 1002.09",
+       "Census Tract 1002.10", "Census Tract 1002.11",
+       "Rent single-family home", "Purchase single-family home")
+y <- c(54615, 44732, 64952, 33618, 59160, 78775)
+z <- c( "Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
+
+sfr_mls_bar <- data.frame(x, y, z)
+
+ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(title = "Renter income and income needed to afford SFR or homeownership",
+       x = NULL, y = NULL) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  scale_fill_discrete(name = "Legend") +
+  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
+
+
+```
+
 ## Proximity to amenities
 
 Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs. 
@@ -1095,143 +1234,4 @@ knitr::include_graphics("images/rockwood-square.jpg")
 Although outside of the Eastern Hull Street corridor study area, the Rockwood Square Shopping Center redevelopment offers an example of the possibilities for aging shopping centers within the study area. This strategy of redeveloping older strip malls and commercial shopping centers is [a vision among Chesterfield County planners](https://www.chesterfieldobserver.com/articles/county-planners-craft-long-term-vision-for-struggling-shopping-centers-near-rockwood-park/) to transform struggling commercial retail hubs into more vibrant mixed-use developments. 
 
 Stanley Martin Homes is proposing the development of the Rockwood Square Shopping Center --- in line with the County's overall goals for the Rockwood area. Their proposal, which was approved by the County Board of Supervisors in June 2022, will see the development of 322 condominiums and townhomes across 25-acres, which includes the Rockwood Golf Park. Although no homes will be for rent and no sales prices have been determined, this project represents the potential for increased residential development along other portions of the Hull Street corridor.
-
-
-
-## Single-family rental versus purchase
-
-The typical renter in the study area requires an income of \$74,441 to afford the median home sales price of \$299,000 --- the median home sales price for homes sold in the last year. But median renter household incomes in the area top out at \$64,952, which are just over \$9,000 less than what is needed to purchase a home. With homeownership out of reach for many renter households in the area, SFRs are often the next best option.
-
-However, the typical listed rent for a SFR is \$1,497 --- only a few hundred dollars less than the monthly mortgage payment for a near \$300,000 home (\$1,736). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000. With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
-
-```{r hsr-renter-income, eval=FALSE}
-
-# MOE for 100206 and 100209 are pretty high.
-
-b25119_vars <- load_variables(2020, "acs5") %>%
-  filter(str_sub(name, end = 6) %in% "B25119")
-
-hsr_b25119_raw <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25119",
-    year = 2020,
-    survey = "acs5",
-    cache_table = TRUE
-  ) 
-
-b25119_vars_cleaned <- b25119_vars %>%
-  separate(label, into = c("est", "income", "total", "tenure"), sep = "!!") %>% 
-  select(variable = name, tenure)%>%
-  mutate(tenure = case_when(
-    tenure == "Owner occupied (dollars)" ~ "Homeowner",
-    tenure == "Renter occupied (dollars)" ~ "Renter",
-    TRUE ~ "All households"
-  ))
-
-hsr_b25119_data <- hsr_b25119_raw %>%
-  right_join(b25119_vars_cleaned, by = "variable") %>%
-  select(NAME, tenure, estimate, moe)  %>%
-  separate(NAME, into = c("tract", "county", "state"), sep = ",")
-
-hsr_tract_names <- c("Census Tract 1002.06",
-                    "Census Tract 1002.08", "Census Tract 1002.09",
-                    "Census Tract 1002.10", "Census Tract 1002.11")
-
-hsr_medinc <- hsr_b25119_data %>%
-  filter(tract %in% hsr_tract_names) %>% 
-  filter(tenure == "Renter")
-
-```
-
-```{r hsr-med-sales, fig.cap="Median single-family home sales price in study area", eval=FALSE}
-
-hsr_sales <- read_csv("data/mls_hsr_sales_72622.csv")
-
-hsr_sales_med <- hsr_sales |> 
-  clean_names() |> 
-  select(sales_price, sales_date) %>% 
-  mutate(sales_date = mdy(sales_date),
-         year = floor_date(sales_date, "year"),
-         sales_price = as.numeric(gsub('[\\$|,]','', sales_price))) %>% 
-  summarise(median = median(sales_price))
-
-# Median is $299,000
-
-```
-
-```{r hsr-home-price, fig.cap="Income needed to afford median priced home in Eastern Hull Street area"}
-
-hsr_msp <- 299000
-downpayment <- 0.05 # 5% downpayment
-hsr_principal <- hsr_msp - (hsr_msp * downpayment)
-closingcosts <- 0.015 # 1.5% closing costs
-hsr_loanamt <- hsr_principal/(1 - closingcosts) # Closing costs added to loan amount 
-intrate <- 0.0465 # Current interest rate from Freddie Mac -- annual average as of 8.10.22 is 4.65%
-utilities <- 250 # Assume $250/month for utilities
-
-hsr_payment <- abs(PMT((intrate/12), 360, hsr_loanamt)) + 250
-
-hsr_inc_needed <- ((hsr_payment*10)/2.8)*12
-
-hsr_labels <- c("Median sales price",
-            "Downpayment",
-            "Closing costs",
-            "Loan amount",
-            "Interest rate",
-            "Monthly utilities",
-            "Monthly payment",
-            "Income needed to buy home")
-
-hsr_values <- c("$299,000",
-            "5.0%",
-            "1.5%",
-            "$288,376",
-            "4.65%",
-            "$250",
-            "$1,736.97",
-            "$74,441")
-
-data.frame(x = hsr_labels, y = hsr_values) %>% 
-  kable(caption = "Calculated income needed to buy median-priced home in the study area",
-        align = "lr",
-        col.names = c("Variable", "Value")) %>% 
-  kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(8, bold=TRUE)
-
-```
-
-```{r hsr-sfr-price, eval=FALSE}
-
-
-hsr_sfr_price <- 1479
-hsr_sfr_income <- ((avg_sfr_price*10)/3)*12
-
-
-```
-
-```{r sfr-mls-bar, fig.cap="Renter income of census tracts and income needed to afford SFR and homeownership"}
-
-x <- c("Census Tract 1002.06",
-       "Census Tract 1002.09",
-       "Census Tract 1002.10", "Census Tract 1002.11",
-       "SFR", "Home Purchase")
-y <- c(54615, 44732, 64952, 33618, 59160, 74441)
-z <- c( "Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
-
-sfr_mls_bar <- data.frame(x, y, z)
-
-ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  labs(title = "Renter income and income needed to afford SFR or homeownership",
-       x = NULL, y = NULL) +
-  scale_y_continuous(labels = scales::dollar_format()) +
-  scale_fill_discrete(name = "Legend") +
-  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
-
-
-```
 
