@@ -19,7 +19,7 @@ But cost burden is still substantial among households with lower incomes, especi
 
 
 <div class="figure">
-<img src="images/homeownercb_income.png" alt="Homeowner cost burden" width="100%" style="border:none;" />
+<img src="part-1b-3_files/figure-html/tenure-owner-img-1.png" alt="Homeowner cost burden" width="100%" style="border:none;" />
 <p class="caption">(\#fig:tenure-owner-img)Homeowner cost burden</p>
 </div>
 
@@ -28,7 +28,7 @@ With the share of renters increasing in Chesterfield County, the share of renter
 Separating out by income group shows that declining cost burden is not a shared experience. Income groups making less than 80 percent AMI have seen an increasing share of cost-burdened renters. Those increases have been greatest among extremely low-income renters (85 percent to 90 percent) and low-income renters (58 percent to 64 percent) between 2012 and 2018. The decrease in higher income renters (80 percent AMI or more) experiencing cost burden shows an increasing number of higher earning renters entering the county rental market, nearly 4,000 higher earning renters without cost burden by 2018.
 
 <div class="figure">
-<img src="images/rentercb_income.png" alt="Renter cost burden" width="100%" style="border:none;" />
+<img src="part-1b-3_files/figure-html/tenure-renter-img-1.png" alt="Renter cost burden" width="100%" style="border:none;" />
 <p class="caption">(\#fig:tenure-renter-img)Renter cost burden</p>
 </div>
 
@@ -45,7 +45,7 @@ Cost burden among these two household types exhibits a growing affordability cha
 
 
 <div class="figure">
-<img src="images/hhtypecb.png" alt="Household type cost burden" width="100%" style="border:none;" />
+<img src="part-1b-3_files/figure-html/hhtype-img-1.png" alt="Household type cost burden" width="100%" style="border:none;" />
 <p class="caption">(\#fig:hhtype-img)Household type cost burden</p>
 </div>
 
@@ -60,8 +60,11 @@ These decreases in cost burden among households of color may be in large part to
 
 
 <div class="figure">
+<img src="part-1b-3_files/figure-html/race-img-1.png" alt="Race and ethnicity cost burden" width="100%" style="border:none;" />
+<p class="caption">(\#fig:race-img-1)Race and ethnicity cost burden</p>
+</div><div class="figure">
 <img src="images/racecb.png" alt="Race and ethnicity cost burden" width="100%" style="border:none;" />
-<p class="caption">(\#fig:race-img)Race and ethnicity cost burden</p>
+<p class="caption">(\#fig:race-img-2)Race and ethnicity cost burden</p>
 </div>
 
 ## Structure type

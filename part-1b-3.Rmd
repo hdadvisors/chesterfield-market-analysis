@@ -38,7 +38,7 @@ For homeowners, cost burden has decreased across the board. There were 21,305 co
 
 But cost burden is still substantial among households with lower incomes, especially extremely low- (30 percent AMI or less) and very low-income (31 to 50 percent AMI) homeowners, where over half of homeowners at these incomes are cost-burdened, 85 percent and 56 percent, respectively. Worse yet, the majority of cost burdened homeowners at these incomes are spending more than 50 percent of their income on housing costs. 
 
-```{r tenure, eval=FALSE, include=FALSE}
+```{r tenure, include=FALSE}
 
 # With the share of renters increasing in Chesterfield County, the share of renter households experiencing cost burden has been in decline in recent years---dropping from 45 percent in 2013 to 42 percent in 2018. But the actual number of cost-burdened renters has been on the rise---from 10,495 at the start of the decade to 12,795 cost-burdened renters in 2018.
 # 
@@ -181,7 +181,7 @@ The second household type experiencing a significant amount of cost burden (35 p
 
 Cost burden among these two household types exhibits a growing affordability challenge for single adults regardless of age. Without additional income that comes from other family members in a household, affording a home in the county can be financially difficult.
 
-```{r hhtype, eval=FALSE, include=FALSE}
+```{r hhtype, include=FALSE}
 
 hhtype_chas <- read_csv("data/Table7_2012to2018.csv") %>%
   filter(fips == 51041) %>%
@@ -273,7 +273,7 @@ In spite of these disparities, the share of cost burdened households of color ha
 
 These decreases in cost burden among households of color may be in large part to the relative affordability and attractiveness of Chesterfield County to growing families.
 
-```{r race, eval=FALSE, include=FALSE}
+```{r race,include=FALSE}
 
 race_chas <- read_csv("data/Table9_2012to2018.csv") %>%
   filter(fips == 51041) %>%
@@ -546,7 +546,7 @@ Levels of cost burden also vary across different areas of the county, generally 
 
 ```
 
-```{r cb-tract, eval=FALSE, include=FALSE}
+```{r cb-tract, include=FALSE}
 
 b25106_vars <- load_variables(2020, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25106")
@@ -597,7 +597,7 @@ b25106_data <- b25106_raw %>%
 
 # Alternative data export for Route 1 cost burden section
 
-saveRDS(b25106_join, "data/b25106_r1.rds")
+# saveRDS(b25106_join, "data/b25106_r1.rds")
 
 # b25106_r1 <- b25106_raw %>% 
 #   right_join(b25106_vars_cleaned, by = "variable") %>%
@@ -627,7 +627,7 @@ saveRDS(b25106_join, "data/b25106_r1.rds")
 #     cv > 30 ~ "Low reliability")) %>% 
 #   mutate(pct_fmt = pct*100)
 
-saveRDS(b25106_r1, "data/b25106_r1.rds")
+# saveRDS(b25106_r1, "data/b25106_r1.rds")
   
 b25106_clean <- b25106_data %>% 
   st_drop_geometry() %>% 

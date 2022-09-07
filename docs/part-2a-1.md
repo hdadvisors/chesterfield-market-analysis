@@ -142,7 +142,7 @@ The following data are from CoStar's multifamily database, which includes 118 ex
 
 ### Average asking rent
 
-From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q3 2021, average asking rent in the county reached a two decade high of $1,510.
+From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q2 2021, average asking rent in the county reached a two decade high of $1,515, when adjusting for inflation.
 
 Average market asking rent per unit is expected to climb in the county---signalling an increasing demand, as well as the construction of higher end rental apartments.
 
@@ -153,7 +153,7 @@ Average market asking rent per unit is expected to climb in the county---signall
 
 ### Rent by bedrooms
 
-The number of bedrooms often impacts rental housing costs---more bedrooms generally equals higher rent. As of 2022 Q1, there is an approximate difference of $420 between the average rent for a 1 bedroom (\$1,335) versus a three bedroom apartment (\$1,756). Average rent for a 2 bedroom apartment was right in the middle at \$1,532.
+The number of bedrooms often impacts rental housing costs---more bedrooms generally equals higher rent. As of 2022 Q3, there is an approximate difference of $420 between the average rent for a 1 bedroom (\$1,336) versus a three bedroom apartment (\$1,756). Average rent for a 2 bedroom apartment was right in the middle at \$1,499.
 
 <div class="figure">
 <img src="part-2a-1_files/figure-html/bedroom-rents-1.png" alt="Average asking rent in Chesterfield County by bedroom" width="100%" style="border:none;" />

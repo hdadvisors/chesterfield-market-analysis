@@ -105,13 +105,13 @@ The full Housing Affordability Index [methodology](https://www.nar.realtor/resea
 
 :::
 
-The HAI has steadily decreased as housing prices continue to rise across the nation. As of January 2022, the preliminary HAI for all 50 states was **143.0**. This assumed a median single-family home price of \$357,100, a mortgage rate of 3.51%, and a median family income of \$88.114.
+The HAI has steadily decreased as housing prices continue to rise across the nation. As of June 2022, the preliminary HAI for all 50 states was **98.5**. This assumed a median single-family home price of \$423,300, a mortgage rate of 5.60%, and a median family income of \$91,952.
 
 **In Chesterfield County:**
 
-The table below shows the inputs and calculated HAI for Chesterfield County as of March 2022. The median sales price is collected from all 2022 year-to-date single-family home sales accessed from the Central Virginia Regional Multiple Listing Service (CVR MLS).^[Through March 30, 2022.] The 30-year fixed mortgage is sourced from the national weekly average published by the Freddie Mac [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms) for the week ending March 24, 2022. The median family income is the latest value published by the U.S. Census Bureau.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B19113.]
+The table below shows the inputs and calculated HAI for Chesterfield County as of August 2022. The median sales price is collected from all 2022 year-to-date single-family home sales accessed from the Central Virginia Regional Multiple Listing Service (CVR MLS).^[Through August 31, 2022.] The 30-year fixed mortgage is sourced from the national weekly average published by the Freddie Mac [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms) for the week ending September 1, 2022. The median family income is the latest value published by the U.S. Census Bureau.^[U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B19113.]
 
-The current HAI for Chesterfield County is **137.1**. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
+The current HAI for Chesterfield County is **118.8**. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.
 
 <table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:hai)Housing Affordability Index in Chesterfield County</caption>
@@ -124,19 +124,19 @@ The current HAI for Chesterfield County is **137.1**. This is lower than the lat
 <tbody>
   <tr>
    <td style="text-align:left;"> Median sales price </td>
-   <td style="text-align:right;"> $370,620 </td>
+   <td style="text-align:right;"> $371,480 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> 30-year fixed mortgage rate </td>
-   <td style="text-align:right;"> 4.42% </td>
+   <td style="text-align:right;"> 5.66% </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Monthly payment </td>
-   <td style="text-align:right;"> $1,488.24 </td>
+   <td style="text-align:right;"> $1,717.33 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Minimum qualifying income </td>
-   <td style="text-align:right;"> $71,436 </td>
+   <td style="text-align:right;"> $82,432 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Median family income </td>
@@ -144,7 +144,7 @@ The current HAI for Chesterfield County is **137.1**. This is lower than the lat
   </tr>
   <tr>
    <td style="text-align:left;font-weight: bold;"> Housing Affordability Index </td>
-   <td style="text-align:right;font-weight: bold;"> 137.1 </td>
+   <td style="text-align:right;font-weight: bold;"> 118.8 </td>
   </tr>
 </tbody>
 </table>
@@ -155,7 +155,7 @@ The National Low Income Housing Coalition has published its Out of Reach report 
 
 ::: {.rmdnote}
 
-The latest 2021 [Out of Reach](https://reports.nlihc.org/oor) report and data is available on the NLIHC website.
+The latest 2022 [Out of Reach](https://reports.nlihc.org/oor) report and data is available on the NLIHC website.
 
 :::
 
@@ -169,7 +169,7 @@ While the Housing Wage is helpful in determining the relationship between jobs a
 
 **In Chesterfield County:**
 
-NLIHC released their latest Out of Reach report in July 2021. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was **\$46,520**, or an hourly wage of **\$22.37**. NLIHC estimates that the typical renter wage in Chesterfield County is \$14.66---nearly $8 short of the wage needed to afford a typical two-bedroom rental in the region. 
+NLIHC released their latest Out of Reach report in July 2022. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was **\$47,560**, or an hourly wage of **\$22.87**. NLIHC estimates that the typical renter wage in Chesterfield County is \$17.15---nearly $6 short of the wage needed to afford a typical two-bedroom rental in the region. 
 
 ## CNT's H+T Affordability Index
 
@@ -307,7 +307,7 @@ We then subtract these costs from the total take home pay of each household to d
 </tbody>
 </table>
 
-This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home (\$1,488, from HAI section above) and the market rent for apartments with three or more bedrooms (\$1,463, via CoStar^[Current as of March 31, 2022.]) in Chesterfield County.
+This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home (\$1,717, from HAI section above) and the market rent for apartments with three or more bedrooms (\$1,759, via CoStar^[Current as of September, 5 2022.]) in Chesterfield County.
 
 For additional examples, we can estimate residual income for some of the county's most common household types and incomes^[Based on 2016-2020 American Community Survey 5-year estimates, regional mean annual wages, Social Security benefit data, and Chesterfield County wage data.]:
 

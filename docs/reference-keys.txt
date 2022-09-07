@@ -23,7 +23,8 @@ fig:race
 fig:tenure-owner-img
 fig:tenure-renter-img
 fig:hhtype-img
-fig:race-img
+fig:race-img-1
+fig:race-img-2
 fig:structure
 fig:structure-sf
 fig:cb-owner
@@ -102,14 +103,14 @@ fig:acs-yrblt
 fig:costar-mf-3
 fig:costar-mf-4
 fig:mhccv-condition
+tab:r1-sfr-price
+fig:sfr-mls-bar
 fig:r1-transit-chart
 fig:r1-schools-chart
 fig:r1-grocery-chart
 fig:r1-jobs-chart
 fig:the-jane
 fig:moores-lake
-tab:r1-sfr-price
-fig:sfr-mls-bar
 fig:hsr-base-map
 fig:hsr-rhh
 tab:costar-hsr-1
@@ -119,12 +120,12 @@ fig:acs-hsr-rent
 fig:costar-hsr-rent
 fig:costar-hsr-brent
 tab:costar-hsr-3
+tab:hsr-home-price
 fig:hsr-schools-chart
 fig:hsr-grocery-chart
 fig:hospital-chart
 fig:hsr-jobs
 fig:rockwood
-tab:hsr-home-price
 part-1a-1
 background
 hull-street-corridor-revitalization-plan
@@ -255,6 +256,7 @@ rental-prices
 multifamily-rents
 single-family-rents
 conditions
+single-family-rental-versus-purchase
 proximity-to-amenities
 public-transportation
 schools
@@ -263,7 +265,6 @@ healthcare
 job-centers
 public-and-private-investments
 case-study
-single-family-rental-versus-purchase
 part-2b-2
 the-hull-street-corridor
 rental-housing-supply-1
@@ -271,6 +272,7 @@ number-of-rental-homes-1
 multifamily-properties-1
 rental-prices-1
 conditions-1
+single-family-rental-versus-purchase-1
 proximity-to-amenities-1
 public-transportation-1
 schools-1
@@ -279,4 +281,3 @@ healthcare-1
 job-centers-1
 public-and-private-investments-1
 case-study-1
-single-family-rental-versus-purchase-1
