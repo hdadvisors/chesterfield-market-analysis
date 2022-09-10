@@ -48,3 +48,5 @@ rsconnect/
 # Bookdown files
 _bookdown_files/
 data/shp/ch_sfh.dbf
+
+/.quarto/

@@ -1,0 +1,338 @@
+# Market-affordable housing {#part-1a-3}
+
+This section summarizes research on market affordable housing, or what is commonly referred to as naturally occurring affordable housing (NOAH). Particular focus will be given to determining a common and accepted definition of NOAH.
+
+## Background
+
+Not all affordable housing is supported by public subsidy. In fact, a large share of affordable housing is privately-owned and receives no government assistance. Widely referred to as naturally occurring affordable housing (NOAH), or market-affordable housing, these properties are a growing concern for communities facing housing affordability challenges.
+
+The preservation of NOAH properties has been a growing strategy to support affordable housing in communities as the ability to quickly develop new units has been stifled by labor shortages, rising land prices, and supply chain issues. NOAH is at great risk of being lost because it often requires greater investment to maintain and more likely to be redeveloped---in turn contributing to a loss of affordable housing units.
+
+## Defining NOAH
+
+While research around NOAH has been growing over the past several years, an universally-accepted definition still does not exist. But general agreement among advocates and practitioners is that NOAH units are older, outmoded, and in less desirable locations.
+
+When these characteristics are placed into the context of a community's rental market, rents are generally lower than the typical rental unit because NOAH units are of comparably lower quality than newer units on the market.
+
+CoStar, a commercial real estate and analytics provider with its global research operations based in Richmond, Virginia, conducted an [analysis of NOAH properties](https://americas.uli.org/new-costar-data-identifies-5-5-million-units-naturally-occurring-affordable-housing-markets-across-united-states/) in Fall 2016 at the request of Urban Land Institute's Terwilliger Center for Housing.
+
+This analysis concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
+
+::: callout-note
+**What are Class B and C properties?**
+
+The commercial real estate industry utilizes a property classification system to help investors, lenders, and brokers quickly understand and communicate the quality of a property. The system classifies real estate properties as A, B, C, or D.
+
+NOAH properties generally fall into either Class B or C.
+
+**Class B**
+
+These properties are generally in good condition for being built within the last 20 years, but the exteriors and interiors are generally considered outdated. Amenities are much less than those found in a high end apartment. Renovations may have occurred recently and there is little deferred maintenance.
+
+**Class C**
+
+These properties were built within the last 30 years or are a much older property that has had recent renovations. Exteriors and interiors are outdated, and amenities are very limited. Improvements to the property show some age and there may be some deferred maintenance.
+:::
+
+## NOAH in Chesterfield County
+
+```{r}
+#| label: setup
+#| 
+library(tidyverse)
+library(janitor)
+library(scales)
+library(zoo)
+library(formattable)
+library(simplevis)
+library(knitr)
+library(leaflet)
+library(htmlwidgets)
+library(kableExtra)
+
+costar_noah <- read_csv("data/chesterfield_noah_coded_8.8.csv") |> 
+  clean_names() |> 
+  filter(property_address != "3201 Lady Marian Ln") |> 
+  filter(style != "Single-Family Home")
+
+costar_noah_rent <- read_csv("data/costar_noah_rent_bedroom_8.8.csv")
+
+```
+
+The following analysis on NOAH inventory in Chesterfield County uses data from CoStar Group, Inc. Properties were selected if they met these criteria:
+
+-   Existing multifamily properties with active leases,
+-   Classified as Class B or C,
+-   No public subsidy, rent caps, or other income-based restrictions, and
+-   *CoStar Building Rating* of two or fewer stars out of five.[^part-1a-3-1]
+-   Built before 2000
+-   Excluding single-family homes
+
+[^part-1a-3-1]: Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.
+
+::: callout-note
+*Manufactured housing undercounted in CoStar data:*
+
+Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County's major corridors. However, the CoStar database does not fully capture all of these communities.
+
+In 2016, the Manufactured Home Community Coalition of Virginia (MHCCV) conducted a [study of mobile home parks in Central Virginia](https://mhccv.org/resources/central-virginia-study/) and found that Chesterfield County was home to roughly 1,500 units within parks---the highest of any Central Virginia locality, with the second highest locality being Prince George at 831.
+
+The analysis below *includes* all manufactured home communities in Chesterfield County identified in the MHCCV report. They are appended to the CoStar records to create a fuller NOAH dataset. However, the only known variables are property location and number of units within each park. Accurate rent levels for most of these communities are *not* known at this time.
+:::
+
+### Amount
+
+Chesterfield County is home to 5,155 market-affordable rental units as of August 2022. These apartments are predominately in garden-style buildings with 200 to 250 units per property. A smaller share of these NOAH units are found in manufactured home communities and low-rise multifamily buildings.
+
+```{r}
+#| label: tbl-noah-amount
+#| tbl-cap: "NOAH properties and units by style"
+
+# library(kableExtra)
+# 
+# costar_noah |> 
+#   select(style, number_of_units) |>  
+#   mutate(properties = 1) |>  
+#   group_by(style) |>  
+#   summarise(properties = sum(properties),
+#             units = sum(number_of_units)) |> 
+#   arrange(desc(units)) |>  
+#   adorn_totals() |>  
+#   kbl(caption = "NOAH properties and units by style",
+#        align = "lrr",
+#        col.names = c("Style", "Properties", "Units"),
+#        format.args = list(big.mark = ",")) |> 
+#   kable_styling(
+#       bootstrap_options = c("striped", "hover", "condensed")) |> 
+#   row_spec(4, bold=TRUE)
+
+```
+
+*Source: CoStar Group, Inc.*
+
+This NOAH inventory is approximately 16 percent of the county's total number of rental units according to the latest Census Bureau estimates.[^part-1a-3-2] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
+
+[^part-1a-3-2]: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.
+
+### Location
+
+NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
+
+```{r}
+#| label: fig-noah-map
+#| fig-cap: "Location and type of NOAH"
+
+pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
+
+leaflet(costar_noah) |> 
+  addTiles() |>
+  addCircleMarkers(
+    radius = 4,
+    color = ~pal(style),
+    stroke = FALSE, fillOpacity = 0.5
+  ) |>
+  addLegend("bottomright", pal = pal, values = ~style,
+            title = "NOAH style", opacity = 1)
+# 
+# saveWidget(noah_map, "maps/noah_map.html")
+
+# knitr::include_url("maps/noah_map.html", height = "500px")
+
+```
+
+### Rent levels
+
+As of early 2022, average rents in Chesterfield's NOAH units range from \$744 to \$1,491 depending on the number of bedrooms. The minimum gross annual income to afford the average 2-bedroom market-affordable apartment is \$47,560.
+
+```{r}
+#| label: tbl-noah-rent-table
+#| tbl-cap: "Current rent by bedroom in NOAH properties"
+
+rent <- costar_noah_rent %>% 
+  pivot_longer(cols = 2:5, names_to = "Bedrooms", values_to = "Rent") %>% 
+  mutate(Bedrooms = fct_reorder(Bedrooms, desc(Rent))) %>% 
+  mutate(Period = as.Date(as.yearqtr(Period, format = "%Y Q%q"), frac = 1))
+
+rent %>% 
+  group_by(Bedrooms) %>% 
+  top_n(1, Period) %>% 
+  mutate(Rent = dollar(parse_number(Rent))) %>% 
+  select(-Period) %>% 
+  kable(caption = "Current rent by bedroom in NOAH properties",
+       align = "lr") %>% 
+  kableExtra::kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+*Source: CoStar Group, Inc.*
+
+Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than \$1,200 per month.
+
+```{r}
+#| label: fig-noah-rent-plot
+#| fig-cap: "Average asking rent by bedroom for NOAH properties"
+
+rent_line <- rent |> 
+  mutate(Rent = parse_number(Rent))
+
+gg_line_col(rent_line,
+            x_var = Period,
+            y_var = Rent,
+            col_var = Bedrooms,
+            alpha_point = 0,
+            size_line = 0.75,
+            title = "Average asking rent by bedroom for NOAH properties",
+            y_labels = label_dollar(),
+            y_title = "Average asking rent",
+            x_title = element_blank(),
+            x_labels = scales::date_format(format = "%Y")
+          ) +
+  ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
+  ggplot2::theme(
+    legend.title = element_blank()
+  )
+  
+```
+
+*Source: CoStar Group, Inc.*
+
+### Age
+
+The majority of Chesterfield's NOAH properties are older than 40 years. These buildings were primarily constructed in two major production cycles:
+
+-   The mid 1960s to the mid 1970s, and
+-   The late 1980s and early 1990s.
+
+The median age of the county's NOAH units is 53 years. (Built in 1969.)
+
+```{r}
+#| label: fig-noah-age
+#| fig-cap: "NOAH units by year built"
+
+gg_histogram(costar_noah,
+             x_var = year_built,
+             x_title = "Year built",
+             x_bins_n = 18,
+             title = "NOAH units by year built",
+             x_labels = scales::label_number(accuracy = 1, big.mark = ""),
+             y_title = "Number of properties",
+             y_labels = scales::label_number(accuracy = 1)) +
+  ggplot2::scale_x_continuous(limits = c(1950, 2000),
+                              breaks = seq(1950, 2000, 10))
+
+```
+
+*Source: CoStar Group, Inc.*
+
+### Examples
+
+<br>
+
+*Falling Creek Apartments*
+
+![Falling Creek Apartments. Credit: CoStar Group, Inc.](images/falling-creek.jpg)
+
+-   Units: 348
+-   Two-bedroom asking rent: \$955
+-   Style: Garden apartments
+-   Neighborhood: Bensley
+
+<br> <br>
+
+*Suburban Village Manufactured Home Community*
+
+![Suburban Village Manufactured Home Community. Credit: Google Earth.](images/suburban-village.png)
+
+-   Units: 220 units
+-   Asking lot rent: Approximately \$500 to \$600
+-   Style: Manufactured home community
+-   Neighborhood: Bon Air
+
+## HUD insured multifamily properties
+
+Chesterfield County also contains 19 multifamily properties with mortgages insured by various HUD programs. These complexes are *not* necessarily NOAH, *nor* are they required to restrict rents or incomes. In fact, only one of these properties has active rental assistance through the Section 8 program. In all, there are 2,280 active units across these communities.
+
+HUD mortgage insurance programs offer certain financing benefits to developers (e.g. longer terms, lower or fixed rates, nonrecourse loans) in exchange for additional due diligence, federal wage standards, and other considerations to guarantee a high-quality and successful development. Both for profit and nonprofit builders can be eligible in most circumstances. HUD issues hundreds of these mortgages across the nation each year.
+
+::: callout-note
+More details about these [multifamily mortgage insurance programs](https://www.hud.gov/program_offices/housing/mfh/progdesc) is available on the HUD website.
+:::
+
+```{r}
+#| label: fig-hud-insured-map
+#| fig-cap: "HUD insured multifamily properties in Chesterfield County"
+#| cache: false
+
+library(mapview)
+library(sf)
+library(tidyverse)
+library(htmltools)
+library(htmlwidgets)
+
+# Load in data (manually downloaded from HUD eGIS site) and select only relevant columns
+
+hud_insured <- read_csv("data/chesterfield_hud_insured.csv") %>% 
+  select(1,2,9,10,15,16,18,57,60,74,111,133,140,141)
+
+# Create spatial object using the lat/long coordinate fields
+
+hud_insured_pts <- hud_insured %>% 
+  st_as_sf(coords = c("X", "Y"),
+           crs = 4326) %>%
+  st_transform(6440)
+
+# Create and save map
+
+mapview(
+  hud_insured_pts,
+  label = "PROPERTY_NAME_TEXT",
+  legend = F,
+  popup = F,
+  burst = F,
+  layer.name = "HUD insured multifamily properties"
+)
+# 
+# htmlwidgets::saveWidget(hud_insured_map@map, "maps/hud_insured_map.html")
+
+# Render map as html widget
+
+# knitr::include_url("maps/hud_insured_map.html", height = "500px")
+
+```
+
+*Source: U.S. Department of Housing and Urban Development.*
+
+Of these 19 properties, CoStar has active rent levels for 12. The average asking rent for these units is \$1,600, which is above the range for most NOAH across the county.
+
+```{r}
+#| label: fig-hud-insured-costar
+#| fig-cap: "Average asking rents for HUD insured multifamily properties in Chesterfield County"
+
+# Load in specific CoStar data (manually selected using names/addresses from HUD list)
+
+hud_insured_costar <- read_csv("data/costar_hud_insured.csv")
+
+# Create histogram to show distribution of average asking rents
+
+gg_histogram(hud_insured_costar,
+             title = "Average asking rents for HUD insured multifamily properties",
+             x_var = `Avg Asking/Unit`,
+             x_labels = scales::label_dollar(accuracy = 1, prefix = "$"),
+             x_bins_n = 4,
+             x_breaks_n = 4,
+             x_expand = c(0.1,0.1),
+             x_title = "Average asking rent per unit",
+             y_title = "Properties"
+             )
+
+```
+
+*Source: CoStar Group, Inc.*
+
+## Takeaways
+
+-   NOAH properties are a key resource for communities facing affordability challenges. However, NOAH properties face challenges themselves.
+-   The investments needed to maintain or improve the quality of NOAH properties are often out of reach for many property owners. However, making those investments can often lead to rent increases that price existing residents out of that housing.
+-   Strategies in NOAH preservation are becoming a growing area of interest among localities seeking to leverage limited resources for preserving existing affordable housing.
+-   NOAH units comprise a significant share of Chesterfield County's rental market, but are experiencing rapid rent escalation despite their above-average age compared to the rest of the county's housing stock.
