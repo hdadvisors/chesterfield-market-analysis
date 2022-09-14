@@ -114,7 +114,7 @@ chesterfield_cb_table <- chesterfield_cb %>%
 
 chesterfield_cb_table %>% 
   rename('Cost burden' = 1) %>% 
-  kable(caption = "Cost burden by tenure in Chesterfield County") %>% 
+  kable() %>% 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
   kableExtra::row_spec(4, bold=TRUE)
@@ -198,8 +198,7 @@ values = c(as.character(msp),
            as.character(hai))
 
 data.frame(x = labels, y = values) %>% 
- kable(caption = "Housing Affordability Index in Chesterfield County",
-       align = "lr",
+ kable(align = "lr",
        col.names = c("Input", "Value")) %>% 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped")) %>% 
@@ -299,7 +298,7 @@ costs_values = c("$1,086", "$922", "$576", "$775", "$462",
            "$1,092", "($100)", "($333)", "$4,480")
 
 data.frame(x = costs_labels, y = costs_values) %>% 
- kable(caption = "Self-Sufficiency Standard monthly costs",
+ kable(
        align = "lr",
        col.names = c("Expense", "Amount")) %>% 
   kableExtra::kable_styling(
@@ -319,7 +318,7 @@ summary_labels = c("Monthly take-home pay", "Monthly expenses (-)", "Residual in
 summary_values = c("$4,843", "($4,480)", "$363")
 
 data.frame(x = summary_labels, y = summary_values) %>% 
- kable(caption = "Residual income available for housing for family of four at 80 percent AMI",
+ kable(
        align = "lr",
        col.names = c("Pay, expenses, and residual income", "Amount")) %>% 
   kableExtra::kable_styling(
@@ -477,7 +476,7 @@ common_sss %>%
   select(label, monthly, residual) %>% 
   mutate(across(2:3, ~ dollar(.x, accuracy = 0.01))) %>%
   arrange(desc(monthly)) %>% 
-  kable(caption = "Monthly take home pay and residual income for selected households",
+  kable(
        align = "lrr",
        col.names = c("Household", "Take home pay", "Residual income")) %>% 
   kableExtra::kable_styling(

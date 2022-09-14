@@ -2,14 +2,14 @@ project:
   type: book
   execute-dir: file
   output-dir: docs
-  
+
 book: 
   title: "Chesterfield County Rental Market Analysis"
   repo-url: https://github.com/hdadvisors/chesterfield-market-analysis/
   author: 
     - name: HDAdvisors
       url: https:www.hdadvisors.net
-  # downloads: pdf
+  downloads: pdf
   date: today
   chapters: 
     - index.qmd
@@ -18,16 +18,16 @@ book:
         - part-1a-1.qmd
         - part-1a-2.qmd
         - part-1a-3.qmd
-        - part-1a-4.qmd
-        - part-1a-5.qmd
+        # - part-1a-4.qmd
+        # - part-1a-5.qmd
         
     - part: "PART 1-B: DEMOGRAPHIC AND AFFORDABILITY ANALYSIS"
-      chapters:
-        - part-1b-1.qmd
-        - part-1b-2.qmd
-        - part-1b-3.qmd
-        - part-1b-4.qmd
-        - part-1b-5.qmd
+      # chapters:
+        # - part-1b-1.qmd
+        # - part-1b-2.qmd
+        # - part-1b-3.qmd
+        # - part-1b-4.qmd
+        # - part-1b-5.qmd
         
     - part: "PART 2-A: COUNTYWIDE MARKET ANALYSIS"
         # - part-2a-1.qmd
@@ -49,4 +49,4 @@ format:
   html:
     theme: cosmo
   pdf:
-    documentclass: scrreprt  
+    documentclass: scrreprt

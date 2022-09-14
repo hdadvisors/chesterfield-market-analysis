@@ -88,23 +88,23 @@ Chesterfield County is home to 5,155 market-affordable rental units as of August
 #| label: tbl-noah-amount
 #| tbl-cap: "NOAH properties and units by style"
 
-# library(kableExtra)
-# 
-# costar_noah |> 
-#   select(style, number_of_units) |>  
-#   mutate(properties = 1) |>  
-#   group_by(style) |>  
-#   summarise(properties = sum(properties),
-#             units = sum(number_of_units)) |> 
-#   arrange(desc(units)) |>  
-#   adorn_totals() |>  
-#   kbl(caption = "NOAH properties and units by style",
-#        align = "lrr",
-#        col.names = c("Style", "Properties", "Units"),
-#        format.args = list(big.mark = ",")) |> 
-#   kable_styling(
-#       bootstrap_options = c("striped", "hover", "condensed")) |> 
-#   row_spec(4, bold=TRUE)
+library(kableExtra)
+
+costar_noah |>
+  select(style, number_of_units) |>
+  mutate(properties = 1) |>
+  group_by(style) |>
+  summarise(properties = sum(properties),
+            units = sum(number_of_units)) |>
+  arrange(desc(units)) |>
+  adorn_totals() |>
+  kbl(
+       align = "lrr",
+       col.names = c("Style", "Properties", "Units"),
+       format.args = list(big.mark = ",")) |>
+  kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed")) |>
+  row_spec(4, bold=TRUE)
 
 ```
 
@@ -124,7 +124,7 @@ NOAH properties are spread throughout all parts of Chesterfield County, but like
 
 pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
 
-leaflet(costar_noah) |> 
+map <- leaflet(costar_noah) |> 
   addTiles() |>
   addCircleMarkers(
     radius = 4,
@@ -133,7 +133,14 @@ leaflet(costar_noah) |>
   ) |>
   addLegend("bottomright", pal = pal, values = ~style,
             title = "NOAH style", opacity = 1)
-# 
+
+library(mapview)
+library(webshot)
+
+mapview::mapshot(map,
+        file = paste0(getwd(),"/noah_map.png"),
+        debug = T)
+
 # saveWidget(noah_map, "maps/noah_map.html")
 
 # knitr::include_url("maps/noah_map.html", height = "500px")
@@ -158,7 +165,7 @@ rent %>%
   top_n(1, Period) %>% 
   mutate(Rent = dollar(parse_number(Rent))) %>% 
   select(-Period) %>% 
-  kable(caption = "Current rent by bedroom in NOAH properties",
+  kable(
        align = "lr") %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"))

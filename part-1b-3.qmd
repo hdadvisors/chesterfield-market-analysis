@@ -656,65 +656,69 @@ cf_tracts <- tracts(state = "VA",
 
 ### Homeowners
 
-```{r cb-owner, fig.cap="Percent of homeowners with cost burden by tract"}
+```{r}
+#| label: fig-cb-owner
+#| fig-cap: "Percent of homeowners with cost burden by tract"
 
-# cf_cb_owner <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%  
-#   filter(tenure == "Homeowner") %>% 
-#   st_transform(4326)
-# 
-# owner_pal <- colorNumeric(palette = "magma", domain = cf_cb_owner$pct_fmt, reverse = TRUE)
-# 
-# leaflet_owner <- leaflet(cf_cb_owner) %>% 
-#   addProviderTiles(providers$CartoDB.PositronNoLabels) %>% 
-#   addPolygons(data = cf_cb_owner,
-#               fillColor = ~owner_pal(pct_fmt),
-#               weight = 0.5,
-#               fillOpacity = 0.5,
-#               smoothFactor = 0.2,
-#               label = ~pct_fmt) %>% 
-#       addLegend(
-#         position = "topright",
-#         pal = owner_pal,
-#         values = ~pct_fmt,
-#         title = "Percent cost-burdened",
-#         labFormat = labelFormat(suffix = "%")
-#       )
+cf_cb_owner <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%
+  filter(tenure == "Homeowner") %>%
+  st_transform(4326)
+
+owner_pal <- colorNumeric(palette = "magma", domain = cf_cb_owner$pct_fmt, reverse = TRUE)
+
+leaflet(cf_cb_owner) %>%
+  addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+  addPolygons(data = cf_cb_owner,
+              fillColor = ~owner_pal(pct_fmt),
+              weight = 0.5,
+              fillOpacity = 0.5,
+              smoothFactor = 0.2,
+              label = ~pct_fmt) %>%
+      addLegend(
+        position = "topright",
+        pal = owner_pal,
+        values = ~pct_fmt,
+        title = "Percent cost-burdened",
+        labFormat = labelFormat(suffix = "%")
+      )
 # 
 # saveWidget(leaflet_owner, "maps/leaflet_owner.html")
 
-knitr::include_url("maps/leaflet_owner.html", height = "500px")
+# knitr::include_url("maps/leaflet_owner.html", height = "500px") |
 
 ```
 
 ### Renters
 
-```{r cb-renter, fig.cap="Percent of renters with cost burden by tract"}
+```{r} 
+#| label: fig-cb-renter
+#| fig-cap: "Percent of renters with cost burden by tract"
 
-# cf_cb_renter <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%  
-#   filter(tenure == "Renter") %>% 
-#   st_transform(4326)
-# 
-# renter_pal <- colorNumeric(palette = "magma", domain = cf_cb_renter$pct_fmt, reverse = TRUE)
-# 
-# leaflet_renter <- leaflet(cf_cb_renter) %>% 
-#   addProviderTiles(providers$CartoDB.PositronNoLabels) %>% 
-#   addPolygons(data = cf_cb_renter,
-#               fillColor = ~renter_pal(pct_fmt),
-#               weight = 0.5,
-#               fillOpacity = 0.5,
-#               smoothFactor = 0.2,
-#               label = ~pct_fmt) %>% 
-#       addLegend(
-#         position = "topright",
-#         pal = renter_pal,
-#         values = ~pct_fmt,
-#         title = "Percent cost-burdened",
-#         labFormat = labelFormat(suffix = "%")
-#       )
+cf_cb_renter <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%
+  filter(tenure == "Renter") %>%
+  st_transform(4326)
+
+renter_pal <- colorNumeric(palette = "magma", domain = cf_cb_renter$pct_fmt, reverse = TRUE)
+
+leaflet(cf_cb_renter) %>%
+  addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+  addPolygons(data = cf_cb_renter,
+              fillColor = ~renter_pal(pct_fmt),
+              weight = 0.5,
+              fillOpacity = 0.5,
+              smoothFactor = 0.2,
+              label = ~pct_fmt) %>%
+      addLegend(
+        position = "topright",
+        pal = renter_pal,
+        values = ~pct_fmt,
+        title = "Percent cost-burdened",
+        labFormat = labelFormat(suffix = "%")
+      )
 # 
 # saveWidget(leaflet_renter, "maps/leaflet_renter.html")
 
-knitr::include_url("maps/leaflet_renter.html", height = "500px")
+# knitr::include_url("maps/leaflet_renter.html", height = "500px")
 
 ```
 
