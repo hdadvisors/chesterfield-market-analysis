@@ -1,6 +1,7 @@
 # Eastern Hull Street Road corridor analysis {#part-2b-2}
 
-```{r setup}
+```{r}
+#| setup
 
 library(tidycensus)
 library(tidyverse)
@@ -46,7 +47,9 @@ But much of the development along Hull Street in Chesterfield County today is mu
 
 Opportunities exist for multifamily development along the Hull Street corridor, but there has been none in recent years and there are none planned for the foreseeable future. 
 
-```{r hsr-base-map, fig.cap="Eastern Hull Street Road corridor", message=FALSE}
+```{r}
+#| label: fig-hsr-base-map
+#| fig-cap: "Eastern Hull Street Road corridor"
 
 hsr_tracts_list <- c("100206", "100208", "100209", "100210", "100211")
 
@@ -79,7 +82,9 @@ knitr::include_url("maps/hsr_tract_map.html", height = "500px")
 
 Despite the low number of multifamily properties in the Hull Street corridor, the number of renters --- like all areas of the county --- has experienced significant increases. From 1,054 renter households in 2010 to 2,388 in 2020, renter households have more than doubled in a decade (a 126 percent increase). Much of this growth occurred between 2018 and 2020, when renter households increased 78 percent from 1,337.
 
-```{r hsr-rhh, fig.cap="Renter households from 2010 to 2020 within Eastern Hull Street study area"}
+```{r}
+#| label: fig-hsr-rhh
+#| fig-cap: "Renter households from 2010 to 2020 within Eastern Hull Street study area"
 
 years <- 2010:2020
 
@@ -122,13 +127,17 @@ b25003_r360 <- b25003_hsr |>
   summarise(estimate = sum(estimate))
   
 #Create line graph showing change in renter households across time.
-hsr_renters_plot <- gg_line(
+hsr_renters_plot <- ggplot(
   b25003_r360,
-  x_var = year,
-  y_var = estimate,
-  y_breaks_n = 5,
-  title = "Renter households",
-  x_title = element_blank())
+  aes(x = year,
+      y = estimate)) +
+  geom_line() + 
+  geom_point(color = "blue") +
+  scale_x_continuous(breaks = seq(2010, 2020, 2)) +
+  theme(axis.title = element_blank()) +
+  labs(title = "Renter households in the study area",
+       subtitle = "From 2010 to 2020") +
+  scale_y_continuous(labels = number_format(big.mark = ","))
 
 hsr_renters_plot
 
@@ -138,7 +147,9 @@ hsr_renters_plot
 
 Based on a survey of CoStar listed multifamily properties in the Hull Street corridor study area, there are only 1,198 apartments --- accounting for only half of renter households (53 percent) in the area. The low number of apartments along the corridor begs the question as to where many renter households find housing when there are so few options in a typical apartment setting. A large share of these apartments are oriented towards the Midlothian Turnpike corridor at the recently developed Element at Stonebridge apartments --- 400 mid-rise apartments built in 2016.
 
-```{r costar-hsr-1, fig.cap= "Total number of multifamily units by property status"}
+```{r}
+#| label: tbl-costar-hsr-1
+#| tbl-cap: "Total number of multifamily units by property status"
 
 # Load .csv of CoStar properties. Data was collected by hand drawing boundaries for the necessary census tracts in the CoStar platform. No filters were placed on the search aside from multi-family property. Need to filter out Sandler - it's a single condo. 
 
@@ -165,8 +176,7 @@ costar_hsr_mf <- read_csv("data/costar_hsr_mf.csv") |>
 costar_hsr_mf |> 
   arrange(desc(number_of_units)) |> 
   select(5, 33, 7) |> 
-  kable(caption = "Multifamily properties located in Hull Street corridor study area",
-        align = "llr",
+  kable(align = "llr",
         col.names = c("Name", "Corridor", "Estimated apartment homes")) |> 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped"))
@@ -175,7 +185,9 @@ costar_hsr_mf |>
 
 No multifamily properties actually front the Eastern Hull Street corridor. The four multifamily properties in closest proximity to the corridor are more closely associated with the Walmsley Boulevard (State Route 647) corridor.
 
-```{r costar-hsr-2, fig.cap="Map of multifamily properties in Eastern Hull Street study area"}
+```{r}
+#| label: fig-costar-hsr-2
+#| fig-cap: "Map of multifamily properties in Eastern Hull Street study area"
 
 hsr_map <- costar_hsr_mf |> 
   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
@@ -190,14 +202,14 @@ hsr_map <- costar_hsr_mf |>
 
 knitr::include_url("maps/hsr_map.html", height = "500px")
 
-
-
 ```
 With no manufactured home communities in the area, single-family home rentals (SFRs) are the option left for many Hull Street corridor residents. An estimated 900 SFRs are located throughout the study area - 14 percent of all single-family detached homes.
 
 Higher concentrations of SFR are located in Census tracts 1002.10 and 1002.11; tracts that adjacent to the Chippenham Parkway and along the city-county border. These tracts have an estimated 21 percent and 20 percent of single-family detached homes being utilized as SFR, respectively. 
 
-```{r sfr-hsr, fig.cap="Percent of single-family homes that are renter-occupied by tract"}
+```{r}
+#| label: fig-sfr-hsr
+#| fig-cap: "Percent of single-family homes that are renter-occupied by tract"
 
 # Choropleth map of percent of SFR by census tract. Perhaps include a chart as well. Might be interesting to compare to change in homeownership rate for each.
 
@@ -228,15 +240,17 @@ sfr_hsr <- ch_sfh |>
 
 sfr_hsr_summary <- read_rds("data/sfr_hsr_summary.rds")
 
-sfr_hsr_pct <- gg_hbar_col(sfr_hsr_summary,
-                          x_var = percent_sfh,
-                          y_var = tract,
-                          col_var = percent_sfh,
-                          title = "Percent of single-family homes that are renter-occupied by tract",
-                          x_labels = label_percent(),
-                          y_labels = function(x) x,
-                          col_legend_none = TRUE,
-                          x_title = "")
+sfr_hsr_pct <- ggplot(sfr_hsr_summary,
+                      aes(x = reorder(tract, percent_sfh),
+                          y = percent_sfh,
+                          fill = percent_sfh)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = percent_format()) +
+  theme(axis.title = element_blank(),
+        legend.position = "none") +
+  labs(title = "Percent of single-family homes that are renter-occupied by tract")
+
 
 sfr_hsr_pct
 
