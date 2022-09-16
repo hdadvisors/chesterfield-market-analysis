@@ -6,7 +6,8 @@ This section describes the Route 1 corridor in terms of its rental housing marke
 
 The Route 1 corridor used in this section uses the same six census tracts from the previous Route 1 affordability analysis in [Chapter 10](#part-1b-5).
 
-```{r setup}
+```{r}
+# label: setup
 
 library(tidycensus)
 library(tidyverse)
@@ -48,7 +49,9 @@ Much of the new rental housing development has occurred at the southern end of t
 
 This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester neighborhoods.
 
-```{r route-one-map}
+```{r}
+#| label: fig-route-one-map
+#| fig-cap: "Route 1 corridor study area"
 
 # r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 # 
@@ -102,7 +105,9 @@ From 2010 to 2012, rental housing was in decline---most likely a reflection of t
 
 From 2019 to 2020, there was a higher estimated percent change (13 percent) in renter homes than in previous years. Although this could be a significant impact of the COVID-19's impact on the rental housing market, margins of error for the data in 2020 are also higher than previous years; therefore, these changes should be interpreted with caution.
 
-```{r r1-rhh, fig.cap="Renter households in Route 1 corridor"}
+```{r}
+#| label: fig-r1-rhh
+#| fig-cap: "Renter households in Route 1 corridor"
 
 # years <- 2010:2020
 # 
@@ -177,7 +182,9 @@ Based on 2010 and 2020 estimates, the increase in rental housing has largely occ
 
 While unable to determine the causes or from where these renter households came from, this area of Route 1 contains several manufactured home communities and naturally-occurring affordable housing --- all of which place households at greater risk of displacement.
 
-```{r r1-rhh-tract, fig.cap="Change in renter households by tract from 2010 to 2020"}
+```{r}
+#| label: fig-r1-rhh-tract
+#| fig-cap: "Change in renter households by tract from 2010 to 2020"
 
 b25003_r1_10 <- b25003_r1 |> 
   filter(year == 2010) |> 
@@ -214,7 +221,9 @@ r1_rhh_tract
 
 Of the estimated 3,376 occupied rental homes from the U.S. Census Bureau, CoStar captures at most 2,417 of them that are located across 20 multifamily properties. These multifamily properties contain at least 12 rental homes and the majority of these properties (70 percent) are garden-style apartments. The majority (70 percent) of existing properties were built before 1976, and of these fourteen properties, only two have a recorded renovation --- Collindale Apartments (renovated in 1990) and Falling Creek (renovated in 2017).
 
-```{r costar-mf-1, fig.cap= "Total number of multifamily units by property status"}
+```{r}
+#| label: fig-costar-mf-1
+#| fig-cap: "Total number of multifamily units by property status"
 
 # Load .csv of CoStar properties. Data was collected by hand drawing boundaries for the necessary census tracts in the CoStar platform. No filters were placed on the search aside from multi-family property.
 
@@ -249,7 +258,9 @@ r1_unit_cnt_bar
 
 The city-county border was located much further north before the annexation of Northern Chesterfield by the City of Richmond in 1970. In spite of this change, these older rental properties represent the extent to which rental housing development in the mid-20th century stretched into the county.
 
-```{r costar-mf-2, fig.cap="Map of multifamily properties along Route 1 Corridor"}
+```{r}
+#| label: fig-costar-mf-2
+#| fig-cap: "Map of multifamily properties along Route 1 Corridor"
 
 # r1_map <- costar_r1_mf |> 
 #   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
@@ -289,7 +300,9 @@ Accurate data on manufactured home communities is difficult to come by. Communit
 
 The northern Route 1 corridor has a substantial number of manufactured home communities --- specifically 10 out of the county's known 17 manufactured home communities are located in the area. This accounts for at least 514 individual manufactured homes, or 31 percent of all homes located in a manufactured home community. This includes the sixth largest manufactured home park in the county, Shady Hill, which was recently purchased in July 2022.
 
-```{r r1-mhc, fig.cap="Map of manufactured home communities along Route 1"}
+```{r}
+#| label: fig-r1-mhc
+#| fig-cap: "Map of manufactured home communities along Route 1"
 
 # Use MHCCV study instead; supplement additional MHCs.
 
@@ -344,12 +357,14 @@ knitr::include_url("maps/r1_mhc_map.html", height = "500px")
 
 Notable among these communities is Bermuda Estates, which was purchased by affordable housing nonprofit, project:HOMES, in September 2020. Only one of two nonprofit owned and managed manufactured home communities in the Commonwealth, Bermuda Estates has seen significant infrastructure improvements and the replacement of homes with new energy efficient manufactured home models by project:HOMES.
 
-```{r r1-mhc-list}
+```{r}
+#| label: tbl-r1-mhc-list
+#| tbl-cap: "Manufactured home communities along northern Route 1 corridor"
 
 mhc_coded_r1 |> 
   arrange(desc(units_mhccv)) |> 
   select(1,4) |> 
-  kable(caption = "Manufactured home communities along northern Route 1 corridor",
+  kable(
         align = "lr",
         col.names = c("Name", "Estimated homes")) %>% 
   kableExtra::kable_styling(
@@ -367,7 +382,10 @@ Along the northern Route 1 corridor, there is an estimated 1,008 single-family h
 
 SFR is a growing demand among renters as homeownership continues to be out of reach for many, but it also serves a growing demand among households looking for greater space and privacy not offered in apartments. As seen in [Chapter 13](#part-2a-3), nearly 54 percent of recent multifamily housing is two-bedrooms or less, leaving many larger households competing for less supply. SFR is filling the gap where multifamily developers are often falling short due to increasing construction costs and public opposition.
 
-```{r sfr-r1, fig.cap="Percent of single-family homes that are renter-occupied by tract and neigborhood", message=FALSE}
+```{r}
+#| label: fig-sfr-r1
+#| fig-cap: "Percent of single-family homes that are renter-occupied by tract and neigborhood"
+#| message: false
 
 # ch_sfh <- st_read("data/shp/ch_sfh.shp",
 #                   quiet = TRUE)
@@ -424,7 +442,9 @@ sfr_r1_pct
 
 The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Fewer than 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida.
 
-```{r sfr_r1_owners, fig.cap="Owner location for single-family rentals along Route 1 corridor"}
+```{r}
+#| label: tbl-sfr_r1_owners
+#| tbl-cap: "Owner location for single-family rentals along Route 1 corridor"
 
 chesterfield_zips <- read_rds("data/chesterfield_zips.rds")
 
@@ -449,7 +469,7 @@ rental_class_r1_sum <- rental_class_r1 |>
   mutate(pct = percent(count/sum(count), 1))
 
 rental_class_r1_sum |> 
-  kable(caption = "Owner location for single-family rentals along Route 1 corridor",
+  kable(
         align = "lrr",
         col.names = c("Ownership", "Number", "Percent")) |> 
   kableExtra::kable_styling(
@@ -462,7 +482,9 @@ rental_class_r1_sum |>
 
 Median rents in the northern Route 1 corridor have fluctuated in the last decade. But increases in the typical rent have most significantly occurred in the southern part of Bellwood (Census Tract 1004.07) where Colony Village was developed. In this part of the corridor, median rent has increased by 24 percent from 2010 to 2020.
 
-```{r acs-r1-rent, fig.cap="Median inflation-adjusted rent by tract: 2010 to 2020"}
+```{r}
+#| label: fig-acs-r1-rent
+#| fig-cap: "Median inflation-adjusted rent by tract: 2010 to 2020"
 
 # years <- 2010:2020
 # 
@@ -539,7 +561,9 @@ There are clear differences in median rents between the northern and southern se
 
 Much of this difference in rental markets is no doubt a result of newer developments like Colony Village and The Jane at Moore's Lake. There have been few new multifamily developments in the northern section aside from Better Housing Coalition developments.
 
-```{r acs-r1-rent1, fig.cap="Median inflation-adjusted rent by neighborhood: 2010 to 2020"}
+```{r}
+#| label: fig-acs-r1-rent1
+#| fig-cap: "Median inflation-adjusted rent by neighborhood: 2010 to 2020"
 
 r1_rent_nhood <- r1_rent_cpi |> 
   mutate(neighborhood = case_when(
@@ -580,7 +604,9 @@ CoStar's analytics allows for a broad snapshot of average rent data along Route 
 
 From 2017 to early 2020, the typical average rent increase was about \$3 but between Q1 2020 and Q2 2020 the average rent jumped \$15 from \$1,195 to \$1,210. It was during this timeframe that the pandemic began to impact housing markets, leading to significantly low rental vacancy rates as the eviction moratorium was put in place and increasing demand for housing away from the denser urban environment.
 
-```{r costar-r1-rent, fig.cap="CoStar average asking rent for Route 1 corridor"}
+```{r}
+#| label: fig-costar-r1-rent
+#| fig-cap: "CoStar average asking rent for Route 1 corridor"
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
 
@@ -616,7 +642,9 @@ gg_line_col(costar_r1_rent,
 
 Average rent disaggregated by number of bedrooms shows fairly steady increases for all bedroom types, especially one- and two-bedroom apartments. Studios and three-bedroom apartments in the area have seen decreasing rents in recent years. In fact, average rent for three bedroom apartments are now \$56 cheaper (\$1,431) than they were at the start of 2012 (\$1,487).
 
-```{r costar-r1-brent, fig.cap="CoStar average asking rent for Route 1 corridor by bedroom"}
+```{r}
+#| label: fig-costar-r1-brent
+#| fig-cap: "CoStar average asking rent for Route 1 corridor by bedroom"
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
 
@@ -665,7 +693,9 @@ Single-family rentals are not often listed via sources that provide consistent o
 
 The average listed rent for one of these SFR was \$1,336 --- nearly \$100 less the average rent for a three-bedroom apartment. Single-family detached homes fetch higher rental prices versus condominiums or duplexes.
 
-```{r mls-sfr, fig.cap="Listed MLS rents in Route 1 corridor"}
+```{r}
+#| label: fig-mls-sfr
+#| fig-cap: "Listed MLS rents in Route 1 corridor"
 
 # Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 0-365; Map: draw outline for census tracts and export. From July 2022.
 
@@ -694,7 +724,9 @@ gg_smooth_col(mls_r1_sfr,
 
 The majority of SFR listed through MLS are three-bedroom homes (54 percent), while 18 percent are four-bedrooms or more --- an option that apartments do not often offer.
 
-```{r mls-sfr1, fig.cap="Percent of MLS-listed SFR by bedrooms in Route 1 corridor"}
+```{r}
+#| label: fig-mls-sfr1
+#| fig-cap: "Percent of MLS-listed SFR by bedrooms in Route 1 corridor"
 
 # Spread of bedrooms
 
@@ -722,7 +754,9 @@ gg_bar_col(mls_r1_sfr_br,
 
 Aging rental properties require substantial capital in order to maintain properties. Even properties built in the 1980s are approaching half a century in age. Along the Route 1 corridor, there are 1,812 rental homes that were built before 1980. The largest share of these homes are located in the Bensley area (Census Tracts 1003 and 1004.04).
 
-```{r acs-yrblt, fig.cap="Percent of rental units built before 1980 by tract"}
+```{r}
+#| label: fig-acs-yrblt
+#| fig-cap: "Percent of rental units built before 1980 by tract"
 
 # b25036_vars <- load_variables(2020, "acs5") |> 
 #   filter(str_sub(name, end = 6) %in% "B25036")
@@ -816,7 +850,9 @@ gg_hbar_col(b25036_r1_grp,
 
 Of the 23 CoStar-listed multifamily properties, 14 (61 percent) were constructed before 1980. There was no major multifamily development activity again until 2000 when Better Housing Coalition constructed Winchester Green Apartments' first phase. There has been little new multifamily development along the corridor during the last two decades --- activity has largely been spearheaded by Better Housing Coalition and Emerson Companies. With few newer developments, there are fewer options for those who are looking to rent along the corridor --- either having to choose a pre-1980s apartment, which are often in need of renovation, or among new luxury apartments that are often outside the budgets of existing renters along the corridor.
 
-```{r costar-mf-3, fig.cap="Multifamily units in Route 1 corridor by year built"}
+```{r}
+#| label: fig-costar-mf-3
+#| fig-cap: "Multifamily units in Route 1 corridor by year built"
 
 costar_r1_yrblt <- costar_r1_mf |> 
   select(year_built, property_address, building_status, number_of_units)
@@ -839,7 +875,9 @@ gg_bar_col(costar_r1_yrblt,
 
 CoStar's building rating system also provides a snapshot of condition of multifamily properties. Eighty-three percent of multifamily properties along the corridor are three-star or less --- meaning that in terms of quality and amenities that these buildings are relatively average or simply functional. In comparison, four-star properties are "are constructed with higher end finishes and specifications, providing desirable amenities to residents and designed/built to competitive and contemporary standards," while five-star properties are "the luxury end of multi-family buildings defined by finishes, amenities, the overall interior/exterior design and the highest level of specifications for its style..."
 
-```{r costar-mf-4, fig.cap="Percent of rental units in Route 1 corridor by CoStar star rating"}
+```{r}
+#| label: fig-costar-mf-4
+#| fig-cap: "Percent of rental units in Route 1 corridor by CoStar star rating"
 
 costar_r1_stars <- costar_r1_mf |> 
   select(star_rating, property_address, building_status, number_of_units) |> 
@@ -870,7 +908,9 @@ Based on an analysis of community socio-economic conditions, spatial patterns, a
 
 Of the ten communities located along the corridor, six are either obsolete or under pressure. Obsolete communities were found to have "severe, long-standing deficiencies in infrastructure, housing condition, private property, tenure, amenities, and management. Under pressure communities often house low-income families with children and are located in areas close to daily needs. They have poor conditions and are at the most risk for redevelopment.
 
-```{r mhccv-condition, fig.cap="Percent of MH units in Route 1 corridor by park typology"}
+```{r}
+#| label: fig-mhccv-condition
+#| fig-cap: "Percent of MH units in Route 1 corridor by park typology"
 
 mhc_con <- read_csv("data/mhccv_chesterfield.csv") |> 
   filter(corridor == "Route 1 - N") |> 
@@ -895,7 +935,6 @@ gg_bar_col(mhc_con,
 ## Single-family rental versus purchase
 
 For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
-
 ```{r r1-renter-income}
 
 b25119_vars <- load_variables(2020, "acs5") %>%
@@ -934,7 +973,6 @@ r1_medinc <- r1_b25119_data %>%
   filter(tenure == "Renter")
 
 ```
-
 ```{r r1-med-sales}
 
 r1_sales <- read_csv("data/routeone_mls.csv")
@@ -952,7 +990,9 @@ r1_sales_med <- r1_sales |>
 
 In the last year, the median home sales price for a home along the corridor was \$274,470, which would require a monthly mortgage payment of \$1,614.98. This is nearly \$300 more than the price of a SFR in the area --- \$1,336.87 a month.
 
-```{r r1-home-price}
+```{r}
+#| label: tbl-r1-home-price
+#| tbl-cap:"Calculated income needed to buy median-priced home in the study area"
 
 library(optiRum)
 
@@ -987,7 +1027,7 @@ r1_values <- c("$285,000",
             "$71,952")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
-  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+  kable(
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
@@ -998,7 +1038,9 @@ data.frame(x = r1_labels, y = r1_values) %>%
 
 In order to afford the median home sales price, a household would need to make \$69,213 annually, while an SFR would require \$53,475 --- almost \$16,000 less.
 
-```{r r1-sfr-price}
+```{r}
+#| label: tbl-r1-sfr-price
+#| tbl-cap: "Calculated income needed to rent single-family home in the Route 1 corridor"
 
 # $1336.87 is the average price for SFR in the last year.
 
@@ -1011,7 +1053,7 @@ sfr_labels <- c("Average rent for single-family home",
 sfr_values <- formattable::currency(c(avg_sfr_price, sfr_income))
 
 data.frame(x = sfr_labels, y = sfr_values) %>% 
-  kable(caption = "Calculated income needed to rent single-family home in the Route 1 corridor",
+  kable(
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
@@ -1022,7 +1064,9 @@ data.frame(x = sfr_labels, y = sfr_values) %>%
 
 Based on the most recent ACS estimates for renter household incomes, the typical renter in most Census tracts would not be able to either rent a SFR nor purchase the typical home in the area. Renters in southern Bellwood and northern Chester are more likely to afford a SFR, but with their incomes they are still nearly \$30,000 short of being able to purchase a home priced at \$274,470.
 
-```{r sfr-mls-bar, fig.cap="Renter income and income needed to purchase or rent single-family home in Route 1 corridor"}
+```{r}
+#| label: fig-sfr-mls-bar
+#| fig-cap: "Renter income and income needed to purchase or rent single-family home in Route 1 corridor"
 
 x <- c("Bensley (1003)", "Bellwood (1004.04)", "Bensley (1004.05)", "Bellwood (1004.06)", "Bellwood (1004.07)", "Northern Chester (1004.09)", "Rent single-family home", "Purchase single-family home")
 y <- c(35906, 32014, 39477, 25861, 64896, 63783, 53475, 71952)
@@ -1134,7 +1178,9 @@ write_rds(r1_trans_map, "data/r1_trans_map.rds")
 
 ```
 
-```{r r1-transit-chart, fig.cap="Percent of units in Route 1 corridor near transit by rent type"}
+```{r}
+#| label: fig-r1-transit-chart
+#| fig-cap: "Percent of units in Route 1 corridor near transit by rent type"
 
 r1_trans_map <- read_rds("data/r1_trans_map.rds")
 
@@ -1160,7 +1206,6 @@ gg_bar_col_facet(r1_trans_sum,
                  )
 
 ```
-
 
 ### Schools
 
@@ -1219,7 +1264,9 @@ write_rds(r1_schools_map, "data/r1_schools_map.rds")
 
 ```
 
-```{r r1-schools-chart, fig.cap="Driving time to schools in Route 1 corridor by rent type"}
+```{r}
+#| label: fig-r1-schools-chart
+#| fig-cap: "Driving time to schools in Route 1 corridor by rent type"
 
 r1_schools_map <- read_rds("data/r1_schools_map.rds")
 
@@ -1319,7 +1366,9 @@ write_rds(r1_grocery_map, "data/r1_grocery_map.rds")
 
 ```
 
-```{r r1-grocery-chart, fig.cap="Mean distance from apartments in Route 1 corridor to food stores by type"}
+```{r}
+#| label: fig-r1-grocery-chart
+#| fig-cap: "Mean distance from apartments in Route 1 corridor to food stores by type"
 
 r1_grocery_map <- read_rds("data/r1_grocery_map.rds")
 
@@ -1432,7 +1481,9 @@ write_rds(r1_health_map, "data/r1_health_map.rds")
 
 ```
 
-```{r r1-health-chart, fig.cap="Mean driving time from apartments in Route 1 corridor to healthcare facility by type"}
+```{r}
+#| label: fig-r1-health-chart
+#| fig-cap: "Mean driving time from apartments in Route 1 corridor to healthcare facility by type"
 
 r1_health_map <- read_rds("data/r1_health_map.rds")
 
@@ -1536,7 +1587,9 @@ write_rds(r1_jobs, "data/r1_jobs.rds")
 
 ```
 
-```{r r1-jobs-chart, fig.cap="Percent of jobs by wage within 15 minute drive by rent type in the Route 1 corridor"}
+```{r}
+#| label: fig-r1-jobs-chart
+#| fig-cap: "Percent of jobs by wage within 15 minute drive by rent type in the Route 1 corridor"
 
 r1_jobs <- read_rds("data/r1_jobs.rds")
 
@@ -1593,11 +1646,7 @@ Nonprofit development interest has continued from Better Housing Coalition furth
 
 **The Jane at Moore's Lake**
 
-```{r the-jane, fig.cap="The Jane at Moore's Lake. Credit: Apartment Finder."}
-
-knitr::include_graphics("images/thejane.jpg")
-
-```
+![The Jane at Moore's Lake. Credit: Apartment Finder.](images/thejane.jpg)
 
 [The Jane at Moore's Lake](https://www.thejanemooreslake.com/) is an upscale apartment complex located off Route 1 in northern Chester. The property developed by Emerson Companies was once an interstate vacation retreat during the early to mid-20th century. Brick cottages surrounded a recreational lake that was incredibly popular and brought thousands to during the warm summer travel months. 
 
@@ -1609,10 +1658,6 @@ A one-bedroom, one-bath apartment at 636 square feet now rents for as low as \$1
 
 The second phase of Moore's Lake is coming and has the potential to create an additional 1,200 new housing opportunities --- including 500 apartments, 238 condos, 62 single-family homes, and 30 townhomes.
 
-```{r moores-lake, fig.cap="Proposed site plan for Moore's Lake development. Credit: Richmond BizSense."}
-
-knitr::include_graphics("images/mooreslakesite.jpg")
-
-```
+![Proposed site plan for Moore's Lake development. Credit: Richmond BizSense.](images/mooreslakesite.jpg)
 
 Development in this section of the corridor has benefited from the close location of the 288 and I-95 interchanges, as well as dense commercial development at the crossroads of Route 10 and Route 1. In addition, developers have noted that negative associations with Route 1 have largely prevented market rate development north of Willis Road. 

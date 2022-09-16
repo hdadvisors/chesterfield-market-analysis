@@ -61,14 +61,16 @@ hsr_tracts <- tracts("VA", "Chesterfield",
 #Run the mapview and savewidget functions before building the book
 # Once the widget is saved, activate the knitr function to embed the map
 
-# hsr_tract_map <-leaflet(hsr_tracts) |> 
-#   addTiles() |> 
-#   addPolygons(color = "blue", 
-#               weight = 3,
-#               label = ~hsr_tracts$NAMELSAD,
-#               labelOptions = labelOptions(noHide = F,
-#                                           direction = "auto",
-#                                           textsize = "15px"))
+hsr_tract_map <-leaflet(hsr_tracts) |>
+  addTiles() |>
+  addPolygons(color = "blue",
+              weight = 3,
+              label = ~hsr_tracts$NAMELSAD,
+              labelOptions = labelOptions(noHide = F,
+                                          direction = "auto",
+                                          textsize = "15px"))
+
+# mapview::mapshot(hsr_tract_map, file = "/maps/hsr_map.png")
 # 
 # saveWidget(hsr_tract_map, "maps/hsr_tract_map.html")
 
@@ -448,9 +450,7 @@ mls_hsr_plot <- ggplot(mls_hsr_sfr,
         axis.title.x = element_blank()) +
   scale_y_continuous(labels = dollar_format())
 
-plotly::ggplotly(mls_hsr_plot) |> 
-  plotly_camera()
-
+mls_hsr_plot
 
 # mean(mls_hsr_sfr$list_price, na.rm = TRUE)
 ```
