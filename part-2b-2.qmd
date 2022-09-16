@@ -45,7 +45,7 @@ Unlike Route 1, Hull Street (Route 360) does not have the storied interstate tou
 
 But much of the development along Hull Street in Chesterfield County today is much less dense. The corridor in the county remains car-centric with no multifamily properties fronting the corridor and no manufactured home communities. Most development along the corridor is concentrated towards the eastern end at the city-county border, while development fronting the corridor becomes more rare west of Pocoshock Creek and the new Manchester Middle School.
 
-Opportunities exist for multifamily development along the Hull Street corridor, but there has been none in recent years and there are none planned for the foreseeable future. 
+Opportunities exist for multifamily development along the Hull Street corridor, but there has been none in recent years and there are none planned for the foreseeable future.
 
 ```{r}
 #| label: fig-hsr-base-map
@@ -203,9 +203,10 @@ hsr_map <- costar_hsr_mf |>
 knitr::include_url("maps/hsr_map.html", height = "500px")
 
 ```
+
 With no manufactured home communities in the area, single-family home rentals (SFRs) are the option left for many Hull Street corridor residents. An estimated 900 SFRs are located throughout the study area - 14 percent of all single-family detached homes.
 
-Higher concentrations of SFR are located in Census tracts 1002.10 and 1002.11; tracts that adjacent to the Chippenham Parkway and along the city-county border. These tracts have an estimated 21 percent and 20 percent of single-family detached homes being utilized as SFR, respectively. 
+Higher concentrations of SFR are located in Census tracts 1002.10 and 1002.11; tracts that adjacent to the Chippenham Parkway and along the city-county border. These tracts have an estimated 21 percent and 20 percent of single-family detached homes being utilized as SFR, respectively.
 
 ```{r}
 #| label: fig-sfr-hsr
@@ -262,7 +263,9 @@ Rent prices, as estimated by the American Community Survey (ACS), show very litt
 
 Other Census tracts in the area have more consistent rent increases - particularly Census tracts 1002.06, 1002.09, and 1002.10. Census tract 1002.11 does not account for a median gross rent until 2020 (\$980), which is strange given that CoStar recognizes three multifamily properties in this Census tract, all of which were built pre-1980.
 
-```{r acs-hsr-rent, fig.cap="Median inflation-adjusted rent by tract: 2010 to 2020"}
+```{r}
+#| label: fig-acs-hsr-rent
+#| fig-cap: "Median inflation-adjusted rent by tract: 2010 to 2020"
 
 # Check MOE for the census tract above
 
@@ -325,8 +328,6 @@ gg_line_col_facet(hsr_rent_change,
 
 ```
 
-
-
 ```{r acs-hsr-rent1, eval=FALSE}
 
 # hsr_rent_cpi$label <- NA
@@ -379,11 +380,9 @@ costar_hsr_rent_line <- ggplot(costar_hsr_rent,
         axis.title.y = element_blank(),
         legend.position = "none")
         
-plotly::ggplotly(costar_hsr_rent_line) |> 
-  plotly_camera()
-
-
+costar_hsr_rent_line
 ```
+
 Breaking out average rent by bedrooms shows a similar pattern among all bedroom sizes, except for studio apartments, in which there are none listed in the study area. Three-bedroom apartments did see a substantial increase in the latter half of 2021 --- a \$61 increase (5 percent increase) from \$1,240 to \$1,301, but, like all other apartment types, have seen declines in 2022.
 
 ```{r costar-hsr-brent, fig.cap="Average rent by bedroom"}
@@ -428,7 +427,7 @@ plotly::ggplotly(hsr_br_line) |>
 
 ```
 
-Very little rental price data exists for SFRs in the study area. Across the past four years, there have only been 25 listed SFRs. Thirteen of these 25 SFRs are single-family detached homes, while the remaining are largely condominums or townhomes (11). List prices have ranged from \$900 for a duplex in 2019 to a /$1,809 for a single-family detached home in 2022. Generally, single-family detached homes have commanded rents above \$1,400 and often offer three-bedrooms and two baths.These rents are on par with recent two-bedroom apartments rents in the area --- often making a decision between an apartment or single-family detached home on the rental market easy for a family of three or more.
+Very little rental price data exists for SFRs in the study area. Across the past four years, there have only been 25 listed SFRs. Thirteen of these 25 SFRs are single-family detached homes, while the remaining are largely condominums or townhomes (11). List prices have ranged from \$900 for a duplex in 2019 to a /\$1,809 for a single-family detached home in 2022. Generally, single-family detached homes have commanded rents above \$1,400 and often offer three-bedrooms and two baths.These rents are on par with recent two-bedroom apartments rents in the area --- often making a decision between an apartment or single-family detached home on the rental market easy for a family of three or more.
 
 ```{r mls-sfr, fig.cap= "Single-family rental rent price by structure type and date leased"}
 
@@ -460,7 +459,9 @@ plotly::ggplotly(mls_hsr_plot) |>
 
 Much of the rental housing stock (62 percent) in the Eastern Hull Street corridor was built after 1980 --- 1,472 rental homes. The largest share of occupied rental housing was built in the latter half of the 20th century (1960 to 1999). These buildings are anywhere from 20 to 50 years old and are most likely in need of modest to major upgrades.
 
-```{r acs-yrblt, fig.cap="Eastern Hull Street rental housing by year built and census tract"}
+```{r}
+#| label: fig-acs-yrblt
+#| fig-cap: "Eastern Hull Street rental housing by year built and census tract"
 
 b25036_vars <- load_variables(2020, "acs5") |> 
   filter(str_sub(name, end = 6) %in% "B25036")
@@ -540,11 +541,13 @@ ggplot(b25036_hsr_grp,
   
 ```
 
-Multifamily property construction has been rare in the corridor for much of the last half century. Only one development was completed in the 2000s --- Element at Stonebridge. This development was the result of the Cloverleaf Mall redevelopment and is oriented towards Midlothian Turnpike, rather than the Eastern Hull Street corridor. 
+Multifamily property construction has been rare in the corridor for much of the last half century. Only one development was completed in the 2000s --- Element at Stonebridge. This development was the result of the Cloverleaf Mall redevelopment and is oriented towards Midlothian Turnpike, rather than the Eastern Hull Street corridor.
 
 More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978. The only multifamily property located directly off of the Eastern Hull Street corridor is the Wayside Townhouse Apartmentsm which were built in 1967 --- the earliest multifamily development in the area. Only one property (Element at Stonebridge) is rated at four stars, while all other properties are three stars or less. Although largely functional, these lower-tiered properties can expect to need renovations in the coming years.
 
-```{r costar-hsr-3, fig.cap="Eastern Hull Street corridor area multifamily properties by year built"}
+```{r}
+#| label: fig-costar-hsr-3
+#| fig-cap: "Eastern Hull Street corridor area multifamily properties by year built"
 
 # Histogram or chart?
 
@@ -627,7 +630,9 @@ hsr_sales_med <- hsr_sales |>
 
 ```
 
-```{r hsr-home-price, fig.cap="Income needed to afford median priced home in Eastern Hull Street area"}
+```{r}
+#| label: tbl-hsr-home-price
+#| tbl-cap: "Income needed to afford median priced home in Eastern Hull Street area"
 
 hsr_msp <- 316750
 downpayment <- 0.05 # 5% downpayment
@@ -660,7 +665,7 @@ hsr_values <- c("$316,750",
             "$78,775")
 
 data.frame(x = hsr_labels, y = hsr_values) %>% 
-  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+  kable(
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
@@ -671,14 +676,14 @@ data.frame(x = hsr_labels, y = hsr_values) %>%
 
 ```{r hsr-sfr-price, eval=FALSE}
 
-
 hsr_sfr_price <- 1479
 hsr_sfr_income <- ((avg_sfr_price*10)/3)*12
 
-
 ```
 
-```{r sfr-mls-bar, fig.cap="Renter income of census tracts and income needed to afford SFR and homeownership"}
+```{r}
+#| label: fig-sfr-mls-bar
+#| fig-cap: "Renter income of census tracts and income needed to afford SFR and homeownership"
 
 x <- c("Census Tract 1002.06",
        "Census Tract 1002.09",
@@ -703,7 +708,7 @@ ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
 
 ## Proximity to amenities
 
-Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs. 
+Being close to amenities like grocery stores and employment can make a difference in housing affordability for many families on a tight budget. Less time spent traveling often means less money spent on personal vehicle maintenance and gas. It also means more time to spend with family members and more savings that can be spent on housing costs.
 
 ### Public transportation
 
@@ -744,7 +749,6 @@ nearest_stops <- st_nn(hsr_prj, stops, k = 20)
 
 ```
 
-
 ```{r hsr-mf-stops}
 
 # costar_stop_walking <- imap(nearest_stops, ~{
@@ -774,7 +778,9 @@ nearest_stops <- st_nn(hsr_prj, stops, k = 20)
 
 ```
 
-```{r hsr_transit-chart, fig.cap="Eastern Hull Street multifamily by distance to transit"}
+```{r}
+#| label: fig-hsr_transit-chart
+#| fig-cap: "Eastern Hull Street multifamily by distance to transit"
 
 hsr_trans_map <- read_rds("data/hsr_trans_map.rds")
 
@@ -792,8 +798,6 @@ ggplot(hsr_trans_sum,
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
         legend.position = "none") +
   labs(title = "Eastern Hull Street multifamily by distance to transit")
-
-  
   
 
 ```
@@ -802,13 +806,13 @@ ggplot(hsr_trans_sum,
 
 Along the Eastern Hull Street Corridor, there are two Chesterfield County Public Schools:
 
-- Manchester Middle School; and
-- J.A. Chalkley Elementary School
+-   Manchester Middle School; and
+-   J.A. Chalkley Elementary School
 
 Nearby, but more oriented towards the Midlothian Turnpike are:
 
-- A.M. Davis Elementary School; and
-- Providence Middle School
+-   A.M. Davis Elementary School; and
+-   Providence Middle School
 
 All five properties closest to the Eastern Hull Street corridor are within an ideal distance to a Chesterfield County Public School --- less than a five minute drive. This provides many families with a convenient drive to take their children to school. The average drive-time distance to a public school for these properties is 3.6 minutes. Properties north of Hull Street would be zoned for either Davis Elementary or Providence Middle School --- but no multifamily properties exist on the northside of Hull Street.
 
@@ -852,7 +856,9 @@ nearest_schools <- st_nn(hsr_prj, schools, k = 20)
 
 ```
 
-```{r hsr-schools-chart, fig.cap="Eastern Hull Street multifamily by drive time to schools"}
+```{r}
+#| label: fig-hsr-schools-chart
+#| fig-cap: "Eastern Hull Street multifamily by drive time to schools"
 
 hsr_schools_map <- read_rds("data/hsr_schools_map.rds")
 
@@ -878,7 +884,7 @@ ggplot(hsr_schools_sum,
 
 Several ethnic food stores exist at the 360 West Shopping Center at the northwest corner of Turner Road and Hull Street. But full service grocery stores like Food Lion and Kroger are located further west, outside of the study area. Although only a short drive down the road, multifamily properties in the study area are much closer to a convenience store or small market, rather than a full service grocery store.
 
-The average distance to a convenience or small market is about half a mile (0.46 miles), while the average distance to a full service grocery store is 1.51 miles. This distance is negligible for those with a personal vehicle, but for those without a car or unable to drive due to an impairment (e.g. physical or mental disability), traveling to the nearest Food Lion or Kroger can be quite difficult. Those having to walk face a near mile and a half walk along a highway with no sidewalks and vehicles going over 55 mph. 
+The average distance to a convenience or small market is about half a mile (0.46 miles), while the average distance to a full service grocery store is 1.51 miles. This distance is negligible for those with a personal vehicle, but for those without a car or unable to drive due to an impairment (e.g. physical or mental disability), traveling to the nearest Food Lion or Kroger can be quite difficult. Those having to walk face a near mile and a half walk along a highway with no sidewalks and vehicles going over 55 mph.
 
 ```{r hsr-grocery, eval=FALSE}
 # Grocery stores:
@@ -962,7 +968,10 @@ The average distance to a convenience or small market is about half a mile (0.46
 # 0.4605118
 
 ```
-```{r hsr-grocery-chart, fig.cap="Eastern Hull Street multifamily by distance to food access"}
+
+```{r}
+#| label: fig-hsr-grocery-chart
+#| fig-cap: "Eastern Hull Street multifamily by distance to food access"
 
 hsr_grocery_map <- read_rds("data/hsr_convenience_map.rds")
 
@@ -993,9 +1002,11 @@ ggplot(hsr_grocery_sum,
 
 ### Healthcare
 
-Comparatively, multifamily properties along the Eastern Hull Street corridor are closer to acute general hospitals (an average of 8.6 minutes driving distance away) than properties along the Route 1 corridor (13.5 minutes). Two acute general care hospitals are within close proximity to multifamily properties. This includes Hunter Holmes McGuire Veterans Hospital down Hull Street towards the city, as well as Chippenham Hospital, which is easily accessed by the Chippenham Parkway interchange at the city-county border. Urgent care access is similar to hospital access --- as the average drive-time distance is only 8 minutes. 
+Comparatively, multifamily properties along the Eastern Hull Street corridor are closer to acute general hospitals (an average of 8.6 minutes driving distance away) than properties along the Route 1 corridor (13.5 minutes). Two acute general care hospitals are within close proximity to multifamily properties. This includes Hunter Holmes McGuire Veterans Hospital down Hull Street towards the city, as well as Chippenham Hospital, which is easily accessed by the Chippenham Parkway interchange at the city-county border. Urgent care access is similar to hospital access --- as the average drive-time distance is only 8 minutes.
 
-Two Patient First urgent cares are located within close proximity to Eastern Hull Street corridor properties. One is located further west down Hull Street at the Genito Crossing Shopping Center, while the other is located on Midlothian Turnpike. The close proximity of these healthcare resources to existing, as well as potential, multifamily properties along the Eastern Hull Street corridor provides a significant benefit to households experiencing a health crisis or who are in need of on-going care. Both travel times are significantly below the national travel time to a hospital in a suburban setting (12 minutes).^[https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/] 
+Two Patient First urgent cares are located within close proximity to Eastern Hull Street corridor properties. One is located further west down Hull Street at the Genito Crossing Shopping Center, while the other is located on Midlothian Turnpike. The close proximity of these healthcare resources to existing, as well as potential, multifamily properties along the Eastern Hull Street corridor provides a significant benefit to households experiencing a health crisis or who are in need of on-going care. Both travel times are significantly below the national travel time to a hospital in a suburban setting (12 minutes).[^part-2b-2-1]
+
+[^part-2b-2-1]: https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/
 
 ```{r medical}
 # Hospital / urgent care
@@ -1071,7 +1082,9 @@ Two Patient First urgent cares are located within close proximity to Eastern Hul
 
 ```
 
-```{r hospital-chart, fig.cap="Eastern Hull Street multifamily by drive time (in minutes) to healthcare"}
+```{r}
+#| label: fig-hospital-chart
+#| fig-cap: "Eastern Hull Street multifamily by drive time (in minutes) to healthcare"
 
 hsr_urgent_map <- read_rds("data/hsr_urgent_map.rds")
 
@@ -1103,9 +1116,9 @@ ggplot(hsr_urgent_sum,
 
 ### Job centers
 
-There are very few commercial retail centers located along the Eastern Hull Street corridor. Furthermore, multifamily properties --- located off of Walmsley Boulevard, a secondary road --- are not adjacent to any major commercial uses. This means that many residents must walk quite a distance or more likely drive to work. There is little nuance in regards to property location to jobs as all properties are located within a mile of each other. 
+There are very few commercial retail centers located along the Eastern Hull Street corridor. Furthermore, multifamily properties --- located off of Walmsley Boulevard, a secondary road --- are not adjacent to any major commercial uses. This means that many residents must walk quite a distance or more likely drive to work. There is little nuance in regards to property location to jobs as all properties are located within a mile of each other.
 
-Of the jobs within a 15 minute drive of properties in the area, nearly half (49 percent) of those jobs pay more than \$3,333. The large share of jobs paying such high wages can be attributed to the proximity of the Chippenham Parkway interchange, which allows commuters to take Chippenham to the Powhite Parkway and into Downtown Richmond. 
+Of the jobs within a 15 minute drive of properties in the area, nearly half (49 percent) of those jobs pay more than \$3,333. The large share of jobs paying such high wages can be attributed to the proximity of the Chippenham Parkway interchange, which allows commuters to take Chippenham to the Powhite Parkway and into Downtown Richmond.
 
 ```{r hsr-jobs-setup, eval=FALSE}
 
@@ -1193,7 +1206,9 @@ Of the jobs within a 15 minute drive of properties in the area, nearly half (49 
 # 0.4866774
 ```
 
-```{r hsr-jobs, fig.cap="Eastern Hull Street multifamily by number of jobs within a 15 minute drive"}
+```{r}
+#| label: fig-hsr-jobs
+#| fig-cap: "Eastern Hull Street multifamily by number of jobs within a 15 minute drive"
 
 hsr_jobs <- read_rds("data/hsr_jobs_list.rds")
 
@@ -1226,26 +1241,22 @@ ggplot(hsr_jobs_sum,
 
 ```
 
-
 ## Public and private investments
 
 The development patterns of the Eastern Hull Street corridor have largely been similar to that of the Route 1 corridor --- car-centric suburban development. However, the county portion of the Hull Street corridor does not have the storied interstate travel history of the Route 1 corridor. As such revitalization along the Eastern Hull Street corridor has not been a major priority.
 
-Nonetheless, the county has continued to invest in this part of the county as its population has grown. In the summer of 2020, the County completed construction on a brand new middle school facility --- Manchester Middle School. This replacement of the former 1964 building for $41 million now serves up to 1,100 students.
+Nonetheless, the county has continued to invest in this part of the county as its population has grown. In the summer of 2020, the County completed construction on a brand new middle school facility --- Manchester Middle School. This replacement of the former 1964 building for \$41 million now serves up to 1,100 students.
 
-Further down the corridor and outside the study area, the County is also encouraging the redevelopment of older retail shopping centers and strip malls like Rockwood Square Shopping Center. The County recently approved plans to develop Rockwood Square into 332 condominiums and townhomes.^[https://richmondbizsense.com/2022/06/02/chesterfield-oks-plan-to-redevelop-rockwood-square-shopping-center/]
+Further down the corridor and outside the study area, the County is also encouraging the redevelopment of older retail shopping centers and strip malls like Rockwood Square Shopping Center. The County recently approved plans to develop Rockwood Square into 332 condominiums and townhomes.[^part-2b-2-2]
+
+[^part-2b-2-2]: https://richmondbizsense.com/2022/06/02/chesterfield-oks-plan-to-redevelop-rockwood-square-shopping-center/
 
 ### Case study
 
 **Rockwood Square Shopping Center**
 
-```{r rockwood, fig.cap= "Rockwood Square Shopping Center. Source: Areaprops.com", out.height="500px"}
+![Rockwood Square Shopping Center. Source: Areaprops.com](images/rockwood-square.jpg)
 
-knitr::include_graphics("images/rockwood-square.jpg")
-
-```
-
-Although outside of the Eastern Hull Street corridor study area, the Rockwood Square Shopping Center redevelopment offers an example of the possibilities for aging shopping centers within the study area. This strategy of redeveloping older strip malls and commercial shopping centers is [a vision among Chesterfield County planners](https://www.chesterfieldobserver.com/articles/county-planners-craft-long-term-vision-for-struggling-shopping-centers-near-rockwood-park/) to transform struggling commercial retail hubs into more vibrant mixed-use developments. 
+Although outside of the Eastern Hull Street corridor study area, the Rockwood Square Shopping Center redevelopment offers an example of the possibilities for aging shopping centers within the study area. This strategy of redeveloping older strip malls and commercial shopping centers is [a vision among Chesterfield County planners](https://www.chesterfieldobserver.com/articles/county-planners-craft-long-term-vision-for-struggling-shopping-centers-near-rockwood-park/) to transform struggling commercial retail hubs into more vibrant mixed-use developments.
 
 Stanley Martin Homes is proposing the development of the Rockwood Square Shopping Center --- in line with the County's overall goals for the Rockwood area. Their proposal, which was approved by the County Board of Supervisors in June 2022, will see the development of 322 condominiums and townhomes across 25-acres, which includes the Rockwood Golf Park. Although no homes will be for rent and no sales prices have been determined, this project represents the potential for increased residential development along other portions of the Hull Street corridor.
-
