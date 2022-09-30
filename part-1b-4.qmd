@@ -23,7 +23,9 @@ library(plotly)
 
 Affording a home in Chesterfield County—whether to own or rent— is directly tied to the incomes that households earn. There are diverse job opportunities across the region, and while some common jobs do pay well-above minimum wage, housing costs are rising faster.
 
-```{r top-occupations}
+```{r}
+#| label: tbl-top-occupations
+#| tbl-cap: "Top five most common occupations in Chesterfield County"
 
 cf_wages <- read_csv("data/chesterfield_wages_may2021.csv")
 
@@ -33,7 +35,7 @@ cf_wages %>%
   mutate(employment = comma(employment, 0),
          meanwage = dollar(meanwage),
          meanannual = dollar(meanannual)) %>% 
-  kable(caption = "Top five most common occupations in Chesterfield County",
+  kable(
        align = "lrrr",
        col.names = c("Occupation", "Jobs", "Mean hourly wage", "Mean annual wage")) %>% 
   kableExtra::kable_styling(
@@ -50,14 +52,16 @@ Another important part of a diverse workforce are public sector jobs, like teach
 
 The table below shows the median annual wage for six common occupations with Chesterfield County government. These positions generally pay higher than the county's most prevalent private-sector jobs.
 
-```{r public-sector}
+```{r}
+#| label: tbl-public-sector
+#| tbl-cap: "Public sector occupations in Chesterfield County"
 
 cf_wages %>% 
   filter(occ_code == "county") %>%
   select(2,7) %>% 
   arrange(desc(meanannual))%>%
   mutate(meanannual = dollar(meanannual)) %>% 
-  kable(caption = "Public sector occupations in Chesterfield County",
+  kable(
        align = "lr",
        col.names = c("Occupation", "Median annual wage")) %>% 
   kableExtra::kable_styling(
@@ -76,7 +80,10 @@ Homeownership is more difficult to achieve in Chesterfield County The COVID-19 p
 
 The median home sale price in Chesterfield County has increased by 39 percent since before the pandemic in 2019---from \$269,000 to \$371,480 in 2022 year-to-date.^[As of August 31, 2022.]
 
-``` {r cf-med-sales, fig.cap="Median single-family home sales price in Chesterfield County"}
+``` {r}
+#| label: fig-cf-med-sales
+#| fig-cap: "Median single-family home sales price in Chesterfield County"
+#| fig-subcap: "Source: CVR MLS. 2022 includes all sales through August 10, 2022."
 
 # CHESTERFIELD COUNTY - SINGLE FAMILY/CONDO/TOWN - 8.31.22
 
@@ -115,16 +122,18 @@ sales_bar <- gg_line(medsales,
   ggplot2::scale_x_continuous(limits = c(2011.5, 2022.5),
                               breaks = seq(2012, 2022, 1))
 
-ggplotly(sales_bar) |> 
-  plotly_camera()
+# ggplotly(sales_bar) |> 
+#   plotly_camera()
+
+sales_bar
 
 ```
 
-*Source: CVR MLS. 2022 includes all sales through August 10, 2022.*
-
 In order to afford a home at this price, a household would need to make **\$89,889** at the current average annual interest rate.^[Freddie Mac 30-Year Fixed Rate Mortgage Annual Average as of August 31, 2022.] The table below shows the assumptions made to calculate this figure.
 
-``` {r cf-home-price}
+``` {r}
+#| label: tbl-cf-home-price
+#| tbl-cap: "Calculated income needed to buy median-priced home in Chesterfield County"
 
 msp <- 371480
 downpayment <- 0.05 # 5% downpayment
@@ -161,7 +170,7 @@ values <- c("$371,480",
             "$89,889")
 
 data.frame(x = labels, y = values) %>% 
-  kable(caption = "Calculated income needed to buy median-priced home in Chesterfield County",
+  kable(
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
@@ -236,7 +245,10 @@ b25119_cpi <- b25119_data %>%
 
 ```
 
-``` {r cf-renter-income-afford, fig.cap="Median household income and affordable home sales price for renters in Chesterfield County"}
+``` {r}
+#| label: fig-cf-renter-income-afford
+#| fig-cap: "Median household income and affordable home sales price for renters in Chesterfield County"
+#| fig-subcap: "Sources: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119 and Freddie Mac Primary Mortgage Market Survey."
 
 # This is focusing in on 2020 median renter household income and 2020 median home price. 
 
@@ -279,13 +291,13 @@ grid.arrange(plot_inc,plot_afford, ncol =2)
 
 ```
 
-*Sources: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119 and Freddie Mac Primary Mortgage Market Survey.*
-
 Compared to 2021 average wages, several common occupations in the county would also struggle to afford the typical home price in the county in 2021. For example, customer service representatives average hourly wage of \$17.51 could only afford a monthly mortgage payment for a home priced below \$170,000. Even with an hourly wage that is three times that of the Virginia minimum wage (\$11.00 per hour), households in the county would still struggle to afford a home.
 
 The table below shows the maximum home sales price affordable at the current average wages for the five most common occupations in Chesterfield County.
 
-``` {r cf-jobs-price}
+``` {r}
+#| label: tbl-cf-jobs-price
+#| tbl-cap: "Maximum home sales price for five most common occupations in Chesterfield County"
 
 # This is focusing on 2021 wages versus 2021 home price which was $330,000
 
@@ -297,7 +309,7 @@ cf_wages %>%
   mutate(employment = comma(employment, 0),
          canafford = dollar(canafford)) %>% 
   select(2,4,11) %>% 
-  kable(caption = "Maximum home sales price for five most common occupations in Chesterfield County",
+  kable(
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum home sales price")) %>% 
   kableExtra::kable_styling(
@@ -311,7 +323,9 @@ cf_wages %>%
 
 Among public sector employees working for the county, maximum home sales prices are higher, reflecting the stronger wages they command. However, most of these prices are at or below \$300,000, still well under the county's current median sales price of $371,480.
 
-``` {r cf-public-price}
+``` {r}
+#| label: tbl-cf-public-price
+#| tbl-cap: "Maximum home sales price for public sector occupations in Chesterfield County"
 
 # This is focusing on 2021 wages versus 2021 home price which was $330,000
 
@@ -323,7 +337,7 @@ cf_wages %>%
   mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) %>% 
   mutate(canafford = dollar(canafford)) %>% 
   select(2,11) %>% 
-  kable(caption = "Maximum home sales price for public sector occupations in Chesterfield County",
+  kable(
        align = "lr",
        col.names = c("Occupation", "Maximum home sales price")) %>% 
   kableExtra::kable_styling(
@@ -342,7 +356,10 @@ Post-recession average asking rent in the county hit a low of \$1,207 in 2012 (a
 
 Between 2019 and 2020, average rent in the county rose by 4 percent (\$61)---from \$1,366 to \$1,427, a substantial increase for individuals and families on tight budgets. Today, the average rent in the county is around \$1,500.^[Data current through 2022 Q2.]
 
-```{r cf-rents, fig.cap="Average asking rent in Chesterfield County: 2000 Q1 to 2022 Q2"}
+```{r}
+#| label: fig-cf-rents
+#| fig-cap: "Average asking rent in Chesterfield County: 2000 Q1 to 2022 Q2"
+#| fig-subcap: "Source: CoStar Group, Inc."
 
 # CoStar calculated average and not median. Amended to reflect these changes. May need to consider changing this to match Part 2a-1.
 
@@ -376,17 +393,19 @@ costar_rents <-gg_line_col(
     legend.justification = "center"
   )
 
-plotly::ggplotly(costar_rents) %>% 
-  plotly_camera()
+# plotly::ggplotly(costar_rents) %>% 
+#   plotly_camera()
+
+costar_rents
 
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 Current minimum annual incomes needed to afford the average apartment in the county---without becoming cost-burdened---start around \$52,000 for a 1 bedroom unit. Two bedroom apartments rent at right about the overall average, requiring at least \$59,560. Three bedrooms units command a much higher premium over \$1,700 per month. Renters looking for these larger units will need an income of \$68,320 or more to budget comfortably.
 
-``` {r cf-rents-br}
+``` {r}
+#| label: tbl-cf-rents-br
+#| tbl-cap: "Calculated income needed to afford average rents by bedroom in Chesterfield County"
 
 bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |> 
   filter(period == "2022 Q2") |> 
@@ -406,7 +425,7 @@ bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
          ))
 
 bedroom_rent %>% 
-  kable(caption = "Calculated income needed to afford average rents by bedroom in Chesterfield County",
+  kable(
         align = "lrr",
         col.names = c("Bedrooms", "Average rent", "Income needed")) %>% 
   kableExtra::kable_styling(
@@ -420,7 +439,10 @@ bedroom_rent %>%
 
 This rent is increasingly unaffordable to some of the most common occupations in the county, like retail salespersons and home health aides. For a retail salesperson with an average hourly wage of \$13.85, a rent on a single income would be more affordable at \$672 to \$748 cheaper than the typical rent in the county. 
 
-```{r cf-renter-affordability}
+```{r}
+#| label: tbl-cf-renter-affordability
+#| tbl-cap: "Maximum monthly rent for five most common occupations in Chesterfield County"
+#| tbl-subcap: "Source: CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021."
 
 cf_wages %>% 
   mutate(third = (meanannual * .3)) %>%
@@ -429,7 +451,7 @@ cf_wages %>%
   mutate(employment = comma(employment, 0),
          rent = dollar(rent)) %>% 
   select(2,4,10) %>% 
-  kable(caption = "Maximum monthly rent for five most common occupations in Chesterfield County",
+  kable(
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
@@ -437,11 +459,12 @@ cf_wages %>%
 
 ```
 
-*Source: CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
-
 CCPS teachers with a median salary of \$54,937 would also be hard pressed to afford the typical rent, especially for units with two or more bedrooms. For an essential part of the workforce there would need to be rental units priced lower at \$1,373. Other public sector workers like firefighters, emergency communication officers, and government administrative workers would find it increasingly difficult to find affordable rental housing in the county's high demand areas.
 
-```{r cf-renter-public-affordability}
+```{r}
+#| label: tbl-cf-renter-public-affordability
+#| tbl-cap: "Maximum monthly rent for public sector occupations in Chesterfield County"
+#| tbl-subcap: "Source: CoStar Group, Inc. and Chesterfield County."
 
 cf_wages %>% 
   filter(occ_code == "county") %>%
@@ -450,15 +473,13 @@ cf_wages %>%
   mutate(rent = (third/12)) %>% 
   mutate(rent = dollar(rent)) %>% 
   select(2, 10) %>% 
-  kable(caption = "Maximum monthly rent for public sector occupations in Chesterfield County",
+  kable(
        align = "lr",
        col.names = c("Occupation", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"))
 
 ```
-
-*Source: CoStar Group, Inc. and Chesterfield County.*
 
 ## Takeaways
 

@@ -3,7 +3,8 @@
 This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, "recent" developments are those built in the past five years, are under construction, or are proposed. This analysis does not include single-family rentals, nor manufactured home communities.
 
 
-```{r setup}
+```{r}
+#| label: setup
 
 library(tidyverse)
 library(zoo)
@@ -34,7 +35,8 @@ From Q2 2020 to Q2 2022, average rent for recent properties has changed 3% --- f
 
 While average rents for recent properties has remained steady, existing property rents have risen dramatically. The COVID-19 pandemic has significantly impacted demand among the existing stock of rental housing in the county --- leading to complementary increases in rental prices.
 
-```{r price}
+```{r}
+#| label: price
 
 # CoStar Recent Filter: Multi-family; Chesterfield County, VA; Construction Status: Existing, Under Construction, Proposed; Style: Townhome, Garden, Low-Rise, Mid-Rise, Hi-Rise; Min Year Built: 2017
 
@@ -62,7 +64,9 @@ price_comp <- rbind(recent_price, past_price)
 
 ```
 
-```{r price-all, fig.cap="Average rent of existing and recent rental units"}
+```{r}
+#| label: fig-price-all
+#| fig-cap: "Average rent of existing and recent rental units. Source: CoStar Group, Inc."
 
 avg_rent_all <- price_comp |> 
   filter(bedrooms == "All") |> 
@@ -92,11 +96,11 @@ total_avg_rent
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 Price difference between recent and existing properties by number of bedrooms follows similar trends. But average rents for recent three-bedroom rentals experienced a significant increase in the middle of 2021 --- going from \$2,152 in Q2 2021 to \$2,337 in Q4 2021. In 2022, these rents began to decline somewhat, but still remained above \$2,000.
 
-```{r price-br, fig.cap="Average rent of existing and recent rental units by bedroom"}
+```{r} 
+#| label: fig-price-br
+#| fig-cap: "Average rent of existing and recent rental units by bedroom. Source: CoStar Group, Inc."
 
 avg_rent_br <- price_comp |> 
   filter(bedrooms != "Studio") |> 
@@ -128,8 +132,6 @@ br_avg_rent
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 In all cases, the percent change in average rents for existing rental properties was three times that of recent properties no matter the bedroom count. One- and two-bedroom existing rentals had a near 20 percent increase in average rents from 2017 to 2022, while three-bedroom average rents increased by 16 percent. Average rents for recent rental properties only had an increase of 5 to 7 percent. The difference in rents between recent and existing properties as of Q2 2022 ranges from \$204 for one-bedrooms to \$552 for three-bedrooms.
 
 ## Unit mix
@@ -142,7 +144,9 @@ Existing rental properties are majority garden-style (85 percent). But the compo
 
 The shift towards these types of developments provides developers with greater economies of scale. More density makes it more financially possible to finance and develop properties. Without the density that comes through low- and mid-rise buildings, developers have to rely heavily on higher rents or substantial subsidies to make development possible.
 
-```{r unit-mix, fig.cap="Share of units by type for existing and recent properties"}
+```{r}
+#| label: fig-unit-mix
+#| fig-cap: "Share of units by type for existing and recent properties. Source: CoStar Group, Inc."
 
 # Need list of existing, proposed, or under construction properties with... 
 
@@ -200,15 +204,15 @@ style_mix_bar
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 ### Bedrooms
 
 Existing rental development mainly consists of two-bedroom rental homes (55 percent) and one-bedrooms (27 percent). More recent developments have shifted towards to one-bedroom rentals (53 percent). The percent of larger rentals - two- and three-bedrooms - being produced has dropped to 36 percent and 9 percent, respectively.
 
 One-bedroom rentals meets a growing demand among young professionals and aging seniors in the county, but the lack of larger rental homes leaves growing families out of the multifamily rental market. Single-family homes are increasingly meeting the demand for larger families in need of rentals. Although this often is preferred by families who want greater privacy and more in-home separation, the single-family rental market can impact opportunities for potential homebuyers.
 
-```{r br-mix, fig.cap="Share of units by bedrooms for existing and recent properties"}
+```{r}
+#| label: fig-br-mix
+#| fig-cap: "Share of units by bedrooms for existing and recent properties. Source: CoStar Group, Inc."
 
 # By bedroom
 
@@ -252,13 +256,13 @@ br_mix_bar
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 ### Size
 
 On average, the significant number of new one-bedroom apartments are close in size to the county's existing supply of one-bedroom units---around 750 square feet. New two- and three-bedroom apartments are noticeably larger than older units, however. Recently-built three-bedroom rentals are now approaching 1,500 square feet.
 
-```{r sf-mix, fig.cap="Share of units by size for existing and recent properties"}
+```{r}
+#| label: fig-sf-mix
+#| fig-cap: "Share of units by size for existing and recent properties. Source: CoStar Group, Inc."
 
 # By square footage
 
@@ -296,8 +300,6 @@ sf_mix_box
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 ## Amenities
 
 The types of amenities and features on a rental property have also changed of time as consumer preferences and expectations have shifted. While there are many possible examples of "amenities", this analysis compares the prevalence of four common features across rental properties in the county.
@@ -311,7 +313,9 @@ These amenities, which are included in property-level data from CoStar, include:
 
 On average, newer apartment communities are much more likely to have at least two of these amenities compared to older properties. In fact, about 90 percent of all new developments have two or more amenities, versus just 71 percent of existing properties.
 
-```{r amenities, fig.cap="Percent of existing and recent properties by number of amenities"}
+```{r}
+#| label:amenities
+#| fig-cap: "Percent of existing and recent properties by number of amenities. Source: CoStar Group, Inc."
 
 # Need list of existing, proposed, or under construction properties with "Amenities" field
 # Create new columns for each amenity that will show T/F
@@ -373,15 +377,15 @@ amenity_bar
 
 ```
 
-*Source: CoStar Group, Inc.*
-
 ## Location
 
 New rental development has occurred all across Chesterfield County in recent years. However, as the map below shows, much of that activity has been concentrated along Route 288 from Midlothian Turnpike south to Hull Street. This development is notable for being located in areas where multifamily housing is not already prevalent.
 
 On the other side of the county, there are five new developments along Route 1, plus several more just to the west following Route 10. These recent properties, unlike those along Route 288, do not make up the majority of multifamily housing in the area.
 
-```{r location, fig.cap="Map of recent and existing multifamily rental properties"}
+```{r}
+#| label: fig-location
+#| fig-cap: "Map of recent and existing multifamily rental properties"
 
 comp_map2 <- unit_mix_clean |> 
   mutate(market = case_when(
@@ -479,7 +483,9 @@ write_rds(trans_map, "data/trans_map.rds")
 
 The overwhelming majority of both recent and existing multifamily properties in the county are located more than a half mile walking distance of a transit stop. On average, the walking distance for all multifamily properties in the county to a transit stop is 3.2 miles --- which would take most people nearly an hour to walk. There is little difference between recent and existing properties in terms of distance to transit, but undoubtedly any new multifamily development on the Route 1 corridor will continue to benefit from public transit access.
 
-```{r transit-chart, fig.cap="Percent of units in Chesterfield County near transit by market"}
+```{r}
+#| label: fig-transit-chart
+#| fig-cap: "Percent of units in Chesterfield County near transit by market"
 
 trans_map <- read_rds("data/trans_map.rds")
 
@@ -562,7 +568,9 @@ schools_map_grp <- schools_map |>
 
 ```
 
-```{r schools-chart, fig.cap="Driving time to schools in Chesterfield County by market"}
+```{r}
+#| label: fig-schools-chart
+#| fig-cap: "Driving time to schools in Chesterfield County by market"
 
 schools_map <- read_rds("data/schools_map.rds")
 
@@ -663,7 +671,9 @@ write_rds(grocery_map, "data/grocery_map.rds")
 
 ```
 
-```{r grocery-chart, fig.cap="Mean distance from apartments in Chesterfield County to food stores by market"}
+```{r}
+#| label: fig-grocery-chart
+#| fig-cap: "Mean distance from apartments in Chesterfield County to food stores by market"
 
 grocery_map <- read_rds("data/grocery_map.rds")
 
@@ -781,7 +791,9 @@ mean(health_map$minutes_to_urgent)
 
 ```
 
-```{r r1-health-chart, fig.cap="Mean driving time from apartments in Chesterfield County to healthcare facility by market"}
+```{r}
+#| label: fig-r1-health-chart
+#| fig-cap: "Mean driving time from apartments in Chesterfield County to healthcare facility by market"
 
 health_map <- read_rds("data/health_map.rds")
 
@@ -888,7 +900,9 @@ write_rds(jobs, "data/jobs.rds")
 
 ```
 
-```{r jobs-chart, fig.cap="Percent of jobs by wage within 15 minute drive by market in Chesterfield County"}
+```{r}
+#| label: fig-jobs-chart
+#| fig-cap: "Percent of jobs by wage within 15 minute drive by market in Chesterfield County"
 
 jobs <- read_rds("data/jobs.rds")
 

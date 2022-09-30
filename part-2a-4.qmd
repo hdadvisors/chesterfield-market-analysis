@@ -18,7 +18,7 @@ All interviewees strongly agreed that the demand for rental housing in the count
 
 The growing demand for rental homes can be attributed to many different household types, but respondents noted several important groups. First, families with one or more children, but with incomes too low to purchase a home, are looking for apartments with three or more bedrooms. County schools are often a motivator, as interviewees noted anecdotal increases in households moving from the City of Richmond and the Tri-Cities areas. Due to their higher childcare and other household costs, these families need an affordable rent to balance their budgets.
 
-::: {.rmdnote}
+::: {.callout-note}
 
 Property managers of affordable rental communities stated that current waitlists for apartments range from 30 to more than 100 applicants. 
 

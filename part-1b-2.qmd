@@ -33,7 +33,10 @@ At the same time, average homeowner incomes have actually declined slightly (by 
 
 Because real average incomes for both homeowners and renters in Chesterfield County have remained steady for a decade, a wide gap of more than \$43,000 remains.
 
-```{r tenure, fig.cap="Median household income by tenure"}
+```{r}
+#| label: fig-tenure
+#| fig-cap: "Median household income by tenure"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25119."
 
 years <- 2010:2020
 
@@ -106,12 +109,12 @@ tenure_plot <- gg_bar_col_facet(
       legend.position = "none"
     )
 
-plotly::ggplotly(tenure_plot) %>% 
-  plotly_camera()
+# plotly::ggplotly(tenure_plot) %>% 
+#   plotly_camera()
+
+tenure_plot
 
 ```
-
-*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25119.*
 
 ```{r tenure-revised}
 
@@ -164,7 +167,10 @@ b25118_data <- b25118_raw %>%
 
 The following graph shows the distribution of households incomes by tenure, for both 2010 and 2020. The Census Bureau does not adjust these income ranges for inflation, so 2010 incomes are in 2010 dollars. Both homeowners and renters experienced upward shifts in their nominal incomes, with significant growth in households earning \$100,000 or more annually. The share of renter households earning between \$50,000 and \$99,999 also increased.
 
-```{r tenure-dist, fig.cap="Household income distribution by tenure"}
+```{r}
+#| label: fig-tenure-dist
+#| fig-cap: "Household income distribution by tenure"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25118."
 
 b25118_viz <-  b25118_data %>% 
   filter(year %in% c(2010, 2020)) %>% 
@@ -192,12 +198,12 @@ tenure_dist_plot <- gg_hbar_col_facet(b25118_viz,
                  x_title = "Percent of households",
                  y_title = "Household income ($)")
 
-plotly::ggplotly(tenure_dist_plot) %>% 
-  plotly_camera()
+# plotly::ggplotly(tenure_dist_plot) %>% 
+#   plotly_camera()
+
+tenure_dist_plot
 
 ```
-
-*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25118.*
 
 ## Age
 
@@ -210,7 +216,10 @@ Chesterfield seniors in 2020 had a median household income of \$61,777. Although
 At the opposite end of the spectrum, households under 25 have seen decreasing incomes---going 
 from \$48,591 in 2010 to \$40,881 in 2020, a 16 percent decrease. Lower incomes among Generation Z may have major implications on the need for more rental and starter home options amid rising costs.
 
-```{r age, fig.cap="Median household income by age"}
+```{r}
+#| label: fig-age
+#| fig-cap: "Median household income by age"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B19049."
 
 years <- 2010:2020
 
@@ -301,12 +310,13 @@ age_plot <- gg_line_col(
   x_expand = expansion(add = 1),
   y_expand = expansion(add = c(0,2000)))
 
-plotly::ggplotly(age_plot) %>% 
-  plotly_camera()
+# plotly::ggplotly(age_plot) %>% 
+#   plotly_camera()
+
+age_plot
 
 ```
 
-*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B19049.*
 
 ## Race and ethnicity
 
@@ -316,7 +326,7 @@ Over the last decade, Asian and white non-Hispanic households in Chesterfield ha
 
 Multiracial households saw the largest real increase in incomes, growing by over 28 percent from 2010 to 2020. However, this increase occurred almost entirely from 2019 to 2020, which is likely reflective of additional individuals and households choosing to identify with more than one race or ethnicity than they would have in previous years.
 
-:::{.caution}
+:::{.callout-caution}
 
 The significant rise in income for multiracial households is very likely in part because of the [changing ways](https://www.npr.org/2021/08/22/1029609786/2020-census-data-results-white-population-shrinking-decline-non-hispanic-race) Americans are choosing to identify their race and ethnicity.
 
@@ -324,7 +334,10 @@ The significant rise in income for multiracial households is very likely in part
 
 The lowest average incomes in the county are found among Hispanic and Black households; both groups have also not seen significant changes in real incomes since 2010. Black households had a median income of \$71,962 in 2020, while Hispanic households had a median income of \$60,875. That amount is roughly equal to the annual gross pay for two full-time workers earning \$15 per hour.
 
-```{r race, fig.cap="Median household income by race and ethnicity"}
+```{r}
+#| label: fig-race
+#| fig-cap: "Median household income by race and ethnicity"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Tables B19013B, B19013C, B19013D, B19013E, B19013F, B19013G, B19013H, B19013I."
 
 years <- 2010:2020
 
@@ -435,12 +448,13 @@ race_plot <-gg_line_col(
   x_expand = expansion(add = 1)) +
   scale_y_continuous(labels = label_dollar(), limits = c(0,105000))
 
-plotly::ggplotly(race_plot) %>% 
-  plotly_camera()
+# plotly::ggplotly(race_plot) %>% 
+#   plotly_camera()
+
+race_plot
 
 ```
 
-*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Tables B19013B, B19013C, B19013D, B19013E, B19013F, B19013G, B19013H, B19013I.*
 
 ## Takeaways
 

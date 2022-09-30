@@ -22,7 +22,7 @@ As of March 2022, the 2020 Census data available for this report include:
 
 These data are part of the [2020 Census Redistricting Data (P.L. 94-171) Summary Files](https://www.census.gov/programs-surveys/decennial-census/about/rdo/summary-files.html) released in August 2021. Data is available at the state, locality, tract, and block level.
 
-::: {.rmdcaution}
+::: {.callout-caution}
 
 **Important context for 2020 Census data:**
 

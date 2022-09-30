@@ -93,7 +93,9 @@ tenure_income_chas <- tenure %>%
 
 ```
 
-```{r tenure-owner-img, fig.cap="Homeowner cost burden"}
+```{r}
+#| label: fig-tenure-owner-img
+#| fig-cap: "Homeowner cost burden"
 
 oo_cb <- tenure_income_chas |>
   select(year, tenure, income, costburden, estimate) |>
@@ -133,7 +135,9 @@ With the share of renters increasing in Chesterfield County, the share of renter
 
 Separating out by income group shows that declining cost burden is not a shared experience. Income groups making less than 80 percent AMI have seen an increasing share of cost-burdened renters. Those increases have been greatest among extremely low-income renters (85 percent to 90 percent) and low-income renters (58 percent to 64 percent) between 2012 and 2018. The decrease in higher income renters (80 percent AMI or more) experiencing cost burden shows an increasing number of higher earning renters entering the county rental market, nearly 4,000 higher earning renters without cost burden by 2018.
 
-```{r tenure-renter-img, fig.cap="Renter cost burden"}
+```{r}
+#| label: fig-tenure-renter-img
+#| fig-cap: "Renter cost burden"
 
 ro_cb <- tenure_income_chas |>
   select(year, tenure, income, costburden, estimate) |>
@@ -228,7 +232,9 @@ hhtype_cb <- hhtype %>%
 
 ```
 
-```{r hhtype-img, fig.cap="Household type cost burden"}
+```{r}
+#| label: fig-hhtype-img
+#| fig-cap: "Household type cost burden"
 
 hh_cb <- hhtype_cb |>
   select(year, hhtype, costburden, estimate) |>
@@ -256,11 +262,12 @@ ggplot(hh_cb,
     axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
     legend.position = "none") +
   scale_y_continuous(labels = percent_format()) +
-  labs(title = "Houshold cost burden by type", 
+  labs(title = "Cost burden by household type", 
        fill = "Cost burden",
        subtitle = "2012 and 2018",
        caption = "Source: HUD Comprehensive Housing Affordability Strategy") +
   geom_text(aes(label = scales::percent(percent, accuracy = 1), vjust = -.1), color = "red")
+
 # knitr::include_graphics("images/hhtypecb.png")
 
 ```
@@ -303,7 +310,9 @@ race_clean <- race_chas %>%
   
 ```
 
-```{r race-img, fig.cap="Race and ethnicity cost burden"}
+```{r}
+#| label: fig-race-img
+#| #fig-cap: "Race and ethnicity cost burden"
 
 race_cb <- race_clean |>
   mutate(estimate = parse_number(estimate)) |>
@@ -314,17 +323,17 @@ race_cb <- race_clean |>
 # 
 # 
 ggplot(race_cb,
-                      aes(x = year, y = percent, fill = costburden)) +
+       aes(x = year, y = percent, fill = costburden)) +
   geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
   facet_wrap(~race) +
   scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
   theme(axis.title = element_blank(),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   scale_y_continuous(labels = percent_format()) +
-  labs(title = "Renter cost burden", fill = "Cost burden")
+  labs(title = "Household cost burden by race or ethnicity", fill = "Cost burden")
 #   
 
-knitr::include_graphics("images/racecb.png")
+# knitr::include_graphics("images/racecb.png") 
 
 ```
 
@@ -334,7 +343,10 @@ Cost burden also varies across the types of buildings Chesterfield residents cal
 
 Caution should be exercised when interpreting these results. The horizontal lines in the figure below represent 90 percent confidence intervals for each estimated percent. Building types that make up a smaller share of the county's housing stock have fewer samples, resulting in lower data reliability. For example, the actual percent of cost-burdened households in manufactured homes may fall between 6 and 44 percent---a very wide range.
 
-```{r structure, fig.cap="Percent of households with cost burden by structure type"}
+```{r}
+#| label: fig-structure
+#| fig-cap: "Percent of households with cost burden by structure type"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Public Use Microdata Sample."
 
 # options(tigris_use_cache = TRUE)
 # 
@@ -422,13 +434,14 @@ ggplot(cf_pums_summary,
 
 ```
 
-*Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Public Use Microdata Sample.*
-
 Single-family detached homes, while the most expensive housing type, have the lowest rate of cost burden for a number of related factors. These include homeowners having relatively high incomes, and (for long-term homeowners) relatively low mortgage payments.
 
 However, roughly 10 percent of single-family homes in the county are renter-occupied. These households have cost burden rates much higher then their homeowner counterparts
 
-```{r structure-sf, fig.cap="Percent of households in single-family detached homes with cost burden by tenure"}
+```{r}
+#| label: fig-structure-sf
+#| fig-cap: "Percent of households in single-family detached homes with cost burden by tenure"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Public Use Microdata Sample."
 
 cf_pums_sf <- cf_pums_svy %>% 
   filter(BLD == "02") %>% 
@@ -477,8 +490,6 @@ ggplot(cf_pums_sf,
 
 
 ```
-
-*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Public Use Microdata Sample.*
 
 ## Spatial distribution
 
@@ -693,6 +704,7 @@ leaflet(cf_cb_owner) %>%
 ```{r} 
 #| label: fig-cb-renter
 #| fig-cap: "Percent of renters with cost burden by tract"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25106."
 
 cf_cb_renter <-  right_join(cf_tracts, b25106_clean, "GEOID", "GEOID") %>%
   filter(tenure == "Renter") %>%
@@ -721,8 +733,6 @@ leaflet(cf_cb_renter) %>%
 # knitr::include_url("maps/leaflet_renter.html", height = "500px")
 
 ```
-
-*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25106.*
 
 ## Takeaways
 

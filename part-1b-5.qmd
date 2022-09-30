@@ -90,7 +90,8 @@ According to tract-level LEHD employment data from the Census Bureau's [OnTheMap
 
 ```{r}
 #| label: tbl-r1-industry
-#| tbl-cap: "Top five most common industries for residents in the study area"
+#| tbl-cap: "Top five most common industries for residents in the study area."
+#| tbl-subcap: "Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program."
 
 r1_otm <- read_csv("data/routeone_otm_may2021.csv")
 
@@ -98,7 +99,7 @@ r1_otm %>%
   filter(level == "Industry") %>% 
   select(2,3) %>% 
   arrange(desc(jobs)) %>% 
-  kable(caption = "Top five most common industries for residents in the study area",
+  kable(
        align = "lr",
        col.names = c("Industry", "Jobs")) %>% 
   kableExtra::kable_styling(
@@ -107,20 +108,19 @@ r1_otm %>%
 
 ```
 
-*Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.*
-
 While specific wages for each industry and occupation are not available for the specific study area, the LEHD dataset does summarize monthly earnings for all workers into three pay bands. One in five workers earn less than \$1,250 per month, which are likely part-time jobs. While many workers (42 percent) earn more than \$3,333 monthly, or approximately \$40,000 annually, the majority earn less. Most working residents in the study area are employed full-time at low-wage jobs, or are underemployed.
 
 ```{r}
 #| label: tbl-r1-earnings
-#| tbl-cap: "Monthly earnings for residents in the study area"
+#| tbl-cap: "Monthly earnings for residents in the study area."
+#| tbl-subcap: "Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program."
 
 r1_otm %>% 
   filter(level == "Earnings") %>% 
   mutate(name = str_remove_all(name, "\\$"),
          pct = formattable::percent((jobs/sum(jobs)), digits=0)) %>% 
   select(2,6) %>% 
-  kable(caption = "Monthly earnings for residents in the study area",
+  kable(
        align = "lr",
        col.names = c("Monthly earnings (dollars)", "Percent")) %>% 
   kableExtra::kable_styling(
@@ -129,13 +129,12 @@ r1_otm %>%
 
 ```
 
-*Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.*
-
 The LEHD does not tabulate jobs by specific occupation, but based on the most common industries of workers in the study area, the table below shows the most likely common occupations (and regional wages) for these workers.
 
 ```{r}
 #| label: tbl-r1-jobs
-#| tbl-cap: "Wages for common occupations in the study area"
+#| tbl-cap: "Wages for common occupations in the study area." 
+#| tbl-subcap: "Source: U.S. Bureau of Labor Statistics. (2021). Occupational Employment and Wage Statistics (OEWS). May 2021 Metropolitan and Nonmetropolitan Area Occupational Employment and Wage Estimates."
 
 r1_otm %>% 
   filter(level == "Occupation") %>% 
@@ -143,7 +142,7 @@ r1_otm %>%
   mutate(meanwage = currency(meanwage, "$"),
          meanannual = currency(meanannual, "$")) %>% 
   arrange(desc(meanwage)) %>% 
-  kable(caption = "Wages for common occupations in the study area",
+  kable(
        align = "lrr",
        col.names = c("Occupation", "Mean hourly wage", "Mean annual wage")) %>% 
   kableExtra::kable_styling(
@@ -151,7 +150,6 @@ r1_otm %>%
 
 ```
 
-*Source: U.S. Bureau of Labor Statistics. (2021). Occupational Employment and Wage Statistics (OEWS). May 2021 Metropolitan and Nonmetropolitan Area Occupational Employment and Wage Estimates.*
 
 ## Cost burden
 
@@ -230,7 +228,8 @@ Along the Route 1 corridor, there have been about 51 home sales each quarter bet
 
 ```{r}
 #| label: fig-r1-med-sales
-#| fig-cap: "Median single-family home sales price in study area"
+#| fig-cap: "Median single-family home sales price in study area."
+#| fig-subcap: "Source: CVR MLS. 2022 includes all sales through September 6, 2022."
 
 # SALES OF SINGLE-FAMILY/CONDO FOR AREA FROM 1/1/2012 TO 9/6/2022
 
@@ -273,15 +272,14 @@ gg_line(r1_sales_med,
   
 ```
 
-*Source: CVR MLS. 2022 includes all sales through September 6, 2022.*
-
 Sales prices have risen in every part of the study area. The graph below shows median sales price from 2012 through 2022 year-to-date by each of the six Census tracts. The tracts are ordered, roughly, from north to south.
 
 Some of the highest price growth occurred in Bellwood neighborhood --- particularly in tracts 1004.04 and 1004.07. Since 2012, the median sales price in both tracts has risen two-fold; tract 1004.04 rose from \$75,000 to \$240,000, while tract 1004.07 rose from \$87,500 to \$256,000. To the south, northern Chester (tract 1004.09) had the highest sales price in both 2012 (\$160,170) and 2022 (\$300,000). It is the first tract to reach the \$300,000 sales price. However, tracts 1004.04 and 1004.07 (which contain much of Bellwood) are on track to also break that ceiling within a year if current market conditions continue.
 
 ```{r}
 #| label: fig-r1-sales-tract
-#| fig-cap: "Median single-family home sales price by Census tract"
+#| fig-cap: "Median single-family home sales price by Census tract."
+#| fig-subcap: "Source: CVR MLS. 2022 includes all sales through September 5, 2022."
 #| cache: true
 
 # Sys.getenv('GEOCODIO_API_KEY')
@@ -331,14 +329,13 @@ gg_line_col_facet(r1_sales_tract,
 
 ```
 
-*Source: CVR MLS. 2022 includes all sales through September 5, 2022.*
-
 In order to afford a home at median price across the study area, a household would need to make **\$71,952**. While this is \$17,937 (20 percent) less than the income needed to afford the median sales price for the whole county, this is significantly above what most workers in the study area earn. The table below shows the assumptions made to calculate this figure.
 
 
 ```{r}
 #| label: tbl-r1-home-price
-#| tbl-cap: "Calculated income needed to buy median-priced home in the study area"
+#| tbl-cap: "Calculated income needed to buy median-priced home in the study area."
+#| tbl-subcap: "Sources: CVR MLS and Freddie Mac Primary Mortgage Market Survey."
 
 r1_msp <- 285000
 downpayment <- 0.05 # 5% downpayment
@@ -371,7 +368,7 @@ r1_values <- c("$285,000",
             "$71,952")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
-  kable(caption = "Calculated income needed to buy median-priced home in the study area",
+  kable(
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
@@ -383,13 +380,12 @@ data.frame(x = r1_labels, y = r1_values) %>%
 
 ```
 
-*Sources: CVR MLS and Freddie Mac Primary Mortgage Market Survey.*
-
 Census estimates also show that most renters across the study area live in households that have incomes well below what it would require to buy a home in their neighborhood. Most of the census tracts have median renter incomes between \$20,000 and \$50,000.
 
 ```{r}
 #| label: fig-r1-renter-income
-#| fig-cap: "Median renter income by tract in the study area"
+#| fig-cap: "Median renter income by tract in the study area."
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119."
 
 years <- 2010:2020
 
@@ -477,13 +473,12 @@ ggplot(r1_medinc,
 
 ```
 
-*Source: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119.*
-
 For workers who live along the Route 1 corridor, these price increases are continuing to keep homeownership out of reach. Residents largely work in the retail, health care and social assistance, construction, and accommodation and food services industries. Based on the average annual wages in the Richmond region, very few workers in these industries could afford to own a home along the corridor. The few homes that are sold at these prices (below \$160,000) are often in disrepair and, if sold, purchased by investors to rehabilitate and sell at a higher price.
 
 ```{r}
 #| label: tbl-r1-jobs-price
-#| tbl-cap: "Maximum home sales price for common occupations in the study area"
+#| tbl-cap: "Maximum home sales price for common occupations in the study area." 
+#| tbl-subcap: "Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021."
 
 r1_otm %>% 
   filter(level == "Occupation") %>% 
@@ -493,7 +488,7 @@ r1_otm %>%
   mutate(canafford = dollar(canafford)) %>% 
   arrange(desc(canafford)) %>% 
   select(2,8) %>% 
-  kable(caption = "Maximum home sales price for common occupations in the study area",
+  kable(
        align = "lr",
        col.names = c("Occupation", "Maximum home sales price")) %>% 
   kableExtra::kable_styling(
@@ -501,8 +496,6 @@ r1_otm %>%
 
 
 ```
-
-*Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.*
 
 ## Renter affordability
 
@@ -512,7 +505,8 @@ Since 2010, rents along the corridor have been on the rise, from a low of \$1,10
 
 ```{r}
 #| label: fig-r1-rents
-#| fig-cap: "Median asking rent in the study area"
+#| fig-cap: "Median asking rent in the study area."
+#| fig-subcap: "Source: CoStar Group, Inc."
 
 # UTILIZE THE SAME FROM 2B-1 - WHICH IS CURRENT AS OF 8.2022
 
@@ -545,7 +539,6 @@ gg_line_col(costar_r1_rent,
   ggplot2::scale_x_date(limits = c(as.Date("1999-12-01"), as.Date("2022-07-31")))
 
 ```
-*Source: CoStar Group, Inc.*
 
 The rise in rental demand---and subsequently, prices---along the corridor is putting significant pressure on workers who live in the area. In order to afford the average rent of \$1,225 in 2022, a single individual would need to make \$49,000 a year, or $25.13 an hour.
 
@@ -553,7 +546,8 @@ Like the single-family market, the rental market in the study area varies by nei
 
 ```{r}
 #| label: fig-rents-tract
-#| fig-cap: "Asking rent by rental property"
+#| fig-cap: "Asking rent by rental property."
+#| fig-subcap: "Source: CoStar Group, Inc. Data as of September 6, 2022."
 
 # Hand draw outline of study area. Filter for Multi-family and existing buildings.
 
@@ -580,8 +574,6 @@ mapview(
 
 ```
 
-*Source: CoStar Group, Inc. Data as of September 6, 2022.*
-
 Some of the most common jobs occupied by corridor residents pay an hourly wage that is nearly half that needed to afford the typical rent. Fast wood workers, home health aides, and childcare workers all have an average hourly wage less than \$12.00. In order to afford a rental on a single income, they would need a monthly rent closer to \$600---a rent that is becoming harder and harder to find even in older properties like the Bellwood Maisonettes that now list their one bedroom apartments at $1,000 a month.
 
 ```{r}
@@ -595,7 +587,7 @@ r1_otm %>%
   mutate(rent = dollar(rent)) %>% 
   arrange(desc(rent)) %>% 
   select(2,7) %>% 
-  kable(caption = "Maximum monthly rent for common occupations in the study area",
+  kable(
        align = "lr",
        col.names = c("Occupation", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(

@@ -6,7 +6,7 @@ This section summarizes research on period of stay in subsidized housing and any
 
 From a growing family to a change in employment, the length of time a person rents an apartment or home can vary depending on a multitude of factors. Little academic research has been conducted on the length of stay among market-rate renters. Most research conducted in this area is dedicated to better understanding apartment turnover rates from a commercial real estate perspective.
 
-:::{.rmdnote}
+:::{.callout-note}
 
 To date, no formal research has been conducted making comparisons between market-rate and affordable housing resident length of stay. 
 
@@ -28,7 +28,10 @@ While there is no readily accessible dataset to compare length-of-stay between r
 
 The figure below shows this data for Chesterfield County using the latest 2016-2020 5-year estimates. Homeowners are much more likely to have lived in their home for a longer time than renters. Well over half of all homeowners last moved before 2009, with many settling in during the 2000-2009 decade. The majority of renters, on the other hand, moved into their current apartment in 2010 or after.
 
-```{r length-of-stay, fig.cap="Percent of households by tenure by year moved into home"}
+```{r}
+#| label: fig-length-of-stay
+#| fig-cap: "Percent of households by tenure by year moved into home"
+#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25038."
 
 library(tidyverse)
 library(tidycensus)
@@ -88,8 +91,6 @@ gg_bar_col(b25038_data,
   )
 
 ```
-
-*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25038.*
 
 ## Takeaways
 
