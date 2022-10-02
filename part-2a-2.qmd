@@ -87,7 +87,6 @@ new_map <- leaflet(newbuild_map) |>
 
 new_map
 
-
 ```
 
 Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed---slightly more than the number of homes completed between 2020 and 2022.

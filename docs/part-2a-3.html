@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chesterfield County Rental Market Analysis - 14&nbsp; Market comparison</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part-2a-4.html" rel="next">
+<link href="./part-2a-2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="site_libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="site_libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Market comparison</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Chesterfield County Rental Market Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/hdadvisors/chesterfield-market-analysis/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="./Chesterfield-County-Rental-Market-Analysis.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">PART 1-A: LITERATURE REVIEW</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Planning for housing in Chesterfield County</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measures of housing affordability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Market-affordable housing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Concentrations of affordable housing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Renter tenancy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">PART 1-B: DEMOGRAPHIC AND AFFORDABILITY ANALYSIS</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data sources and reliability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Household income</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Household cost burden</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ability-to-pay</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Route 1 affordability analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">PART 2-A: COUNTYWIDE MARKET ANALYSIS</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Rental market summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Rental spatial analyis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-3.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Market comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Outreach</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">PART 2-B: CORRIDOR CASE STUDIES</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2b-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Route 1 corridor analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2b-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Eastern Hull Street Road corridor analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#price" id="toc-price" class="nav-link active" data-scroll-target="#price"><span class="toc-section-number">14.1</span>  Price</a></li>
+  <li><a href="#unit-mix" id="toc-unit-mix" class="nav-link" data-scroll-target="#unit-mix"><span class="toc-section-number">14.2</span>  Unit mix</a>
+  <ul class="collapse">
+  <li><a href="#building-style" id="toc-building-style" class="nav-link" data-scroll-target="#building-style"><span class="toc-section-number">14.2.1</span>  Building style</a></li>
+  <li><a href="#bedrooms" id="toc-bedrooms" class="nav-link" data-scroll-target="#bedrooms"><span class="toc-section-number">14.2.2</span>  Bedrooms</a></li>
+  <li><a href="#size" id="toc-size" class="nav-link" data-scroll-target="#size"><span class="toc-section-number">14.2.3</span>  Size</a></li>
+  </ul></li>
+  <li><a href="#amenities" id="toc-amenities" class="nav-link" data-scroll-target="#amenities"><span class="toc-section-number">14.3</span>  Amenities</a></li>
+  <li><a href="#location" id="toc-location" class="nav-link" data-scroll-target="#location"><span class="toc-section-number">14.4</span>  Location</a>
+  <ul class="collapse">
+  <li><a href="#proximity-to-public-transportation" id="toc-proximity-to-public-transportation" class="nav-link" data-scroll-target="#proximity-to-public-transportation"><span class="toc-section-number">14.4.1</span>  Proximity to public transportation</a></li>
+  <li><a href="#proximity-to-schools" id="toc-proximity-to-schools" class="nav-link" data-scroll-target="#proximity-to-schools"><span class="toc-section-number">14.4.2</span>  Proximity to schools</a></li>
+  <li><a href="#proximity-to-grocery-stores" id="toc-proximity-to-grocery-stores" class="nav-link" data-scroll-target="#proximity-to-grocery-stores"><span class="toc-section-number">14.4.3</span>  Proximity to grocery stores</a></li>
+  <li><a href="#proximity-to-healthcare" id="toc-proximity-to-healthcare" class="nav-link" data-scroll-target="#proximity-to-healthcare"><span class="toc-section-number">14.4.4</span>  Proximity to healthcare</a></li>
+  <li><a href="#proximity-to-job-centers" id="toc-proximity-to-job-centers" class="nav-link" data-scroll-target="#proximity-to-job-centers"><span class="toc-section-number">14.4.5</span>  Proximity to job centers</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="part-2a-3" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Market comparison</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>This section will make comparisons between recent multifamily developments and existing rental supply in the county. For the purposes of this section, “recent” developments are those built in the past five years, are under construction, or are proposed. This analysis does not include single-family rentals, nor manufactured home communities.</p>
+<div class="cell">
+
+</div>
+<section id="price" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="price"><span class="header-section-number">14.1</span> Price</h2>
+<p>For much of the past five years, the difference in rental prices between recent and existing rental properties has remained at nearly $400. But when the pandemic hit in the second quarter of 2020, the gap began to narrow.</p>
+<p>Both recent and existing properties experienced a jump in average rent in the second quarter of 2020. While recent properties experienced a 1% increase in average rents, existing property average rents increased by 4% — closing the gap to $352. This difference in percent of change over time has continued to Q2 2022.</p>
+<p>From Q2 2020 to Q2 2022, average rent for recent properties has changed 3% — from $1,696 to $1,743. Existing property average rent growth was three times (9%) that of recent properties — going from $1,344 to $1,460. From Q2 2017 to Q2 2022, the difference in average rent between recent and existing properties has gone from $410 to $285.</p>
+<p>While average rents for recent properties has remained steady, existing property rents have risen dramatically. The COVID-19 pandemic has significantly impacted demand among the existing stock of rental housing in the county — leading to complementary increases in rental prices.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-price-all" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-price-all-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.1: Average rent of existing and recent rental units</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Price difference between recent and existing properties by number of bedrooms follows similar trends. But average rents for recent three-bedroom rentals experienced a significant increase in the middle of 2021 — going from $2,152 in Q2 2021 to $2,337 in Q4 2021. In 2022, these rents began to decline somewhat, but still remained above $2,000.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-price-br" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-price-br-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.2: Average rent of existing and recent rental units by bedroom</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In all cases, the percent change in average rents for existing rental properties was three times that of recent properties no matter the bedroom count. One- and two-bedroom existing rentals had a near 20 percent increase in average rents from 2017 to 2022, while three-bedroom average rents increased by 16 percent. Average rents for recent rental properties only had an increase of 5 to 7 percent. The difference in rents between recent and existing properties as of Q2 2022 ranges from $204 for one-bedrooms to $552 for three-bedrooms.</p>
+</section>
+<section id="unit-mix" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="unit-mix"><span class="header-section-number">14.2</span> Unit mix</h2>
+<section id="building-style" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="building-style"><span class="header-section-number">14.2.1</span> Building style</h3>
+<p>Consumer preferences can change over time and those preference changes can impact market demand and prices. Multifamily building styles built in the late 20th century were largely in the garden-style apartments. The garden-style emphasizes lower densities and clustered development. Residents typically have ground floor access with no neighbors above.</p>
+<p>Existing rental properties are majority garden-style (85 percent). But the composition of recent multifamily development is much more diverse. Although though garden-style apartments are still being produced, the majority (82 percent) of newer multifamily properties are low- or mid-rise buildings.</p>
+<p>The shift towards these types of developments provides developers with greater economies of scale. More density makes it more financially possible to finance and develop properties. Without the density that comes through low- and mid-rise buildings, developers have to rely heavily on higher rents or substantial subsidies to make development possible.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-unit-mix" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-unit-mix-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.3: Share of units by type for existing and recent properties</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bedrooms" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="bedrooms"><span class="header-section-number">14.2.2</span> Bedrooms</h3>
+<p>Existing rental development mainly consists of two-bedroom rental homes (55 percent) and one-bedrooms (27 percent). More recent developments have shifted towards to one-bedroom rentals (53 percent). The percent of larger rentals - two- and three-bedrooms - being produced has dropped to 36 percent and 9 percent, respectively.</p>
+<p>One-bedroom rentals meets a growing demand among young professionals and aging seniors in the county, but the lack of larger rental homes leaves growing families out of the multifamily rental market. Single-family homes are increasingly meeting the demand for larger families in need of rentals. Although this often is preferred by families who want greater privacy and more in-home separation, the single-family rental market can impact opportunities for potential homebuyers.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-br-mix" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-br-mix-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.4: Share of units by bedrooms for existing and recent properties</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="size" class="level3" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="size"><span class="header-section-number">14.2.3</span> Size</h3>
+<p>On average, the significant number of new one-bedroom apartments are close in size to the county’s existing supply of one-bedroom units—around 750 square feet. New two- and three-bedroom apartments are noticeably larger than older units, however. Recently-built three-bedroom rentals are now approaching 1,500 square feet.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-sf-mix" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-sf-mix-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.5: Share of units by size for existing and recent properties</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="amenities" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="amenities"><span class="header-section-number">14.3</span> Amenities</h2>
+<p>The types of amenities and features on a rental property have also changed of time as consumer preferences and expectations have shifted. While there are many possible examples of “amenities”, this analysis compares the prevalence of four common features across rental properties in the county.</p>
+<p>These amenities, which are included in property-level data from CoStar, include:</p>
+<ul>
+<li>Clubhouse,</li>
+<li>On-site property manager,</li>
+<li>Pool, and</li>
+<li>Fitness center.</li>
+</ul>
+<p>On average, newer apartment communities are much more likely to have at least two of these amenities compared to older properties. In fact, about 90 percent of all new developments have two or more amenities, versus just 71 percent of existing properties.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-amenities" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-amenities-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.6: Percent of existing and recent properties by number of amenities</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="location" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="location"><span class="header-section-number">14.4</span> Location</h2>
+<p>New rental development has occurred all across Chesterfield County in recent years. However, as the map below shows, much of that activity has been concentrated along Route 288 from Midlothian Turnpike south to Hull Street. This development is notable for being located in areas where multifamily housing is not already prevalent.</p>
+<p>On the other side of the county, there are five new developments along Route 1, plus several more just to the west following Route 10. These recent properties, unlike those along Route 288, do not make up the majority of multifamily housing in the area.</p>
+<div class="cell">
+<div id="fig-location" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div id="htmlwidget-86168ee1a8c4a310852f" style="width:100%;height:464px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-86168ee1a8c4a310852f">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[37.463447,37.453624,37.355749,37.4952631,37.5217263,37.4236177,37.4245944,37.3879938,37.4340498,37.5118752,37.5056553,37.5105924,37.516316,37.4909819,37.3105155,37.5061682,37.4531865,37.418395,37.4704738,37.3591282,37.356051,37.493428,37.4525867,37.385989,37.3868515,37.516829,37.4161673,37.254604,37.4024981,37.3441526,37.466216,37.443839,37.4120888,37.3566087,37.366585,37.4962222,37.3405376,37.3622413,37.36063,37.3775317,37.3590129,37.4509959,37.395725,37.3248582,37.4520676,37.3538597,37.4268763,37.435882,37.462315,37.419594,37.344707,37.361904,37.516606,37.4169455,37.399948,37.3739812,37.296501,37.4975887,37.3572442,37.4597286,37.5120419,37.4675151,37.50398,37.360706,37.420821,37.415045,37.434016,37.3182205,37.4378792,37.436979,37.5036969,37.3621348,37.4224921,37.418508,37.4461964,37.4753164,37.452648,37.5162239,37.4431249,37.465495,37.5041728,37.436075,37.3490663,37.4496538,37.3500934,37.4480838,37.3374321,37.2370347,37.3586547,37.4749512,37.4218539,37.4002833,37.490205,37.3787851,37.4417441,37.4656696,37.524405,37.5220297,37.4996774,37.462571,37.449631,37.40929,37.4990468,37.5052285,37.4293998,37.451721,37.5077936,37.4092886,37.4001659,37.4665308,37.4997024,37.3543406,37.4326575,37.4379419,37.4601073],[-77.664415,-77.446765,-77.491532,-77.5682884,-77.6072974,-77.4418739,-77.4415003,-77.6782917,-77.4557458,-77.5326124,-77.5326851,-77.5346073,-77.604704,-77.6586473,-77.4275272,-77.6422259,-77.4897209,-77.504624,-77.6614462,-77.4466718,-77.447804,-77.655475,-77.4445528,-77.4258182,-77.4266142,-77.68487,-77.6245689,-77.415906,-77.710331,-77.4411732,-77.6750341,-77.448835,-77.6419567,-77.3987191,-77.493655,-77.6483398,-77.4162353,-77.4508597,-77.447837,-77.5000366,-77.4454843,-77.6398079,-77.7405882,-77.3184541,-77.4467055,-77.4577268,-77.695146,-77.590295,-77.502341,-77.63686,-77.441085,-77.495388,-77.612727,-77.4357878,-77.431476,-77.4194953,-77.409271,-77.5271077,-77.4906285,-77.5059193,-77.6814084,-77.5188814,-77.536546,-77.348258,-77.621157,-77.6352244,-77.591348,-77.408765,-77.4393993,-77.458757,-77.669418,-77.4099752,-77.4396854,-77.4345264,-77.5851768,-77.6614078,-77.647896,-77.6902964,-77.6416094,-77.511266,-77.5900471,-77.586161,-77.4857729,-77.443458,-77.4894109,-77.4918221,-77.3334906,-77.4335841,-77.443,-77.6599419,-77.497621,-77.6978885,-77.522548,-77.4999255,-77.4503715,-77.6758591,-77.61515,-77.5715354,-77.5500768,-77.533172,-77.495213,-77.68627,-77.6917785,-77.6929055,-77.4444602,-77.458023,-77.6632126,-77.6862704,-77.6816869,-77.5154124,-77.5550052,-77.4567887,-77.4377512,-77.4518733,-77.4984697],4,null,null,{"interactive":true,"className":"","stroke":false,"color":["#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#0000FF","#0000FF","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000"],"fillOpacity":0.5},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#FF0000","#0000FF"],"labels":["Existing","Recent"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"Market","extra":null,"layerId":null,"className":"info legend","group":null}]},{"method":"addControl","args":["<div>Source: CoStar Group, Inc.<\/div>","bottomright",null,"info legend"]}],"limits":{"lat":[37.2370347,37.524405],"lng":[-77.7405882,-77.3184541]}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.7: Map of recent and existing multifamily rental properties</figcaption><p></p>
+</figure>
+</div>
+</div>
+<section id="proximity-to-public-transportation" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="proximity-to-public-transportation"><span class="header-section-number">14.4.1</span> Proximity to public transportation</h3>
+<p>Within the county, there are only 20 out of 115 multifamily properties located within a half mile walking distance of a public transit stop. The majority of these properties are existing properties, while only six are recent developments (built in 2017 or later).</p>
+<p>These transit stops are mainly located at the city-county border along Midlothian Turnpike or along Route One, where the Greater Richmond Transit Company (GRTC) began local bus service from Falling Creek to John Tyler Community College in March 2020. One recent development (Commonwealth Apartments built in 2022) has taken advantage of an Express Service Park-N-Ride located at Commonwealth Centre Parkway. This transit service provides a direct route from Commonwealth Centre Parkway to Downtown Richmond — whether for work or leisure.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<p>The overwhelming majority of both recent and existing multifamily properties in the county are located more than a half mile walking distance of a transit stop. On average, the walking distance for all multifamily properties in the county to a transit stop is 3.2 miles — which would take most people nearly an hour to walk. There is little difference between recent and existing properties in terms of distance to transit, but undoubtedly any new multifamily development on the Route 1 corridor will continue to benefit from public transit access.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-transit-chart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-transit-chart-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.8: Percent of units in Chesterfield County near transit by market</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="proximity-to-schools" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="proximity-to-schools"><span class="header-section-number">14.4.2</span> Proximity to schools</h3>
+<p>Across the entire county, there are 64 schools within the Chesterfield County Public Schools (CCPS) system serving more than 63,000 students. As the county continues to attract more and more families, the desire to be in close proximity to schools at all levels will continue to grow.</p>
+<p>In the county, there are 39 elementary schools, 12 middle schools, and 11 high schools.</p>
+<p>All 115 multimfamily properties are within a 30 minute drive to a CCPS school. More specifically, all properties are less than an eight minute drive of a CCPS school. The average drive time for all multifamily properties to a CCPS school is only about 5 minutes, and there is hardly any difference between recent and existing properties in the average drive time — 4.7 and 4.9 minutes, respectively.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-schools-chart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-schools-chart-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.9: Driving time to schools in Chesterfield County by market</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="proximity-to-grocery-stores" class="level3" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="proximity-to-grocery-stores"><span class="header-section-number">14.4.3</span> Proximity to grocery stores</h3>
+<p>Convenient access to affordable and healthy foods helps support family and individual health. When households have access to food options like fresh fruits and vegetables, they can potentially lower their risk for chronic disease. Close proximity to full service groceries that accept <a href="https://www.cbpp.org/research/food-assistance/the-supplemental-nutrition-assistance-program-snap">Supplemental Nutrition Assistance Program (SNAP)</a> helps keep low-income families and individuals out of hunger, but also helps save time and money in commuting.</p>
+<p>While many convenience stores accept SNAP, the food options are not always the healthiest. Highly processed foods and other snacks do not provide the nutritional value of many food products found at full service grocery retailers.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-grocery-chart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-grocery-chart-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.10: Mean distance from apartments in Chesterfield County to food stores by market</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The prevalence of convenience stores across the county accounts for their closer proximity to both recent and existing multifamily properties. But the average distance to a full service grocery is over a mile for existing properties and has only increased to just over 1.5 miles for recent multifamily properties.</p>
+<p>The increasing distance of recent multifamily to full service groceries increases the likelihood of food deserts — low-income, low-access areas. Food access should continue to considered as new multifamily development grows across the county.</p>
+</section>
+<section id="proximity-to-healthcare" class="level3" data-number="14.4.4">
+<h3 data-number="14.4.4" class="anchored" data-anchor-id="proximity-to-healthcare"><span class="header-section-number">14.4.4</span> Proximity to healthcare</h3>
+<p>Healthcare access is important to growing communities as households age and new family members are added. Healthy communities are maintained when residents can not only afford healthcare, but also reasonably reach healthcare. <a href="https://www.vhi.org/Hospital-Guide/general-hospitals.asp">General acute care hospitals</a> provide 24-hour patient care and conduct many of the major procedures that help treat chronic illnesses, as well as save people in an emergency situation. Urgent care facilities, on the other hand, provide easy walk-in access for non-emergency healthcare. Often less expensive than a hospital visit, urgent care offers patients help when they are unsure of their illness.</p>
+<p>Being within a short driving distance to a hospital or urgent care can be lifesaving, but it can also mean more frequent care to support a longer life. In the county, the average drive time to a hospital from a multifamily property is about 12 minutes, while it is 9 minutes to an urgent care.</p>
+<p>More recent development has been closer to hospitals (10 minutes) than existing development (12 minutes). But recent development has been getting further away from urgent cares (10 minutes) compared to 9 minutes for existing development. This has implications for low- and moderate-income households who can more likely afford urgent care compared to hospital visits.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-r1-health-chart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-r1-health-chart-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.11: Mean driving time from apartments in Chesterfield County to healthcare facility by market</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="proximity-to-job-centers" class="level3" data-number="14.4.5">
+<h3 data-number="14.4.5" class="anchored" data-anchor-id="proximity-to-job-centers"><span class="header-section-number">14.4.5</span> Proximity to job centers</h3>
+<p>With transportation being many households second highest expense after housing, a daily commute to work can quickly eat into a households budget the longer it is. Job centers are located all across the region, but areas with the highest paying jobs are located in Downtown Richmond and business parks like West Creek in Henrico County or Meadowville in Chesterfield County. With many multifamily properties located along major corridors and near the city-county border, proximity to job centers is not a problem for those commuters with personal vehicles. A commute to the city is made easier with the Powhite Parkway and I-95 access. But an assortment of jobs are necessary for a diverse and thriving economy. For any income household shorter commutes help save money, which can be used on housing and life’s other necessities. However, fewer job opportunities for low-income households in close proximity to home mean longer commutes and more money spent on transportation — especially in localities where public transportation isn’t available.</p>
+<p>In the county, the share of jobs paying more than $39,996 within a 15 minute drive of multifamily properties is near 50 percent for both recent and existing properties — 47 and 49 percent, respectively. Recent multifamily development is increasingly located in areas wherein there are lower paying jobs (below $39,996). This means greater job opportunities for low- and moderate-income households within a short distance. But mixed-use developments, or live-work-play communities, are increasingly desired by diverse households.</p>
+<p>Meeting the needs of houesholds all within a walking distance is a growing trend and is being seen across the region. The Midlothian Special Area Plan helps support development like this which helps households of all kind find employment opportunities with having to depend on a car.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-jobs-chart" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="part-2a-3_files/figure-html/fig-jobs-chart-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;14.12: Percent of jobs by wage within 15 minute drive by market in Chesterfield County</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part-2a-2.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Rental spatial analyis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part-2a-4.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Outreach</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

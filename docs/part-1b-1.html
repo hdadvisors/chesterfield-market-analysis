@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chesterfield County Rental Market Analysis - 7&nbsp; Data sources and reliability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part-1b-2.html" rel="next">
+<link href="./part-1a-5.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data sources and reliability</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Chesterfield County Rental Market Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/hdadvisors/chesterfield-market-analysis/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="./Chesterfield-County-Rental-Market-Analysis.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">PART 1-A: LITERATURE REVIEW</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Planning for housing in Chesterfield County</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measures of housing affordability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Market-affordable housing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Concentrations of affordable housing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Renter tenancy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">PART 1-B: DEMOGRAPHIC AND AFFORDABILITY ANALYSIS</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data sources and reliability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Household income</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Household cost burden</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ability-to-pay</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Route 1 affordability analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">PART 2-A: COUNTYWIDE MARKET ANALYSIS</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Rental market summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Rental spatial analyis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Market comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Outreach</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">PART 2-B: CORRIDOR CASE STUDIES</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2b-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Route 1 corridor analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2b-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Eastern Hull Street Road corridor analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="toc-section-number">7.1</span>  Background</a></li>
+  <li><a href="#decennial-census" id="toc-decennial-census" class="nav-link" data-scroll-target="#decennial-census"><span class="toc-section-number">7.2</span>  Decennial Census</a></li>
+  <li><a href="#american-community-survey" id="toc-american-community-survey" class="nav-link" data-scroll-target="#american-community-survey"><span class="toc-section-number">7.3</span>  American Community Survey</a></li>
+  <li><a href="#comprehensive-housing-affordability-strategy" id="toc-comprehensive-housing-affordability-strategy" class="nav-link" data-scroll-target="#comprehensive-housing-affordability-strategy"><span class="toc-section-number">7.4</span>  Comprehensive Housing Affordability Strategy</a></li>
+  <li><a href="#center-for-neighborhood-technology" id="toc-center-for-neighborhood-technology" class="nav-link" data-scroll-target="#center-for-neighborhood-technology"><span class="toc-section-number">7.5</span>  Center for Neighborhood Technology</a></li>
+  <li><a href="#central-virginia-regional-multiple-listing-service" id="toc-central-virginia-regional-multiple-listing-service" class="nav-link" data-scroll-target="#central-virginia-regional-multiple-listing-service"><span class="toc-section-number">7.6</span>  Central Virginia Regional Multiple Listing Service</a></li>
+  <li><a href="#costar" id="toc-costar" class="nav-link" data-scroll-target="#costar"><span class="toc-section-number">7.7</span>  CoStar</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="toc-section-number">7.8</span>  Takeaways</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="part-1b-1" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data sources and reliability</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>This section lists and summarizes the major data sources used to measure housing affordability in the United States. Additional information is provided on the reliability of those data sources to accurately reflect households in Chesterfield County.</p>
+<section id="background" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="background"><span class="header-section-number">7.1</span> Background</h2>
+<p>Public and proprietary data are both available to help determine the level of housing affordability in communities across Virginia. These data have varying degrees of reliability based on sample sizes and time of data collection, but they serve as the most comprehensive source of information.</p>
+</section>
+<section id="decennial-census" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="decennial-census"><span class="header-section-number">7.2</span> Decennial Census</h2>
+<p>The U.S. Census Bureau is constitutionally obligated to conduct a full count of the American population every 10 years. These enumerations determine the number and location of every person in the country as of April 1 of the year each Census is conducted. Current Census forms also ask respondents to include information on their sex, age, race, ethnicity, and whether they own or rent their home.</p>
+<p>This report will use data from the most recent 2020 Census. The Census Bureau released the first data from this enumeration in April 2021 (state apportionment counts) and has since published additional datasets with greater detail.</p>
+<p>As of March 2022, the 2020 Census data available for this report include:</p>
+<ul>
+<li>Total population and household counts,</li>
+<li>Occupancy status of housing units,</li>
+<li>Group quarters population,</li>
+<li>Race and ethnicity, and</li>
+<li>Voting age (18 years and over) population.</li>
+</ul>
+<p>These data are part of the <a href="https://www.census.gov/programs-surveys/decennial-census/about/rdo/summary-files.html">2020 Census Redistricting Data (P.L. 94-171) Summary Files</a> released in August 2021. Data is available at the state, locality, tract, and block level.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Danger
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Important context for 2020 Census data:</strong></p>
+<p>For the first time, Census results were produced using “<a href="https://www.ncsl.org/research/redistricting/differential-privacy-for-census-data-explained.aspx">differential privacy</a>.” This technique adds artificial noise to data at small geographies to reduce the likelihood of respondents being matched with personal information.</p>
+<p>Many researchers and Census advocates have pointed out <a href="https://www.bloomberg.com/news/articles/2021-08-12/data-scientists-ask-can-we-trust-the-2020-census">major flaws</a> in the Bureau’s implementation of differential privacy. For example, that the risk of “unmasking” private data has been <a href="https://twitter.com/HistDem/status/1428047057219108873">greatly overstated</a>, and that the added noise makes neighborhood-level data very <a href="https://www.pilotonline.com/government/virginia/vp-nw-census-distortion-folo-20210818-b4wf2lalkfb35fkrtkj6xdfp4a-story.html">unreliable for research</a>.</p>
+<p>Furthermore, there is evidence that the 2020 Census <a href="https://www.npr.org/2022/03/10/1083732104/2020-census-accuracy-undercount-overcount-data-quality">dramatically undercounted</a> Americans who are Black, Latino, or indigenous. This is attributable to both the impact of COVID-19 on response rates, as well as the uncertainty surrounding the Trump administration’s effort to add citizenship status as an additional question for respondents to answer.</p>
+</div>
+</div>
+</section>
+<section id="american-community-survey" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="american-community-survey"><span class="header-section-number">7.3</span> American Community Survey</h2>
+<p>The <a href="https://www.census.gov/programs-surveys/acs">American Community Survey</a> is a program of the U.S. Census Bureau that provides annual data on communities across the country. This provides communities with up-to-date and more detailed socioeconomic information between the official census, which occurs every ten years and only collects basic information.</p>
+<p>The ACS produces both 1-year and 5-year period estimates of the U.S. population. The 1-year estimates are produced every year for geographic areas with a population of 65,000 or more. Data for 1-year estimates are collected over a 12 month period and have a smaller sample size than 5-year estimates. Although better for getting the most current data, 1-year estimates are less reliable than 5-year estimates.</p>
+<p>The 5-year estimates are collected over a 60 month period. For 2019 5-year estimates, this meant that data was collected from January 1, 2015 to December 31, 2019. Sample sizes are large due to this length of time. While this results in higher data reliability, data is not as current.</p>
+</section>
+<section id="comprehensive-housing-affordability-strategy" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="comprehensive-housing-affordability-strategy"><span class="header-section-number">7.4</span> Comprehensive Housing Affordability Strategy</h2>
+<p><a href="https://www.huduser.gov/portal/datasets/cp.html">Comprehensive Housing Affordability Strategy</a> (CHAS) data are custom tabulations of ACS data that are sent to the U.S. Department of Housing and Urban Development (HUD) by the U.S. Census Bureau every year. These custom tabulations demonstrate the extent of housing needs across the country—mainly in terms of housing cost burden.</p>
+<p>The primary benefit of CHAS data is its use of regional Area Median Income (AMI) categories to sort households, which is not available in standard American Community Survey tables. This feature allows researchers and policymakers to easily compare housing needs with available housing programs, which nearly always use AMI for eligibility guidelines.</p>
+<p>CHAS data is produced using ACS 5-year estimates and lags behind 5-year estimate releases by a year. Therefore, the most recent release of CHAS data (as of March 2022) is for the 2014-2018 5-year period.</p>
+<p>Published CHAS data does include calculated margins of error based on the original ACS sample. These error ranges generally result in high to moderate estimate reliability at the locality level (especially for larger jurisdictions, such as Chesterfield County). However, we take caution in using CHAS data produced for small population subsets with higher errors (e.g., households who rent, are between 30 and 50 percent AMI, are Asian, and are cost-burdened).</p>
+</section>
+<section id="center-for-neighborhood-technology" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="center-for-neighborhood-technology"><span class="header-section-number">7.5</span> Center for Neighborhood Technology</h2>
+<p>The Center for Neighborhood Technology’s <a href="https://htaindex.cnt.org/">Housing and Transportation (H+T) Affordability Index</a> utilizes a cost model reviewed by practitioners and academics specializing in transportation and community indicators. The index was last updated in 2017, but is the most comprehensive, publicly-available tool to measure both housing and transportation affordability in the United States.</p>
+<p>The H+T Affordability Index utilizes the 2015 American Community Survey, Longitudinal Employer-Household Dynamics (LEHD) Origin Destination Employment Statistics (LODES), and CNT’s own General Transit Feed Specification (GTFS) data.</p>
+<p>Although it uses ACS data as a model input, CNT does not publish any calculated margins of error or other data reliability measures for their index. Readers should take caution with specific metrics for smaller slices of the population.</p>
+</section>
+<section id="central-virginia-regional-multiple-listing-service" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="central-virginia-regional-multiple-listing-service"><span class="header-section-number">7.6</span> Central Virginia Regional Multiple Listing Service</h2>
+<p>The Central Virginia Regional Multiple Listing Service (CVR MLS) is a database of real estate transactions maintained by the Richmond Association of REALTORS®. The database provides real-time data on properties for sale and helps real estate agents and brokers connect potential homebuyers to sellers.</p>
+<p>Although the data is dependent on agent inputs, the MLS is a highly reliable source of information on residential real estate sales. While a small number of properties sold directly by owners may not be included, we treat the MLS database as a complete population of all home sales and listings in the Richmond region. A margin of error is not applicable.</p>
+</section>
+<section id="costar" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="costar"><span class="header-section-number">7.7</span> CoStar</h2>
+<p>CoStar Group, Inc.&nbsp;maintains a proprietary database of commercial real estate information across the nation, including multifamily properties. CoStar collects a multitude of data on these assets through a comprehensive approach of direct communication with properties and online data scraping.</p>
+<p>We will treat the CoStar database as a complete population of all multifamily units in the Richmond region that are corporately owned. Their database excludes, however, most small-scale rental properties such as single-family homes and duplexes.</p>
+</section>
+<section id="takeaways" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">7.8</span> Takeaways</h2>
+<ul>
+<li>A wide range of data types and sources are necessary to fully understand housing needs and affordability across a population. These include both public and private data sources.</li>
+<li>The survey sample-based American Community Survey and other datasets that rely on it (CHAS, CNT, etc.) benefit from standard collection methodology, complete coverage of the United States, and regularly scheduled updates. However, this comes at the expense of lower data reliability for smaller geographies with lower population counts, which have fewer responses from which to draw accurate conclusions.</li>
+<li>For the purposes of this report, we will use Census Tracts as the most detailed geographic unit. These generally correspond to larger neighborhoods and communities with several thousand people. Margins of error for most tract-level estimates are within reasonable ranges.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part-1a-5.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Renter tenancy</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part-1b-2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Household income</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

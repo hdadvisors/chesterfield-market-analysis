@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chesterfield County Rental Market Analysis - 3&nbsp; Measures of housing affordability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part-1a-3.html" rel="next">
+<link href="./part-1a-1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measures of housing affordability</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Chesterfield County Rental Market Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/hdadvisors/chesterfield-market-analysis/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="./Chesterfield-County-Rental-Market-Analysis.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">PART 1-A: LITERATURE REVIEW</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Planning for housing in Chesterfield County</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measures of housing affordability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Market-affordable housing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Concentrations of affordable housing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1a-5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Renter tenancy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">PART 1-B: DEMOGRAPHIC AND AFFORDABILITY ANALYSIS</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data sources and reliability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Household income</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Household cost burden</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ability-to-pay</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1b-5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Route 1 affordability analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">PART 2-A: COUNTYWIDE MARKET ANALYSIS</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Rental market summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Rental spatial analyis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Market comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2a-4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Outreach</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">PART 2-B: CORRIDOR CASE STUDIES</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2b-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Route 1 corridor analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2b-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Eastern Hull Street Road corridor analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="toc-section-number">3.1</span>  Background</a></li>
+  <li><a href="#percent-standard" id="toc-percent-standard" class="nav-link" data-scroll-target="#percent-standard"><span class="toc-section-number">3.2</span>  30 percent standard</a></li>
+  <li><a href="#nars-housing-affordability-index" id="toc-nars-housing-affordability-index" class="nav-link" data-scroll-target="#nars-housing-affordability-index"><span class="toc-section-number">3.3</span>  NAR’s Housing Affordability Index</a></li>
+  <li><a href="#nlihcs-housing-wage" id="toc-nlihcs-housing-wage" class="nav-link" data-scroll-target="#nlihcs-housing-wage"><span class="toc-section-number">3.4</span>  NLIHC’s Housing Wage</a></li>
+  <li><a href="#cnts-ht-affordability-index" id="toc-cnts-ht-affordability-index" class="nav-link" data-scroll-target="#cnts-ht-affordability-index"><span class="toc-section-number">3.5</span>  CNT’s H+T Affordability Index</a></li>
+  <li><a href="#residual-income-approach" id="toc-residual-income-approach" class="nav-link" data-scroll-target="#residual-income-approach"><span class="toc-section-number">3.6</span>  Residual income approach</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="toc-section-number">3.7</span>  Takeaways</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="part-1a-2" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measures of housing affordability</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<p>This section will summarize the common measures of housing affordability that are widely used by researchers and policymakers, as well as credible alternative measures. Comparisons are made of each measure using county-specific data to understand the variations.</p>
+<section id="background" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="background"><span class="header-section-number">3.1</span> Background</h2>
+<p>Determining what housing is affordable and to whom is a key challenge many communities face as housing prices continue to rise. For many researchers and practitioners, the 30 percent of income ratio has been the standard measure due to its ease in application and understanding among the public. But criticism laid upon this measure points to its failure to account for the varying differences in cost of living based on household size and location.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Other measures have gained credibility over time such as the Housing Affordability Index (HAI) from the National Association of REALTORS® and the Housing Wage from the National Low Income Housing Coalition (NLIHC). Alternative measures such as the residual income approach and the Housing and Transportation Affordability Index from the Center for Neighborhood Technology are other more recent metrics.</p>
+<p>The following sections summarize standard and alternative measures of housing affordability, and provide an understanding of affordability within a Chesterfield-specific context.</p>
+</section>
+<section id="percent-standard" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="percent-standard"><span class="header-section-number">3.2</span> 30 percent standard</h2>
+<p>A household spending more than 30 percent of their gross income on housing costs is often referred to as <em>cost-burdened</em>. This standard (and the term “cost burden”) is the most commonly used benchmark for housing affordability. It is simple to understand, and simple to calculate, because only two data points are needed: gross household income and total housing costs.</p>
+<p>The 30 percent threshold is used because any income used for housing beyond that share cannot be used for transportation, healthcare, childcare, groceries, and other necessary household expenses. Generally speaking, a cost-burdened household will more commonly have trouble balancing their monthly budget, and will also face significant challenges when attempting to save or invest their income.</p>
+<p>This income-to-cost ratio was originally set at 25 percent when the federal government began designing housing assistance programs in the 1960s and 1970s. The threshold was increased to 30 percent in the 1980s. Today, the 30 percent cap is used to set household rent levels for public housing, Housing Choice Vouchers, and many other housing assistance initiatives.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Although it has been the go-to measure in housing affordability, the 30 percent standard has several criticisms. Chief among these critiques is that living expenses vary from household to household.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> A family of four will likely face much higher and additional costs for things like childcare, food, and transportation, when compared to a single adult with the same income.</p>
+<p>Secondly, different income groups don’t spend the same way.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Higher income households can have much more flexibility to spend more than 30 percent of their income on housing costs when compared to a low income household. Using the 30 percent standard in this case can sometimes overestimate the share of higher income households experiencing cost burden.</p>
+<p>Other critics also reference the fact that the 30 percent standard does not account for things like location and housing quality. A household living in a very walkable community will spend very differently from a household that has to invest a lot of money in transportation (i.e., gas and car maintenance).</p>
+</div>
+</div>
+<p>Cost burden data is available from the U.S. Census Bureau in the American Community Survey. Tables <a href="https://censusreporter.org/data/table/?table=B25091&amp;geo_ids=04000US51,05000US51041&amp;primary_geo_id=04000US51">B25091</a> and <a href="https://censusreporter.org/data/table/?table=B25070&amp;geo_ids=04000US51,05000US51041&amp;primary_geo_id=04000US51">B25070</a> break down the share of gross household income dedicated to housing costs for homeowners and renters, respectively.</p>
+<p>Table B25091 defines “selected monthly owner costs” for homeowners as:</p>
+<ul>
+<li>Monthly mortgage payments,</li>
+<li>Real estate taxes,</li>
+<li>Homeowners and/or mortgage insurance, and</li>
+<li>Necessary utilities.</li>
+</ul>
+<p>Table B25070 defines “gross rent” for renters as:</p>
+<ul>
+<li>Monthly contract rent payments, and</li>
+<li>Necessary utilities paid directly by tenants.</li>
+</ul>
+<p><strong>In Chesterfield County:</strong></p>
+<p>The table below combines those datasets to show the number of cost burdened households by tenure in Chesterfield County.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-cost-burden" class="anchored">
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3.1:  Cost burden by tenure in Chesterfield County </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Cost burden </th>
+   <th style="text-align:right;"> Homeowners </th>
+   <th style="text-align:right;"> Renters </th>
+   <th style="text-align:right;"> Total </th>
+   <th style="text-align:right;"> Percent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Not cost burdened </td>
+   <td style="text-align:right;"> 78,661 </td>
+   <td style="text-align:right;"> 15,005 </td>
+   <td style="text-align:right;"> 93,666 </td>
+   <td style="text-align:right;"> 73.6% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cost burdened </td>
+   <td style="text-align:right;"> 18,502 </td>
+   <td style="text-align:right;"> 13,266 </td>
+   <td style="text-align:right;"> 31,768 </td>
+   <td style="text-align:right;"> 25.0% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Not computed </td>
+   <td style="text-align:right;"> 427 </td>
+   <td style="text-align:right;"> 1,369 </td>
+   <td style="text-align:right;"> 1,796 </td>
+   <td style="text-align:right;"> 1.4% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> Total </td>
+   <td style="text-align:right;font-weight: bold;"> 97,590 </td>
+   <td style="text-align:right;font-weight: bold;"> 29,640 </td>
+   <td style="text-align:right;font-weight: bold;"> 127,230 </td>
+   <td style="text-align:right;font-weight: bold;"> 100.0% </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><em>Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25091 and B25070.</em></p>
+</section>
+<section id="nars-housing-affordability-index" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="nars-housing-affordability-index"><span class="header-section-number">3.3</span> NAR’s Housing Affordability Index</h2>
+<p>The National Association of REALTORS® (NAR) publishes a <a href="https://www.nar.realtor/research-and-statistics/housing-statistics/housing-affordability-index">Housing Affordability Index</a> (HAI) to show the difference between the average family income for an area versus the minimum income required to afford the median priced single-family home in that community.</p>
+<p>For 2021, the national HAI was <strong>150.3</strong>. This reflects the median family income being about 1.5 times greater than the minimum income required to purchase the median priced home, using the current 30-year fixed mortgage rate published by the Federal Housing Finance Board. A higher HAI value reflects higher affordability in the for-sale market.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The full Housing Affordability Index <a href="https://www.nar.realtor/research-and-statistics/housing-statistics/housing-affordability-index/methodology">methodology</a> is available on the NAR website.</p>
+</div>
+</div>
+<p>The HAI has steadily decreased as housing prices continue to rise across the nation. As of June 2022, the preliminary HAI for all 50 states was <strong>98.5</strong>. This assumed a median single-family home price of $423,300, a mortgage rate of 5.60%, and a median family income of $91,952.</p>
+<p><strong>In Chesterfield County:</strong></p>
+<p>The table below shows the inputs and calculated HAI for Chesterfield County as of August 2022. The median sales price is collected from all 2022 year-to-date single-family home sales accessed from the Central Virginia Regional Multiple Listing Service (CVR MLS).<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The 30-year fixed mortgage is sourced from the national weekly average published by the Freddie Mac <a href="https://www.freddiemac.com/pmms">Primary Mortgage Market Survey</a> for the week ending September 1, 2022. The median family income is the latest value published by the U.S. Census Bureau.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>The current HAI for Chesterfield County is <strong>118.8</strong>. This is lower than the latest national average published by NAR (150.3), indicating greater barriers to affordable homeownership in the county.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-hai" class="anchored">
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3.2:  Housing Affordability Index in Chesterfield County </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Input </th>
+   <th style="text-align:right;"> Value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Median sales price </td>
+   <td style="text-align:right;"> $371,480 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 30-year fixed mortgage rate </td>
+   <td style="text-align:right;"> 5.66% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Monthly payment </td>
+   <td style="text-align:right;"> $1,717.33 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Minimum qualifying income </td>
+   <td style="text-align:right;"> $82,432 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Median family income </td>
+   <td style="text-align:right;"> $97,941 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> Housing Affordability Index </td>
+   <td style="text-align:right;font-weight: bold;"> 118.8 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="nlihcs-housing-wage" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="nlihcs-housing-wage"><span class="header-section-number">3.4</span> NLIHC’s Housing Wage</h2>
+<p>The National Low Income Housing Coalition has published its Out of Reach report every year since 1989 to bring attention to the widening gap between actual wages and the cost of rental housing in the United States. Within this report, NLIHC calculates its Housing Wage, an affordability measure that estimates the wage a full-time worker must earn to afford rental housing based on the U.S. Department of Housing and Urban Development’s (HUD) fair market rent (FMR) without spending more than 30 percent of their income.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The latest 2022 <a href="https://reports.nlihc.org/oor">Out of Reach</a> report and data is available on the NLIHC website.</p>
+</div>
+</div>
+<p>NLIHC utilizes multiple data sources, such as the U.S. Census Bureau’s American Community Survey and average wages from the Bureau of Labor Statistics, to create an affordability measure that focuses on the economic gap between household incomes and the price of rental housing.</p>
+<p>Fair market rent is another a key statistic that helps NLIHC determine the Housing Wage. FMR is calculated by HUD every fiscal year and is a reflection of the median rent in a given area. FMR is largely used to set rental assistance limits under the Housing Choice Voucher (HCV) program (Section 8).</p>
+<p>There have been few, if any, specific critiques of the Housing Wage statistic. But issue can be taken with the fact that FMR is set at the metropolitan level. Therefore, the FMR in Chesterfield County, regardless of location, is the same as the FMR in the City of Richmond and other localities in the Richmond, Virginia Metropolitan Statistican Area (MSA). This means that the Housing Wage does not fully account for the nuances that exist across the regional rental market.</p>
+<p>While the Housing Wage is helpful in determining the relationship between jobs and housing prices, it does not help to measure the gap in affordable housing, or rather how many households are facing affordability challenges.</p>
+<p><strong>In Chesterfield County:</strong></p>
+<p>NLIHC released their latest Out of Reach report in July 2022. According to NLIHC, the annual wage required to afford a two-bedroom rental unit in Chesterfield County was <strong>$47,560</strong>, or an hourly wage of <strong>$22.87</strong>. NLIHC estimates that the typical renter wage in Chesterfield County is $17.15—nearly $6 short of the wage needed to afford a typical two-bedroom rental in the region.</p>
+</section>
+<section id="cnts-ht-affordability-index" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="cnts-ht-affordability-index"><span class="header-section-number">3.5</span> CNT’s H+T Affordability Index</h2>
+<p>The Center for Neighborhood Technology (CNT) developed the <a href="https://htaindex.cnt.org/">Housing + Transportation (H+T) Affordability Index</a> in 2006 as a result of a Minneapolis-St.&nbsp;Paul report conducted for the Brookings Institution’s Urban Markets Initiative. This affordability measure is a robust indicator of the role that geographic location has on the two major costs faced by American households: housing and transportation.</p>
+<p>CNT expands on the 30 percent standard with the inclusion of transportation costs in an affordability standard. Based on extensive research CNT found that 15 percent was a reasonable standard at which to set affordable transportation costs; it follows that a household should pay no more than 45 percent of their household income on housing and transportation costs combined.</p>
+<p>CNT’s transportation cost model takes into account several factors that influence how much a typical household pays for transportation, including commuting data, public transportation access, housing density, and consumer behavior.</p>
+<p>With the H+T Affordability Index, CNT offers detailed data down to the Census Block Group-level (i.e.&nbsp;a neighborhood-level). The index is provided in terms of a regional typical household based on a median income, the average number of commuters per household, and the average household size. This allows the index to consistently measure the impact of neighborhood factors on a typical household’s housing and transportation costs.</p>
+<p>The index is expressed as a set percentage of income—in other words, what the typical regional household spends on housing and transportation based on their home’s location.</p>
+<p>In spite of the H+T’s comprehensiveness, it has its pitfalls. The nature of the model requires the use of a standard household which only sets a baseline from which to compare other households to. This can make it difficult to make conclusions about households with incomes lower or higher than that baseline. To help with this, CNT offers the index based on a regional moderate income household—80 percent of the regional median household income, while maintaining the typical regional household size and commuters.</p>
+<p>The index also suffers from outdated data sources. The most recent update of the model took place in 2017 and utilized data that predated this year to calculate the index. Therefore, the index does not capture recent trends in housing and transportation costs that tend to exacerbate cost burden.</p>
+<p><strong>In Chesterfield County:</strong></p>
+<p>The most recent H+T Affordability Index for <a href="https://htaindex.cnt.org/fact-sheets/?lat=37.3673217&amp;lng=-77.6077865&amp;focus=county&amp;gid=3038#fs">Chesterfield County</a> stated that the typical regional household, with an income of $59,919, 1.19 commuters per household, and a household size of 2.58 people, spent 53 percent of their income on housing and transportation combined.</p>
+<p>CNT disaggregated housing and transportation to account for 30 percent and 23 percent, respectively.</p>
+<p>These costs increase for the regional moderate income household with an income of $47,935—increasing to 63 percent, or 38 percent on housing and 25 percent on transportation.</p>
+</section>
+<section id="residual-income-approach" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="residual-income-approach"><span class="header-section-number">3.6</span> Residual income approach</h2>
+<p>The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over (“residual”) and available for housing. That residual amount can then be compared to local housing prices to assess affordability.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The most comprehensive assessment of the residual income approach compared to other housing affordability measures is <em>Measuring Housing Affordability: Assessing the 30 Percent of Income Standard</em>, a <a href="https://www.jchs.harvard.edu/research-areas/working-papers/measuring-housing-affordability-assessing-30-percent-income-standard">research paper</a> published by The Harvard Joint Center for Housing Studies in 2018.</p>
+</div>
+</div>
+<p>Benefits of the residual income approach include the ability to:</p>
+<ul>
+<li>Factor in real-life household cost estimates for transportation, healthcare, and other necessary expenses,</li>
+<li>Account for a range of household types and compositions, particularly those with children, and</li>
+<li>More accurately reflect the affordability distinctions between low and high income households.</li>
+</ul>
+<p>However, drawbacks of this metric include:</p>
+<ul>
+<li>Greater data and methodological requirements, making it less accessible to calculate,</li>
+<li>Difficulty in providing a simple explanation of the methods to laypersons, and</li>
+<li>The potential to inflate affordability challenges in high-cost areas.</li>
+</ul>
+<p><strong>In Chesterfield County:</strong></p>
+<p>A full calculation of housing affordability in Chesterfield County using the residual income method is beyond the scope of this report. However, we may use a sample from the <a href="https://selfsufficiencystandard.org/virginia/">Self-Sufficiency Standard</a> (SSS) dataset published by the Center for Women’s Welfare at the University of Washington. According to the Center, this Standard:</p>
+<blockquote class="blockquote">
+<p>…defines the income working families need to meet a minimum yet adequate level, taking into account family composition, ages of children, and geographic differences in costs. The Standard is an affordability and living wage economic security measure that provides an alternative to the official poverty measure.</p>
+</blockquote>
+<p>As an example, we will estimate residual income for a household with the following characteristics:</p>
+<ul>
+<li>Two full-time working adults (married) and two elementary school-age children,</li>
+<li>A total household income equal to 80 percent of the Richmond, Virginia Area Median Income (AMI), and</li>
+<li>Full-time residency in Chesterfield County.</li>
+</ul>
+<p>First, we calculate the gross and take-home household incomes. According to HUD’s <a href="https://www.huduser.gov/portal/datasets/il/il2021/2021summary.odn?states=%24states%24&amp;data=2021&amp;inputname=METRO40060M40060*Richmond%2C+VA+MSA&amp;stname=%24stname%24&amp;statefp=99&amp;year=2021&amp;selection_type=hmfa">FY 2021 Income Limits</a>, the income for a four-person family at 80 percent AMI is $72,000. Based on current federal and state effective tax rates, the estimated total household income after taxes for this family would be $58,111. This amounts to a monthly take-home wage of $4,843.</p>
+<p>Next, we determine the 2021 SSS monthly cost estimates for a four-person household with two working adults and two elementary school-age children in Chesterfield County. These total costs (housing excluded) are $4,480.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-residual-cost" class="anchored">
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3.3:  Self-Sufficiency Standard monthly costs </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Expense </th>
+   <th style="text-align:right;"> Amount </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Child Care </td>
+   <td style="text-align:right;"> $1,086 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Food </td>
+   <td style="text-align:right;"> $922 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Transportation </td>
+   <td style="text-align:right;"> $576 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Health Care </td>
+   <td style="text-align:right;"> $775 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Miscellaneous </td>
+   <td style="text-align:right;"> $462 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Taxes </td>
+   <td style="text-align:right;"> $1,092 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Child Care Tax Credit (-) </td>
+   <td style="text-align:right;"> ($100) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Child Tax Credit (-) </td>
+   <td style="text-align:right;"> ($333) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> Total </td>
+   <td style="text-align:right;font-weight: bold;"> $4,480 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We then subtract these costs from the total take home pay of each household to determine what is left to be spent on housing costs.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-residual-summary" class="anchored">
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3.4:  Residual income available for housing for family of four at 80 percent AMI </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Pay, expenses, and residual income </th>
+   <th style="text-align:right;"> Amount </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Monthly take-home pay </td>
+   <td style="text-align:right;"> $4,843 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Monthly expenses (-) </td>
+   <td style="text-align:right;"> ($4,480) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> Residual income </td>
+   <td style="text-align:right;font-weight: bold;"> $363 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>This $363 available for housing is far below than the required monthly payment to afford the median-priced single-family home ($1,717, from HAI section above) and the market rent for apartments with three or more bedrooms ($1,759, via CoStar<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>) in Chesterfield County.</p>
+<p>For additional examples, we can estimate residual income for some of the county’s most common household types and incomes<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>:</p>
+<p><em>Homeowners</em></p>
+<ul>
+<li>Married registered nurse and Chesterfield County police officer, with two school-age kids, and a household income of $136,410</li>
+<li>Married couple, aged 65 and over, with no kids, and a monthly Social Security benefit of $2,739.10 (average amount for retired worker and aged spouse)</li>
+</ul>
+<p><em>Renters</em></p>
+<ul>
+<li>Single Chesterfield County Public Schools teacher, with no kids, and a household income of $54,937</li>
+<li>Single female home health aide, with an infant and preschooler, and a household income of $23,930</li>
+</ul>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<p>The table below shows the monthly take home pay for each of these households, along with their calculated residual incomes based on SSS cost estimates.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-residual-takehome" class="anchored">
+
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;3.5:  Monthly take home pay and residual income for selected households </caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Household </th>
+   <th style="text-align:right;"> Take home pay </th>
+   <th style="text-align:right;"> Residual income </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Registered nurse, police officer, 2 kids </td>
+   <td style="text-align:right;"> $8,594.58 </td>
+   <td style="text-align:right;"> $5,206.02 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCPS teacher </td>
+   <td style="text-align:right;"> $3,589.33 </td>
+   <td style="text-align:right;"> $2,618.01 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Retired senior and spouse </td>
+   <td style="text-align:right;"> $2,328.24 </td>
+   <td style="text-align:right;"> $250.94 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Home health aide, 2 kids </td>
+   <td style="text-align:right;"> $1,685.92 </td>
+   <td style="text-align:right;"> -$2,000.74 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>These cases show a wide range of housing affordability depended on income and assumed households expenses. For two-earner families with above-average salaries, finding a home to buy in the county is likely not a major challenge. For single workers with strong wages, finding an affordable apartment in Chesterfield may not be difficult. However, student loans, car payments, and other possible debt—not included in this analysis—would change this outcome.</p>
+<p>On the other hand, lower income families—especially those with greater expenses associated with young children—must make hard choices to balance their budget. These concessions may include forgoing healthier (and more expensive) food options, putting off necessary healthcare treatments, and finding cheaper housing that is further away from their jobs. Other forms of public assistance, such as EBT, would also help.</p>
+</section>
+<section id="takeaways" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">3.7</span> Takeaways</h2>
+<ul>
+<li>There are multiple measures that are being utilized to help practitioners communicate the need to address housing affordability in their communities.</li>
+<li>Each measure has their pros and cons, ranging from data currency to methodology complexity. But the choice of one over the other is dependent on its ultimate use.</li>
+<li>For this report, and for most other housing needs assessments, the standard 30 percent (cost burden) methodology is preferred for its ubiquity.</li>
+<li>If you want to better understand how location impacts costs, the CNT H+T may be the most useful. If you want to focus on the unique challenges that individual households face, the residual income approach may be worth the additional analysis required.</li>
+</ul>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Morris. Carolyn. (2021). “How Much Should I Spend on Rent? Ignore the ‘30% Rule’,” Earnest.com. November 22, 2021. Retrieved from https://www.earnest.com/blog/rent-and-the-30-percent-rule/.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Herbert, Christopher, Alexander Hermann, &amp; Daniel McCue. (2018). Measuring Housing Affordability: Assessing the 30 Percent Income Standard. September 2018. Joint Center for Housing Studies of Harvard University.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Daniel Kay Hertz. (2017). “Affordability: The 30 Percent Standard’s Blinders,” Shelterforce. April 25, 2017. Retrieved from https://shelterforce.org/2017/04/25/30-percent-standards-blinders/.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Through August 31, 2022.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B19113.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Current as of September, 5 2022.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Based on 2016-2020 American Community Survey 5-year estimates, regional mean annual wages, Social Security benefit data, and Chesterfield County wage data.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part-1a-1.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Planning for housing in Chesterfield County</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part-1a-3.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Market-affordable housing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

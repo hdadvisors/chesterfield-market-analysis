@@ -90,8 +90,6 @@ renters_plot <- gg_line(
 
 renters_plot
 
-# plotly::ggplotly(renters_plot) %>% 
-#   plotly_camera()
 
 ```
 
