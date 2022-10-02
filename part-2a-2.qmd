@@ -14,6 +14,7 @@ library(ggplot2)
 library(plotly)
 library(simplevis)
 library(htmlwidgets)
+library(htmltools)
 library(stringi)
 
 ```
@@ -26,7 +27,7 @@ As of June 2022, there were 33 existing market-rate multifamily developments tha
 
 ```{r}
 #| label: fig-recent-mf
-#| fig-cap: "Recent multifamily developments by magisterial district. Source: CoStar Group, Inc."
+#| fig-cap: "Recent multifamily developments by magisterial district"
 
 # CoStar filter - Chesterfield County, VA; Property type: Multi-Family; Construction status: Existing, Proposed, Under Construction; Year Built Min: 2017
 
@@ -64,14 +65,28 @@ newbuild_map <- newbuilds_by_district |>
 
 # Leaflet map of new builds. Would like to mask to just Chesterfield County.
 
-# new_map <- leaf_sf_col(newbuild_map,
-#                        col_var = District,
-#                        label_var = Development,
-#                        col_labels = function(x) x)
-# 
-# saveWidget(new_map, "maps/new_map.html")
+Districts <- unique(newbuild_map$District)
 
-knitr::include_url("maps/new_map.html", height = "500px")
+districts_pal <- colorFactor(c("#8dd3c7", "#fdb462", "#bebada", "#fb8072", "#80b1d3"),
+                   domain = Districts)
+
+source_costar <- tags$div(
+  HTML('Source: CoStar Group, Inc.')
+)
+
+new_map <- leaflet(newbuild_map) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addCircleMarkers(
+    radius = 4,
+    color = ~districts_pal(District),
+    stroke = FALSE, fillOpacity = 0.9
+  ) |>
+  addLegend("topright", pal = districts_pal, values = ~District,
+            title = "District", opacity = 1) |> 
+  addControl(source_costar, position = "bottomright")
+
+new_map
+
 
 ```
 
@@ -79,7 +94,7 @@ Thirty-two percent of recent and future development has been or will be construc
 
 ```{r}
 #| label: fig-new-units
-#| fig-cap: "Number of recent multifamily units by magisterial district. Source: CoStar Group, Inc."
+#| fig-cap: "Number of recent multifamily units by magisterial district"
 
 # Summarize number of units by magisterial districts.
 
@@ -101,12 +116,10 @@ recent_mag <- gg_bar_col(recentunits,
                y_title = "",
                x_labels = function(x) x, 
                col_legend_none = TRUE,
-               title = "Number of recent multifamily units by magisterial district")
+               title = "Number of recent multifamily units by magisterial district",
+               caption = "Source: CoStar Group, Inc.")
 
 recent_mag
-
-# plotly::ggplotly(recent) |> 
-#   plotly_camera()
 
 ```
 
@@ -116,7 +129,7 @@ The Midlothian area also offers convenient access to Route 288, where residents 
 
 ```{r}
 #| label: fig-units-time
-#| fig-cap: "Timeline of recent multifamily units by magisterial district. Source: CoStar Group, Inc."
+#| fig-cap: "Timeline of recent multifamily units by magisterial district"
 
 # Summarize number of units by year to show future development timeline.
 
@@ -142,15 +155,13 @@ status_timeline <- gg_bar_col_facet(status_units,
                               y_title = "",
                               facet_labels = function(x) x,
                               col_legend_none = TRUE,
-                              title = "Timeline of recent multifamily units by magisterial district") +
+                              title = "Timeline of recent multifamily units by magisterial district",
+                              caption = "Source: CoStar Group, Inc.") +
   ggplot2::theme(
     axis.text.x = element_text(angle = 90, size = 8)
   )
 
 status_timeline
-
-# plotly::ggplotly(status_timeline) |> 
-#   plotly_camera()
 
 ```
 
@@ -162,7 +173,7 @@ Market affordable rental housing is spread throughout each district of Chesterfi
 
 ```{r}
 #| label: fig-noah-map
-#| fig-cap: "Map of market affordable units by magisterial district. Source: CoStar Group, Inc."
+#| fig-cap: "Map of market affordable units by magisterial district"
 
 # Costar filter - Chesterfield County, VA, Property type: Multi-family; Construction status: Existing; Rent Type: Market; Class: B or C; CoStar Building Rating: three or fewer stars
 
@@ -188,15 +199,19 @@ noah_by_district <- st_join(noah, left = FALSE, districts["MagDistName"]) |>
     TRUE ~ style
   ))
 
-noah_map_dist <- leaf_sf_col(noah_by_district,
-                             col_var = MagDistName,
-                             label_var = name,
-                             col_title = "District",
-                             col_labels = function(x) x)
+noah_map_dist <- leaflet(noah_by_district) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addCircleMarkers(
+    radius = 4,
+    color = ~districts_pal(MagDistName),
+    stroke = FALSE, fillOpacity = 0.9
+  ) |>
+  addLegend("topright", pal = districts_pal, values = ~MagDistName,
+            title = "District", opacity = 1) |> 
+  addControl(source_costar, position = "bottomright")
 
 noah_map_dist
 
-# 
 # saveWidget(noah_map_dist, "maps/noah_map_dist.html")
 
 # knitr::include_url("maps/noah_map_dist.html", height = "500px")
@@ -208,7 +223,7 @@ The Bermuda District, which includes the entirety of the Route 1 corridor, conta
 
 ```{r}
 #| label: fig-noah-units
-#| fig-cap: "Total market affordable homes by magisterial district. Source: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia."
+#| fig-cap: "Total market affordable homes by magisterial district"
 
 # Summarize number of NOAH units by magisterial districts. Add in a note about NA values
 
@@ -230,12 +245,10 @@ noah_count <- gg_bar_col(noahunits,
                y_title = "",
                x_labels = function(x) x,
                col_legend_none = TRUE,
-               title = "Total market affordable homes by magisterial district")
+               title = "Total market affordable homes by magisterial district",
+               caption = "Sources: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia.")
 
 noah_count
-
-# plotly::ggplotly(noah_count) |> 
-#   plotly_camera()
 
 ```
 
@@ -245,7 +258,7 @@ Market affordable rentals are largely located in garden style apartments. Garden
 
 ```{r}
 #| label: fig-noah-type
-#| fig-cap: "Type of market affordable housing by magisterial district. Source: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia."}
+#| fig-cap: "Type of market affordable housing by magisterial district"
 
 # Create bar chart showing type by magisterial district.
 
@@ -261,7 +274,8 @@ noah_t_district <- gg_bar_col(noah_sum_district,
                               x_title = "",
                               y_title = "",
                               x_labels = function(x) x,
-                              title = "Type of market affordable housing by magisterial district")
+                              title = "Type of market affordable housing by magisterial district",
+                              caption = "Sources: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia.")
 
 noah_t_district
 
@@ -280,7 +294,8 @@ Preserving market affordable rentals, especially near the city-county border and
 
 ```{r}
 #| label: fig-noah-age
-#| fig-cap: "Market affordable housing by year built. Source: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia."
+#| fig-cap: "Market affordable housing by year built"
+
 
 # Create map showing NOAH by type.
 
@@ -300,7 +315,8 @@ noah_age <- gg_bar(noah_built,
                    y_var = units,
                    x_title = "",
                    y_title = "Units",
-                   title = "Market affordable housing by year built")
+                   title = "Market affordable housing by year built",
+                   caption = "Sources: CoStar Group, Inc. and the Manufactured Housing Community Coalition of Virginia.")
 
 noah_age
 
@@ -314,7 +330,8 @@ The Dale District compares the second most federally-supported rental housing wi
 
 ```{r}
 #| label: fig-affordable-map
-#| fig-cap: "Affordable housing by magisterial district. Source: National Housing Preservation Database"
+#| fig-cap: "Affordable housing by magisterial district"
+#| fig-subcap: "Source: National Housing Preservation Database."
 
 library(lubridate)
 library(stringi)
@@ -344,17 +361,26 @@ affordable_by_district <- st_join(affordable_sf, left = FALSE, districts["MagDis
 
 # Create map of affordable units by district.
 
-aff_map <- leaf_sf_col(affordable_by_district,
-                       col_var = MagDistName,
-                       col_title = "District",
-                       label_var = property_name,
-                       col_labels = function(x) x)
-# 
+source_nhpd <- tags$div(
+  HTML('Source: National Housing Preservation Database.')
+)
+
+aff_map <- leaflet(affordable_by_district) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addCircleMarkers(
+    radius = 4,
+    color = ~districts_pal(MagDistName),
+    stroke = FALSE, fillOpacity = 0.9
+  ) |>
+  addLegend("topright", pal = districts_pal, values = ~MagDistName,
+            title = "District", opacity = 1) |> 
+  addControl(source_nhpd, position = "bottomright")
+
+aff_map
+
 # saveWidget(aff_map, "maps/aff_map.html")
 
 # knitr::include_url("maps/aff_map.html", height = "500px")
-
-aff_map
 
 ```
 
@@ -368,8 +394,6 @@ The bulk of affordable rental housing is supported by the Low-Income Housing Tax
 #| label: fig-aff-type
 #| fig-cap: "Subsidy type by magisterial district"
 
-# Create bar chart showing subsidy type by district. Need help with reordering
-
 afftype <- gg_bar_col(affordable_by_district,
                       x_var = MagDistName,
                       y_var = assisted_units,
@@ -380,7 +404,8 @@ afftype <- gg_bar_col(affordable_by_district,
                       x_labels = function(x) x,
                       col_title = "Subsidy type",
                       col_labels = function(x) x,
-                      title = "Subsidy type by magisterial district")
+                      title = "Subsidy type by magisterial district",
+                      caption = "Source: National Housing Preservation Database.")
 
 afftype
   
@@ -410,7 +435,8 @@ loss_bar <- gg_bar_col(loss,
                        x_title = "Subsidy expiration date",
                        col_title = "District",
                        col_labels = function(x) x,
-                       title = "LIHTC housing at risk of loss of affordability by year")
+                       title = "LIHTC housing at risk of loss of affordability by year",
+                       caption = "Source: National Housing Preservation Database.")
 
 loss_bar
 
@@ -426,7 +452,8 @@ The following makes comparisons between affordable multifamily and market-rate m
 
 The map below shows the location of market rate, affordable (rent restricted or rent subsidized), and market/affordable multifamily developments. The size of the circle represents the average asking market rent per unit for each property. The map shows a large amount of market rate properties located in the northern section of the county, specifically along Midlothian Turnpike and Route 288. Affordable rental properties, including those that are mixed-income, are largely located towards the eastern part of the county along Route 1 and Route 10.
 
-```{r price-comparison, include=FALSE}
+```{r}
+#| label: price-comparison
 
 # CoStar filters: Chesterfield County, Virginia; Multi-family; Construction status: Existing
 
@@ -461,24 +488,14 @@ comp_by_district <- st_join(p_comp_sf, left = FALSE, districts["MagDistName"]) |
                                  "Market/Affordable",
                                  "Affordable"))
 
-library(tigris)
-library(mapboxapi)
- 
-ch_boundary <- counties("VA") |> 
-  filter(NAME == "Chesterfield")
-
-cf_basemap <- layer_static_mapbox(
-  location = ch_boundary,
-  style_id = "light-v10",
-  username = "mapbox"
-)
 
 ```
 
 ```{r}
 #| label: fig-price-comparison-map
-#| fig-cap: "Map of average rent by property type. Source: CoStar Group, Inc."
-#| message: false
+#| fig-cap: "Map of average rent by property type"
+
+cf_basemap <- read_rds("data/cf_basemap.rds")
 
 ggplot() +
   cf_basemap +
@@ -487,7 +504,9 @@ ggplot() +
               color = rent_type),
           alpha = 0.6,
           shape = 16) +
-  labs(size = "Average asking rent",
+  labs(title = "Map of average rent by property type",
+       caption = "Source: CoStar Group, Inc.",
+       size = "Average asking rent",
        color = "Type") +
   scale_size(range = c(0, 5),
              labels = scales::label_dollar()) +
@@ -499,9 +518,8 @@ Market rate rents skew towards the \$1,500 to \$2,000 range, with two properties
 
 ```{r}
 #| label: fig-pcomp-hist-county
-#| fig-cap: "Average asking rents by rent type. Source: CoStar Group, Inc."}
-
-# I think a histogram is easier to understand than a boxplot but I've given both options below.
+#| fig-cap: "Average asking rents by rent type"
+ 
 
 pcomp_box_county <- gg_boxplot_col(comp_by_district,
                                    x_var = rent_type,
@@ -511,20 +529,10 @@ pcomp_box_county <- gg_boxplot_col(comp_by_district,
                                    col_legend_none = TRUE,
                                    y_labels = scales::label_dollar(),
                                    x_labels = function(x) x,
-                                   title = "Average asking rents by rent type")
+                                   title = "Average asking rents by rent type",
+                                   caption = "Source: CoStar Group, Inc.")
 
 pcomp_box_county
-
-# plotly::ggplotly(pcomp_box_county) |> 
-#   plotly_camera()
-# 
-# pcomp_hist_county <- gg_histogram_col_facet(comp_by_district,
-#                                       x_var = avg_asking_unit,
-#                                       col_var = rent_type,
-#                                       facet_var = rent_type)
-# 
-# plotly::ggplotly(pcomp_hist_county) |> 
-#   plotly_camera()
 
 ```
 
@@ -532,7 +540,7 @@ The following chart shows the distribution of rental properties by their average
  
 ```{r}
 #| label: fig-pcomp-hist-dist
-#| fig-cap: "Number of properties by average rent by district. Source: CoStar Group, Inc."
+#| fig-cap: "Number of properties by average rent by district"
 
 pcomp_hist_dist <- gg_histogram_col_facet(comp_by_district,
                                           x_var = avg_asking_unit,
@@ -544,7 +552,8 @@ pcomp_hist_dist <- gg_histogram_col_facet(comp_by_district,
                                           col_labels = function(x) x,
                                           col_title = "",
                                           x_title = "",
-                                          title = "Number of properties by average rent by district") +
+                                          title = "Number of properties by average rent by district",
+                                          caption = "Source: CoStar Group, Inc.") +
   ggplot2::theme(legend.position = "top",
                  legend.direction = "horizontal",
                  legend.justification = "center")

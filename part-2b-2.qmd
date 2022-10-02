@@ -29,6 +29,7 @@ library(ggrepel)
 library(lehdr)
 library(scales)
 library(htmlwidgets)
+library(htmltools)
 library(zoo)
 
 ```
@@ -58,11 +59,11 @@ hsr_tracts <- tracts("VA", "Chesterfield",
   filter(TRACTCE %in% hsr_tracts_list) |> 
   st_transform(4326)
 
-#Run the mapview and savewidget functions before building the book
+# Run the mapview and savewidget functions before building the book
 # Once the widget is saved, activate the knitr function to embed the map
 
 hsr_tract_map <-leaflet(hsr_tracts) |>
-  addTiles() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
   addPolygons(color = "blue",
               weight = 3,
               label = ~hsr_tracts$NAMELSAD,
@@ -70,11 +71,7 @@ hsr_tract_map <-leaflet(hsr_tracts) |>
                                           direction = "auto",
                                           textsize = "15px"))
 
-# mapview::mapshot(hsr_tract_map, file = "/maps/hsr_map.png")
-# 
-# saveWidget(hsr_tract_map, "maps/hsr_tract_map.html")
-
-knitr::include_url("maps/hsr_tract_map.html", height = "500px")
+hsr_tract_map
 
 ```
 
@@ -86,60 +83,61 @@ Despite the low number of multifamily properties in the Hull Street corridor, th
 
 ```{r}
 #| label: fig-hsr-rhh
-#| fig-cap: "Renter households from 2010 to 2020 within Eastern Hull Street study area"
+#| fig-cap: "Renter households in Eastern Hull Street study area"
 
-years <- 2010:2020
+# years <- 2010:2020
+# 
+# b25003_vars <- load_variables(2020, "acs5") |> 
+#   filter(str_sub(name, end = 7) %in% "B25003_")
+# 
+# b25003_raw <- map_dfr(years, function(yr){
+#   b25003_pull <- get_acs(
+#     geography = "tract",
+#     county = "Chesterfield County",
+#     state = "VA",
+#     table = "B25003",
+#     year = yr,
+#     survey = "acs5",
+#     cache_table = TRUE,
+#     geometry = TRUE
+#   ) |> 
+#     mutate(year = yr)
+#   })
+# 
+# b25003_hsr_raw <- b25003_raw |> 
+#   subset(GEOID %in% hsr_tracts$GEOID)
+# 
+# b25003_vars_cleaned <- b25003_vars |> 
+#   separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
+#   select(variable = name, tenure) |> 
+#   drop_na() |> 
+#   mutate(tenure = case_when(
+#     tenure == "Owner occupied" ~ "Homeowner",
+#     tenure == "Renter occupied" ~ "Renter"
+#   )) |> 
+#   filter(tenure == "Renter")
+# 
+# b25003_hsr <- b25003_hsr_raw |> 
+#   right_join(b25003_vars_cleaned, by = "variable") |> 
+#   select(NAME, fips = GEOID, year, tenure, estimate, moe)
+# 
+# b25003_r360 <- b25003_hsr |> 
+#   group_by(year) |> 
+#   summarise(estimate = sum(estimate))
+#   
+# write_rds(b25003_r360, "data/b25003_hrs.rds")
 
-b25003_vars <- load_variables(2020, "acs5") |> 
-  filter(str_sub(name, end = 7) %in% "B25003_")
+b25003_hrs <- read_rds("data/b25003_hrs.rds")
 
-b25003_raw <- map_dfr(years, function(yr){
-  b25003_pull <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25003",
-    year = yr,
-    survey = "acs5",
-    cache_table = TRUE,
-    geometry = TRUE
-  ) |> 
-    mutate(year = yr)
-  })
-
-b25003_hsr_raw <- b25003_raw |> 
-  subset(GEOID %in% hsr_tracts$GEOID)
-
-b25003_vars_cleaned <- b25003_vars |> 
-  separate(label, into = c("est", "total", "tenure"), sep = "!!") |> 
-  select(variable = name, tenure) |> 
-  drop_na() |> 
-  mutate(tenure = case_when(
-    tenure == "Owner occupied" ~ "Homeowner",
-    tenure == "Renter occupied" ~ "Renter"
-  )) |> 
-  filter(tenure == "Renter")
-
-b25003_hsr <- b25003_hsr_raw |> 
-  right_join(b25003_vars_cleaned, by = "variable") |> 
-  select(NAME, fips = GEOID, year, tenure, estimate, moe)
-
-b25003_r360 <- b25003_hsr |> 
-  group_by(year) |> 
-  summarise(estimate = sum(estimate))
-  
-#Create line graph showing change in renter households across time.
-hsr_renters_plot <- ggplot(
-  b25003_r360,
-  aes(x = year,
-      y = estimate)) +
-  geom_line() + 
-  geom_point(color = "blue") +
-  scale_x_continuous(breaks = seq(2010, 2020, 2)) +
-  theme(axis.title = element_blank()) +
-  labs(title = "Renter households in the study area",
-       subtitle = "From 2010 to 2020") +
-  scale_y_continuous(labels = number_format(big.mark = ","))
+hsr_renters_plot <- gg_line(
+  b25003_hrs,
+  x_var = year,
+  y_var = estimate,
+  y_breaks_n = 5,
+  y_zero = TRUE,
+  title = "Renter households in Eastern Hull Street study area",
+  caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25003.",
+  x_title = element_blank())
 
 hsr_renters_plot
 
@@ -191,18 +189,25 @@ No multifamily properties actually front the Eastern Hull Street corridor. The f
 #| label: fig-costar-hsr-2
 #| fig-cap: "Map of multifamily properties in Eastern Hull Street study area"
 
-hsr_map <- costar_hsr_mf |> 
+hsr_map <- costar_hsr_mf |>
   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
-# hsr_map <- leaflet(hsr_map) |> 
-#   addTiles() |> 
-#   addCircleMarkers(
-#     radius = 3) |> 
-#   addPolygons(data=hsr_tracts, weight = 2, fillColor = NULL)
-# 
-# saveWidget(hsr_map, "maps/hsr_map.html")
+source_costar <- tags$div(
+  HTML('Source: CoStar Group, Inc.')
+)
 
-knitr::include_url("maps/hsr_map.html", height = "500px")
+hsr_map <- leaflet(hsr_map) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addPolygons(data = hsr_tracts,
+              weight = 2,
+              color = "#666666",
+              fillColor = "#999999",
+              fillOpacity = 0.3) |>
+  addCircleMarkers(radius = 3,
+                   popup = hsr_map$property_name) |> 
+  addControl(source_costar, position = "bottomright")
+
+hsr_map
 
 ```
 
@@ -216,13 +221,13 @@ Higher concentrations of SFR are located in Census tracts 1002.10 and 1002.11; t
 
 # Choropleth map of percent of SFR by census tract. Perhaps include a chart as well. Might be interesting to compare to change in homeownership rate for each.
 
-ch_sfh <- st_read("data/shp/ch_sfh.shp",
-                  quiet = TRUE)
-
-sfr_hsr <- ch_sfh |> 
-  st_join(left = FALSE, hsr_tracts["NAMELSAD"]) |> 
-  select(address, imprvmn, ownrshp, ownr_zp, ownr_st, tract = NAMELSAD, geometry) |>
-  filter(imprvmn > 0)
+# ch_sfh <- st_read("data/shp/ch_sfh.shp",
+#                   quiet = TRUE)
+# 
+# sfr_hsr <- ch_sfh |> 
+#   st_join(left = FALSE, hsr_tracts["NAMELSAD"]) |> 
+#   select(address, imprvmn, ownrshp, ownr_zp, ownr_st, tract = NAMELSAD, geometry) |>
+#   filter(imprvmn > 0)
 
 # sfr_hsr_summary <- sfr_hsr |>
 #   st_drop_geometry() |>
@@ -243,16 +248,17 @@ sfr_hsr <- ch_sfh |>
 
 sfr_hsr_summary <- read_rds("data/sfr_hsr_summary.rds")
 
-sfr_hsr_pct <- ggplot(sfr_hsr_summary,
-                      aes(x = reorder(tract, percent_sfh),
-                          y = percent_sfh,
-                          fill = percent_sfh)) +
-  geom_col() +
-  coord_flip() +
-  scale_y_continuous(labels = percent_format()) +
-  theme(axis.title = element_blank(),
-        legend.position = "none") +
-  labs(title = "Percent of single-family homes that are renter-occupied by tract")
+sfr_hsr_pct <- gg_hbar_col(sfr_hsr_summary,
+                          x_var = percent_sfh,
+                          y_var = tract,
+                          col_var = percent_sfh,
+                          title = "Percent of single-family homes that are renter-occupied by tract neighborhood",
+                          caption = "Source: County parcel records.", 
+                          x_labels = label_percent(),
+                          y_labels = function(x) x,
+                          col_legend_none = TRUE,
+                          x_title = "",
+                          y_title = "")
 
 
 sfr_hsr_pct
@@ -271,42 +277,47 @@ Other Census tracts in the area have more consistent rent increases - particular
 
 # Check MOE for the census tract above
 
-years <- 2010:2020
+# years <- 2010:2020
+# 
+# b25064_vars <- load_variables(2020, "acs5") |> 
+#   filter(str_sub(name, end =6) %in% "B25064")
+# 
+# b25064_raw <- map_dfr(years, function(yr){
+#   b25064_pull <- get_acs(
+#     geography = "tract",
+#     county = "Chesterfield County",
+#     state = "VA",
+#     table = "B25064",
+#     year = yr,
+#     survey = "acs5",
+#     cache_table = TRUE,
+#     geometry = TRUE
+#   ) %>%
+#     mutate(year = yr)
+#   })
+# 
+# b25064_hsr_raw <- b25064_raw |> 
+#   subset(GEOID %in% hsr_tracts$GEOID)
+# 
+# cpi <- read_excel("data/CPI_U_RS.xlsx")
+# cpi <- cpi |>  
+#   rename(year = Year,
+#          priceindex = Index) |> 
+#   transform(year = as.numeric(year))
+# 
+# hsr_rent_cpi <- b25064_hsr_raw |> 
+#   left_join(cpi, by = 'year') |> 
+#   transform(dollars20 = ((381.2/priceindex)*estimate)) |> 
+#   select(GEOID, NAME, year, dollars20, moe) |> 
+#   separate(NAME, into = c("NAMELSAD", "county", "state"), sep = ",") |> 
+#   transform(year_char = as.character(year))
+# 
+# write_rds(hsr_rent_cpi, "data/hsr_rent_cpi.rds")
 
-b25064_vars <- load_variables(2020, "acs5") |> 
-  filter(str_sub(name, end =6) %in% "B25064")
-
-b25064_raw <- map_dfr(years, function(yr){
-  b25064_pull <- get_acs(
-    geography = "tract",
-    county = "Chesterfield County",
-    state = "VA",
-    table = "B25064",
-    year = yr,
-    survey = "acs5",
-    cache_table = TRUE,
-    geometry = TRUE
-  ) %>%
-    mutate(year = yr)
-  })
-
-b25064_hsr_raw <- b25064_raw |> 
-  subset(GEOID %in% hsr_tracts$GEOID)
-
-cpi <- read_excel("data/CPI_U_RS.xlsx")
-cpi <- cpi |>  
-  rename(year = Year,
-         priceindex = Index) |> 
-  transform(year = as.numeric(year))
-
-hsr_rent_cpi <- b25064_hsr_raw |> 
-    left_join(cpi, by = 'year') |> 
-  transform(dollars20 = ((381.2/priceindex)*estimate)) |> 
-  select(GEOID, NAME, year, dollars20, moe) |> 
-  separate(NAME, into = c("NAMELSAD", "county", "state"), sep = ",") |> 
-  transform(year_char = as.character(year))
+hsr_rent_cpi <- read_rds("data/hsr_rent_cpi.rds")
 
 hsr_rent_change <- hsr_rent_cpi |> 
+  filter(NAMELSAD != "Census Tract 1002.11") |> 
   select(NAMELSAD, year, dollars20) |> 
   mutate(tract = sapply(strsplit(
            as.character(
@@ -318,42 +329,26 @@ gg_line_col_facet(hsr_rent_change,
                   y_var = dollars20,
                   col_var = tract,
                   facet_var = tract,
+                  facet_nrow = 1,
                   alpha_point = 0,
                   size_line = 0.75,
                   col_legend_none = TRUE,
                   y_labels = label_dollar(),
                   facet_labels = function(x) x,
                   title = "Median inflation-adjusted rent by tract: 2010 to 2020",
+                  caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25064.",
                   y_title = "Median inflation-adjusted rent",
                   x_title = ""
                   )
 
 ```
+Focusing on the areas adjacent to the Hull Street corridor, CoStar's data show an average rent across the four existing properties. Changes in average rent have been slight over the past decade, but have been on a steady climb --- reaching a decade max at the start of 2022 with an average rent of \$1,140.
 
-```{r acs-hsr-rent1, eval=FALSE}
+Over the course of the pandemic, rents in the area have seen upticks much like other parts of the county, including the Route 1 corridor. From Q1 2020 to Q3 2022, average rent saw a 2 percent increase from \$1,088 to \$1,110. But in 2022 so far, average rent has been in decline from its decade max --- potentially signaling some cooling of the hot pandemic housing market.
 
-# hsr_rent_cpi$label <- NA
-# hsr_rent_cpi$label[which(hsr_rent_cpi$year == max(hsr_rent_cpi$year))] <- 
-#   hsr_rent_cpi$dollars20[which(hsr_rent_cpi$year == max(hsr_rent_cpi$year))] 
-# 
-# 
-# ggplot(hsr_rent_cpi, aes(x = year, y = dollars20)) +
-#   geom_line(aes(color = NAMELSAD)) +
-#   geom_point(aes(color = NAMELSAD)) +
-#   scale_y_continuous(labels = scales::dollar_format()) +
-#   ggplot2::scale_x_continuous(limits = c(2009.5, 2020.5),
-#                               breaks = seq(2010, 2020, 1)) +
-#   labs(title = "Renter income in the Eastern Hull Street corridor study area",
-#        x = NULL, y = "Median household income (2020 dollars)") +
-#   scale_color_discrete(name = "Legend")
-# 
-# 
-
-```
-
-Focusing on the areas adjacent to the Hull Street corridor, CoStar's data show an average rent across the four existing properties. Changes in average rent have been slight over the past decade, but have been on a steady climb --- reaching a decade max at the start of 2022 with an average rent of \$1,140. Over the course of the pandemic, rents in the area have seen upticks much like other parts of the county, including the Route 1 corridor. From Q1 2020 to Q3 2022, average rent saw a 2 percent increase from \$1,088 to \$1,110. But in 2022 so far, average rent has been in decline from its decade max --- potentially signaling some cooling of the hot pandemic housing market.
-
-```{r costar-hsr-rent, fig.cap="Average asking rent per unit for Eastern Hull Street corridor"}
+```{r}
+#| label: fig-costar-hsr-rent
+#| fig-cap: "CoStar average asking rent for Eastern Hull Street corridor"
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. I have two versions of this data pull - one that excludes the developments near Midlo Turnpike and one that includes them --- including Midlo results in some erratic rent changes.
 
@@ -371,26 +366,29 @@ costar_hsr_rent <- read_csv("data/costar_hsr_rent_nomidlo.csv") |>
 
 colnames(costar_hsr_rent)[2] <- "rent"
 
-costar_hsr_rent_line <- ggplot(costar_hsr_rent,
-                               aes(x=period,
-                                   y=rent,
-                                   color = "blue")) +
-  geom_line(stat="identity") +
-  scale_y_continuous(labels=dollar_format()) +
-  labs(title="Average asking rent per unit for Eastern Hull Street corridor") +
-  theme(axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        legend.position = "none")
-        
-costar_hsr_rent_line
+gg_line(costar_hsr_rent,
+        x_var = period,
+        y_var = rent,
+        y_zero = TRUE,
+        alpha_point = 0,
+        size_line = 0.75,
+        x_labels = label_date(format = "%Y"),
+        y_labels = label_dollar(),
+        x_title = "",
+        y_title = "Average asking rent",
+        title = "CoStar average asking rent for Eastern Hull Street corridor",
+        caption = "Source: CoStar Group, Inc.") +
+  ggplot2::scale_x_date(limits = c(as.Date("2011-12-01"), as.Date("2022-07-31")))
+
 ```
 
 Breaking out average rent by bedrooms shows a similar pattern among all bedroom sizes, except for studio apartments, in which there are none listed in the study area. Three-bedroom apartments did see a substantial increase in the latter half of 2021 --- a \$61 increase (5 percent increase) from \$1,240 to \$1,301, but, like all other apartment types, have seen declines in 2022.
 
-```{r costar-hsr-brent, fig.cap="Average rent by bedroom"}
+```{r}
+#| label: fig-costar-hsr-brent
+#| fig-cap: "CoStar average asking rent for Eastern Hull Street corridor by bedroom"
 
 # Use CoStar Multi-family properties search. Draw with polygon tool on map the outline of the Route One census tracts. Filter out properties from previous. Download inflation adjusted history for all years. 
-
 
 costar_hsr_brent <- read_csv("data/costar_hsr_brent_nomidlo.csv") |> 
   clean_names() |> 
@@ -404,55 +402,68 @@ costar_hsr_brent <- read_csv("data/costar_hsr_brent_nomidlo.csv") |>
   ) |> 
   mutate(br = case_when(
     br == "studio" ~ "Studio",
-    br == "x1_bed" ~ "One bedroom",
-    br == "x2_beds" ~ "Two bedroom",
-    br == "x3_beds" ~ "Three bedroom"
+    br == "x1_bed" ~ "1 bedroom",
+    br == "x2_beds" ~ "2 bedroom",
+    br == "x3_beds" ~ "3 bedroom"
   )) |> 
   mutate(period = yq(period)) |> 
   mutate(year = year(period)) |> 
   mutate(rent = parse_number(rent)) |> 
   filter(year > 2011) |> 
-  filter(br != "Studio")
+  filter(br != "Studio") |> 
+  mutate(br = fct_reorder(br, rent, .fun = max, .desc = TRUE))
 
-hsr_br_line<- ggplot(costar_hsr_brent,
-                     aes(x = period,
-                         y = rent,
-                         color = br)) +
-  geom_line(stat = "identity") + 
-  labs(title = "Average rent by bedroom", color = "Bedrooms") +
-  theme(axis.title.x = element_blank(),
-        axis.title.y = element_blank()) +
-  scale_y_continuous(labels = dollar_format())
-        
-plotly::ggplotly(hsr_br_line) |> 
-  plotly_camera()
+
+gg_line_col(costar_hsr_brent,
+            x_var = period,
+            y_var = rent,
+            col_var = br,
+            alpha_point = 0,
+            size_line = 0.75,
+            title = "CoStar average asking rent for Eastern Hull Street corridor by bedroom",
+            y_labels = label_dollar(),
+            x_labels = label_date(format = "%Y"),
+            y_title = "Average asking rent (inflation-adjusted)",
+            caption = "Source: CoStar Group, Inc.",
+            x_title = "",
+            y_zero = TRUE,
+            col_title = "") +
+  ggplot2::scale_x_date(limits = as.Date(c("2011-12-01", "2022-08-01")))
+
 
 ```
+Very little rental price data exists for SFRs in the study area. Across the past four years, there have only been 25 listed SFRs. Thirteen of these 25 SFRs are single-family detached homes, while the remaining are largely condominums or townhomes (11).
 
-Very little rental price data exists for SFRs in the study area. Across the past four years, there have only been 25 listed SFRs. Thirteen of these 25 SFRs are single-family detached homes, while the remaining are largely condominums or townhomes (11). List prices have ranged from \$900 for a duplex in 2019 to a /\$1,809 for a single-family detached home in 2022. Generally, single-family detached homes have commanded rents above \$1,400 and often offer three-bedrooms and two baths.These rents are on par with recent two-bedroom apartments rents in the area --- often making a decision between an apartment or single-family detached home on the rental market easy for a family of three or more.
+List prices have ranged from \$900 for a duplex in 2019 to \$1,809 for a single-family detached home in 2022. Generally, single-family detached homes have commanded rents above \$1,400 and often offer three-bedrooms and two baths. These rents are on par with recent two-bedroom apartments rents in the area --- often making a decision between an apartment or single-family detached home on the rental market easy for a family of three or more.
 
-```{r mls-sfr, fig.cap= "Single-family rental rent price by structure type and date leased"}
+```{r}
+#| label: fig-mls-sfr
+#| fig-cap: "Listed MLS rents in Eastern Hull Street Road corridor"
 
 # Use MLS Search RNT search. Filters: Status/Date Range: Active, Leased - 4 years; Map: draw outline for census tracts and export. From July 2022.
 
 mls_hsr_sfr <- read_csv("data/mls_hsr_sfr.csv") |> 
   clean_names() |> 
-  mutate(sales_date = mdy(sales_date)) |> 
-  mutate(list_price = parse_number(list_price))
-
-mls_hsr_plot <- ggplot(mls_hsr_sfr,
-                       aes(x = sales_date,
-                           y = list_price,
-                           color = type)) +
-  geom_point(stat = "identity") + 
-  labs(title = "SFR rent by structure type", color = "Structure type") +
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_blank()) +
-  scale_y_continuous(labels = dollar_format())
-
-mls_hsr_plot
-
+  mutate(sales_date = mdy(sales_date),
+         list_price = parse_number(list_price),
+         year = as.numeric(year(sales_date)),
+         day = as.numeric(yday(sales_date)),
+         date = year + day/365) 
+  
 # mean(mls_hsr_sfr$list_price, na.rm = TRUE)
+
+gg_smooth(mls_hsr_sfr,
+         x_var = date,
+         y_var = list_price,
+         y_labels = label_dollar(),
+         x_title = "",
+         y_title = "Listed rent",
+         title = "Listed MLS rents in Eastern Hull Street corridor",
+         caption = "Source: CVR MLS.") +
+  ggplot2::scale_x_continuous(limits = c(2019.7, 2022.55),
+                              breaks = c(2020, 2021, 2022),
+                              labels = label_number(accuracy = 1, big.mark = ""))
+
 ```
 
 ### Conditions
@@ -463,34 +474,38 @@ Much of the rental housing stock (62 percent) in the Eastern Hull Street corrido
 #| label: fig-acs-yrblt
 #| fig-cap: "Eastern Hull Street rental housing by year built and census tract"
 
-b25036_vars <- load_variables(2020, "acs5") |> 
-  filter(str_sub(name, end = 6) %in% "B25036")
+# b25036_vars <- load_variables(2020, "acs5") |> 
+#   filter(str_sub(name, end = 6) %in% "B25036")
+# 
+# b25036_raw <- get_acs(
+#   geography = "tract",
+#   county = "Chesterfield County",
+#   state = "VA",
+#   table = "B25036",
+#   year = 2020,
+#   survey = "acs5",
+#   cache_table = TRUE,
+#   geometry = TRUE
+#   )
+# 
+# b25036_hsr_raw <- b25036_raw |> 
+#   subset(GEOID %in% hsr_tracts$GEOID)
+# 
+# # Maybe keep all households in order to do percentages across entire housing stock? Or just rental housing stock?
+# 
+# b25036_vars_cleaned <- b25036_vars |> 
+#   separate(label, into = c("est", "total", "tenure", "yrblt"), sep = "!!") |> 
+#   select(variable = name, tenure, yrblt) |> 
+#   filter(tenure == "Renter occupied:") |> 
+#   drop_na() |> 
+#   mutate(tenure = "Renter")
+# 
+# b25036_hsr <- b25036_hsr_raw |> 
+#   right_join(b25036_vars_cleaned, by = "variable")
+# 
+# write_rds(b25036_hsr, "data/b25036_hsr.rds")
 
-b25036_raw <- get_acs(
-  geography = "tract",
-  county = "Chesterfield County",
-  state = "VA",
-  table = "B25036",
-  year = 2020,
-  survey = "acs5",
-  cache_table = TRUE,
-  geometry = TRUE
-  )
-
-b25036_hsr_raw <- b25036_raw |> 
-  subset(GEOID %in% hsr_tracts$GEOID)
-
-# Maybe keep all households in order to do percentages across entire housing stock? Or just rental housing stock?
-
-b25036_vars_cleaned <- b25036_vars |> 
-  separate(label, into = c("est", "total", "tenure", "yrblt"), sep = "!!") |> 
-  select(variable = name, tenure, yrblt) |> 
-  filter(tenure == "Renter occupied:") |> 
-  drop_na() |> 
-  mutate(tenure = "Renter")
-
-b25036_hsr <- b25036_hsr_raw |> 
-  right_join(b25036_vars_cleaned, by = "variable")
+b25036_hsr <-  read_rds("data/b25036_hsr.rds")
 
 b25036_hsr_grp <- b25036_hsr |> 
   mutate(yrblt = case_when(
@@ -513,51 +528,55 @@ b25036_hsr_grp <- b25036_hsr |>
   )) |> 
   mutate(total_renters = sum(estimate))
 
-
-b25036_hsr_summary <- b25036_hsr_grp |> 
-  group_by(NAME, yrblt) |> 
-  summarise(estimate = sum(estimate)) |> 
-  st_drop_geometry() |> 
-  separate(NAME, into = c("tract", "county", "st"), sep = ",")
-
 # Total renter households is 2,388
 
+b25036_hsr_summary <- b25036_hsr_grp |> 
+  group_by(NAME, yrgrp) |> 
+  summarise(estimate = sum(estimate)) |> 
+  st_drop_geometry() |> 
+  mutate(tract = sapply(strsplit(
+           as.character(
+             str_remove_all(NAME, "\\,")), " "), unlist)[3,])
+
 b25036_hsr_grp <- b25036_hsr_summary |> 
-  select(tract, yrblt, estimate) |>
+  select(tract, yrgrp, estimate) |>
   group_by(tract) |> 
   mutate(percent = estimate/sum(estimate)) |> 
-  ungroup()
+  ungroup() |> 
+  mutate(yrgrp = fct_relevel(yrgrp, c("2010 or later", "2000 to 2009", "1980 to 1999")))
 
-ggplot(b25036_hsr_grp,
-       aes(x=tract,
-           y=percent,
-           fill=yrblt)) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Eastern Hull Street corridor rental housing by year built and census tract", fill = "Year built") +
-  scale_y_continuous(labels = percent_format()) +
-  theme(axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust =1))
+gg_hbar_col(b25036_hsr_grp,
+            x_var = percent,
+            y_var = tract,
+            col_var = yrgrp,
+            stack = TRUE,
+            col_rev = TRUE,
+            title = "Percent of rental units by year built by tract",
+            caption = "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25035.",
+            col_title = "Year built",
+            x_labels = label_percent(),
+            y_labels = function(x) x,
+            x_title = "",
+            y_title = "")
+
   
 ```
-
 Multifamily property construction has been rare in the corridor for much of the last half century. Only one development was completed in the 2000s --- Element at Stonebridge. This development was the result of the Cloverleaf Mall redevelopment and is oriented towards Midlothian Turnpike, rather than the Eastern Hull Street corridor.
 
-More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978. The only multifamily property located directly off of the Eastern Hull Street corridor is the Wayside Townhouse Apartmentsm which were built in 1967 --- the earliest multifamily development in the area. Only one property (Element at Stonebridge) is rated at four stars, while all other properties are three stars or less. Although largely functional, these lower-tiered properties can expect to need renovations in the coming years.
+More relevant to the corridor is Cross Creek Apartments, the most recent development in close proximity to the Eastern Hull Street. This 225 unit garden style apartment property was completed in 1991 --- 31 years ago --- and was the first multifamily development along the Eastern Hull Street corridor since 1978.
+
+The only multifamily property located directly off of the Eastern Hull Street corridor is the Wayside Townhouse Apartmentsm which were built in 1967 --- the earliest multifamily development in the area. Only one property (Element at Stonebridge) is rated at four stars, while all other properties are three stars or less. Although largely functional, these lower-tiered properties can expect to need renovations in the coming years.
 
 ```{r}
-#| label: fig-costar-hsr-3
-#| fig-cap: "Eastern Hull Street corridor area multifamily properties by year built"
-
-# Histogram or chart?
+#| label: tbl-costar-hsr-3
+#| tbl-cap: "Eastern Hull Street corridor (and nearby Midlothian corridor) multifamily properties"
 
 costar_hsr_yrblt <- costar_hsr_mf |> 
   select(property_name, corridor, year_built, star_rating)
 
 costar_hsr_yrblt |> 
   arrange(desc(year_built)) |> 
-  kable(caption = "Multifamily properties located in Hull Street corridor study area by year built and rating",
-        align = "llrr",
+  kable(align = "llrr",
         col.names = c("Name", "Corridor", "Year Built", "CoStar Rating")) |> 
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped"))
@@ -569,9 +588,8 @@ costar_hsr_yrblt |>
 
 The typical renter in the study area requires an income of \$74,441 to afford the median home sales price of \$299,000 --- the median home sales price for homes sold in the last year. But median renter household incomes in the area top out at \$64,952, which are just over \$9,000 less than what is needed to purchase a home. With homeownership out of reach for many renter households in the area, SFRs are often the next best option.
 
-However, the typical listed rent for a SFR is \$1,497 --- only a few hundred dollars less than the monthly mortgage payment for a near \$300,000 home (\$1,736). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000. With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
-
-```{r hsr-renter-income, eval=FALSE}
+```{r}
+#| label: hsr-renter-income
 
 # MOE for 100206 and 100209 are pretty high.
 
@@ -612,7 +630,8 @@ hsr_medinc <- hsr_b25119_data %>%
 
 ```
 
-```{r hsr-med-sales, fig.cap="Median single-family home sales price in study area", eval=FALSE}
+```{r}
+#| label: hsr-med-sales
 
 hsr_sales <- read_csv("data/mls_hsr_sales_72622.csv")
 
@@ -674,16 +693,35 @@ data.frame(x = hsr_labels, y = hsr_values) %>%
 
 ```
 
-```{r hsr-sfr-price, eval=FALSE}
+The typical listed rent for a SFR is \$1,479 --- a few hundred dollars less than the monthly mortgage payment for the average-priced home (\$1,838). The income needed to afford a SFR at this price without being cost-burdened is \$59,160, which is still well-above what renter households in the study area can afford. In some cases, that gap in income to afford rent is over \$25,000.
+
+```{r}
+#| label: tbl-r1-sfr-price
+#| tbl-cap: "Calculated income needed to rent single-family home in the Eastern Hull Street corridor"
 
 hsr_sfr_price <- 1479
-hsr_sfr_income <- ((avg_sfr_price*10)/3)*12
+hsr_sfr_income <- ((hsr_sfr_price*10)/3)*12
+
+sfr_labels <- c("Average rent for single-family home",
+                "Income needed")
+
+sfr_values <- formattable::currency(c(hsr_sfr_price, hsr_sfr_income))
+
+data.frame(x = sfr_labels, y = sfr_values) %>% 
+  kable(
+        align = "lr",
+        col.names = c("Variable", "Value")) %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+  kableExtra::row_spec(2, bold=TRUE)
 
 ```
 
+With convenient access to higher paying jobs, this section of the corridor could support additional high-end multifamily development. But for lower income renter households, who already have few options along the corridor, increased development could have negative impacts if affordable multifamily homes are not included, as well.
+
 ```{r}
 #| label: fig-sfr-mls-bar
-#| fig-cap: "Renter income of census tracts and income needed to afford SFR and homeownership"
+#| fig-cap: "Renter income and income needed to purchase or rent single-family home in Eastern Hull Street corridor"
 
 x <- c("Census Tract 1002.06",
        "Census Tract 1002.09",
@@ -692,16 +730,28 @@ x <- c("Census Tract 1002.06",
 y <- c(54615, 44732, 64952, 33618, 59160, 78775)
 z <- c( "Renter income","Renter income","Renter income","Renter income", "Income needed", "Income needed")
 
-sfr_mls_bar <- data.frame(x, y, z)
+sfr_mls_bar <- data.frame(x, y, z) |> 
+  mutate(x = fct_reorder(x, y, .desc = TRUE))
 
-ggplot(sfr_mls_bar, aes(x = reorder(x, y), y = y, fill = z)) +
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  labs(title = "Renter income and income needed to afford SFR or homeownership",
-       x = NULL, y = NULL) +
-  scale_y_continuous(labels = scales::dollar_format()) +
-  scale_fill_discrete(name = "Legend") +
-  geom_text(size = 3, aes(label = dollar(y), vjust = -0.2))
+gg_hbar_col(sfr_mls_bar,
+            x_var = y,
+            y_var = x,
+            col_var = z,
+            x_labels = label_dollar(),
+            y_labels = function(x) x,
+            x_title = "",
+            y_title = "",
+            col_title = "",
+            title = "Renter income and income needed to purchase or rent single-family home"
+            ) +
+  ggplot2::geom_text(
+    aes(x = x, y = (y - 7500), label = label_dollar()(y)),
+    size = 3.5, color = "white") +
+  ggplot2::theme(
+    legend.position = "top",
+    legend.justification = "center",
+    legend.direction = "horizontal"
+  )
 
 
 ```
@@ -718,7 +768,9 @@ To date, extension of GRTC down Hull Street through the county has only been exp
 
 For the five multifamily properties located closest to the Hull Street corridor, no properties are within a half mile walking distance to public transit. For individuals without a car, accessing public transit means walking an average of two miles to the Chippenham Mall stop of Route 1C. It also means walking down a portion of Hull Street that is a six-lane highway interchange that has no sidewalks.
 
-```{r hsr-transit-setup, eval=FALSE}
+```{r}
+#| label: hsr-transit-setup
+#| eval: false
 
 costar_hsr_map <- costar_hsr_mf |>
   st_as_sf(coords = c("longitude", "latitude"),
@@ -749,32 +801,34 @@ nearest_stops <- st_nn(hsr_prj, stops, k = 20)
 
 ```
 
-```{r hsr-mf-stops}
+```{r}
+#| label: hsr-transit-analysis
+#| eval: false
 
-# costar_stop_walking <- imap(nearest_stops, ~{
-#   
-#   property <- hsr_prj[.y,]
-#   
-#   nearby_stops <- stops[.x, ]
-# 
-#   mb_matrix(origins = property,
-#             destinations = nearby_stops,
-#             profile = "walking",
-#             output = "distance")}) |> 
-#   reduce(rbind) |> 
-#   apply(1, min) |> 
-#   magrittr::divide_by(1609.34)
-# 
-# hsr_trans_map <- costar_hsr_map |>
-#    mutate(
-#      walk_to_transit = costar_stop_walking,
-#      transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
-#    )
+costar_stop_walking <- imap(nearest_stops, ~{
 
-# write_rds(hsr_trans_map, "data/hsr_trans_map.rds")
+  property <- hsr_prj[.y,]
 
-# mean(hsr_trans_map$walk_to_transit)
-# 2.097232
+  nearby_stops <- stops[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_stops,
+            profile = "walking",
+            output = "distance")}) |>
+  reduce(rbind) |>
+  apply(1, min) |>
+  magrittr::divide_by(1609.34)
+
+hsr_trans_map <- costar_hsr_map |>
+   mutate(
+     walk_to_transit = costar_stop_walking,
+     transit_nearby = ifelse(walk_to_transit <= 0.5, 1, 0)
+   )
+
+write_rds(hsr_trans_map, "data/hsr_trans_map.rds")
+
+mean(hsr_trans_map$walk_to_transit)
+2.097232
 
 ```
 
@@ -787,18 +841,19 @@ hsr_trans_map <- read_rds("data/hsr_trans_map.rds")
 hsr_trans_sum <- hsr_trans_map |> 
   st_drop_geometry() |> 
   select(property_name, number_of_units, walk_to_transit) |> 
-  mutate(walk_to_transit = parse_number(format(round(walk_to_transit, 2))))
-  
+  mutate(walk_to_transit = parse_number(format(round(walk_to_transit, 2))),
+         property_name = str_wrap(property_name, width = 10))
 
-ggplot(hsr_trans_sum,
-       aes(x = reorder(property_name, -walk_to_transit), y = walk_to_transit, fill = property_name)) +
-  geom_bar(stat = "identity") + 
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "none") +
-  labs(title = "Eastern Hull Street multifamily by distance to transit")
-  
+gg_bar(hsr_trans_sum,
+       x_var = property_name,
+       y_var = walk_to_transit,
+       x_title = "",
+       y_title = "Miles",
+       x_labels = function(x) x,
+       x_reorder = TRUE,
+       title = "Eastern Hull Street multifamily by distance to transit",
+       caption = "Sources: CoStar Group, Inc. and GRTC."
+       )
 
 ```
 
@@ -816,43 +871,43 @@ Nearby, but more oriented towards the Midlothian Turnpike are:
 
 All five properties closest to the Eastern Hull Street corridor are within an ideal distance to a Chesterfield County Public School --- less than a five minute drive. This provides many families with a convenient drive to take their children to school. The average drive-time distance to a public school for these properties is 3.6 minutes. Properties north of Hull Street would be zoned for either Davis Elementary or Providence Middle School --- but no multifamily properties exist on the northside of Hull Street.
 
-```{r hsr-school-map, eval=FALSE}
+```{r}
+#| label: hsr-school-map
+#| eval: false
 
 schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
   st_transform(va_crs)
 
 nearest_schools <- st_nn(hsr_prj, schools, k = 20)
 
-# mapview(schools) +
-#   mapview(costar_hsr_tracts)
-
 ```
 
-```{r hsr-schools, eval=FALSE}
+```{r}
+#| label: hsr-school-setup
+#| eval: false
 
 # I think I would want to understand the number of schools within a distance of certain properties and what schools those are. 
 
-# hsr_school_driving <- imap(nearest_schools, ~{
-#   
-#   property <- hsr_prj[.y,]
-# 
-#   nearby_schools <- schools[.x, ]
-# 
-#   mb_matrix(origins = property,
-#             destinations = nearby_schools,
-#             profile = "driving",
-#             output = "duration")
-# }) |> 
-#   reduce(rbind) |> 
-#   apply(1, min)
-# 
-# hsr_schools_map <- hsr_trans_map |>
-#   mutate(
-#     minutes_to_school = hsr_school_driving,
-#     school_nearby = ifelse(minutes_to_school <= 30, 1, 0))
-# 
-# write_rds(hsr_schools_map, "data/hsr_schools_map.rds")
+hsr_school_driving <- imap(nearest_schools, ~{
 
+  property <- hsr_prj[.y,]
+
+  nearby_schools <- schools[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_schools,
+            profile = "driving",
+            output = "duration")
+}) |>
+  reduce(rbind) |>
+  apply(1, min)
+
+hsr_schools_map <- hsr_trans_map |>
+  mutate(
+    minutes_to_school = hsr_school_driving,
+    school_nearby = ifelse(minutes_to_school <= 30, 1, 0))
+
+write_rds(hsr_schools_map, "data/hsr_schools_map.rds")
 
 ```
 
@@ -865,91 +920,94 @@ hsr_schools_map <- read_rds("data/hsr_schools_map.rds")
 hsr_schools_sum <- hsr_schools_map |> 
   st_drop_geometry() |> 
   select(property_name, number_of_units, minutes_to_school) |> 
-  mutate(minutes_to_school = parse_number(format(round(minutes_to_school, 2))))
+  mutate(minutes_to_school = parse_number(format(round(minutes_to_school, 2))),
+         property_name = str_wrap(property_name, width = 10))
   
-
-ggplot(hsr_schools_sum,
-       aes(x = reorder(property_name, -minutes_to_school), y = minutes_to_school, fill = property_name)) +
-  geom_bar(stat = "identity") + 
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "none") +
-  labs(title = "Eastern Hull Street multifamily by drive time (in minutes) to schools")
-
+gg_bar(hsr_schools_sum,
+       x_var = property_name,
+       y_var = minutes_to_school,
+       x_title = "",
+       y_title = "Minutes",
+       x_labels = function(x) x,
+       x_reorder = TRUE,
+       title = "Eastern Hull Street multifamily by drive time to schools",
+       caption = "Sources: CoStar Group, Inc. and CCPS."
+       )
 
 ```
-
 ### Grocery stores
 
 Several ethnic food stores exist at the 360 West Shopping Center at the northwest corner of Turner Road and Hull Street. But full service grocery stores like Food Lion and Kroger are located further west, outside of the study area. Although only a short drive down the road, multifamily properties in the study area are much closer to a convenience store or small market, rather than a full service grocery store.
 
 The average distance to a convenience or small market is about half a mile (0.46 miles), while the average distance to a full service grocery store is 1.51 miles. This distance is negligible for those with a personal vehicle, but for those without a car or unable to drive due to an impairment (e.g. physical or mental disability), traveling to the nearest Food Lion or Kroger can be quite difficult. Those having to walk face a near mile and a half walk along a highway with no sidewalks and vehicles going over 55 mph.
 
-```{r hsr-grocery, eval=FALSE}
+```{r}
+#| label: hsr-grocery-setup
+#| eval: false
+
 # Grocery stores:
 # We'll use SNAP retailers from the USDA as a proxy here
 # This is not perfect so some filtering may be necessary
 # as it picks up on convenience stores as well
-# snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b2deb56d_0.csv") %>%
-#   filter(State == "VA") %>%
-#   st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
-#   st_transform(va_crs)
-# 
-# snap_fullservice <- snap |> 
-#   filter(str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
-# 
-# snap_convenience <- snap |> 
-#   filter(!str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
-#   
-# # Full service grocery filter.
-# nearest_snap <- st_nn(hsr_prj, snap_fullservice, k = 20)
-# 
-# hsr_grocery <- imap(nearest_snap, ~{
-# 
-#   property <- hsr_prj[.y,]
-# 
-#   nearby_snap <- snap_fullservice[.x, ]
-# 
-#   mb_matrix(origins = property,
-#             destinations = nearby_snap,
-#             profile = "walking",
-#             output = "distance")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min) %>%
-#   magrittr::divide_by(1609.34)
-# 
-# hsr_grocery_map <- hsr_schools_map |>
-#   mutate(
-#     miles_to_snap = hsr_grocery,
-#     snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
-# 
-# # Convenience store filter.
-# 
-# nearest_snapconvenience <- st_nn(hsr_prj, snap_convenience, k = 20)
-# 
-# hsr_convenience <- imap(nearest_snapconvenience, ~{
-# 
-#   property <- hsr_prj[.y,]
-# 
-#   nearby_snapconvenience <- snap_convenience[.x, ]
-# 
-#   mb_matrix(origins = property,
-#             destinations = nearby_snapconvenience,
-#             profile = "walking",
-#             output = "distance")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min) %>%
-#   magrittr::divide_by(1609.34)
-# 
-# hsr_convenience_map <- hsr_grocery_map |>
-#   mutate(
-#     miles_to_convenience = hsr_convenience,
-#     convenience_nearby = ifelse(miles_to_convenience <= 0.5, 1, 0))
-# 
-# write_rds(hsr_convenience_map, "data/hsr_convenience_map.rds")
+snap <- read_csv("https://opendata.arcgis.com/datasets/e9cc76a48ccb45628181ece7b2deb56d_0.csv") %>%
+  filter(State == "VA") %>%
+  st_as_sf(coords = c("X", "Y"), crs = 4326) %>%
+  st_transform(va_crs)
+
+snap_fullservice <- snap |>
+  filter(str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+
+snap_convenience <- snap |>
+  filter(!str_detect(Store_Name, regex("food lion|publix|Costco|Kroger|aldi|lidl|whole foods|walmart|save-a-lot|sam's club|farm fresh", ignore_case = T)))
+
+# Full service grocery filter.
+nearest_snap <- st_nn(hsr_prj, snap_fullservice, k = 20)
+
+hsr_grocery <- imap(nearest_snap, ~{
+
+  property <- hsr_prj[.y,]
+
+  nearby_snap <- snap_fullservice[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snap,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+hsr_grocery_map <- hsr_schools_map |>
+  mutate(
+    miles_to_snap = hsr_grocery,
+    snap_nearby = ifelse(miles_to_snap <= 0.5, 1, 0))
+
+# Convenience store filter.
+
+nearest_snapconvenience <- st_nn(hsr_prj, snap_convenience, k = 20)
+
+hsr_convenience <- imap(nearest_snapconvenience, ~{
+
+  property <- hsr_prj[.y,]
+
+  nearby_snapconvenience <- snap_convenience[.x, ]
+
+  mb_matrix(origins = property,
+            destinations = nearby_snapconvenience,
+            profile = "walking",
+            output = "distance")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min) %>%
+  magrittr::divide_by(1609.34)
+
+hsr_convenience_map <- hsr_grocery_map |>
+  mutate(
+    miles_to_convenience = hsr_convenience,
+    convenience_nearby = ifelse(miles_to_convenience <= 0.5, 1, 0))
+
+write_rds(hsr_convenience_map, "data/hsr_convenience_map.rds")
 
 # pal <- colorFactor(c("red", "blue"), domain = c(0,1))
 # 
@@ -979,24 +1037,31 @@ hsr_grocery_sum <- hsr_grocery_map |>
   st_drop_geometry() |> 
   select(property_name, number_of_units, miles_to_snap, miles_to_convenience) |> 
   mutate(miles_to_snap = parse_number(format(round(miles_to_snap, 2)))) |> 
-  mutate(miles_to_convenience = parse_number(format(round(miles_to_convenience, 2)))) |> 
+  mutate(miles_to_convenience = parse_number(format(round(miles_to_convenience, 2))),
+         property_name = str_wrap(property_name, width = 10)) |> 
   pivot_longer(cols = starts_with("miles"),
                names_to = "Store",
                values_to = "Miles") |> 
   mutate(Store = case_when(
     Store == "miles_to_convenience" ~ "Convenience store",
     Store == "miles_to_snap" ~ "Full SNAP retailer"
-  ))
+  )) |> 
+  mutate(property_name = fct_reorder(property_name, Miles, .fun = sum, .desc = TRUE))
 
-ggplot(hsr_grocery_sum,
-       aes(x = reorder(property_name, -Miles), y = Miles, fill = property_name)) +
-  geom_bar(stat = "identity") + 
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "none") +
-  labs(title = "Eastern Hull Street multifamily by miles to food access") +
-  facet_wrap(~Store)
+gg_hbar_col_facet(hsr_grocery_sum,
+       y_var = property_name,
+       x_var = Miles,
+       y_title = "",
+       x_title = "Miles",
+       col_var = Store,
+       facet_var = Store,
+       y_labels = function(x) x,
+       facet_labels = function(x) x,
+       #x_reorder = TRUE,
+       col_legend_none = TRUE,
+       title = "Eastern Hull Street multifamily by distance to food access",
+       caption = "Sources: CoStar Group, Inc. and USDA"
+       )
 
 ```
 
@@ -1008,83 +1073,86 @@ Two Patient First urgent cares are located within close proximity to Eastern Hul
 
 [^part-2b-2-1]: https://www.pewresearch.org/fact-tank/2018/12/12/how-far-americans-live-from-the-closest-hospital-differs-by-community-type/
 
-```{r medical}
+```{r}
+#| label: hsr-medical-setup
+#| eval: false
+
 # Hospital / urgent care
 # I'm not filtering by type but you might consider doing so
 # There are some other datasets in HIFLD on care centers that may 
 # be relevant as well.
-# hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
-#   filter(STATE == "VA") %>%
-#   st_transform(va_crs) |> 
-#   filter(STATUS == "OPEN") |> 
-#   filter(TYPE == "GENERAL ACUTE CARE")
-# 
-# urgentcare <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Urgent_Care_Facilities/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
-#   filter(STATE == "VA") %>%
-#   st_transform(va_crs)
-# 
-# nearest_hospitals <- st_nn(hsr_prj, hospitals, k = 20)
-# # 
-# costar_hospital_driving <- imap(nearest_hospitals, ~{
-#   # Get the specific property (the list index)
-#   property <- hsr_prj[.y,]
-# #   
-#   # Get the nearby hospitals (the indices in the list element)
-#   nearby_hospitals <- hospitals[.x, ]
-# #   
-#   # Calculate the matrix (drive-times here instead)
-#   # Minutes are returned by default
-#   mb_matrix(origins = property,
-#             destinations = nearby_hospitals,
-#             profile = "driving",
-#             output = "duration")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min)
-# 
-# hsr_health_map <- hsr_convenience_map |>
-#   mutate(
-#     minutes_to_hospital = costar_hospital_driving,
-#     hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
-# 
-# nearest_urgent <- st_nn(hsr_prj, urgentcare, k = 20)
-# 
-# costar_urgent_driving <- imap(nearest_urgent, ~{
-#   # Get the specific property (the list index)
-#   property <- hsr_prj[.y,]
-# #   
-#   # Get the nearby hospitals (the indices in the list element)
-#   nearby_urgent <- urgentcare[.x, ]
-# #   
-#   # Calculate the matrix (drive-times here instead)
-#   # Minutes are returned by default
-#   mb_matrix(origins = property,
-#             destinations = nearby_urgent,
-#             profile = "driving",
-#             output = "duration")
-# }) %>%
-#   reduce(rbind) %>%
-#   apply(1, min)
-# 
-# hsr_urgent_map <- hsr_health_map |>
-#   mutate(
-#     minutes_to_urgent = costar_urgent_driving,
-#     urgent_nearby = ifelse(minutes_to_urgent <= 15, 1, 0))
-# 
-# write_rds(hsr_urgent_map, "data/hsr_urgent_map.rds")
-# 
+
+hospitals <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
+  st_transform(va_crs) |>
+  filter(STATUS == "OPEN") |>
+  filter(TYPE == "GENERAL ACUTE CARE")
+
+urgentcare <- st_read("https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Urgent_Care_Facilities/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>%
+  filter(STATE == "VA") %>%
+  st_transform(va_crs)
+
+nearest_hospitals <- st_nn(hsr_prj, hospitals, k = 20)
+#
+costar_hospital_driving <- imap(nearest_hospitals, ~{
+  # Get the specific property (the list index)
+  property <- hsr_prj[.y,]
+#
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_hospitals <- hospitals[.x, ]
+#
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_hospitals,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+hsr_health_map <- hsr_convenience_map |>
+  mutate(
+    minutes_to_hospital = costar_hospital_driving,
+    hospital_nearby = ifelse(minutes_to_hospital <= 15, 1, 0))
+
+nearest_urgent <- st_nn(hsr_prj, urgentcare, k = 20)
+
+costar_urgent_driving <- imap(nearest_urgent, ~{
+  # Get the specific property (the list index)
+  property <- hsr_prj[.y,]
+#
+  # Get the nearby hospitals (the indices in the list element)
+  nearby_urgent <- urgentcare[.x, ]
+#
+  # Calculate the matrix (drive-times here instead)
+  # Minutes are returned by default
+  mb_matrix(origins = property,
+            destinations = nearby_urgent,
+            profile = "driving",
+            output = "duration")
+}) %>%
+  reduce(rbind) %>%
+  apply(1, min)
+
+hsr_urgent_map <- hsr_health_map |>
+  mutate(
+    minutes_to_urgent = costar_urgent_driving,
+    urgent_nearby = ifelse(minutes_to_urgent <= 15, 1, 0))
+
+write_rds(hsr_urgent_map, "data/hsr_urgent_map.rds")
+
 # mean(hsr_urgent_map$minutes_to_hospital)
 # 8.57
 # 
 # mean(hsr_urgent_map$minutes_to_urgent)
 # 8.208
 
-
 ```
 
 ```{r}
-#| label: fig-hospital-chart
-#| fig-cap: "Eastern Hull Street multifamily by drive time (in minutes) to healthcare"
+#| label: fig-hsr-health-chart
+#| fig-cap: "Mean driving time from apartments in Eastern Hull Street corridor to healthcare facility"
 
 hsr_urgent_map <- read_rds("data/hsr_urgent_map.rds")
 
@@ -1092,7 +1160,8 @@ hsr_urgent_sum <- hsr_urgent_map |>
   st_drop_geometry() |> 
   select(property_name, number_of_units, minutes_to_urgent, minutes_to_hospital) |> 
   mutate(minutes_to_hospital = parse_number(format(round(minutes_to_hospital, 2)))) |> 
-  mutate(minutes_to_urgent = parse_number(format(round(minutes_to_urgent), 2))) |> 
+  mutate(minutes_to_urgent = parse_number(format(round(minutes_to_urgent), 2)),
+         property_name = str_wrap(property_name, width = 10)) |> 
   pivot_longer(
     cols = starts_with("minutes"),
     names_to = "Type",
@@ -1100,17 +1169,22 @@ hsr_urgent_sum <- hsr_urgent_map |>
   mutate(Type = case_when(
     Type == "minutes_to_hospital" ~ "Acute General Hospital",
     Type == "minutes_to_urgent" ~ "Urgent Care"
-  ))
+  )) |> 
+  mutate(property_name = fct_reorder(property_name, Minutes, .fun = sum, .desc = TRUE))
 
-ggplot(hsr_urgent_sum,
-       aes(x = reorder(property_name, -Minutes), y = Minutes, fill = property_name)) +
-  geom_bar(stat = "identity") + 
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "none") +
-  labs(title = "Eastern Hull Street multifamily by minutes to healthcare") +
-  facet_wrap(~Type)
+gg_hbar_col_facet(hsr_urgent_sum,
+       y_var = property_name,
+       x_var = Minutes,
+       y_title = "",
+       x_title = "Minutes",
+       col_var = Type,
+       facet_var = Type,
+       y_labels = function(x) x,
+       #x_reorder = TRUE,
+       col_legend_none = TRUE,
+       title = "Mean driving time from apartments in Eastern Hull Street corridor to healthcare facility",
+       caption = "Sources: CoStar Group, Inc. and U.S. Department of Homeland Security."
+       )
 
 ```
 
@@ -1120,80 +1194,82 @@ There are very few commercial retail centers located along the Eastern Hull Stre
 
 Of the jobs within a 15 minute drive of properties in the area, nearly half (49 percent) of those jobs pay more than \$3,333. The large share of jobs paying such high wages can be attributed to the proximity of the Chippenham Parkway interchange, which allows commuters to take Chippenham to the Powhite Parkway and into Downtown Richmond.
 
-```{r hsr-jobs-setup, eval=FALSE}
+```{r}
+#| label: hsr-jobs-setup
+#| eval: false
 
-# va_wac <- grab_lodes(
-#   state = "va",
-#   year = 2019,
-#   lodes_type = "wac",
-#   use_cache = TRUE
-# )
-# 
-# # Jobs with earnings more than $3333/month.
-# 
-# va_jobs <- va_wac %>%
-#   select(w_geocode, total_jobs = C000, hi_paying_jobs = CE03, mid_paying_jobs = CE02, lo_paying_jobs = CE01, hs_jobs = CD02, ba_jobs = CD04)
-# 
-# options(tigris_use_cache = TRUE)
-# 
-# va_blocks <- blocks("VA", year = 2019)
-# 
-# va_jobs_sf <- va_blocks %>%
-#   select(w_geocode = GEOID10) %>%
-#   inner_join(va_jobs, by = "w_geocode")
-# 
-# hsr <- read_csv("data/costar_hsr_mf.csv") %>%
-#   st_as_sf(coords = c("Longitude", "Latitude"), 
-#            crs = 4326) %>%
-#   mutate(property_id = 1:nrow(.)) |> 
-#   clean_names() |> 
-#   mutate(corridor = case_when(
-#     property_address == "301 Karl Linn Dr" ~ "Midlothian",
-#     property_address == "3005 Lancers Blvd" ~ "Hull Street",
-#     property_address == "6300 Pewter Ave" ~ "Hull Street",
-#     property_address == "6925 Starview Ct" ~ "Midlothian",
-#     property_address == "7660 Van Hoy Dr" ~ "Hull Street",
-#     property_address == "3101 Danzler Cir" ~ "Hull Street",
-#     property_address == "2635 Wayside Dr" ~ "Hull Street"
-#   )) |> 
-#   mutate(property_name = case_when(
-#     property_address == "3101 Danzler Cir" ~ "Danzler Place Townhomes",
-#     TRUE ~ property_name
-#   )) |> 
-#   filter(corridor == "Hull Street")
-# 
-# costar_isos <- mb_isochrone(
-#   location = hsr,
-#   profile = "driving",
-#   time = 15,
-#   id_column = "property_id"
-# )
-# 
-# reachable_jobs <- st_join(
-#   st_transform(costar_isos, 6594),
-#   st_centroid(st_transform(va_jobs_sf, 6594)),
-#   left = FALSE
-# ) %>%
-#   st_drop_geometry() %>%
-#   group_by(id) %>%
-#   summarize(hi_jobs = sum(hi_paying_jobs, na.rm = TRUE),
-#             mid_jobs = sum(mid_paying_jobs, na.rm = TRUE),
-#             lo_jobs = sum(lo_paying_jobs, na.rm = TRUE),
-#             total_jobs = sum(total_jobs, na.rm = TRUE),
-#             hs_jobs = sum(hs_jobs, na.rm = TRUE),
-#             ba_jobs = sum(ba_jobs, na.rm = TRUE))
-# 
-# hsr_jobs <- hsr |> 
-#   mutate(id = property_id)|> 
-#   left_join(reachable_jobs, by = "id")
-# 
-# hsr_jobs_list <- hsr_jobs |> 
-#   select(property_name, property_address, total_jobs, hi_jobs, mid_jobs, lo_jobs, ba_jobs, hs_jobs) |> 
-#   transform(hi_percent = hi_jobs/total_jobs) |> 
-#   transform(lo_percent = lo_jobs/total_jobs)
-# 
-# write_rds(hsr_jobs_list, "data/hsr_jobs_list.rds")
-# 
+va_wac <- grab_lodes(
+  state = "va",
+  year = 2019,
+  lodes_type = "wac",
+  use_cache = TRUE
+)
+
+# Jobs with earnings more than $3333/month.
+
+va_jobs <- va_wac %>%
+  select(w_geocode, total_jobs = C000, hi_paying_jobs = CE03, mid_paying_jobs = CE02, lo_paying_jobs = CE01, hs_jobs = CD02, ba_jobs = CD04)
+
+options(tigris_use_cache = TRUE)
+
+va_blocks <- blocks("VA", year = 2019)
+
+va_jobs_sf <- va_blocks %>%
+  select(w_geocode = GEOID10) %>%
+  inner_join(va_jobs, by = "w_geocode")
+
+hsr <- read_csv("data/costar_hsr_mf.csv") %>%
+  st_as_sf(coords = c("Longitude", "Latitude"),
+           crs = 4326) %>%
+  mutate(property_id = 1:nrow(.)) |>
+  clean_names() |>
+  mutate(corridor = case_when(
+    property_address == "301 Karl Linn Dr" ~ "Midlothian",
+    property_address == "3005 Lancers Blvd" ~ "Hull Street",
+    property_address == "6300 Pewter Ave" ~ "Hull Street",
+    property_address == "6925 Starview Ct" ~ "Midlothian",
+    property_address == "7660 Van Hoy Dr" ~ "Hull Street",
+    property_address == "3101 Danzler Cir" ~ "Hull Street",
+    property_address == "2635 Wayside Dr" ~ "Hull Street"
+  )) |>
+  mutate(property_name = case_when(
+    property_address == "3101 Danzler Cir" ~ "Danzler Place Townhomes",
+    TRUE ~ property_name
+  )) |>
+  filter(corridor == "Hull Street")
+
+costar_isos <- mb_isochrone(
+  location = hsr,
+  profile = "driving",
+  time = 15,
+  id_column = "property_id"
+)
+
+reachable_jobs <- st_join(
+  st_transform(costar_isos, 6594),
+  st_centroid(st_transform(va_jobs_sf, 6594)),
+  left = FALSE
+) %>%
+  st_drop_geometry() %>%
+  group_by(id) %>%
+  summarize(hi_jobs = sum(hi_paying_jobs, na.rm = TRUE),
+            mid_jobs = sum(mid_paying_jobs, na.rm = TRUE),
+            lo_jobs = sum(lo_paying_jobs, na.rm = TRUE),
+            total_jobs = sum(total_jobs, na.rm = TRUE),
+            hs_jobs = sum(hs_jobs, na.rm = TRUE),
+            ba_jobs = sum(ba_jobs, na.rm = TRUE))
+
+hsr_jobs <- hsr |>
+  mutate(id = property_id)|>
+  left_join(reachable_jobs, by = "id")
+
+hsr_jobs_list <- hsr_jobs |>
+  select(property_name, property_address, total_jobs, hi_jobs, mid_jobs, lo_jobs, ba_jobs, hs_jobs) |>
+  transform(hi_percent = hi_jobs/total_jobs) |>
+  transform(lo_percent = lo_jobs/total_jobs)
+
+write_rds(hsr_jobs_list, "data/hsr_jobs_list.rds")
+
 # leaflet(hsr_jobs_list) |>
 #   addTiles() |>
 #   addCircleMarkers(
@@ -1201,13 +1277,13 @@ Of the jobs within a 15 minute drive of properties in the area, nearly half (49 
 #     color = "red",
 #     stroke = FALSE, fillOpacity = 0.5
 #    )
-# 
+
 # mean(hsr_jobs_list$hi_percent)
 # 0.4866774
 ```
 
 ```{r}
-#| label: fig-hsr-jobs
+#| label: fig-hsr-jobs-chart
 #| fig-cap: "Eastern Hull Street multifamily by number of jobs within a 15 minute drive"
 
 hsr_jobs <- read_rds("data/hsr_jobs_list.rds")
@@ -1225,19 +1301,23 @@ hsr_jobs_sum <- hsr_jobs |>
   select(property_name, wage, value) |> 
   group_by(property_name) |> 
   mutate(percent = value/sum(value)) |> 
-  ungroup()
+  ungroup() |> 
+  mutate(property_name = str_wrap(property_name, width = 10))
 
-ggplot(hsr_jobs_sum,
-       aes(x = property_name,
-           y = percent,
-           fill = wage)) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Percent of jobs by wage within a 15 minute drive of Eastern Hull Street multifamily", fill = "Annual wage") +
-  theme(axis.title.y = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-  scale_y_continuous(labels = percent_format())
-
+gg_bar_col(hsr_jobs_sum,
+           x_var = property_name,
+           y_var = percent,
+           col_var = wage,
+           stack = TRUE,
+           x_title = "",
+           y_labels = label_percent(),
+           x_labels = function(x) x,
+           col_labels = function(x) x,
+           col_title = "Annual wage",
+           col_rev = TRUE,
+           title = "Percent of jobs by wage within a 15 minute drive of Eastern Hull Street multifamily",
+           caption = "Sources: CoStar Group, Inc. and U.S. Census Bureau LEHD Origin-Destination Employment Statistics."
+           )
 
 ```
 
@@ -1255,7 +1335,8 @@ Further down the corridor and outside the study area, the County is also encoura
 
 **Rockwood Square Shopping Center**
 
-![Rockwood Square Shopping Center. Source: Areaprops.com](images/rockwood-square.jpg)
+![Rockwood Square Shopping Center.](images/rockwood-square.jpg)
+*Photo: Areaprops.com*
 
 Although outside of the Eastern Hull Street corridor study area, the Rockwood Square Shopping Center redevelopment offers an example of the possibilities for aging shopping centers within the study area. This strategy of redeveloping older strip malls and commercial shopping centers is [a vision among Chesterfield County planners](https://www.chesterfieldobserver.com/articles/county-planners-craft-long-term-vision-for-struggling-shopping-centers-near-rockwood-park/) to transform struggling commercial retail hubs into more vibrant mixed-use developments.
 

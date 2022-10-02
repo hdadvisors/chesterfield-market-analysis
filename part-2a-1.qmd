@@ -8,7 +8,6 @@ This section summarizes the existing stock of rental units within the county and
 library(tidyverse)
 library(tidycensus)
 library(glue)
-library(esquisse)
 library(plotly)
 library(scales)
 library(formattable)
@@ -27,7 +26,6 @@ library(htmlwidgets)
 library(pals)
 library(mapboxapi)
 library(ggspatial)
-
 
 ```
 
@@ -166,7 +164,6 @@ structure_plot
 # plotly::ggplotly(structure_plot) %>% 
 #   plotly_camera()
 
-
 ```
 
 ### Number of bedrooms
@@ -304,38 +301,41 @@ To obtain a better understanding of the scale and distribution of SFR across the
 
 Based on an analysis of these address in the latest parcel records from the county, there are an estimated 13,205 single-family home rentals in the county. These comprise nearly 12 percent of all single-family homes.
 
-```{r sfr-setup}
+```{r}
+#| label: sfr-setup
+#| eval: false
 
 # Pull in Chesterfield County magisterial districts
 
-# districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
-# 
-# districts <- read_sf(districts_geojson)
+districts_geojson <- "https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson"
+
+districts <- read_sf(districts_geojson)
 
 # View districts as simple map
+
 # plot(districts$geometry)
 
 # Pull in Chesterfield County parcel shapefile and convert polygons to points
 
-# parcels <- st_read("data/ParcelsEnriched.shp") |>
-#    st_point_on_surface()
+parcels <- st_read("data/ParcelsEnriched.shp") |>
+   st_point_on_surface()
 
 # Remove unneeded columns and spatially join to magisterial districts
 
-# parcels_sub <- parcels %>%
-#   select(
-#     id = GPIN,
-#     use_code = UseCode,
-#     owner_address = OwnerAddre,
-#     owner_city = OwnerCity,
-#     owner_state = OwnerState,
-#     owner_zip = OwnerZip,
-#     address = Address,
-#     zip = Zip,
-#     year_built = Year_Built,
-#     improvement = Improvemen
-#   ) |>
-#   st_join(left = FALSE, districts["MagDistName"])
+parcels_sub <- parcels %>%
+  select(
+    id = GPIN,
+    use_code = UseCode,
+    owner_address = OwnerAddre,
+    owner_city = OwnerCity,
+    owner_state = OwnerState,
+    owner_zip = OwnerZip,
+    address = Address,
+    zip = Zip,
+    year_built = Year_Built,
+    improvement = Improvemen
+  ) |>
+  st_join(left = FALSE, districts["MagDistName"])
 
 # Check closeness between parcel address and owner address
 
@@ -360,33 +360,32 @@ Based on an analysis of these address in the latest parcel records from the coun
 # Set renter-occupied SFH as all other single-family parcels
 # Assign all other parcels as "Multifamily" or "Other"
 
-# parcels_ownership <- parcels_sub %>%
-#   mutate(address_num = str_extract(address, "[0-9]+"),
-#          owner_num = str_extract(owner_address, "[0-9]+")) %>%
-#   mutate(ownership = case_when(
-#     use_code == "SD" & match_score > 0.6 & address_num == owner_num ~ "Owner-occupied SFH",
-#     use_code == "SD" ~ "Renter-occupied SFH",
-#     use_code %in% c("CD", "CN", "DU", "QP", "RE", "TH", "TN", "TP", "100") ~ "Multifamily",
-#     TRUE ~ "Other"
-#   ))
+parcels_ownership <- parcels_sub %>%
+  mutate(address_num = str_extract(address, "[0-9]+"),
+         owner_num = str_extract(owner_address, "[0-9]+")) %>%
+  mutate(ownership = case_when(
+    use_code == "SD" & match_score > 0.6 & address_num == owner_num ~ "Owner-occupied SFH",
+    use_code == "SD" ~ "Renter-occupied SFH",
+    use_code %in% c("CD", "CN", "DU", "QP", "RE", "TH", "TN", "TP", "100") ~ "Multifamily",
+    TRUE ~ "Other"
+  ))
 
 # table(parcels_ownership$ownership)
 
 # Filter parcels for only SFH
 
-# ch_sfh <- filter(parcels_ownership, ownership %in% c("Owner-occupied SFH",
-#                                                      "Renter-occupied SFH"))
+ch_sfh <- filter(parcels_ownership, ownership %in% c("Owner-occupied SFH",
+                                                     "Renter-occupied SFH"))
 
-# st_write(ch_sfh, "data/shp/ch_sfh.shp")
+st_write(ch_sfh, "data/shp/ch_sfh.shp")
 
-# ch_sfh |> 
-#   st_drop_geometry() |> 
-#   saveRDS("data/ch_sfh.rds")
+ch_sfh |>
+  st_drop_geometry() |>
+  saveRDS("data/ch_sfh.rds")
 
-# ch_sfr <- filter(ch_sfh, ownership == "Renter-occupied SFH")
+ch_sfr <- filter(ch_sfh, ownership == "Renter-occupied SFH")
 
-# st_write(ch_sfr, "data/shp/ch_sfr.shp")
-
+st_write(ch_sfr, "data/shp/ch_sfr.shp")
 
 ```
 
@@ -416,7 +415,9 @@ ch_sfh_sum |>
 
 The map below shows the spatial distribution of SFRs across the county. They are found in nearly every community, but are most prevalent in Ettrick neighborhoods surrounding Petersburg and Colonial Heights, between Route 288 and Chippenham Parkway, the Route 1 corridor, and the Hull Street corridor.
 
-```{r sfr-basemap, include=FALSE}
+```{r}
+#| label: sfr-basemap
+#| eval: false
 
 library(tigris)
 library(ggspatial)
@@ -439,13 +440,19 @@ cf_basemap <- layer_static_mapbox(
   location = ch_boundary,
   style_id = "light-v10",
   username = "mapbox"
-)
+  )
+
+write_rds(cf_basemap, "data/cf_basemap.rds")
 
 ```
 
 ```{r}
 #| label: fig-sfr-map
 #| fig-cap: "Single-family rental homes in Chesterfield County"
+
+cf_basemap <- read_rds("data/cf_basemap.rds")
+
+ch_sfr <- st_read("data/shp/ch_sfr.shp")
 
 sfr_map <- ggplot() +
   cf_basemap +
@@ -490,7 +497,8 @@ sfr_mag
 
 The majority of SFR owners (61 percent) also live in the county, while 29 percent live somewhere else in Virginia. The remaining 10 percent of single-family rental owners live outside of the state.
 
-```{r sfr-owners, include=FALSE}
+```{r}
+#| label: sfr-owners
 
 # sf_use_s2(FALSE)
 # 
@@ -573,7 +581,7 @@ Average market asking rent per unit is expected to climb in the county---signall
 
 ```{r}
 #| label: fig-costar-rents
-#| fig-cap: "Average asking rent in Chesterfield County. Source: CoStar Group, Inc."}
+#| fig-cap: "Average asking rent in Chesterfield County. Source: CoStar Group, Inc."
 
 # This is pulling in average rents for all existing multifamily properties in the county. For some reason, this differs from the previous average rent calculations. I'd resolve this by updating the previous visualization in Part-1B-4.
 
@@ -620,7 +628,6 @@ The number of bedrooms often impacts rental housing costs---more bedrooms genera
 ```{r}
 #| label: fig-bedroom-rents
 #| fig-cap: "Average asking rent in Chesterfield County by bedroom."
-#| fig-subcap: "Source: CoStar Group, Inc."
 
 # This uses the same filter as above from CoStar.
 

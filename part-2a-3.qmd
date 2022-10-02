@@ -14,6 +14,7 @@ library(ggplot2)
 library(plotly)
 library(leaflet)
 library(htmlwidgets)
+library(htmltools)
 library(sf)
 library(mapview)
 library(crsuggest)
@@ -66,7 +67,7 @@ price_comp <- rbind(recent_price, past_price)
 
 ```{r}
 #| label: fig-price-all
-#| fig-cap: "Average rent of existing and recent rental units. Source: CoStar Group, Inc."
+#| fig-cap: "Average rent of existing and recent rental units"
 
 avg_rent_all <- price_comp |> 
   filter(bedrooms == "All") |> 
@@ -85,7 +86,8 @@ total_avg_rent <- gg_line_col(
   col_title = "",
   y_labels = scales::label_dollar(),
   x_labels = scales::label_date(format = "%Y"),
-  title = "Average rent of existing and recent rental units") +
+  title = "Average rent of existing and recent rental units",
+  caption = "Source: CoStar Group, Inc.") +
   ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
   ggplot2::theme(
   legend.position = "top",
@@ -100,7 +102,7 @@ Price difference between recent and existing properties by number of bedrooms fo
 
 ```{r} 
 #| label: fig-price-br
-#| fig-cap: "Average rent of existing and recent rental units by bedroom. Source: CoStar Group, Inc."
+#| fig-cap: "Average rent of existing and recent rental units by bedroom"
 
 avg_rent_br <- price_comp |> 
   filter(bedrooms != "Studio") |> 
@@ -121,7 +123,8 @@ br_avg_rent <- gg_line_col_facet(
   col_title = "",
   y_labels = scales::label_dollar(),
   x_labels = scales::label_date(format = "%Y"),
-  title = "Average rent of existing and recent rental units by bedroom") +
+  title = "Average rent of existing and recent rental units by bedroom",
+  caption = "Source: CoStar Group, Inc.") +
   ggplot2::scale_x_date(limits = as.Date(c(NA, Sys.Date()))) +
   ggplot2::theme(
   legend.position = "top",
@@ -146,7 +149,7 @@ The shift towards these types of developments provides developers with greater e
 
 ```{r}
 #| label: fig-unit-mix
-#| fig-cap: "Share of units by type for existing and recent properties. Source: CoStar Group, Inc."
+#| fig-cap: "Share of units by type for existing and recent properties"
 
 # Need list of existing, proposed, or under construction properties with... 
 
@@ -197,7 +200,8 @@ style_mix_bar <- gg_bar_col_facet(
   y_title = "",
   x_title = "",
   col_legend_none = TRUE,
-  title = "Share of units by type for existing and recent properties"
+  title = "Share of units by type for existing and recent properties",
+  caption = "Source: CoStar Group, Inc."
 )
 
 style_mix_bar
@@ -212,7 +216,7 @@ One-bedroom rentals meets a growing demand among young professionals and aging s
 
 ```{r}
 #| label: fig-br-mix
-#| fig-cap: "Share of units by bedrooms for existing and recent properties. Source: CoStar Group, Inc."
+#| fig-cap: "Share of units by bedrooms for existing and recent properties"
 
 # By bedroom
 
@@ -249,7 +253,8 @@ br_mix_bar <- gg_bar_col_facet(
   y_title = "",
   x_title = "",
   col_legend_none = TRUE,
-  title = "Share of units by bedrooms for existing and recent properties"
+  title = "Share of units by bedrooms for existing and recent properties",
+  caption = "Source: CoStar Group, Inc."
 )
 
 br_mix_bar
@@ -262,7 +267,7 @@ On average, the significant number of new one-bedroom apartments are close in si
 
 ```{r}
 #| label: fig-sf-mix
-#| fig-cap: "Share of units by size for existing and recent properties. Source: CoStar Group, Inc."
+#| fig-cap: "Share of units by size for existing and recent properties"
 
 # By square footage
 
@@ -294,7 +299,9 @@ sf_mix_box <- gg_boxplot_col_facet(
   y_title = "Average square footage",
   col_title = "",
   col_legend_none = TRUE,
-  title = "Share of units by size for existing and recent properties")
+  title = "Share of units by size for existing and recent properties",
+  caption = "Source: CoStar Group, Inc."
+  )
 
 sf_mix_box
 
@@ -314,8 +321,8 @@ These amenities, which are included in property-level data from CoStar, include:
 On average, newer apartment communities are much more likely to have at least two of these amenities compared to older properties. In fact, about 90 percent of all new developments have two or more amenities, versus just 71 percent of existing properties.
 
 ```{r}
-#| label:amenities
-#| fig-cap: "Percent of existing and recent properties by number of amenities. Source: CoStar Group, Inc."
+#| label: fig-amenities
+#| fig-cap: "Percent of existing and recent properties by number of amenities"
 
 # Need list of existing, proposed, or under construction properties with "Amenities" field
 # Create new columns for each amenity that will show T/F
@@ -370,7 +377,8 @@ amenity_bar <- gg_bar_col_facet(
   y_title = "",
   x_title = "Number of amenities",
   col_legend_none = TRUE,
-  title = "Percent of existing and recent properties by number of amenities"
+  title = "Percent of existing and recent properties by number of amenities",
+  caption = "Source: CoStar Group, Inc."
 )
 
 amenity_bar
@@ -387,23 +395,36 @@ On the other side of the county, there are five new developments along Route 1, 
 #| label: fig-location
 #| fig-cap: "Map of recent and existing multifamily rental properties"
 
-comp_map2 <- unit_mix_clean |> 
+comp_map2 <- unit_mix_clean |>
   mutate(market = case_when(
     year_built <= 2016 ~ "Existing",
     year_built >= 2017 ~ "Recent",
-    name == "Ashlake Crossing" ~ "Recent")) |> 
-  select(address, name, status, year_built, market, style, units, rent_type, latitude, longitude) |> 
+    name == "Ashlake Crossing" ~ "Recent")) |>
+  select(address, name, status, year_built, market, style, units, rent_type, latitude, longitude) |>
   sf::st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
-# pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
+pal <- colorFactor(c("red", "blue"), domain = c("Recent", "Existing"))
 
-# comp_location_map <- leaf_sf_col(comp_map2,
-#                                  col_var = market,
-#                                  label_var = name)
-# 
+source_costar <- tags$div(
+  HTML('Source: CoStar Group, Inc.')
+)
+
+comp_location_map <- leaflet(comp_map2) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addCircleMarkers(
+    radius = 4,
+    color = ~pal(market),
+    stroke = FALSE, fillOpacity = 0.5
+  ) |>
+  addLegend("topright", pal = pal, values = ~market,
+            title = "Market", opacity = 1) |> 
+  addControl(source_costar, position = "bottomright")
+
+comp_location_map
+
 # saveWidget(comp_location_map, "maps/comp_location_map.html")
-
-knitr::include_url("maps/comp_location_map.html", height = "500px")
+# 
+# knitr::include_url("maps/comp_location_map.html", height = "500px")
 
 ```
 
@@ -415,7 +436,9 @@ These transit stops are mainly located at the city-county border along Midlothia
 
 
 
-```{r transit-setup, eval=FALSE}
+```{r}
+#| label: transit-setup
+#| eval: false
 
 # Load CoStar properties and change 'Market/Affordable' to just 'Affordable'
 
@@ -447,9 +470,12 @@ network_buffer <- mb_isochrone(comp_prj,
 
 
 nearest_stops <- st_nn(comp_prj, stops, k = 20)
+
 ```
 
-```{r transit-analysis, eval=FALSE}
+```{r}
+#| label: transit-analysis
+#| eval: false
 
 comp_stop_walking <- imap(nearest_stops, ~{
   
@@ -507,7 +533,8 @@ gg_bar_col_facet(trans_sum,
                  col_labels = function(x) x,
                  y_labels = label_percent(),
                  y_breaks_n = 5,
-                 title = "Percent of units in Chesterfield County near transit by market"
+                 title = "Percent of units in Chesterfield County near transit by market",
+                 caption = "Sources: CoStar Group, Inc. and GRTC."
                  )
 
 ```
@@ -520,7 +547,9 @@ In the county, there are 39 elementary schools, 12 middle schools, and 11 high s
 
 All 115 multimfamily properties are within a 30 minute drive to a CCPS school. More specifically, all properties are less than an eight minute drive of a CCPS school. The average drive time for all multifamily properties to a CCPS school is only about 5 minutes, and there is hardly any difference between recent and existing properties in the average drive time --- 4.7 and 4.9 minutes, respectively.
 
-```{r school-map, eval=FALSE}
+```{r}
+#| label: school-map
+#| eval: false
 
 schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
   st_transform(va_crs)
@@ -529,7 +558,9 @@ nearest_schools <- st_nn(comp_prj, schools, k = 20)
 
 ```
 
-```{r schools-setup, eval=FALSE}
+```{r}
+#| label: schools-setup
+#| eval: false
 
 # I think I would want to understand the number of schools within a distance of certain properties and what schools those are. 
 
@@ -580,7 +611,8 @@ gg_bar_col(schools_map,
            col_var = market,
            x_labels = element_blank(),
            x_title = "Properties",
-           title = "Driving time to schools in Chesterfield County by market")
+           title = "Driving time to schools in Chesterfield County by market",
+           caption = "Sources: CoStar Group, Inc. and CCPS.")
 
 ```
 
@@ -590,7 +622,9 @@ Convenient access to affordable and healthy foods helps support family and indiv
 
 While many convenience stores accept SNAP, the food options are not always the healthiest. Highly processed foods and other snacks do not provide the nutritional value of many food products found at full service grocery retailers.
 
-```{r grocery-setup, eval=FALSE}
+```{r}
+#| label: grocery-setup
+#| eval: false
 
 # Grocery stores:
 # We'll use SNAP retailers from the USDA as a proxy here
@@ -700,10 +734,12 @@ gg_bar_col_facet(grocery_sum,
                  y_title = "Miles",
                  x_labels = element_blank(),
                  col_labels = function(x) x,
-                 title = "Mean distance from apartments in Chesterfield County to food stores by type"
+                 title = "Mean distance from apartments in Chesterfield County to food stores by type",
+                 caption = "Sources: CoStar Group, Inc. and USDA."
                  )
 
 ```
+
 The prevalence of convenience stores across the county accounts for their closer proximity to both recent and existing multifamily properties. But the average distance to a full service grocery is over a mile for existing properties and has only increased to just over 1.5 miles for recent multifamily properties.
 
 The increasing distance of recent multifamily to full service groceries increases the likelihood of food deserts --- low-income, low-access areas. Food access should continue to considered as new multifamily development grows across the county.
@@ -718,7 +754,9 @@ Being within a short driving distance to a hospital or urgent care can be lifesa
 
 More recent development has been closer to hospitals (10 minutes) than existing development (12 minutes). But recent development has been getting further away from urgent cares (10 minutes) compared to 9 minutes for existing development. This has implications for low- and moderate-income households who can more likely afford urgent care compared to hospital visits.
 
-```{r medical-setup, eval=FALSE}
+```{r}
+#| label: medical-setup
+#| eval: false
 
 # Hospital / urgent care
 # I'm not filtering by type but you might consider doing so
@@ -787,8 +825,6 @@ mean(health_map$minutes_to_hospital)
 mean(health_map$minutes_to_urgent)
 9.181826
 
-
-
 ```
 
 ```{r}
@@ -821,7 +857,8 @@ gg_bar_col_facet(health_sum,
                  col_title = "Facility",
                  x_labels = element_blank(),
                  col_labels = function(x) x,
-                 title = "Mean driving time from apartments in Chesterfield County to healthcare facility by market"
+                 title = "Mean driving time from apartments in Chesterfield County to healthcare facility by market",
+                 caption = "Sources: CoStar Group Inc. and U.S. Department of Homeland Security."
                  )
 
 ```
@@ -835,7 +872,9 @@ In the county, the share of jobs paying more than \$39,996 within a 15 minute dr
 
 Meeting the needs of houesholds all within a walking distance is a growing trend and is being seen across the region. The Midlothian Special Area Plan helps support development like this which helps households of all kind find employment opportunities with having to depend on a car.
     
-```{r jobs, eval=FALSE}
+```{r}
+#| label: jobs-setup
+#| eval: false
 
 va_wac <- grab_lodes(
   state = "va",
@@ -932,7 +971,8 @@ gg_bar_col_facet(jobs_sum,
                  x_labels = element_blank(),
                  y_labels = label_percent(),
                  col_labels = function(x) x,
-                 title = "Percent of jobs by wage within 15 minute drive of apartments by market in Chesterfield County"
+                 title = "Percent of jobs by wage within 15 minute drive of apartments by market in Chesterfield County",
+                 caption = "Sources: CoStar Group, Inc. and U.S. Census Bureau LEHD Origin-Destination Employment Statistics."
                  )
 
 ```

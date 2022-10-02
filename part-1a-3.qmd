@@ -38,17 +38,20 @@ These properties were built within the last 30 years or are a much older propert
 
 ```{r}
 #| label: setup
-#| 
+ 
 library(tidyverse)
 library(janitor)
 library(scales)
 library(zoo)
+library(sf)
 library(formattable)
 library(simplevis)
-library(knitr)
 library(leaflet)
 library(htmlwidgets)
+library(htmltools)
 library(kableExtra)
+library(mapview)
+library(webshot)
 
 costar_noah <- read_csv("data/chesterfield_noah_coded_8.8.csv") |> 
   clean_names() |> 
@@ -121,6 +124,7 @@ NOAH properties are spread throughout all parts of Chesterfield County, but like
 ```{r}
 #| label: fig-noah-map
 #| fig-cap: "Location and type of NOAH"
+#| eval: false
 
 pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
 
@@ -134,8 +138,7 @@ map <- leaflet(costar_noah) |>
   addLegend("bottomright", pal = pal, values = ~style,
             title = "NOAH style", opacity = 1)
 
-library(mapview)
-library(webshot)
+
 
 mapview::mapshot(map,
         file = paste0(getwd(),"/noah_map.png"),
@@ -144,6 +147,24 @@ mapview::mapshot(map,
 # saveWidget(noah_map, "maps/noah_map.html")
 
 # knitr::include_url("maps/noah_map.html", height = "500px")
+
+```
+
+```{r}
+#| label: fig-noah-map-test
+#| fig-cap: "Location and type of NOAH"
+
+pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
+
+leaflet(costar_noah) |> 
+  addProviderTiles(providers$CartoDB.Positron) |> 
+  addCircleMarkers(
+    radius = 4,
+    color = ~pal(style),
+    stroke = FALSE, fillOpacity = 0.5
+  ) |>
+  addLegend("bottomright", pal = pal, values = ~style,
+            title = "NOAH style", opacity = 1)
 
 ```
 
@@ -232,6 +253,8 @@ gg_histogram(costar_noah,
 
 *Source: CoStar Group, Inc.*
 
+{{< pagebreak >}}
+
 ### Examples
 
 <br>
@@ -247,6 +270,8 @@ gg_histogram(costar_noah,
 
 <br> <br>
 
+{{< pagebreak >}}
+
 *Suburban Village Manufactured Home Community*
 
 ![Suburban Village Manufactured Home Community. Credit: Google Earth.](images/suburban-village.png)
@@ -255,6 +280,8 @@ gg_histogram(costar_noah,
 -   Asking lot rent: Approximately \$500 to \$600
 -   Style: Manufactured home community
 -   Neighborhood: Bon Air
+
+{{< pagebreak >}}
 
 ## HUD insured multifamily properties
 
@@ -270,12 +297,6 @@ More details about these [multifamily mortgage insurance programs](https://www.h
 #| label: fig-hud-insured-map
 #| fig-cap: "HUD insured multifamily properties in Chesterfield County"
 #| cache: false
-
-library(mapview)
-library(sf)
-library(tidyverse)
-library(htmltools)
-library(htmlwidgets)
 
 # Load in data (manually downloaded from HUD eGIS site) and select only relevant columns
 

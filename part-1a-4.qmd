@@ -53,6 +53,7 @@ library(tidyverse)
 library(simplevis)
 library(plotly)
 library(leaflet)
+library(htmltools)
 
 nhpd <- read_csv("data/nhpd_chesterfield.csv") |> 
   clean_names() |> 
@@ -61,7 +62,7 @@ nhpd <- read_csv("data/nhpd_chesterfield.csv") |>
 pal <- colorFactor(palette = c("blue", "red", "green", "orange"), levels = c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236"))
 
 leaflet(nhpd) |>
-  addTiles() |>
+  addProviderTiles(providers$CartoDB.Positron) |> 
   addCircleMarkers(
     lng = ~long,
     lat = ~lat,
@@ -121,7 +122,7 @@ costar_noah <- read_csv("data/chesterfield_noah_coded_8.8.csv") |>
 pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
 
 leaflet(costar_noah) |> 
-  addTiles() |>
+  addProviderTiles(providers$CartoDB.Positron) |> 
   addCircleMarkers(
     radius = 4,
     color = ~pal(style),
@@ -162,20 +163,34 @@ hcv <- read_csv("data/hcv_by_tract.csv")
 chesterfield_hcv <- chesterfield_tracts %>%
   mutate(GEOID = as.numeric(GEOID)) %>%
   left_join(hcv, by = "GEOID") %>%
-  select(GEOID,NAME, NAMELSAD, HCV_PUBLIC, HCV_PCT_RENTER_OCC_UNITS, INTPTLAT, INTPTLON, SHAPE_Length, SHAPE_Area, geometry)
+  select(GEOID,NAME, NAMELSAD, HCV_PUBLIC, HCV_PCT_RENTER_OCC_UNITS,
+         INTPTLAT, INTPTLON, SHAPE_Length, SHAPE_Area, geometry) |> 
+  drop_na(HCV_PCT_RENTER_OCC_UNITS)
 
-mapview(
-  chesterfield_hcv,
-  zcol = "HCV_PCT_RENTER_OCC_UNITS",
-  legend = T,
-  layer.name = "Percent of occupied rental units with HCVs"
+pal <- colorNumeric(palette = "viridis",
+                    domain = chesterfield_hcv$HCV_PCT_RENTER_OCC_UNITS,
+                    reverse = TRUE)
+
+source_hud <- tags$div(
+  HTML('Source: U.S. Department of Housing and Urban Development.')
 )
 
-# htmlwidgets::saveWidget(hcv_map@map, "maps/hcv_map.html")
+leaflet(chesterfield_hcv) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addPolygons(color = ~pal(HCV_PCT_RENTER_OCC_UNITS),
+              weight = 1,
+              label = ~chesterfield_hcv$HCV_PCT_RENTER_OCC_UNITS,
+              fillOpacity = 0.7,
+              labelOptions = labelOptions(noHide = F,
+                                          direction = "auto",
+                                          textsize = "15px")) |>
+  addLegend("topright",
+            pal = pal,
+            values = ~HCV_PCT_RENTER_OCC_UNITS,
+            title = "Percent of occupied<br>rental units with HCVs",
+            labFormat = labelFormat(suffix = "%")) |> 
+  addControl(source_hud, "bottomright")
 
-# Render map as html widget
-
-# knitr::include_url("maps/hcv_map.html", height = "500px")
 
 ```
 

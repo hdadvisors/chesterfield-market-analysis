@@ -3,6 +3,9 @@ project:
   execute-dir: file
   output-dir: docs
 
+execute: 
+  freeze: auto
+
 book: 
   title: "Chesterfield County Rental Market Analysis"
   repo-url: https://github.com/hdadvisors/chesterfield-market-analysis/
@@ -18,26 +21,25 @@ book:
         - part-1a-1.qmd
         - part-1a-2.qmd
         - part-1a-3.qmd
-        # - part-1a-4.qmd
-        # - part-1a-5.qmd
-        
+        - part-1a-4.qmd
+        - part-1a-5.qmd
     - part: "PART 1-B: DEMOGRAPHIC AND AFFORDABILITY ANALYSIS"
-      # chapters:
-        # - part-1b-1.qmd
-        # - part-1b-2.qmd
-        # - part-1b-3.qmd
-        # - part-1b-4.qmd
-        # - part-1b-5.qmd
-        
+      chapters:
+        - part-1b-1.qmd
+        - part-1b-2.qmd
+        - part-1b-3.qmd
+        - part-1b-4.qmd
+        - part-1b-5.qmd
     - part: "PART 2-A: COUNTYWIDE MARKET ANALYSIS"
-        # - part-2a-1.qmd
-        # - part-2a-2.qmd
-        # - part-2a-3.qmd
-        # - part-2a-4.qmd
-        
+      chapters:
+        - part-2a-1.qmd
+        - part-2a-2.qmd
+        - part-2a-3.qmd
+        - part-2a-4.qmd
     - part: "PART 2-B: CORRIDOR CASE STUDIES"
-        # - part-2b-1.qmd
-        # - part-2b-2.qmd
+      chapters: 
+        - part-2b-1.qmd
+        - part-2b-2.qmd
 
 knitr:
   opts_chunk: 
@@ -50,3 +52,8 @@ format:
     theme: cosmo
   pdf:
     documentclass: scrreprt
+    include-in-header: 
+      text: |
+        \usepackage{float}
+        \floatplacement{figure}{H}
+        \floatplacement{table}{H}

@@ -5,7 +5,7 @@ This section describes the Route 1 corridor in terms of its rental housing marke
 The Route 1 corridor used in this section uses the same six census tracts from the previous Route 1 affordability analysis in [Chapter 10](#part-1b-5).
 
 ```{r}
-# label: setup
+#| label: setup
 
 library(tidycensus)
 library(tidyverse)
@@ -17,11 +17,9 @@ library(tigris)
 library(mapview)
 library(simplevis)
 library(readxl)
-library(ggplot2)
 library(lubridate)
 library(viridis)
 library(tidygeocoder)
-library(knitr)
 library(crsuggest)
 options(tigris_use_cache = TRUE)
 remotes::install_github("walkerke/mapboxapi")
@@ -32,6 +30,7 @@ library(scales)
 library(htmlwidgets)
 library(htmltools)
 library(zoo)
+library(kableExtra)
 
 ```
 
@@ -48,46 +47,29 @@ Much of the new rental housing development has occurred at the southern end of t
 This study focuses its research on the six census tracts that straddle the Route 1 corridor from the Richmond-Chesterfield County border to the north and State Route 10 to the south. This encompasses portions of the Bensley, Bellwood, and northern Chester neighborhoods.
 
 ```{r}
-#| label: fig-route-one-map
+#| label: fig-r1-map
 #| fig-cap: "Route 1 corridor study area"
 
-# r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
-# 
-# r1_tracts <- tracts("VA", "Chesterfield",
-#                     progress_bar = FALSE) |>
-#   filter(TRACTCE %in% r1_tracts_list) |>
-#   st_transform(4326) |>
-#   mutate(neighborhood = case_when(
-#     TRACTCE == "100300" ~ "Bensley",
-#     TRACTCE == "100404" ~ "Bellwood",
-#     TRACTCE == "100405" ~ "Bensley",
-#     TRACTCE == "100406" ~ "Bellwood",
-#     TRACTCE == "100407" ~ "Bellwood",
-#     TRACTCE == "100409" ~ "Northern Chester"
-#   ))
-# 
-# write_rds(r1_tracts, "data/r1_tracts.rds")
-#
-# hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
-# 
-# r1_neighborhoods <- leaflet(r1_tracts) |>
-#   addTiles() |>
-#   addPolygons(color = ~hood_pal(neighborhood),
-#               weight = 3,
-#               label = ~r1_tracts$NAMELSAD,
-#               labelOptions = labelOptions(noHide = F,
-#                                           direction = "auto",
-#                                           textsize = "15px")) |>
-#   addLegend("topright",
-#             pal = hood_pal,
-#             values = ~neighborhood,
-#             title = "Route 1 corridor neighborhoods")
-# 
-# saveWidget(r1_neighborhoods, "maps/r1_neighborhoods.html")
+r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
 r1_tracts <- read_rds("data/r1_tracts.rds")
 
-knitr::include_url("maps/r1_neighborhoods.html", height = "500px")
+hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
+
+r1_neighborhoods <- leaflet(r1_tracts) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addPolygons(color = ~hood_pal(neighborhood),
+              weight = 3,
+              label = ~r1_tracts$NAMELSAD,
+              labelOptions = labelOptions(noHide = F,
+                                          direction = "auto",
+                                          textsize = "15px")) |>
+  addLegend("topright",
+            pal = hood_pal,
+            values = ~neighborhood,
+            title = "Route 1 corridor neighborhoods")
+
+r1_neighborhoods
 
 ```
 
@@ -168,12 +150,12 @@ r1_renters_plot <- gg_line(
   y_var = estimate,
   y_breaks_n = 5,
   y_zero = TRUE,
-  title = "Renter households",
+  title = "Renter households in Route 1 corridor",
+  caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25003.",
   x_title = element_blank())
 
 r1_renters_plot
 
-  
 ```
 
 Based on 2010 and 2020 estimates, the increase in rental housing has largely occurred at the northern end of the Route 1 corridor in the Bensley area. All areas saw some increase in renter housing except for Census Tract 1004.04, which covers the eastern side of Route 1 from Falling Creek down to Bellwood Road. This census tract experienced a decrease of 180 renter households.
@@ -206,6 +188,7 @@ r1_rhh_tract <- gg_hbar_col(b25003_r1_10_20,
                             y_var = tract,
                             col_var = change,
                             title = "Change in renter households by tract from 2010 to 2020",
+                            caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25003.",
                             y_labels = function(x) x,
                             x_title = "",
                             y_title = "",
@@ -247,7 +230,8 @@ r1_unit_cnt_bar <- gg_bar_col(
   x_var = building_status,
   y_var = units,
   col_var = building_status,
-  title = "Total number of multifamily units by property status"
+  title = "Total number of multifamily units by property status",
+  caption = "Source: CoStar Group, Inc."
 )
 
 r1_unit_cnt_bar
@@ -260,24 +244,29 @@ The city-county border was located much further north before the annexation of N
 #| label: fig-costar-mf-2
 #| fig-cap: "Map of multifamily properties along Route 1 Corridor"
 
-# r1_map <- costar_r1_mf |> 
-#   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
-# 
-# r1_costar_map <- leaflet(r1_map) |> 
-#   addTiles() |> 
-#   addPolygons(data = r1_tracts,
-#               weight = 2,
-#               color = "#666666",
-#               fillColor = "#999999",
-#               fillOpacity = 0.3) |> 
-#   addCircleMarkers(radius = 3,
-#                    popup = r1_map$property_name)
-# 
-# r1_costar_map
-# 
-# saveWidget(r1_costar_map, "maps/r1_costar_map.html")
+r1_map <- costar_r1_mf |>
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove=FALSE)
 
-knitr::include_url("maps/r1_costar_map.html", height = "500px")
+source_costar <- tags$div(
+  HTML('Source: CoStar Group, Inc.')
+)
+
+r1_costar_map <- leaflet(r1_map) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addPolygons(data = r1_tracts,
+              weight = 2,
+              color = "#666666",
+              fillColor = "#999999",
+              fillOpacity = 0.3) |>
+  addCircleMarkers(radius = 3,
+                   popup = r1_map$property_name) |> 
+  addControl(source_costar, position = "bottomright")
+
+r1_costar_map
+
+# saveWidget(r1_costar_map, "maps/r1_costar_map.html")
+# 
+# knitr::include_url("maps/r1_costar_map.html", height = "500px")
 
 ```
 
@@ -337,19 +326,30 @@ mhc_coded_r1 <- mhc_coded |>
 
 # sum(mhc$units_mhccv)
 
-# r1_mhc_map <- leaflet(mhc_coded_r1) |> 
-#   addTiles() |> 
-#   addCircleMarkers(
-#     radius = ~ (units_mhccv/5),
-#     color = "orangered",
-#     stroke = TRUE,
-#     fillOpacity = 0.5,
-#     popup = ~paste(name, "<br> Units:", units_mhccv)
-#   )
-# 
-# saveWidget(r1_mhc_map, "maps/r1_mhc_map.html")
+source_mhccv <- tags$div(
+  HTML('Source: Manufactured Home Community<br>Coalition of Virginia.')
+)
 
-knitr::include_url("maps/r1_mhc_map.html", height = "500px")
+r1_mhc_map <- leaflet(mhc_coded_r1) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addPolygons(data = r1_tracts,
+              weight = 2,
+              color = "#666666",
+              fillColor = "#999999",
+              fillOpacity = 0.3) |>
+  addCircleMarkers(
+    radius = ~ (units_mhccv/5),
+    color = "orangered",
+    stroke = TRUE,
+    fillOpacity = 0.5,
+    popup = ~paste(name, "<br> Units:", units_mhccv)) |> 
+  addControl(source_mhccv, position = "bottomright")
+ 
+r1_mhc_map
+
+# saveWidget(r1_mhc_map, "maps/r1_mhc_map.html")
+# 
+# knitr::include_url("maps/r1_mhc_map.html", height = "500px")
 
 ```
 
@@ -383,7 +383,6 @@ SFR is a growing demand among renters as homeownership continues to be out of re
 ```{r}
 #| label: fig-sfr-r1
 #| fig-cap: "Percent of single-family homes that are renter-occupied by tract and neigborhood"
-#| message: false
 
 # ch_sfh <- st_read("data/shp/ch_sfh.shp",
 #                   quiet = TRUE)
@@ -428,6 +427,7 @@ sfr_r1_pct <- gg_hbar_col(sfr_r1_summary,
                           y_var = tract,
                           col_var = percent_sfh,
                           title = "Percent of single-family homes that are renter-occupied by tract and neighborhood",
+                          caption = "Source: County parcel records.", 
                           x_labels = label_percent(),
                           y_labels = function(x) x,
                           col_legend_none = TRUE,
@@ -441,7 +441,7 @@ sfr_r1_pct
 The majority (68 percent) of owners of SFR along the corridor live somewhere else in the county, while 25 percent live outside of the county but somewhere else in Virginia. Fewer than 7 percent of SFR owners live outside of Virginia --- the largest share of which has an owner in Florida.
 
 ```{r}
-#| label: tbl-sfr_r1_owners
+#| label: tbl-sfr-r1-owners
 #| tbl-cap: "Owner location for single-family rentals along Route 1 corridor"
 
 chesterfield_zips <- read_rds("data/chesterfield_zips.rds")
@@ -549,6 +549,7 @@ gg_line_col_facet(r1_rent_change,
                   y_labels = label_dollar(),
                   facet_labels = function(x) x,
                   title = "Median inflation-adjusted rent by tract: 2010 to 2020",
+                  caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25064.",
                   y_title = "Median inflation-adjusted rent",
                   x_title = ""
                   )
@@ -589,6 +590,7 @@ gg_line_col_facet(r1_rent_nhood,
             col_labels = function(x) x,
             facet_labels = function(x) x,
             title = "Median inflation-adjusted rent by neighborhood: 2010 to 2020",
+            caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25064.",
             y_title = "Median inflation-adjusted rent",
             x_title = ""
             )
@@ -632,7 +634,8 @@ gg_line_col(costar_r1_rent,
         y_labels = label_dollar(),
         x_title = "",
         y_title = "Average asking rent",
-        title = "CoStar average asking rent for Route 1 corridor") +
+        title = "CoStar average asking rent for Route 1 corridor",
+        caption = "Source: CoStar Group, Inc.") +
   ggplot2::scale_x_date(limits = c(as.Date("1999-12-01"), as.Date("2022-07-31")))
 
 
@@ -678,6 +681,7 @@ gg_line_col(costar_r1_brent,
             y_labels = label_dollar(),
             x_labels = label_date(format = "%Y"),
             y_title = "Average asking rent (inflation-adjusted)",
+            caption = "Source: CoStar Group, Inc.",
             x_title = "",
             y_zero = TRUE,
             col_title = "") +
@@ -715,7 +719,8 @@ gg_smooth_col(mls_r1_sfr,
          col_labels = function(x) x,
          x_title = "",
          y_title = "Listed rent",
-         title = "Listed MLS rents in Route 1 corridor") +
+         title = "Listed MLS rents in Route 1 corridor",
+         caption = "Source: CVR MLS.") +
   ggplot2::scale_x_continuous(limits = c(2017.5, 2022.3))
 
 ```
@@ -742,7 +747,8 @@ gg_bar_col(mls_r1_sfr_br,
            y_title = "",
            y_labels = label_percent(),
            col_legend_none = TRUE,
-           title = "Percent of MLS-listed SFR by bedrooms in Route 1 corridor")
+           title = "Percent of MLS-listed SFR by bedrooms in Route 1 corridor",
+           caption = "Source: CVR MLS.")
 
 
 ```
@@ -832,12 +838,12 @@ b25036_r1_grp <- b25036_r1_grp |>
          tract = paste0(tract, " (", neighborhood, ")"),
          tract = fct_reorder(tract, percent, .desc = TRUE))
   
-
 gg_hbar_col(b25036_r1_grp,
             x_var = percent,
             y_var = tract,
             col_var = percent,
             title = "Percent of rental units built before 1980 by tract",
+            caption = "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25035.",
             x_labels = label_percent(),
             y_labels = function(x) x,
             col_legend_none = TRUE,
@@ -863,7 +869,8 @@ gg_bar_col(costar_r1_yrblt,
            x_labels = label_date(format = "%Y"),
            x_title = "",
            y_title = "Number of units",
-           title = "Multifamily units in Route 1 corridor by year built") +
+           title = "Multifamily units in Route 1 corridor by year built",
+           caption = "Source: CoStar Group, Inc.") +
   ggplot2::scale_x_continuous(
     limits = c(1956, 2024),
     breaks = c(1960, 1970, 1980, 1990, 2000, 2010, 2020)
@@ -893,7 +900,8 @@ gg_bar_col(costar_r1_stars,
            y_title = "",
            col_legend_none = TRUE,
            y_labels = label_percent(),
-           title = "Percent of rental units in Route 1 corridor by CoStar star rating"
+           title = "Percent of rental units in Route 1 corridor by CoStar star rating",
+           caption = "Source: CoStar Group, Inc."
            )
 
 ```
@@ -925,15 +933,18 @@ gg_bar_col(mhc_con,
            y_title = "",
            col_legend_none = TRUE,
            y_labels = label_percent(),
-           title = "Percent of MH units in Route 1 corridor by park typology"
+           title = "Percent of MH units in Route 1 corridor by park typology",
+           caption = "Source: Manufactured Home Community Coalition of Virginia."
            )
 
 ```
 
 ## Single-family rental versus purchase
 
-For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford. 
-```{r r1-renter-income}
+For renter households along the corridor, the ability to purchase a home may be out of reach for many. But SFRs are filling a gap for households looking for the opportunity to live in a single-family detached home --- providing more space and privacy for growing families. At the same time, SFRs are typically the entry-level homes that many first-time homebuyers would be able to afford.
+
+```{r}
+#| label: r1-renter-income
 
 b25119_vars <- load_variables(2020, "acs5") %>%
   filter(str_sub(name, end = 6) %in% "B25119")
@@ -971,7 +982,9 @@ r1_medinc <- r1_b25119_data %>%
   filter(tenure == "Renter")
 
 ```
-```{r r1-med-sales}
+
+```{r}
+#| label: r1-med-sales
 
 r1_sales <- read_csv("data/routeone_mls.csv")
 
@@ -990,7 +1003,7 @@ In the last year, the median home sales price for a home along the corridor was 
 
 ```{r}
 #| label: tbl-r1-home-price
-#| tbl-cap:"Calculated income needed to buy median-priced home in the study area"
+#| tbl-cap: "Calculated income needed to buy median-priced home in the study area"
 
 library(optiRum)
 
@@ -1111,7 +1124,9 @@ In fact, the average distance of properties along this section of the corridor t
 
 However, this access is slightly more difficult for renters living in apartment communities with affordable rents. One-in-four of all rent-restricted apartments are beyond 1/2 mile walking distance to a transit stop, compared to just 13 percent of all market-rate apartments in the corridor.
 
-```{r r1-transit-setup, eval=FALSE}
+```{r}
+#| label: r1-transit-setup
+#| eval: false
 
 # Load CoStar properties and change 'Market/Affordable' to just 'Affordable'
 
@@ -1144,7 +1159,9 @@ nearest_stops <- st_nn(r1_prj, stops, k = 20)
 
 ```
 
-```{r r1-transit-analysis, eval=FALSE}
+```{r}
+#| label: r1-transit-analysis
+#| eval: false
 
 costar_stop_walking <- imap(nearest_stops, ~{
   
@@ -1200,7 +1217,8 @@ gg_bar_col_facet(r1_trans_sum,
                  col_labels = function(x) x,
                  y_labels = label_percent(),
                  y_breaks_n = 5,
-                 title = "Percent of units in Route 1 corridor near transit by rent type"
+                 title = "Percent of units in Route 1 corridor near transit by rent type",
+                 caption = "Sources: CoStar Group, Inc. and GRTC."
                  )
 
 ```
@@ -1219,7 +1237,9 @@ Multifamily properties along the corridor are all within a 30 minute drive of at
 
 Still, the affordable communities are further away on average compared to market-rate properties. All but one rent-restricted community has a drive time of more than six minutes. This may detrimentally affect students who walk to school.
 
-```{r r1-school-map, eval=FALSE}
+```{r}
+#| label: r1-school-map
+#| eval: false
 
 schools <- st_read("https://services3.arcgis.com/TsynfzBSE6sXfoLq/ArcGIS/rest/services/Administrative/FeatureServer/15/query?outFields=*&where=1%3D1&f=geojson") |> 
   st_transform(va_crs)
@@ -1228,7 +1248,9 @@ nearest_schools <- st_nn(r1_prj, schools, k = 20)
 
 ```
 
-```{r r1-schools-setup, eval=FALSE}
+```{r}
+#| label: r1-schools-setup
+#| eval: false
 
 # I think I would want to understand the number of schools within a distance of certain properties and what schools those are. 
 
@@ -1274,7 +1296,8 @@ gg_bar_col(r1_schools_map,
            col_var = rent_type,
            x_labels = element_blank(),
            x_title = "Properties",
-           title = "Driving time to schools in Route 1 corridor by rent type")
+           title = "Driving time to schools in Route 1 corridor by rent type",
+           caption = "Sources: CoStar Group, Inc. and CCPS.")
 
 ```
 
@@ -1288,7 +1311,9 @@ The average distance between an apartment and a full-service grocery is 1.39 mil
 
 On average, both affordable and market-rate apartments are a little less than half a mile from a convenience store. However, residents in market-rate properties are more likely to be significantly closer (1.2 miles away) to a SNAP retailer, such as a major grocery store, versus those in rent-restricted properties (1.8 miles).
 
-```{r r1-grocery-setup, eval=FALSE}
+```{r}
+#| label: r1-grocery-setup
+#| eval: false
 
 # Grocery stores:
 # We'll use SNAP retailers from the USDA as a proxy here
@@ -1393,7 +1418,8 @@ gg_bar_col_facet(r1_grocery_sum,
                  y_title = "Miles",
                  x_labels = element_blank(),
                  col_labels = function(x) x,
-                 title = "Mean distance from apartments in Route 1 corridor to food stores by type"
+                 title = "Mean distance from apartments in Route 1 corridor to food stores by type",
+                 caption = "Sources: CoStar Group, Inc. and USDA."
                  )
 
 ```
@@ -1408,7 +1434,9 @@ Nationally, the average travel time for residents in a suburban setting to a hos
 
 There are no significant differences in the average driving time to both hospitals and urgent care facilities between affordable and market-rate properties in the corridor.
 
-```{r r1-medical-setup, eval=FALSE}
+```{r}
+#| label: r1-medical-setup
+#| eval: false
 
 # Hospital / urgent care
 # I'm not filtering by type but you might consider doing so
@@ -1509,7 +1537,8 @@ gg_bar_col_facet(r1_health_sum,
                  col_title = "Facility",
                  x_labels = element_blank(),
                  col_labels = function(x) x,
-                 title = "Mean driving time from apartments in Route 1 corridor to healthcare facility by type"
+                 title = "Mean driving time from apartments in Route 1 corridor to healthcare facility by type",
+                 caption = "Sources: CoStar Group Inc. and U.S. Department of Homeland Security."
                  )
 
 ```
@@ -1524,7 +1553,9 @@ Furthermore, properties closer to the city-county border are also in closer prox
 
 Fewer high-paying job opportunities exist towards the southern end of the corridor, despite higher end developments like The Jane and Colony Village. This most likely means that many residents are commuting longer distances away from the corridor for work. 
 
-```{r r1-jobs, eval=FALSE}
+```{r}
+#| label: r1-jobs-setup
+#| eval: false
 
 va_wac <- grab_lodes(
   state = "va",
@@ -1617,7 +1648,8 @@ gg_bar_col_facet(r1_jobs_sum,
                  x_labels = element_blank(),
                  y_labels = label_percent(),
                  col_labels = function(x) x,
-                 title = "Percent of jobs by wage within 15 minute drive of apartments by rent type in the Route 1 corridor"
+                 title = "Percent of jobs by wage within 15 minute drive of apartments by rent type in the Route 1 corridor",
+                 caption = "Sources: CoStar Group, Inc. and U.S. Census Bureau LEHD Origin-Destination Employment Statistics."
                  )
 
 ```
@@ -1644,7 +1676,8 @@ Nonprofit development interest has continued from Better Housing Coalition furth
 
 **The Jane at Moore's Lake**
 
-![The Jane at Moore's Lake. Credit: Apartment Finder.](images/thejane.jpg)
+![The Jane at Moore's Lake.](images/thejane.jpg)
+*Photo: Apartment Finder.*
 
 [The Jane at Moore's Lake](https://www.thejanemooreslake.com/) is an upscale apartment complex located off Route 1 in northern Chester. The property developed by Emerson Companies was once an interstate vacation retreat during the early to mid-20th century. Brick cottages surrounded a recreational lake that was incredibly popular and brought thousands to during the warm summer travel months. 
 
@@ -1656,6 +1689,7 @@ A one-bedroom, one-bath apartment at 636 square feet now rents for as low as \$1
 
 The second phase of Moore's Lake is coming and has the potential to create an additional 1,200 new housing opportunities --- including 500 apartments, 238 condos, 62 single-family homes, and 30 townhomes.
 
-![Proposed site plan for Moore's Lake development. Credit: Richmond BizSense.](images/mooreslakesite.jpg)
+![Proposed site plan for Moore's Lake development.](images/mooreslakesite.jpg)
+*Photo: Richmond BizSense.*
 
 Development in this section of the corridor has benefited from the close location of the 288 and I-95 interchanges, as well as dense commercial development at the crossroads of Route 10 and Route 1. In addition, developers have noted that negative associations with Route 1 have largely prevented market rate development north of Willis Road. 

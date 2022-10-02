@@ -28,6 +28,7 @@ library(sp)
 library(janitor)
 library(leaflet)
 library(lubridate)
+library(htmltools)
 
 ```
 
@@ -47,25 +48,31 @@ For the purposes of this analysis, the study area is defined as the Census tract
 #| label: fig-r1-base-map
 #| fig-cap: "Route 1 study area"
 
+# knitr::include_url("maps/r1_neighborhoods.html", height = "500px")
+
 r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
-r1_tracts <- tracts("VA", "Chesterfield",
-                    progress_bar = FALSE) |> 
-  filter(TRACTCE %in% r1_tracts_list) |> 
-  st_transform(4326) |> 
-  mutate(neighborhood = case_when(
-    TRACTCE == "100300" ~ "Bensley",
-    TRACTCE == "100404" ~ "Bellwood",
-    TRACTCE == "100405" ~ "Bensley",
-    TRACTCE == "100406" ~ "Bellwood",
-    TRACTCE == "100407" ~ "Bellwood",
-    TRACTCE == "100409" ~ "Northern Chester"
-  ))
+# r1_tracts <- tracts("VA", "Chesterfield",
+#                     progress_bar = FALSE) |>
+#   filter(TRACTCE %in% r1_tracts_list) |>
+#   st_transform(4326) |>
+#   mutate(neighborhood = case_when(
+#     TRACTCE == "100300" ~ "Bensley",
+#     TRACTCE == "100404" ~ "Bellwood",
+#     TRACTCE == "100405" ~ "Bensley",
+#     TRACTCE == "100406" ~ "Bellwood",
+#     TRACTCE == "100407" ~ "Bellwood",
+#     TRACTCE == "100409" ~ "Northern Chester"
+#   ))
+# 
+# write_rds(r1_tracts, "data/r1_tracts.rds")
+
+r1_tracts <- read_rds("data/r1_tracts.rds")
 
 hood_pal <- colorFactor(rainbow(3), c("Bensley", "Bellwood", "Northern Chester"))
 
-leaflet(r1_tracts) |>
-  addTiles() |>
+r1_neighborhoods <- leaflet(r1_tracts) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
   addPolygons(color = ~hood_pal(neighborhood),
               weight = 3,
               label = ~r1_tracts$NAMELSAD,
@@ -76,10 +83,8 @@ leaflet(r1_tracts) |>
             pal = hood_pal,
             values = ~neighborhood,
             title = "Route 1 corridor neighborhoods")
-# 
-# htmlwidgets::saveWidget(r1_neighborhoods, "maps/r1_maps.html")
-# 
-# knitr::include_url("maps/r1_map.html", height = "500px")
+
+r1_neighborhoods
 
 ```
 
@@ -90,7 +95,7 @@ According to tract-level LEHD employment data from the Census Bureau's [OnTheMap
 
 ```{r}
 #| label: tbl-r1-industry
-#| tbl-cap: "Top five most common industries for residents in the study area."
+#| tbl-cap: "Top five most common industries for residents in the study area"
 #| tbl-subcap: "Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program."
 
 r1_otm <- read_csv("data/routeone_otm_may2021.csv")
@@ -105,14 +110,13 @@ r1_otm %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"))
 
-
 ```
 
 While specific wages for each industry and occupation are not available for the specific study area, the LEHD dataset does summarize monthly earnings for all workers into three pay bands. One in five workers earn less than \$1,250 per month, which are likely part-time jobs. While many workers (42 percent) earn more than \$3,333 monthly, or approximately \$40,000 annually, the majority earn less. Most working residents in the study area are employed full-time at low-wage jobs, or are underemployed.
 
 ```{r}
 #| label: tbl-r1-earnings
-#| tbl-cap: "Monthly earnings for residents in the study area."
+#| tbl-cap: "Monthly earnings for residents in the study area"
 #| tbl-subcap: "Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program."
 
 r1_otm %>% 
@@ -547,7 +551,6 @@ Like the single-family market, the rental market in the study area varies by nei
 ```{r}
 #| label: fig-rents-tract
 #| fig-cap: "Asking rent by rental property."
-#| fig-subcap: "Source: CoStar Group, Inc. Data as of September 6, 2022."
 
 # Hand draw outline of study area. Filter for Multi-family and existing buildings.
 
@@ -556,21 +559,26 @@ r1_rentals <- read_csv("data/routeone_costar.csv") %>%
   st_as_sf(coords = c("longitude", "latitude"),
            crs = 4326)
 
-mapview(
-  r1_rentals,
-  label = "propertyname",
-  zcol = "askingrent",
-  legend = T,
-  popup = T,
-  burst = F,
-  layer.name = "Rental property asking rent ($)")
-# 
-# htmlwidgets::saveWidget(r1_rentals_map@map, "maps/r1_rentals_map.html")
+source_costar <- tags$div(
+  HTML('Source: CoStar Group, Inc.')
+)
 
-# Render map as html widget
+pal <- colorNumeric(palette = "viridis", domain = r1_rentals$askingrent, reverse = TRUE)
 
-# knitr::include_url("maps/r1_rentals_map.html", height = "500px")
-
+leaflet(r1_rentals) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addCircleMarkers(
+    radius = 5,
+    fillColor = ~pal(askingrent),
+    stroke = TRUE,
+    weight = 1,
+    color = "black",
+    fillOpacity = 0.5
+  ) |>
+  addLegend("topright", pal = pal, values = ~askingrent,
+            title = "Asking rent", opacity = 1,
+            labFormat = labelFormat(prefix = "$")) |> 
+  addControl(source_costar, position = "bottomright")
 
 ```
 
@@ -578,7 +586,7 @@ Some of the most common jobs occupied by corridor residents pay an hourly wage t
 
 ```{r}
 #| label: tbl-r1-renter-affordability
-#| fig-cap: "Maximum monthly rent for common occupations in the study area"
+#| tbl-cap: "Maximum monthly rent for common occupations in the study area"
 
 r1_otm %>%
   filter(level == "Occupation") %>%
