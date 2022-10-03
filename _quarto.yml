@@ -57,3 +57,5 @@ format:
         \usepackage{float}
         \floatplacement{figure}{H}
         \floatplacement{table}{H}
+        
+pdf-engine: lualatex
