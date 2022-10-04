@@ -16,7 +16,6 @@ library(jsonlite)
 library(tidyverse)
 library(tidycensus)
 library(readxl)
-library(ggplot2)
 library(plotly)
 library(sf)
 library(formattable)
@@ -110,24 +109,31 @@ oo_cb <- tenure_income_chas |>
   group_by(year, income, cb_group) |>
   summarise(estimate = sum(estimate)) |>
   mutate(percent = estimate/sum(estimate)) |> 
-  filter(cb_group == "Cost-burdened")
-  
+  filter(cb_group == "Cost-burdened") |> 
+  mutate(year = as.character(year),
+         income = str_wrap(income, 10))
 
-ggplot(oo_cb, aes(x = income, y = percent, fill = cb_group)) +
-  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
-  facet_wrap(~year) +
-  scale_fill_manual(values = c("red", "gray"), breaks = c("Cost-burdened", "Not cost-burdened")) +
-  theme(axis.title = element_blank(),
-    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-    legend.position = "none")+
-  scale_y_continuous(labels = percent_format()) +
-  labs(title = "Homeowner cost burden", 
-       fill = "Cost burden",
+ggplot(oo_cb,
+       aes(x = income, y = percent, fill = year)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = label_percent(accuracy = 0.1)(percent),
+                color = year,
+                vjust = -.5),
+            size = 3,
+            position = position_dodge(width = 0.9)) +
+  scale_y_continuous(labels = label_percent(),
+                     limits = c(0, 0.99)) +
+  labs(title = "Homeowner cost burden",
        subtitle = "2012 and 2018",
-       caption = "Source: HUD Comprehensive Housing Affordability Strategy") +
-  geom_text(aes(label = scales::percent(percent, accuracy = 1), vjust = -.1), color = "red")
+       caption = "Source: HUD Comprehensive Housing Affordability Strategy.") +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_blank(),
+        legend.position = "top",
+        legend.title = element_blank(),
+        panel.grid.major.y = element_line(color = "grey95",
+                                          size = 0.05))
 
-# knitr::include_graphics("images/homeownercb_income.png")
 
 ```
 
