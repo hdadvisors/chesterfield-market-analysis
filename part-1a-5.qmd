@@ -8,6 +8,8 @@ From a growing family to a change in employment, the length of time a person ren
 
 :::{.callout-note}
 
+### Research limitations
+
 To date, no formal research has been conducted making comparisons between market-rate and affordable housing resident length of stay. 
 
 :::
@@ -37,7 +39,6 @@ library(tidycensus)
 library(simplevis)
 library(scales)
 library(plotly)
-library(ggplot2)
 
 b25038_vars <- load_variables(2020, "acs5", cache = T) %>% 
   filter(str_detect(name, "B25038")) %>% 
@@ -63,36 +64,25 @@ b25038_data <- b25038_raw %>%
   ungroup() %>% 
   mutate(moved = gsub(" ", "\n", moved))
 
-# b25038_plot <- ggplot(b25038_data, aes(x=moved, y=pct, fill=tenure)) +
-#   geom_bar(stat = "identity") +
-#   facet_wrap(~tenure) +
-#   scale_y_continuous(labels=percent_format(accuracy=1, suffix="%")) +
-#   theme(
-#     axis.title.x = element_blank(),
-#     axis.title.y = element_blank(),
-#     legend.position = "none")
-#   
-# b25038_plot
-
-
 ggplot(b25038_data,
        aes(x = moved,
            y = pct,
            fill = tenure)) + 
   geom_col(position = "dodge") +
   scale_y_continuous(labels = label_percent()) +
-  labs(title = "Percent of households by tenure by year moved into home", 
-       x = "Year moved into unit",
-       y = "Percent of households",
-       caption = "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25038.", 
-       legend = "Tenure") + 
+  labs(title = "Percent of households by tenure by year moved into home",
+       caption = "Source: U.S. Census Bureau, American Community Survey,\n2016-2020 5-year estimates. Table B25038.") + 
   theme(
     legend.position = "top",
     legend.direction = "horizontal",
     legend.justification = "center",
-    legend.title = element_blank()
+    legend.title = element_blank(),
+    panel.background = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    panel.grid.major.y = element_line(color = "grey95",
+                                          size = 0.05)
   )
-
 
 ```
 

@@ -33,6 +33,9 @@ The 30 percent threshold is used because any income used for housing beyond that
 This income-to-cost ratio was originally set at 25 percent when the federal government began designing housing assistance programs in the 1960s and 1970s. The threshold was increased to 30 percent in the 1980s. Today, the 30 percent cap is used to set household rent levels for public housing, Housing Choice Vouchers, and many other housing assistance initiatives.
 
 ::: callout-note
+
+### Drawbacks of 30 percent standard
+
 Although it has been the go-to measure in housing affordability, the 30 percent standard has several criticisms. Chief among these critiques is that living expenses vary from household to household.[^part-1a-2-2] A family of four will likely face much higher and additional costs for things like childcare, food, and transportation, when compared to a single adult with the same income.
 
 Secondly, different income groups don't spend the same way.[^part-1a-2-3] Higher income households can have much more flexibility to spend more than 30 percent of their income on housing costs when compared to a low income household. Using the 30 percent standard in this case can sometimes overestimate the share of higher income households experiencing cost burden.
@@ -114,9 +117,10 @@ chesterfield_cb_table <- chesterfield_cb %>%
 
 chesterfield_cb_table %>% 
   rename('Cost burden' = 1) %>% 
-  kable() %>% 
+  kable(booktabs = T) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(4, bold=TRUE)
 
 ```
@@ -129,7 +133,10 @@ The National Association of REALTORS® (NAR) publishes a [Housing Affordability 
 
 For 2021, the national HAI was **150.3**. This reflects the median family income being about 1.5 times greater than the minimum income required to purchase the median priced home, using the current 30-year fixed mortgage rate published by the Federal Housing Finance Board. A higher HAI value reflects higher affordability in the for-sale market.
 
-::: callout-note
+::: callout-tip
+
+### More on NAR's HAI
+
 The full Housing Affordability Index [methodology](https://www.nar.realtor/research-and-statistics/housing-statistics/housing-affordability-index/methodology) is available on the NAR website.
 :::
 
@@ -199,9 +206,11 @@ values = c(as.character(msp),
 
 data.frame(x = labels, y = values) %>% 
  kable(align = "lr",
-       col.names = c("Input", "Value")) %>% 
+       col.names = c("Input", "Value"),
+       booktabs = T) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(6, bold=TRUE)
 
 ```
@@ -210,7 +219,10 @@ data.frame(x = labels, y = values) %>%
 
 The National Low Income Housing Coalition has published its Out of Reach report every year since 1989 to bring attention to the widening gap between actual wages and the cost of rental housing in the United States. Within this report, NLIHC calculates its Housing Wage, an affordability measure that estimates the wage a full-time worker must earn to afford rental housing based on the U.S. Department of Housing and Urban Development's (HUD) fair market rent (FMR) without spending more than 30 percent of their income.
 
-::: {.callout-note}
+::: {.callout-tip}
+
+### More on NLIHC's Out of Reach
+
 The latest 2022 [Out of Reach](https://reports.nlihc.org/oor) report and data is available on the NLIHC website.
 :::
 
@@ -254,7 +266,10 @@ These costs increase for the regional moderate income household with an income o
 
 The residual income approach is a relatively new and uncommon method for measuring housing affordability. Rather than begin with housing costs compared to income, this more holistic metric sums up all other necessary household costs and determines what is left over ("residual") and available for housing. That residual amount can then be compared to local housing prices to assess affordability.
 
-:::{.callout-note}
+:::{.callout-tip}
+
+### More on the residual income approach
+
 The most comprehensive assessment of the residual income approach compared to other housing affordability measures is *Measuring Housing Affordability: Assessing the 30 Percent of Income Standard*, a [research paper](https://www.jchs.harvard.edu/research-areas/working-papers/measuring-housing-affordability-assessing-30-percent-income-standard) published by The Harvard Joint Center for Housing Studies in 2018.
 :::
 
@@ -298,11 +313,12 @@ costs_values = c("$1,086", "$922", "$576", "$775", "$462",
            "$1,092", "($100)", "($333)", "$4,480")
 
 data.frame(x = costs_labels, y = costs_values) %>% 
- kable(
+ kable(booktabs = T,
        align = "lr",
        col.names = c("Expense", "Amount")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(9, bold=TRUE)
 
 ```
@@ -318,11 +334,12 @@ summary_labels = c("Monthly take-home pay", "Monthly expenses (-)", "Residual in
 summary_values = c("$4,843", "($4,480)", "$363")
 
 data.frame(x = summary_labels, y = summary_values) %>% 
- kable(
+ kable(booktabs = T,
        align = "lr",
        col.names = c("Pay, expenses, and residual income", "Amount")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(3, bold=TRUE)
 
 ```
@@ -476,11 +493,12 @@ common_sss %>%
   select(label, monthly, residual) %>% 
   mutate(across(2:3, ~ dollar(.x, accuracy = 0.01))) %>%
   arrange(desc(monthly)) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lrr",
        col.names = c("Household", "Take home pay", "Residual income")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped"))
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped"))
 
 ```
 

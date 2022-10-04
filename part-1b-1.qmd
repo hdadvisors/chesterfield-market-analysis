@@ -24,9 +24,7 @@ These data are part of the [2020 Census Redistricting Data (P.L. 94-171) Summary
 
 ::: {.callout-caution}
 
-## Caution
-
-**Important context for 2020 Census data:**
+### Important context for 2020 Census data
 
 For the first time, Census results were produced using “[differential privacy](https://www.ncsl.org/research/redistricting/differential-privacy-for-census-data-explained.aspx).” This technique adds artificial noise to data at small geographies to reduce the likelihood of respondents being matched with personal information.
 

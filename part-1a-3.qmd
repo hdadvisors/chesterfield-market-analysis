@@ -19,7 +19,7 @@ CoStar, a commercial real estate and analytics provider with its global research
 This analysis concluded that 76 percent of the 335,978 multifamily properties in their database were NOAH properties. CoStar came to this conclusion based on their proprietary rating system, which gives each property a star rating from one to five stars, wherein one- and two-star properties are the equivalent of Class B and C properties.
 
 ::: callout-note
-**What are Class B and C properties?**
+### What are Class B and C properties?
 
 The commercial real estate industry utilizes a property classification system to help investors, lenders, and brokers quickly understand and communicate the quality of a property. The system classifies real estate properties as A, B, C, or D.
 
@@ -74,7 +74,7 @@ The following analysis on NOAH inventory in Chesterfield County uses data from C
 [^part-1a-3-1]: Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.
 
 ::: callout-note
-*Manufactured housing undercounted in CoStar data:*
+### Manufactured housing undercounted in CoStar data
 
 Manufactured homes are a key source of NOAH throughout Virginia, especially along Chesterfield County's major corridors. However, the CoStar database does not fully capture all of these communities.
 
@@ -101,12 +101,13 @@ costar_noah |>
             units = sum(number_of_units)) |>
   arrange(desc(units)) |>
   adorn_totals() |>
-  kbl(
+  kbl(booktabs = T,
        align = "lrr",
        col.names = c("Style", "Properties", "Units"),
        format.args = list(big.mark = ",")) |>
   kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed")) |>
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) |>
   row_spec(4, bold=TRUE)
 
 ```
@@ -123,35 +124,6 @@ NOAH properties are spread throughout all parts of Chesterfield County, but like
 
 ```{r}
 #| label: fig-noah-map
-#| fig-cap: "Location and type of NOAH"
-#| eval: false
-
-pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
-
-map <- leaflet(costar_noah) |> 
-  addTiles() |>
-  addCircleMarkers(
-    radius = 4,
-    color = ~pal(style),
-    stroke = FALSE, fillOpacity = 0.5
-  ) |>
-  addLegend("bottomright", pal = pal, values = ~style,
-            title = "NOAH style", opacity = 1)
-
-
-
-mapview::mapshot(map,
-        file = paste0(getwd(),"/noah_map.png"),
-        debug = T)
-
-# saveWidget(noah_map, "maps/noah_map.html")
-
-# knitr::include_url("maps/noah_map.html", height = "500px")
-
-```
-
-```{r}
-#| label: fig-noah-map-test
 #| fig-cap: "Location and type of NOAH"
 
 pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
@@ -186,10 +158,11 @@ rent %>%
   top_n(1, Period) %>% 
   mutate(Rent = dollar(parse_number(Rent))) %>% 
   select(-Period) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr") %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped"))
 
 ```
 
@@ -211,6 +184,7 @@ gg_line_col(rent_line,
             alpha_point = 0,
             size_line = 0.75,
             title = "Average asking rent by bedroom for NOAH properties",
+            caption = "Source: CoStar Group, Inc.",
             y_labels = label_dollar(),
             y_title = "Average asking rent",
             x_title = element_blank(),
@@ -222,8 +196,6 @@ gg_line_col(rent_line,
   )
   
 ```
-
-*Source: CoStar Group, Inc.*
 
 ### Age
 
@@ -243,6 +215,7 @@ gg_histogram(costar_noah,
              x_title = "Year built",
              x_bins_n = 18,
              title = "NOAH units by year built",
+             caption = "Source: CoStar Group, Inc.",
              x_labels = scales::label_number(accuracy = 1, big.mark = ""),
              y_title = "Number of properties",
              y_labels = scales::label_number(accuracy = 1)) +
@@ -250,8 +223,6 @@ gg_histogram(costar_noah,
                               breaks = seq(1950, 2000, 10))
 
 ```
-
-*Source: CoStar Group, Inc.*
 
 {{< pagebreak >}}
 
@@ -289,43 +260,40 @@ Chesterfield County also contains 19 multifamily properties with mortgages insur
 
 HUD mortgage insurance programs offer certain financing benefits to developers (e.g. longer terms, lower or fixed rates, nonrecourse loans) in exchange for additional due diligence, federal wage standards, and other considerations to guarantee a high-quality and successful development. Both for profit and nonprofit builders can be eligible in most circumstances. HUD issues hundreds of these mortgages across the nation each year.
 
-::: callout-note
+::: callout-tip
+
+### Information on all HUD insurance programs
+
 More details about these [multifamily mortgage insurance programs](https://www.hud.gov/program_offices/housing/mfh/progdesc) is available on the HUD website.
 :::
 
 ```{r}
 #| label: fig-hud-insured-map
 #| fig-cap: "HUD insured multifamily properties in Chesterfield County"
-#| cache: false
 
 # Load in data (manually downloaded from HUD eGIS site) and select only relevant columns
 
-hud_insured <- read_csv("data/chesterfield_hud_insured.csv") %>% 
+hud_insured <- read_csv("data/chesterfield_hud_insured.csv") |> 
   select(1,2,9,10,15,16,18,57,60,74,111,133,140,141)
 
 # Create spatial object using the lat/long coordinate fields
 
-hud_insured_pts <- hud_insured %>% 
+hud_insured_pts <- hud_insured |> 
   st_as_sf(coords = c("X", "Y"),
-           crs = 4326) %>%
-  st_transform(6440)
+           crs = 4326)
 
-# Create and save map
-
-mapview(
-  hud_insured_pts,
-  label = "PROPERTY_NAME_TEXT",
-  legend = F,
-  popup = F,
-  burst = F,
-  layer.name = "HUD insured multifamily properties"
+source_hud <- tags$div(
+  HTML('Source: U.S. Department of Housing and Urban Development.')
 )
-# 
-# htmlwidgets::saveWidget(hud_insured_map@map, "maps/hud_insured_map.html")
 
-# Render map as html widget
-
-# knitr::include_url("maps/hud_insured_map.html", height = "500px")
+leaflet(hud_insured_pts) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addCircleMarkers(
+    radius = 4,
+    stroke = FALSE,
+    fillOpacity = 0.5
+  ) |>
+  addControl(source_hud, "bottomright")
 
 ```
 
@@ -345,6 +313,7 @@ hud_insured_costar <- read_csv("data/costar_hud_insured.csv")
 
 gg_histogram(hud_insured_costar,
              title = "Average asking rents for HUD insured multifamily properties",
+             caption = "Source: CoStar Group, Inc.",
              x_var = `Avg Asking/Unit`,
              x_labels = scales::label_dollar(accuracy = 1, prefix = "$"),
              x_bins_n = 4,
@@ -355,8 +324,6 @@ gg_histogram(hud_insured_costar,
              )
 
 ```
-
-*Source: CoStar Group, Inc.*
 
 ## Takeaways
 

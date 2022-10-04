@@ -52,6 +52,7 @@ format:
     theme: cosmo
   pdf:
     documentclass: scrreprt
+    mainfont: "Open Sans"
     include-in-header: 
       text: |
         \usepackage{float}

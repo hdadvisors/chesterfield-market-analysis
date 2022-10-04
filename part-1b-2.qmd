@@ -14,13 +14,11 @@ However, like the rest of the country, households in Chesterfield County have a 
 library(tidyverse)
 library(tidycensus)
 library(readxl)
-library(ggplot2)
 library(plotly)
 library(simplevis)
 library(scales)
 library(lubridate)
 library(esquisse)
-library(ggplot2)
 
 ```
 
@@ -37,7 +35,6 @@ Because real average incomes for both homeowners and renters in Chesterfield Cou
 ```{r}
 #| label: fig-tenure
 #| fig-cap: "Median household income by tenure"
-#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25119."
 
 years <- 2010:2020
 
@@ -95,23 +92,22 @@ b25119_cpi <- b25119_data %>%
   subset(tenure != "All households") |> 
   mutate(year = as.character(year))
 
-tenure_plot <- ggplot(b25119_cpi,
+ggplot(b25119_cpi,
        aes(x = year,
            y = dollars20,
            fill = tenure)) +
-  geom_col(stat = "identity") +
+  geom_col() +
   facet_wrap(~tenure) + 
   scale_y_continuous(labels = dollar_format()) +
   theme(axis.title = element_blank(),
         axis.text.x = element_text(angle = 90, vjust = .15),
-        legend.position = "none") + 
+        legend.position = "none",
+        panel.background = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.major.y = element_line(color = "grey95",
+                                          size = 0.05)) + 
   labs(title = "Median household income by tenure", 
-       caption = "")
-
-# plotly::ggplotly(tenure_plot) %>% 
-#   plotly_camera()
-
-tenure_plot
+       caption = "Source: U.S. Census Bureau, American Community Survey,\n5-year estimates. Table B25119.")
 
 ```
 
@@ -169,7 +165,6 @@ The following graph shows the distribution of households incomes by tenure, for 
 ```{r}
 #| label: fig-tenure-dist
 #| fig-cap: "Household income distribution by tenure"
-#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B25118."
 
 b25118_viz <-  b25118_data %>% 
   filter(year %in% c(2010, 2020)) %>% 
@@ -187,20 +182,16 @@ b25118_viz <-  b25118_data %>%
                                          "$100,000 to $149,999",
                                          "$150,000 or more")))
 
-tenure_dist_plot <- gg_hbar_col_facet(b25118_viz,
+gg_hbar_col_facet(b25118_viz,
                  x_var = pct,
                  y_var = income,
                  col_var = year,
                  facet_var = tenure,
                  title = "Household income distribution by tenure",
+                 caption = "Source: U.S. Census Bureau, American Community Survey,\n5-year estimates. Table B25118.",
                  x_labels = scales::label_percent(accuracy = 1),
-                 x_title = "Percent of households",
-                 y_title = "Household income ($)")
-
-# plotly::ggplotly(tenure_dist_plot) %>% 
-#   plotly_camera()
-
-tenure_dist_plot
+                 y_labels = function(x) x,
+                 x_title = "Percent of households")
 
 ```
 
@@ -218,7 +209,6 @@ from \$48,591 in 2010 to \$40,881 in 2020, a 16 percent decrease. Lower incomes 
 ```{r}
 #| label: fig-age
 #| fig-cap: "Median household income by age"
-#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Table B19049."
 
 years <- 2010:2020
 
@@ -279,22 +269,7 @@ b19049_cpi <- b19049_data %>%
   mutate(age = fct_reorder(age, dollars20, .desc = TRUE)) %>% 
   dplyr::rename(Age = age)
 
-# age <- ggplot(b19049_cpi, aes(x=year, y=dollars20, group=age)) +
-#   geom_line(aes(color=age)) +
-#   labs(
-#     x = NULL,
-#     y = NULL,
-#     title = "Median household income by age",
-#     subtitle = "From 2010 to 2020 in Chesterfield County",
-#     source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19049."
-#   ) +
-#   scale_y_continuous(labels=scales::dollar_format(),
-#                      limits = c(0, NA)) +
-#   scale_x_continuous(breaks = 2010:2020)
-# 
-# ggplotly(age)
-
-age_plot <- gg_line_col(
+gg_line_col(
   b19049_cpi,
   x_var = year,
   y_var = dollars20,
@@ -303,16 +278,12 @@ age_plot <- gg_line_col(
   y_labels = label_dollar(),
   y_title = "Median household income (2020 dollars)",
   title = "Median household income by age group",
+  caption = "Source: U.S. Census Bureau, American Community Survey,\n5-year estimates. Table B19049.",
   x_labels = label_number(accuracy = 1, big.mark = ""),
   x_title = element_blank(),
   y_zero = TRUE,
   x_expand = expansion(add = 1),
   y_expand = expansion(add = c(0,2000)))
-
-# plotly::ggplotly(age_plot) %>% 
-#   plotly_camera()
-
-age_plot
 
 ```
 
@@ -327,6 +298,8 @@ Multiracial households saw the largest real increase in incomes, growing by over
 
 :::{.callout-caution}
 
+### Recent trends in self-reported demographic identity
+
 The significant rise in income for multiracial households is very likely in part because of the [changing ways](https://www.npr.org/2021/08/22/1029609786/2020-census-data-results-white-population-shrinking-decline-non-hispanic-race) Americans are choosing to identify their race and ethnicity.
 
 :::
@@ -336,7 +309,6 @@ The lowest average incomes in the county are found among Hispanic and Black hous
 ```{r}
 #| label: fig-race
 #| fig-cap: "Median household income by race and ethnicity"
-#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates. Tables B19013B, B19013C, B19013D, B19013E, B19013F, B19013G, B19013H, B19013I."
 
 years <- 2010:2020
 
@@ -417,21 +389,6 @@ b19013_cpi <- b19013_data %>%
   mutate(race = fct_reorder(race, dollars20, .desc = TRUE)) %>%
   rename(Race = race)
 
-# race <- ggplot(b19013_cpi, aes(x=year, y=dollars20, group=race)) +
-#   geom_line(aes(color=race)) +
-#   labs(
-#     x = NULL,
-#     y = NULL,
-#     title = "Median household income by race and ethnicity",
-#     subtitle = "From 2010 to 2020 in Chesterfield County",
-#     source = "U.S. Census Bureau, American Community Survey, 2010-2020 5-year estimates, Table B19013B-I."
-#   ) +
-#   scale_y_continuous(labels=scales::dollar_format(),
-#                      limits = c(0, NA)) +
-#   scale_x_continuous(breaks = 2010:2020)
-#   
-# ggplotly(race)
-
 race_plot <-gg_line_col(
   b19013_cpi,
   x_var = year,
@@ -439,6 +396,7 @@ race_plot <-gg_line_col(
   col_var = Race,
   y_breaks_n = 4,
   title = "Median household income by race and ethnicity",
+  caption = "Source: U.S. Census Bureau, American Community Survey,\n5-year estimates. Tables B19013B-I.",
   y_labels = label_dollar(),
   y_title = "Median household income (2020 dollars)",
   x_labels = label_number(accuracy = 1, big.mark = ""),
@@ -446,11 +404,6 @@ race_plot <-gg_line_col(
   y_zero = TRUE,
   x_expand = expansion(add = 1)) +
   scale_y_continuous(labels = label_dollar(), limits = c(0,105000))
-
-# plotly::ggplotly(race_plot) %>% 
-#   plotly_camera()
-
-race_plot
 
 ```
 

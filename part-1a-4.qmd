@@ -24,6 +24,8 @@ More recent research from 2020 investigated spillover effects of more than one L
 
 ::: {.callout-note}
 
+#### Jobs-housing balance
+
 In 2017, the Center for Urban and Regional Analysis at Virginia Commonwealth University released a [report](https://cura.vcu.edu/ongoing-projects/housing-and-connectivity-in-richmond/) on the jobs-housing imbalance in the Richmond region. While it did not specifically address any potential "concentrations" of affordable housing, it analyzed six low-cost rental housing developments to determine if they had any tangible impacts to the surrounding neighborhoods.
 
 The analysis, which included two properties in Chesterfield County (one subsidized and one unsubsidized), determined that these developments likely had no influence on nearby property values, property sales, or crime rates.
@@ -54,12 +56,17 @@ library(simplevis)
 library(plotly)
 library(leaflet)
 library(htmltools)
+library(scales)
 
 nhpd <- read_csv("data/nhpd_chesterfield.csv") |> 
   clean_names() |> 
   filter(subsidy_status != "Inactive")
 
 pal <- colorFactor(palette = c("blue", "red", "green", "orange"), levels = c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236"))
+
+source_nhpd <- tags$div(
+  HTML('Source: National Housing Preservation Database.')
+)
 
 leaflet(nhpd) |>
   addProviderTiles(providers$CartoDB.Positron) |> 
@@ -71,13 +78,8 @@ leaflet(nhpd) |>
     stroke = FALSE, fillOpacity = 0.5
   ) |>
   addLegend("bottomright", pal = pal, values = ~subsidy,
-            title = "Federal program", opacity = 1)
-# 
-# saveWidget(nhpd_map, "maps/nhpd_map.html")
-
-# knitr::include_url("maps/nhpd_map.html", height = "500px")
-
-# knitr::include_graphics("images/assisted_prop_map.png")
+            title = "Federal program", opacity = 1) |> 
+  addControl(source_nhpd, position = "bottomright")
 
 ```
 
@@ -94,15 +96,21 @@ set <-c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")
 
 nhpd_units <- nhpd_units |> arrange(sapply(subsidy, function(y) which(y == set)))
 
-nhpd_plot <- ggplot(nhpd_units, aes(x = reorder(subsidy, -units), y = units, fill = subsidy))+
-  geom_bar(stat = "identity") + 
-  scale_fill_manual(values = c("blue", "red", "green", "orange"), breaks = c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")) +
-  labs(title = "Federally assisted units by subsidy type in Chesterfield County", fill = "Subsidy name") +
-  theme(axis.text.x = element_text(),
+ggplot(nhpd_units,
+       aes(x = reorder(subsidy, -units),
+           y = units,
+           fill = subsidy)) +
+  geom_col() + 
+  scale_y_continuous(labels = label_comma()) +
+  labs(title = "Federally assisted units by subsidy type in Chesterfield County",
+       caption = "Source: National Housing Preservation Database.") +
+  theme(panel.background = element_blank(),
+        legend.position = "none",
+        axis.ticks = element_blank(),
         axis.title.x = element_blank(),
-        axis.title.y = element_blank())
-
-nhpd_plot
+        axis.title.y = element_blank(),
+        panel.grid.major.y = element_line(color = "grey95",
+                                          size = 0.05))
 
 ```
 
@@ -121,6 +129,10 @@ costar_noah <- read_csv("data/chesterfield_noah_coded_8.8.csv") |>
 
 pal <- colorFactor(palette = c("blue", "red", "green"), levels = c("Garden", "Manufactured Home Community", "Low-Rise"))
 
+source_costar <- tags$div(
+  HTML('Source: CoStar Group, Inc.')
+)
+
 leaflet(costar_noah) |> 
   addProviderTiles(providers$CartoDB.Positron) |> 
   addCircleMarkers(
@@ -129,7 +141,8 @@ leaflet(costar_noah) |>
     stroke = FALSE, fillOpacity = 0.5
   ) |>
   addLegend("bottomright", pal = pal, values = ~style,
-            title = "NOAH style", opacity = 1)
+            title = "NOAH style", opacity = 1) |> 
+  addControl(source_costar, position = "bottomright")
 
 ```
 
@@ -140,6 +153,8 @@ The Section 8 Housing Choice Voucher (HCV) program is the federal government's m
 Tenants are required to 30 percent of their monthly adjusted gross income on rent and utilities, while the voucher will cover the remaining amount up to a payment standard set by HUD. This payment standard is referred to as Fair Market Rent (FMR), a measure of the average cost of affordable housing in a metropolitan area. For county residents, HCVs are administered through the county's Department of Social Services (as a local housing agency on behalf of Virginia Housing). HCV recipients from other agencies in the region, such as Richmond Redevelopment and Housing Authority, are able to utilize their vouchers in Chesterfield County.
 
 ::: {.callout-note}
+
+#### Fair Market Rent
 
 In the Richmond region, the FMR for a two-bedroom rental in 2021 was $1,189. 
 
@@ -190,7 +205,6 @@ leaflet(chesterfield_hcv) |>
             title = "Percent of occupied<br>rental units with HCVs",
             labFormat = labelFormat(suffix = "%")) |> 
   addControl(source_hud, "bottomright")
-
 
 ```
 
