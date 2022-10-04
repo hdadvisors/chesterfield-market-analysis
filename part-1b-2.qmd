@@ -20,6 +20,7 @@ library(simplevis)
 library(scales)
 library(lubridate)
 library(esquisse)
+library(ggplot2)
 
 ```
 
@@ -91,23 +92,21 @@ b25119_cpi <- b25119_data %>%
     left_join(cpi, by = 'year') %>%
   transform(dollars20 = ((381.2/priceindex)*estimate)) %>%
   select(year, tenure, dollars20, moe, reliability) %>%
-  subset(tenure != "All households")
+  subset(tenure != "All households") |> 
+  mutate(year = as.character(year))
 
-tenure_plot <- gg_bar_col_facet(
-  b25119_cpi,
-  x_var = year,
-  y_var = dollars20,
-  col_var = tenure,
-  facet_var = tenure,
-  y_breaks_n = 5,
-  title = "Median household income by tenure",
-  y_labels = label_dollar(),
-  y_title = "Median household income (2020 dollars)",
-  x_labels = label_number(accuracy = 1, big.mark = ""),
-  x_title = element_blank()) +
-    theme(
-      legend.position = "none"
-    )
+tenure_plot <- ggplot(b25119_cpi,
+       aes(x = year,
+           y = dollars20,
+           fill = tenure)) +
+  geom_col(stat = "identity") +
+  facet_wrap(~tenure) + 
+  scale_y_continuous(labels = dollar_format()) +
+  theme(axis.title = element_blank(),
+        axis.text.x = element_text(angle = 90, vjust = .15),
+        legend.position = "none") + 
+  labs(title = "Median household income by tenure", 
+       caption = "")
 
 # plotly::ggplotly(tenure_plot) %>% 
 #   plotly_camera()

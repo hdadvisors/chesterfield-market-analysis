@@ -108,7 +108,7 @@ nhpd_plot
 
 ### Without public subsidy
 
-Naturally-occuring affordable housing (NOAH) is much more prevalent across the county than its income-restricted counterparts, as discussed in [Chapter 3](#part-1a-3). These properties can be found throughout most populated areas, with the highest concentrations within several miles of the border with the City of Richmond, particularly between Hull Street and Route 1.
+Naturally-occurring affordable housing (NOAH) is much more prevalent across the county than its income-restricted counterparts, as discussed in [Chapter 3](#part-1a-3). These properties can be found throughout most populated areas, with the highest concentrations within several miles of the border with the City of Richmond, particularly between Hull Street and Route 1.
 
 ```{r}
 #| label: fig-noah-map

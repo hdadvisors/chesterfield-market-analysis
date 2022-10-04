@@ -31,13 +31,13 @@ The figure below shows this data for Chesterfield County using the latest 2016-2
 ```{r}
 #| label: fig-length-of-stay
 #| fig-cap: "Percent of households by tenure by year moved into home"
-#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25038."
 
 library(tidyverse)
 library(tidycensus)
 library(simplevis)
 library(scales)
 library(plotly)
+library(ggplot2)
 
 b25038_vars <- load_variables(2020, "acs5", cache = T) %>% 
   filter(str_detect(name, "B25038")) %>% 
@@ -74,21 +74,25 @@ b25038_data <- b25038_raw %>%
 #   
 # b25038_plot
 
-gg_bar_col(b25038_data,
-  x_var = moved,
-  y_var = pct,
-  col_var = tenure,
-  y_labels = label_percent(),
-  title = "Percent of households by tenure by year moved into home",
-  y_title = "Percent of households",
-  x_title = "Year moved into unit",
-) +
-  ggplot2::theme(
+
+ggplot(b25038_data,
+       aes(x = moved,
+           y = pct,
+           fill = tenure)) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = label_percent()) +
+  labs(title = "Percent of households by tenure by year moved into home", 
+       x = "Year moved into unit",
+       y = "Percent of households",
+       caption = "Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Table B25038.", 
+       legend = "Tenure") + 
+  theme(
     legend.position = "top",
     legend.direction = "horizontal",
     legend.justification = "center",
     legend.title = element_blank()
   )
+
 
 ```
 
