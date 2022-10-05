@@ -32,7 +32,7 @@ cf_wages <- read_csv("data/chesterfield_wages_may2021.csv")
 cf_wages %>% 
   slice_max(order_by = employment, n = 5) %>% 
   select(2,4,6, 7) %>% 
-  mutate(employment = comma(employment, 0),
+  mutate(employment = prettyNum(employment, big.mark = ","),
          meanwage = dollar(meanwage),
          meanannual = dollar(meanannual)) %>% 
   kable(booktabs = T,
@@ -250,7 +250,7 @@ b25119_cpi <- b25119_data %>%
 
 ``` {r}
 #| label: fig-cf-renter-income-afford
-#| fig-cap: "Median household income and affordable home sales price for renters in Chesterfield County"
+#| fig-cap: "Median household income for renters in Chesterfield County"
 
 # This is focusing in on 2020 median renter household income and 2020 median home price. 
 
@@ -270,9 +270,18 @@ plot_inc <- gg_bar(
   title = "Median renter income",
   x_title = "",
   x_labels = scales::label_number(accuracy = 1, big.mark = ""),
+  caption = "Sources: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119",
   y_title = "Median household income (2020 dollars)",
   y_labels = scales::label_dollar()
   )
+
+plot_inc
+
+```
+
+```{r}
+#| label: fig-cf-afford
+#| fig-cap: "Affordable home sales price for renters in Chesterfield County"
 
 plot_afford <- gg_bar(
   income_price,
@@ -288,9 +297,7 @@ plot_afford <- gg_bar(
   y_labels = scales::label_dollar()
   )
 
-library(gridExtra)
-
-grid.arrange(plot_inc,plot_afford, ncol =2)
+plot_afford
 
 ```
 
@@ -318,7 +325,7 @@ cf_wages %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) %>% 
-  kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and \nBureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
+  kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
                        general_title = "Sources: ",
                        footnote_as_chunk = T)
 
@@ -430,7 +437,7 @@ bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
          ))
 
 bedroom_rent %>% 
-  kable(bookstabs = T,
+  kable(booktabs = T,
         align = "lrr",
         col.names = c("Bedrooms", "Average rent", "Income needed")) %>% 
   kableExtra::kable_styling(
@@ -456,13 +463,13 @@ cf_wages %>%
   mutate(employment = comma(employment, 0),
          rent = dollar(rent)) %>% 
   select(2,4,10) %>% 
-  kable(bookstabs = T,
+  kable(booktabs = T,
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) %>% 
-  kableExtra::footnote(general = "CoStar Group, Inc. and Bureau of Labor Statistics, \nOccupational Employment and Wage Statistics, May 2021.",
+  kableExtra::footnote(general = "CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
                        general_title = "Sources: ",
                        footnote_as_chunk = T)
 
@@ -473,7 +480,6 @@ CCPS teachers with a median salary of \$54,937 would also be hard pressed to aff
 ```{r}
 #| label: tbl-cf-renter-public-affordability
 #| tbl-cap: "Maximum monthly rent for public sector occupations in Chesterfield County"
-#| tbl-subcap: 
 
 cf_wages %>% 
   filter(occ_code == "county") %>%
@@ -482,11 +488,12 @@ cf_wages %>%
   mutate(rent = (third/12)) %>% 
   mutate(rent = dollar(rent)) %>% 
   select(2, 10) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Occupation", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))  %>% 
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped"))  %>% 
   kableExtra::footnote(general = "CoStar Group, Inc. and Chesterfield County.",
                        general_title = "Sources: ",
                        footnote_as_chunk = T)

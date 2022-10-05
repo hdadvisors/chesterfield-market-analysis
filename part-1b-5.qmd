@@ -96,7 +96,6 @@ According to tract-level LEHD employment data from the Census Bureau's [OnTheMap
 ```{r}
 #| label: tbl-r1-industry
 #| tbl-cap: "Top five most common industries for residents in the study area"
-#| tbl-subcap: "Source: 
 
 r1_otm <- read_csv("data/routeone_otm_may2021.csv")
 
@@ -110,7 +109,7 @@ r1_otm %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) %>% 
-  kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination \nEmployment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
+  kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
                        general_title = "Source: ",
                        footnote_as_chunk = T)
 
@@ -134,7 +133,7 @@ r1_otm %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) %>% 
-  kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination \nEmployment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
+  kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
                        general_title = "Source: ",
                        footnote_as_chunk = T)
 
@@ -159,7 +158,7 @@ r1_otm %>%
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped"))  %>% 
-  kableExtra::footnote(general = "U.S. Bureau of Labor Statistics. (2021). Occupational Employment \nand Wage Statistics (OEWS). May 2021 Metropolitan and \nNonmetropolitan Area Occupational Employment and Wage Estimates.",
+  kableExtra::footnote(general = "U.S. Bureau of Labor Statistics. (2021). Occupational Employment and Wage Statistics (OEWS). May 2021 Metropolitan and Nonmetropolitan Area Occupational Employment and Wage Estimates.",
                        general_title = "Source: ",
                        footnote_as_chunk = T)
 

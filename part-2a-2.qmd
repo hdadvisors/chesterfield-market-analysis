@@ -15,6 +15,7 @@ library(plotly)
 library(simplevis)
 library(htmlwidgets)
 library(htmltools)
+library(scales)
 library(stringi)
 
 ```

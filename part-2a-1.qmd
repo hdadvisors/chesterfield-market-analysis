@@ -608,7 +608,7 @@ costar_rent <-gg_line_col(
   alpha_point = 0,
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County",
-  caption = "CoStar Group, Inc."
+  caption = "CoStar Group, Inc.",
   y_labels = label_dollar(),
   y_title = "Average asking rent",
   x_title = element_blank(),
