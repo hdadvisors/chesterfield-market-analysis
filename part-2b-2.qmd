@@ -67,9 +67,9 @@ hsr_tract_map <-leaflet(hsr_tracts) |>
   addPolygons(color = "blue",
               weight = 3,
               label = ~hsr_tracts$NAMELSAD,
-              labelOptions = labelOptions(noHide = F,
+              labelOptions = labelOptions(noHide = T,
                                           direction = "auto",
-                                          textsize = "15px"))
+                                          textsize = "10px"))
 
 hsr_tract_map
 
@@ -176,10 +176,12 @@ costar_hsr_mf <- read_csv("data/costar_hsr_mf.csv") |>
 costar_hsr_mf |> 
   arrange(desc(number_of_units)) |> 
   select(5, 33, 7) |> 
-  kable(align = "llr",
+  kable(booktabs = T,
+        align = "llr",
         col.names = c("Name", "Corridor", "Estimated apartment homes")) |> 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped"))
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped"))
 
 ```
 
@@ -576,10 +578,12 @@ costar_hsr_yrblt <- costar_hsr_mf |>
 
 costar_hsr_yrblt |> 
   arrange(desc(year_built)) |> 
-  kable(align = "llrr",
+  kable(booktabs = T,
+        align = "llrr",
         col.names = c("Name", "Corridor", "Year Built", "CoStar Rating")) |> 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped"))
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped"))
 
 
 ```
@@ -684,11 +688,12 @@ hsr_values <- c("$316,750",
             "$78,775")
 
 data.frame(x = hsr_labels, y = hsr_values) %>% 
-  kable(
+  kable(booktabs = T,
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(8, bold=TRUE)
 
 ```
@@ -708,11 +713,12 @@ sfr_labels <- c("Average rent for single-family home",
 sfr_values <- formattable::currency(c(hsr_sfr_price, hsr_sfr_income))
 
 data.frame(x = sfr_labels, y = sfr_values) %>% 
-  kable(
+  kable(booktabs = T,
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(2, bold=TRUE)
 
 ```
@@ -1317,7 +1323,8 @@ gg_bar_col(hsr_jobs_sum,
            col_rev = TRUE,
            title = "Percent of jobs by wage within a 15 minute drive of Eastern Hull Street multifamily",
            caption = "Sources: CoStar Group, Inc. and U.S. Census Bureau LEHD Origin-Destination Employment Statistics."
-           )
+           ) +
+  ggplot2::coord_flip()
 
 ```
 

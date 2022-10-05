@@ -79,7 +79,7 @@ leaflet(nhpd) |>
   ) |>
   addLegend("bottomright", pal = pal, values = ~subsidy,
             title = "Federal program", opacity = 1) |> 
-  addControl(source_nhpd, position = "bottomright")
+  addControl(source_nhpd, position = "topright")
 
 ```
 
@@ -142,7 +142,7 @@ leaflet(costar_noah) |>
   ) |>
   addLegend("bottomright", pal = pal, values = ~style,
             title = "NOAH style", opacity = 1) |> 
-  addControl(source_costar, position = "bottomright")
+  addControl(source_costar, position = "topright")
 
 ```
 

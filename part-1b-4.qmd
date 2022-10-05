@@ -35,11 +35,12 @@ cf_wages %>%
   mutate(employment = comma(employment, 0),
          meanwage = dollar(meanwage),
          meanannual = dollar(meanannual)) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lrrr",
        col.names = c("Occupation", "Jobs", "Mean hourly wage", "Mean annual wage")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed")) %>% 
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
                        general_title = "Sources: ",
                        footnote_as_chunk = T)
@@ -61,11 +62,12 @@ cf_wages %>%
   select(2,7) %>% 
   arrange(desc(meanannual))%>%
   mutate(meanannual = dollar(meanannual)) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Occupation", "Median annual wage")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed")) %>% 
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "Chesterfield County.",
                        general_title = "Source: ",
                        footnote_as_chunk = T)
@@ -83,7 +85,6 @@ The median home sale price in Chesterfield County has increased by 39 percent si
 ``` {r}
 #| label: fig-cf-med-sales
 #| fig-cap: "Median single-family home sales price in Chesterfield County"
-#| fig-subcap: "Source: CVR MLS. 2022 includes all sales through August 10, 2022."
 
 # CHESTERFIELD COUNTY - SINGLE FAMILY/CONDO/TOWN - 8.31.22
 
@@ -113,6 +114,7 @@ sales_bar <- gg_line(medsales,
         alpha_point = 0,
         size_line = 0.75,
         title = "Median single-family home sales price in Chesterfield County",
+        caption = "Source: CVR MLS. 2022 includes all sales through August 10, 2022.",
         y_labels = label_dollar(),
         y_title = "Median sales price",
         x_title = element_blank(),
@@ -170,11 +172,12 @@ values <- c("$371,480",
             "$89,889")
 
 data.frame(x = labels, y = values) %>% 
-  kable(
+  kable(booktabs = T,
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(8, bold=TRUE) %>% 
   kableExtra::footnote(general = "CVR MLS and Freddie Mac Primary Mortgage Market Survey.",
                        general_title = "Sources: ",
@@ -248,7 +251,6 @@ b25119_cpi <- b25119_data %>%
 ``` {r}
 #| label: fig-cf-renter-income-afford
 #| fig-cap: "Median household income and affordable home sales price for renters in Chesterfield County"
-#| fig-subcap: "Sources: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119 and Freddie Mac Primary Mortgage Market Survey."
 
 # This is focusing in on 2020 median renter household income and 2020 median home price. 
 
@@ -279,6 +281,7 @@ plot_afford <- gg_bar(
   pal = "#472D7BFF",
   alpha_fill = 0.75,
   title = "Maximum home price for renters",
+  caption = "Sources: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119 and Freddie Mac Primary Mortgage Market Survey.",
   x_title = "",
   x_labels = scales::label_number(accuracy = 1, big.mark = ""),
   y_title = "Sales price (2020 dollars)",
@@ -306,15 +309,16 @@ cf_wages %>%
   mutate(monthly = (third/12)) %>%
   mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) %>% 
   slice_max(order_by = employment, n = 5) %>% 
-  mutate(employment = comma(employment, 0),
+  mutate(employment = prettyNum(employment, big.mark = ","),
          canafford = dollar(canafford)) %>% 
   select(2,4,11) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum home sales price")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed")) %>% 
-  kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
+  kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and \nBureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
                        general_title = "Sources: ",
                        footnote_as_chunk = T)
 
@@ -337,11 +341,12 @@ cf_wages %>%
   mutate(canafford = PV((intrate/12), 360, (monthly * -1), 0)) %>% 
   mutate(canafford = dollar(canafford)) %>% 
   select(2,11) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Occupation", "Maximum home sales price")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed")) %>% 
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and Chesterfield County.",
                        general_title = "Sources: ",
                        footnote_as_chunk = T)
@@ -359,7 +364,6 @@ Between 2019 and 2020, average rent in the county rose by 4 percent (\$61)---fro
 ```{r}
 #| label: fig-cf-rents
 #| fig-cap: "Average asking rent in Chesterfield County: 2000 Q1 to 2022 Q2"
-#| fig-subcap: "Source: CoStar Group, Inc."
 
 # CoStar calculated average and not median. Amended to reflect these changes. May need to consider changing this to match Part 2a-1.
 
@@ -379,6 +383,7 @@ costar_rents <-gg_line_col(
   alpha_point = 0,
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County: 2000 Q1 to 2022 Q2",
+  caption = "Source: CoStar Group, Inc.",
   y_labels = label_dollar(),
   y_title = "Average asking rent",
   x_title = element_blank(),
@@ -425,11 +430,12 @@ bedroom_rent <- read_csv("data/costar_br_existing_may_12.csv") |>
          ))
 
 bedroom_rent %>% 
-  kable(
+  kable(bookstabs = T,
         align = "lrr",
         col.names = c("Bedrooms", "Average rent", "Income needed")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(4, bold=TRUE) %>% 
   kableExtra::footnote(general = "CoStar Group, Inc.",
                        general_title = "Source: ",
@@ -442,7 +448,6 @@ This rent is increasingly unaffordable to some of the most common occupations in
 ```{r}
 #| label: tbl-cf-renter-affordability
 #| tbl-cap: "Maximum monthly rent for five most common occupations in Chesterfield County"
-#| tbl-subcap: "Source: CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021."
 
 cf_wages %>% 
   mutate(third = (meanannual * .3)) %>%
@@ -451,11 +456,15 @@ cf_wages %>%
   mutate(employment = comma(employment, 0),
          rent = dollar(rent)) %>% 
   select(2,4,10) %>% 
-  kable(
+  kable(bookstabs = T,
        align = "lrr",
        col.names = c("Occupation", "Jobs", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
+  kableExtra::footnote(general = "CoStar Group, Inc. and Bureau of Labor Statistics, \nOccupational Employment and Wage Statistics, May 2021.",
+                       general_title = "Sources: ",
+                       footnote_as_chunk = T)
 
 ```
 
@@ -464,7 +473,7 @@ CCPS teachers with a median salary of \$54,937 would also be hard pressed to aff
 ```{r}
 #| label: tbl-cf-renter-public-affordability
 #| tbl-cap: "Maximum monthly rent for public sector occupations in Chesterfield County"
-#| tbl-subcap: "Source: CoStar Group, Inc. and Chesterfield County."
+#| tbl-subcap: 
 
 cf_wages %>% 
   filter(occ_code == "county") %>%
@@ -477,7 +486,10 @@ cf_wages %>%
        align = "lr",
        col.names = c("Occupation", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"))  %>% 
+  kableExtra::footnote(general = "CoStar Group, Inc. and Chesterfield County.",
+                       general_title = "Sources: ",
+                       footnote_as_chunk = T)
 
 ```
 

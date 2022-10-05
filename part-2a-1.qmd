@@ -35,7 +35,7 @@ A growing population, housing affordability challenges, and [changing housing pr
 
 ### Total renters
 
-Over the past decade, the number of renter households in the county has steadily increased. From 2010 to 2019, the number of renters in the county grew from 24,312 to 30,273---a 24 percent increase. 
+Over the past decade, the number of renter households in the county has steadily increased. From 2010 to 2019, the number of renters in the county grew from 24,312 to 30,273---a 24 percent increase.
 
 From 2019 to 2020, there was a two percent decline in the renting population. But this decrease of 633 renters may be attributed to [the collection challenges of the 2020 Census count](https://apnews.com/article/lifestyle-health-coronavirus-pandemic-census-2020-government-and-politics-9aebdfb9c1b834352676d4b95f2d9ea0) and [historical undercounting of renters](https://censuscounts.org/whats-at-stake/will-you-count-renters-in-the-2020-census/). As rising interest rates and home sales prices persist, the number of renters in the county can be expected to rise as well---further contributing to the need for a diverse mix of rental housing opportunities.
 
@@ -86,6 +86,7 @@ renters_plot <- gg_line(
   y_breaks_n = 5,
   y_zero = TRUE,
   title = "Renter households",
+  caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25003.",
   x_title = element_blank())
 
 renters_plot
@@ -152,6 +153,7 @@ structure_plot <- gg_bar_col(
   stack = TRUE,
   pal = pals::cubicl(10),
   title = "Rental housing units by structure type",
+  caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25032.",
   col_title = "Units in structure",
   col_labels = function(x) x,
   x_title = element_blank()
@@ -166,9 +168,9 @@ structure_plot
 
 ### Number of bedrooms
 
-Most rental housing in the county are two-bedroom and three-bedroom homes. This accounts for nearly half of all rental housing in the county (68 percent). 
+Most rental housing in the county are two-bedroom and three-bedroom homes. This accounts for nearly half of all rental housing in the county (68 percent).
 
-The number of four-bedroom rental homes has been on a steady increase since 2010---from 1,995 to 3,453 in 2020, a 73 percent increase. Although the increasing number of families in search of larger homes has led to a corresponding demand in larger rental homes, the impact can be felt among single adults, especially low-income adults, needing affordable rental opportunities. 
+The number of four-bedroom rental homes has been on a steady increase since 2010---from 1,995 to 3,453 in 2020, a 73 percent increase. Although the increasing number of families in search of larger homes has led to a corresponding demand in larger rental homes, the impact can be felt among single adults, especially low-income adults, needing affordable rental opportunities.
 
 ```{r}
 #| label: fig-bedrooms
@@ -200,21 +202,24 @@ b25042_vars_cleaned <- b25042_vars |>
 
 b25042_data <- b25042_raw |> 
   right_join(b25042_vars_cleaned, by = "variable") |> 
-  select(NAME, fips = GEOID, year, bedrooms, estimate, moe)
+  select(NAME, fips = GEOID, year, bedrooms, estimate, moe) |> 
+  mutate(bedrooms = case_when(
+    bedrooms == "5 or more bedrooms" ~ "5+ bedrooms",
+    TRUE ~ bedrooms
+  ))
 
-bedroom_plot <- gg_bar_col_facet(
-  b25042_data,
-  stack = TRUE,
-  x_var = year,
-  y_var = estimate,
-  col_var = bedrooms,
-  facet_var = bedrooms,
-  y_breaks_n = 5,
-  title = "Rental housing by bedrooms",
-  x_title = element_blank()) +
-    theme(
-      legend.position = "none"
-    )
+bedroom_plot <- ggplot(b25042_data,
+                       aes(x = year,
+                           y = estimate, 
+                           fill = bedrooms)) +
+  geom_col() +
+  facet_wrap(~bedrooms) +
+  labs(title = "Rental housing by bedrooms",
+       caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25042.") +
+  theme(axis.title = element_blank(), 
+        legend.position = "none") +
+  scale_x_continuous(n.breaks = 3, labels = number_format(accuracy = 1, big.mark = "")) +
+  scale_y_continuous(n.breaks = 5, labels = number_format(big.mark = ","))
 
 bedroom_plot
 
@@ -265,19 +270,19 @@ b25036_data <- b25036_raw |>
     yrbuilt == "Built 1950 to 1959" ~ "1940 to 1959",
     yrbuilt == "Built 1940 to 1949" ~ "1940 to 1959",
     yrbuilt == "Built 1939 or earlier" ~ "1939 or earlier"
-  ))
+  )) |> 
+  mutate(yrbuilt = gsub(" ", "\n", yrbuilt))
 
-built_plot <- gg_bar(
-  b25036_data,
-  x_var = yrbuilt,
-  y_var = estimate,
-  y_breaks_n = 5,
-  title = "Rental housing by year built",
-  x_title = element_blank()) +
-    theme(
-      legend.position = "none"
-    )
-
+built_plot <- ggplot(b25036_data,
+                     aes(x = yrbuilt,
+                         y = estimate)) +
+  geom_col(fill = "blue") +
+  scale_y_continuous(n.breaks = 5, labels = number_format(big.mark = ",")) +
+  theme(axis.title = element_blank(),
+        legend.position = "none") +
+  labs(title = "Rental housing by year built",
+       caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25036.") 
+  
 built_plot
 
 # plotly::ggplotly(built_plot) %>% 
@@ -291,7 +296,9 @@ Two significant components of Chesterfield County's rental housing supply, singl
 
 ### Single-family rentals
 
-Single-family home rentals (SFRs) are a growing trend in the rental market as a result of lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked to avoid higher density apartments and have the space to work and learn remotely.^[https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/]
+Single-family home rentals (SFRs) are a growing trend in the rental market as a result of lifestyle changes and affordability challenges. The COVID-19 pandemic has also had a dramatic impact on the demand for SFRs, as many individuals and families looked to avoid higher density apartments and have the space to work and learn remotely.[^part-2a-1-1]
+
+[^part-2a-1-1]: https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/
 
 SFR in the county have been on the rise---over 28 percent growth in the past decade, according to ACS estimates. This is the most substantial increase among all rental housing types.
 
@@ -402,11 +409,12 @@ ch_sfh_sum <- ch_sfh |>
          cnt = comma(cnt, 0))
 
 ch_sfh_sum |> 
-  kable(
+  kable(booktabs = T,
         align = "lrr",
         col.names = c("Ownership", "Number", "Percent")) |> 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")
   )
 
 ```
@@ -448,9 +456,10 @@ write_rds(cf_basemap, "data/cf_basemap.rds")
 #| label: fig-sfr-map
 #| fig-cap: "Single-family rental homes in Chesterfield County"
 
+
 cf_basemap <- read_rds("data/cf_basemap.rds")
 
-ch_sfr <- st_read("data/shp/ch_sfr.shp")
+ch_sfr <- st_read("data/shp/ch_sfr.shp", quiet = TRUE)
 
 sfr_map <- ggplot() +
   cf_basemap +
@@ -553,17 +562,15 @@ While single-family homes saw a major increase in rentals, manufactured homes ex
 
 This estimate from the U.S. Census Bureau's American Community Survey severely undercounts manufactured homes located in manufactured home communities (MHCs). Manufactured home communities are a valuable source of affordable housing across Virginia. Chesterfield County is home to a significant amount of MHCs---about 1,500 in total.
 
-::: {.callout-note}
-
+::: callout-note
 Additional details and maps of the county's manufactured home communities can be found in [Chapter 3](#part-1a-3).
-
 :::
 
 However, a significant issue faces manufactured home community residents. MHCs often give residents two options, 1) a resident may rent both their home and the lot on which that home is placed, or 2) a resident may own their home and rent the lot on which that home is placed.
 
 In both cases, a resident is renting, but residents in the second case are in an especially precarious situation should a MHC owner choose to sell or redevelop their property. MHCs are increasingly at-risk of redevelopment.
 
-In 2021, Suburban Village, a MHC along the Midlothian Turnpike, was [purchased](https://richmond.com/news/local/maryland-based-investment-firm-buys-chesterfield-mobile-home-park-for-22-5-million/article_41bd2656-0466-5643-9285-2715e88fee40.html) by a Maryland-based investment firm for $23 million. As the county's third largest MHC with nearly 220 households, residents and advocates fear for substantial lot rent increases or displacement.
+In 2021, Suburban Village, a MHC along the Midlothian Turnpike, was [purchased](https://richmond.com/news/local/maryland-based-investment-firm-buys-chesterfield-mobile-home-park-for-22-5-million/article_41bd2656-0466-5643-9285-2715e88fee40.html) by a Maryland-based investment firm for \$23 million. As the county's third largest MHC with nearly 220 households, residents and advocates fear for substantial lot rent increases or displacement.
 
 In contrast to growing investment firm interest in MHCs, local affordable housing nonprofit, project:HOMES, [purchased](https://www.projecthomes.org/bermuda-estates) Bermuda Estates, a 52 unit MHC in 2021. Since the purchase, project:HOMES has made significant improvements to community infrastructure and has been working to replace distressed homes with new high-quality and energy efficient manufactured homes (with support from Virginia Tech's Virginia Center for Housing Research and Virginia Housing). project:HOMES's ultimate goal is to empower residents to take ownership of the community.
 
@@ -573,7 +580,7 @@ The following data are from CoStar's multifamily database, which includes 118 ex
 
 ### Average asking rent
 
-From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q2 2021, average asking rent in the county reached a two decade high of $1,515, when adjusting for inflation.
+From the early 2000s, rental housing costs had generally been declining in the county. But changing trends in affordability and lifestyle have led to an increasing demand for rentals that has led to a complementary increase in rental housing costs. Since 2012, the average asking rent in the county has been on a steady increase. In Q2 2021, average asking rent in the county reached a two decade high of \$1,515, when adjusting for inflation.
 
 Average market asking rent per unit is expected to climb in the county---signalling an increasing demand, as well as the construction of higher end rental apartments.
 
@@ -601,6 +608,7 @@ costar_rent <-gg_line_col(
   alpha_point = 0,
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County",
+  caption = "CoStar Group, Inc."
   y_labels = label_dollar(),
   y_title = "Average asking rent",
   x_title = element_blank(),
@@ -621,7 +629,7 @@ costar_rent
 
 ### Rent by bedrooms
 
-The number of bedrooms often impacts rental housing costs---more bedrooms generally equals higher rent. As of 2022 Q3, there is an approximate difference of $420 between the average rent for a 1 bedroom (\$1,336) versus a three bedroom apartment (\$1,756). Average rent for a 2 bedroom apartment was right in the middle at \$1,499.
+The number of bedrooms often impacts rental housing costs---more bedrooms generally equals higher rent. As of 2022 Q3, there is an approximate difference of \$420 between the average rent for a 1 bedroom (\$1,336) versus a three bedroom apartment (\$1,756). Average rent for a 2 bedroom apartment was right in the middle at \$1,499.
 
 ```{r}
 #| label: fig-bedroom-rents
@@ -648,6 +656,7 @@ costar_br_rent <-gg_line_col(
   alpha_point = 0,
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County by bedroom",
+  caption = "CoStar Group, Inc.",
   y_labels = label_dollar(),
   y_title = "Average asking rent (inflation-adjusted)",
   x_title = element_blank(),
@@ -672,7 +681,7 @@ Like most of the country, the Great Recession negatively impacted home building 
 
 ### Multifamily building permits
 
-Multifamily (five or more units) home starts were not as impacted by the recession. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466. 
+Multifamily (five or more units) home starts were not as impacted by the recession. Multifamily building permits saw a substantial increase in 2019 when it reached a two decade high of 1,466.
 
 Duplexes and smaller multifamily homes like tri-plexes and quads have not seen substantial construction in the county. These types of properties often make up what is called "[Missing Middle](https://missingmiddlehousing.com/)" housing, a term used to describe smaller multifamily and clustered single-family housing that often offers affordability by design (i.e., smaller homes typically mean lower price).
 
@@ -737,7 +746,9 @@ permits
 
 ### Proposed and in-progress developments
 
-There are currently 19 proposed or under construction multifamily developments in the county---an estimated total of 5,039 rental homes^[Three properties do not have number of units listed and are slated for a 2027 completion date]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
+There are currently 19 proposed or under construction multifamily developments in the county---an estimated total of 5,039 rental homes[^part-2a-1-2]. Six of these properties are expected to be completed in 2022, while the remaining homes will be completed over the next two years.
+
+[^part-2a-1-2]: Three properties do not have number of units listed and are slated for a 2027 completion date
 
 ```{r}
 #| label: fig-costar-construction
@@ -765,4 +776,3 @@ proposed <- gg_bar(
 proposed
 
 ```
-

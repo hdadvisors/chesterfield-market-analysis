@@ -189,20 +189,18 @@ style_mix <- unit_mix_clean |>
 
 # Percent of total properties by style.
 
-style_mix_bar <- gg_bar_col_facet(
-  style_mix,
-  x_var = style,
-  y_var = pct,
-  col_var = market,
-  facet_var = market,
-  x_labels = function(x) x,
-  y_labels = scales::label_percent(),
-  y_title = "",
-  x_title = "",
-  col_legend_none = TRUE,
-  title = "Share of units by type for existing and recent properties",
-  caption = "Source: CoStar Group, Inc."
-)
+style_mix_bar <- ggplot(style_mix,
+                        aes(x = style,
+                            y = pct,
+                            fill = market)) +
+  geom_col() +
+  facet_wrap(~market) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "Share of units by type for existing and recent properties",
+  caption = "Source: CoStar Group, Inc.") +
+  theme(axis.title = element_blank(),
+        legend.position = "none")
+
 
 style_mix_bar
 
@@ -242,20 +240,17 @@ br_mix <- br_mix_long |>
 
 # Percent of total units by bedroom by market
 
-br_mix_bar <- gg_bar_col_facet(
-  br_mix,
-  x_var = bedrooms,
-  y_var = pct,
-  col_var = market,
-  facet_var = market,
-  x_labels = function(x) x,
-  y_labels = scales::label_percent(),
-  y_title = "",
-  x_title = "",
-  col_legend_none = TRUE,
-  title = "Share of units by bedrooms for existing and recent properties",
-  caption = "Source: CoStar Group, Inc."
-)
+br_mix_bar <- ggplot(br_mix,
+                     aes(x = bedrooms,
+                         y = pct,
+                            fill = market)) +
+  geom_col() +
+  facet_wrap(~market) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "Share of units by bedrooms for existing and recent properties",
+  caption = "Source: CoStar Group, Inc.") +
+  theme(axis.title = element_blank(),
+        legend.position = "none")
 
 br_mix_bar
 

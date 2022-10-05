@@ -61,9 +61,9 @@ r1_neighborhoods <- leaflet(r1_tracts) |>
   addPolygons(color = ~hood_pal(neighborhood),
               weight = 3,
               label = ~r1_tracts$NAMELSAD,
-              labelOptions = labelOptions(noHide = F,
+              labelOptions = labelOptions(noHide = T,
                                           direction = "auto",
-                                          textsize = "15px")) |>
+                                          textsize = "10px")) |>
   addLegend("topright",
             pal = hood_pal,
             values = ~neighborhood,
@@ -362,11 +362,12 @@ Notable among these communities is Bermuda Estates, which was purchased by affor
 mhc_coded_r1 |> 
   arrange(desc(units_mhccv)) |> 
   select(1,4) |> 
-  kable(
+  kable(booktabs = T,
         align = "lr",
         col.names = c("Name", "Estimated homes")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped"))
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped"))
 
 ```
 
@@ -467,11 +468,12 @@ rental_class_r1_sum <- rental_class_r1 |>
   mutate(pct = percent(count/sum(count), 1))
 
 rental_class_r1_sum |> 
-  kable(
+  kable(booktabs = T,
         align = "lrr",
         col.names = c("Ownership", "Number", "Percent")) |> 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")
   )
 
 ```
@@ -922,20 +924,22 @@ mhc_con <- read_csv("data/mhccv_chesterfield.csv") |>
   filter(corridor == "Route 1 - N") |> 
   group_by(typology) |> 
   summarise(units = sum(units)) |> 
+  mutate(typology = gsub(" ", "\n", typology)) |> 
   mutate(pct = units/sum(units),
          fct_reorder(typology, pct, .desc = TRUE))
 
-gg_bar_col(mhc_con,
-           x_var = typology,
-           y_var = pct,
-           col_var = typology,
-           x_title = "",
-           y_title = "",
-           col_legend_none = TRUE,
-           y_labels = label_percent(),
-           title = "Percent of MH units in Route 1 corridor by park typology",
+ggplot(mhc_con,
+       aes(x = typology,
+           y = pct,
+           fill = typology)) +
+  geom_col() +
+  scale_y_continuous(labels = percent_format()) +
+  theme(axis.title = element_blank(),
+        legend.position = "none") +
+  labs(title = "Percent of MH units in Route 1 corridor by park typology",
            caption = "Source: Manufactured Home Community Coalition of Virginia."
            )
+          
 
 ```
 
@@ -1038,11 +1042,12 @@ r1_values <- c("$285,000",
             "$71,952")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
-  kable(
+  kable(booktabs = T,
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(8, bold=TRUE)
 
 ```
@@ -1064,11 +1069,12 @@ sfr_labels <- c("Average rent for single-family home",
 sfr_values <- formattable::currency(c(avg_sfr_price, sfr_income))
 
 data.frame(x = sfr_labels, y = sfr_values) %>% 
-  kable(
+  kable(booktabs = T,
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
   kableExtra::row_spec(2, bold=TRUE)
 
 ```

@@ -96,7 +96,7 @@ According to tract-level LEHD employment data from the Census Bureau's [OnTheMap
 ```{r}
 #| label: tbl-r1-industry
 #| tbl-cap: "Top five most common industries for residents in the study area"
-#| tbl-subcap: "Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program."
+#| tbl-subcap: "Source: 
 
 r1_otm <- read_csv("data/routeone_otm_may2021.csv")
 
@@ -104,11 +104,16 @@ r1_otm %>%
   filter(level == "Industry") %>% 
   select(2,3) %>% 
   arrange(desc(jobs)) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Industry", "Jobs")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
+  kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination \nEmployment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
+                       general_title = "Source: ",
+                       footnote_as_chunk = T)
+
 
 ```
 
@@ -117,18 +122,21 @@ While specific wages for each industry and occupation are not available for the 
 ```{r}
 #| label: tbl-r1-earnings
 #| tbl-cap: "Monthly earnings for residents in the study area"
-#| tbl-subcap: "Source: U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program."
 
 r1_otm %>% 
   filter(level == "Earnings") %>% 
   mutate(name = str_remove_all(name, "\\$"),
          pct = formattable::percent((jobs/sum(jobs)), digits=0)) %>% 
   select(2,6) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Monthly earnings (dollars)", "Percent")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
+  kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination \nEmployment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
+                       general_title = "Source: ",
+                       footnote_as_chunk = T)
 
 
 ```
@@ -138,7 +146,6 @@ The LEHD does not tabulate jobs by specific occupation, but based on the most co
 ```{r}
 #| label: tbl-r1-jobs
 #| tbl-cap: "Wages for common occupations in the study area." 
-#| tbl-subcap: "Source: U.S. Bureau of Labor Statistics. (2021). Occupational Employment and Wage Statistics (OEWS). May 2021 Metropolitan and Nonmetropolitan Area Occupational Employment and Wage Estimates."
 
 r1_otm %>% 
   filter(level == "Occupation") %>% 
@@ -146,14 +153,17 @@ r1_otm %>%
   mutate(meanwage = currency(meanwage, "$"),
          meanannual = currency(meanannual, "$")) %>% 
   arrange(desc(meanwage)) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lrr",
        col.names = c("Occupation", "Mean hourly wage", "Mean annual wage")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped"))  %>% 
+  kableExtra::footnote(general = "U.S. Bureau of Labor Statistics. (2021). Occupational Employment \nand Wage Statistics (OEWS). May 2021 Metropolitan and \nNonmetropolitan Area Occupational Employment and Wage Estimates.",
+                       general_title = "Source: ",
+                       footnote_as_chunk = T)
 
 ```
-
 
 ## Cost burden
 
@@ -233,7 +243,6 @@ Along the Route 1 corridor, there have been about 51 home sales each quarter bet
 ```{r}
 #| label: fig-r1-med-sales
 #| fig-cap: "Median single-family home sales price in study area."
-#| fig-subcap: "Source: CVR MLS. 2022 includes all sales through September 6, 2022."
 
 # SALES OF SINGLE-FAMILY/CONDO FOR AREA FROM 1/1/2012 TO 9/6/2022
 
@@ -264,6 +273,7 @@ gg_line(r1_sales_med,
         alpha_point = 0,
         size_line = 0.75,
         title = "Median single-family home sales price in study area",
+        caption = "Source: CVR MLS. 2022 includes all sales through September 6, 2022.",
         y_labels = label_dollar(),
         y_title = "Median sales price",
         x_title = element_blank(),
@@ -283,7 +293,6 @@ Some of the highest price growth occurred in Bellwood neighborhood --- particula
 ```{r}
 #| label: fig-r1-sales-tract
 #| fig-cap: "Median single-family home sales price by Census tract."
-#| fig-subcap: "Source: CVR MLS. 2022 includes all sales through September 5, 2022."
 #| cache: true
 
 # Sys.getenv('GEOCODIO_API_KEY')
@@ -323,6 +332,7 @@ gg_line_col_facet(r1_sales_tract,
                   size_line = 0.75,
                   y_labels = label_dollar(),
                   title = "Median single-family home sales price by Census tract",
+                  caption = "Source: CVR MLS. 2022 includes all sales through September 5, 2022.",
                   y_title = "Median sales price",
                   x_title = element_blank(),
                   x_labels = scales::date_format(format = "%Y")) +
@@ -339,7 +349,6 @@ In order to afford a home at median price across the study area, a household wou
 ```{r}
 #| label: tbl-r1-home-price
 #| tbl-cap: "Calculated income needed to buy median-priced home in the study area."
-#| tbl-subcap: "Sources: CVR MLS and Freddie Mac Primary Mortgage Market Survey."
 
 r1_msp <- 285000
 downpayment <- 0.05 # 5% downpayment
@@ -372,12 +381,17 @@ r1_values <- c("$285,000",
             "$71,952")
 
 data.frame(x = r1_labels, y = r1_values) %>% 
-  kable(
+  kable(booktabs = T, 
         align = "lr",
         col.names = c("Variable", "Value")) %>% 
   kableExtra::kable_styling(
-    bootstrap_options = c("condensed", "hover", "striped")) %>% 
-  kableExtra::row_spec(8, bold=TRUE)
+    bootstrap_options = c("condensed", "hover", "striped"),
+    latex_options = c("striped")) %>% 
+  kableExtra::row_spec(8, bold = TRUE) %>% 
+  kableExtra::footnote(general = "CVR MLS and Freddie Mac Primary Mortgage Market Survey.",
+                       general_title = "Sources: ",
+                       footnote_as_chunk = T)
+
 
 
 # County income needed is $89,889
@@ -389,7 +403,6 @@ Census estimates also show that most renters across the study area live in house
 ```{r}
 #| label: fig-r1-renter-income
 #| fig-cap: "Median renter income by tract in the study area."
-#| fig-subcap: "Source: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119."
 
 years <- 2010:2020
 
@@ -468,7 +481,9 @@ ggplot(r1_medinc,
           y=dollars20,
           colour=label)) +
   geom_line(stat="identity") +
-  labs(title="Median renter income by tract in the study area", color = "Neighborhood/Tract") +
+  labs(title="Median renter income by tract in the study area", 
+       caption = "Source: U.S. Census Bureau, American Community Survey, 5-year estimates, Table B25119.",
+       color = "Neighborhood/Tract") +
   scale_y_continuous(labels = dollar_format()) +
   scale_x_continuous(breaks = c(2010, 2015, 2020)) +
   theme(axis.title.y = element_blank(),
@@ -482,7 +497,6 @@ For workers who live along the Route 1 corridor, these price increases are conti
 ```{r}
 #| label: tbl-r1-jobs-price
 #| tbl-cap: "Maximum home sales price for common occupations in the study area." 
-#| tbl-subcap: "Sources: Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021."
 
 r1_otm %>% 
   filter(level == "Occupation") %>% 
@@ -492,11 +506,15 @@ r1_otm %>%
   mutate(canafford = dollar(canafford)) %>% 
   arrange(desc(canafford)) %>% 
   select(2,8) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Occupation", "Maximum home sales price")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped")) %>% 
+  kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
+                       general_title = "Sources: ",
+                       footnote_as_chunk = T)
 
 
 ```
@@ -510,7 +528,6 @@ Since 2010, rents along the corridor have been on the rise, from a low of \$1,10
 ```{r}
 #| label: fig-r1-rents
 #| fig-cap: "Median asking rent in the study area."
-#| fig-subcap: "Source: CoStar Group, Inc."
 
 # UTILIZE THE SAME FROM 2B-1 - WHICH IS CURRENT AS OF 8.2022
 
@@ -539,7 +556,8 @@ gg_line_col(costar_r1_rent,
         y_labels = label_dollar(),
         x_title = "",
         y_title = "Average asking rent",
-        title = "CoStar average asking rent for Route 1 corridor") +
+        title = "CoStar average asking rent for Route 1 corridor",
+        caption = "Source: CoStar Group, Inc.") +
   ggplot2::scale_x_date(limits = c(as.Date("1999-12-01"), as.Date("2022-07-31")))
 
 ```
@@ -595,11 +613,12 @@ r1_otm %>%
   mutate(rent = dollar(rent)) %>% 
   arrange(desc(rent)) %>% 
   select(2,7) %>% 
-  kable(
+  kable(booktabs = T,
        align = "lr",
        col.names = c("Occupation", "Maximum monthly rent")) %>% 
   kableExtra::kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"))
+      bootstrap_options = c("striped", "hover", "condensed"),
+      latex_options = c("striped"))
 
 ```
 
