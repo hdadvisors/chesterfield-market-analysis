@@ -326,8 +326,10 @@ cf_wages %>%
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
+                      footnote_as_chunk = T,
                        general_title = "Sources: ",
-                       footnote_as_chunk = T)
+                      threeparttable = T
+                       )
 
 
 ```
@@ -470,8 +472,10 @@ cf_wages %>%
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "CoStar Group, Inc. and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
+                       footnote_as_chunk = T,
                        general_title = "Sources: ",
-                       footnote_as_chunk = T)
+                       threeparttable = T)
+                       
 
 ```
 

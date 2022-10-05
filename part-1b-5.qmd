@@ -111,7 +111,8 @@ r1_otm %>%
       latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
                        general_title = "Source: ",
-                       footnote_as_chunk = T)
+                       footnote_as_chunk = T,
+                       threeparttable = T)
 
 
 ```
@@ -135,7 +136,8 @@ r1_otm %>%
       latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "U.S. Census Bureau. (2022). LEHD Origin-Destination Employment Statistics (2002-2019). Longitudinal-Employer Household Dynamics Program.",
                        general_title = "Source: ",
-                       footnote_as_chunk = T)
+                       footnote_as_chunk = T,
+                       threeparttable = T)
 
 
 ```
@@ -160,7 +162,8 @@ r1_otm %>%
       latex_options = c("striped"))  %>% 
   kableExtra::footnote(general = "U.S. Bureau of Labor Statistics. (2021). Occupational Employment and Wage Statistics (OEWS). May 2021 Metropolitan and Nonmetropolitan Area Occupational Employment and Wage Estimates.",
                        general_title = "Source: ",
-                       footnote_as_chunk = T)
+                       footnote_as_chunk = T,
+                       threeparttable = T)
 
 ```
 
@@ -513,7 +516,8 @@ r1_otm %>%
       latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "Freddie Mac Primary Mortgage Market Survey and Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
                        general_title = "Sources: ",
-                       footnote_as_chunk = T)
+                       footnote_as_chunk = T,
+                       threeparttable = T)
 
 
 ```
