@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.0.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,15 +11,10 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
-  vertical-align: middle;
-}
 </style>
 
 
@@ -227,13 +222,13 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#research-analysis" id="toc-research-analysis" class="nav-link active" data-scroll-target="#research-analysis"><span class="toc-section-number">5.1</span>  Research analysis</a></li>
-  <li><a href="#length-of-stay-by-tenure-in-chesterfield" id="toc-length-of-stay-by-tenure-in-chesterfield" class="nav-link" data-scroll-target="#length-of-stay-by-tenure-in-chesterfield"><span class="toc-section-number">5.2</span>  Length of stay by tenure in Chesterfield</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="toc-section-number">5.3</span>  Takeaways</a></li>
+  <li><a href="#research-analysis" id="toc-research-analysis" class="nav-link active" data-scroll-target="#research-analysis"> <span class="header-section-number">5.1</span> Research analysis</a></li>
+  <li><a href="#length-of-stay-by-tenure-in-chesterfield" id="toc-length-of-stay-by-tenure-in-chesterfield" class="nav-link" data-scroll-target="#length-of-stay-by-tenure-in-chesterfield"> <span class="header-section-number">5.2</span> Length of stay by tenure in Chesterfield</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"> <span class="header-section-number">5.3</span> Takeaways</a></li>
   </ul>
 </nav>
     </div>
@@ -288,7 +283,7 @@ Research limitations
 <div id="fig-length-of-stay" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="part-1a-5_files/figure-html/fig-length-of-stay-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;5.1: Percent of households by tenure by year moved into home</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 5.1: Percent of households by tenure by year moved into home</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -305,11 +300,11 @@ Research limitations
 
 
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Multi-Disciplinary Research Team. (2017). “Length of Stay in Assisted Housing.” U.S. Department of Housing and Urban Development, Office of Policy Development and Research.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>ResidentRated.com. (2019). “Average U.S. Renter Stays in a Building 27.5 Months.” ResidentRated.com. June 10, 2019. Retrieved from https://www.residentrated.com/blog/2019/6/10/average-us-renter-stays-in-a-building-275-months.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>Multi-Disciplinary Research Team. (2017). “Length of Stay in Assisted Housing.” U.S. Department of Housing and Urban Development, Office of Policy Development and Research.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>ResidentRated.com. (2019). “Average U.S. Renter Stays in a Building 27.5 Months.” ResidentRated.com. June 10, 2019. Retrieved from https://www.residentrated.com/blog/2019/6/10/average-us-renter-stays-in-a-building-275-months.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -383,8 +378,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      let href = ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
