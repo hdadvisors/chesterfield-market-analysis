@@ -16,7 +16,7 @@ The following sections summarize housing, community development, and revitalizat
 
 This plan was a joint revitalization plan between the City of Richmond and Chesterfield County. It focused on a 4.7 mile stretch of Hull Street experiencing changing demographics and increased need for reinvestment.
 
-Plan highlights:
+**Plan highlights:**
 
 -   Current housing conditions in the corridor included:
     -   A significant supply of affordable rental homes (without public assistance),
@@ -34,7 +34,7 @@ Plan highlights:
 
 This detailed special area plan produced by county planners focused on the northern 8.5 mile section of Route 1 within the county.
 
-Plan highlights:
+**Plan highlights:**
 
 -   The plan included a strong emphasis on stabilizing and improving distinct neighborhoods.
 -   Certain areas of the corridor were designated for new residential mixed use development to help encourage additional housing options and bring new investment.
@@ -49,7 +49,7 @@ Plan highlights:
 
 This study, commissioned by Chesterfield County and prepared by Urban Partners, informed county officials on market opportunities that exist along the northern section of Route 1 within Chesterfield County. The study area included eight census block groups that abut Route 1 from the Richmond City border to Route 288.
 
-Study highlights:
+**Study highlights:**
 
 -   Population and household growth in the study area are much slower than the county average.
 -   The study area is very ethnically diverse compared to county and region.
@@ -67,12 +67,11 @@ Study highlights:
 
 ![](images/plan-comp.png)
 
-
 *Completed May 2019.*
 
 The Code of Virginia (Section 15.2-2223) requires all localities to adopt a comprehensive plan that guides the physical development of jurisdictions based on existing conditions and trends. This plan is the most recently completed effort to fulfill this requirement. It was a collaborative effort between elected officials, residents, stakeholders, and county staff.
 
-Plan highlights:
+**Plan highlights:**
 
 -   Chapter 6: Neighborhoods and Housing:
     -   The first desired outcome is additional affordable homeownership opportunities.
@@ -91,7 +90,7 @@ Plan highlights:
 
 This is a detailed special area plan by county planners focused on the Midlothian community. It is a continued effort of the *Moving Forward* comprehensive plan adopted earlier in 2019.
 
-Plan highlights:
+**Plan highlights:**
 
 -   There are currently a "limited variety of housing options" in the Midlothian Village area.
 -   61 percent of housing in the Village are single-family homes in subdivisions.
@@ -108,7 +107,7 @@ Plan highlights:
 
 This framework is an effort between the Partnership for Housing Affordability (PHA), Chesterfield, Hanover, Henrico, the City of Richmond, and the Town of Ashland to increase housing opportunities across the region. The plan identified common housing challenges and solutions, along with locality-specific findings and recommendations.
 
-Major findings for Chesterfield County included:
+**Major findings for Chesterfield County included:**
 
 -   Homeownership is significantly more expensive to achieve than a decade ago.
 -   The deficit of homes affordable to renters below 50 percent AMI is over 2,000.
@@ -131,7 +130,7 @@ Some of the specific policy solutions for Chesterfield County included:
 
 An analysis of impediments (AI) to fair housing is a requirement among jurisdictions receiving entitlement funds from the U.S. Department of Housing and Urban Development. This AI was a collaborative effort by Chesterfield, Henrico, and Cities of Colonial Heights, Hopewell, Petersburg, and Richmond in order to maximize efficiency.
 
-Among the 587 respondents from Chesterfield County who participated in a community engagement survery:
+**Among the 587 respondents from Chesterfield County who participated in a community engagement survey:**
 
 -   25 percent want to buy a home but cannot afford one.
 -   19 percent are worried about rent going up and being unable to afford it.
@@ -143,7 +142,7 @@ Among the 587 respondents from Chesterfield County who participated in a communi
     -   Close to work.
 -   The top impediment to moving was the inability to afford anywhere else to live.
 
-Relevant research findings for Chesterfield County included:
+**Relevant research findings for Chesterfield County included:**
 
 -   The lowest share of non-family households in the region (27 percent).
 -   Low disability rates among the full population (12 percent).
@@ -154,19 +153,19 @@ Relevant research findings for Chesterfield County included:
 -   More manufactured home communities are in Chesterfield than any other locality in the region; these neighnorhoods offer more affordable options but often at the expense of poor housing quality.
 -   Underutilization of housing assistance (e.g. Housing Choice Vouchers) by Hispanic and Latino households relative to their share of the overall population.
 
-Common impediments to furthering fair and equitable housing included:
+**Common impediments to furthering fair and equitable housing included:**
 
 -   Historical segregation and discrimination,
 -   Limited and/or inconsistent federal resources to increase the supply of affordable homes and reduce housing instability, and
 -   Restrictive land use codes limiting multifamily development and other more affordable types of construction.
 
-Impediments to rental housing choices included:
+**Impediments to rental housing choices included:**
 
 -   Geographically concentrated affordable rental options (in lower-opportunity areas),
 -   Low supply and high demand contributing to significant rent growth, and
 -   A lack of (and poor locations of) units available and affordable to residents with very low incomes and/or disabilities.
 
-Impediments to accessing high opportunity environments included:
+**Impediments to accessing high opportunity environments included:**
 
 -   A limited amount of affordable housing and transit access in job-rich areas,
 -   Inadequate public transportation coverage across the region, and

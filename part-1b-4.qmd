@@ -43,7 +43,8 @@ cf_wages %>%
       latex_options = c("striped")) %>% 
   kableExtra::footnote(general = "Bureau of Labor Statistics, Occupational Employment and Wage Statistics, May 2021.",
                        general_title = "Sources: ",
-                       footnote_as_chunk = T)
+                       footnote_as_chunk = T,
+                       threeparttable = T)
   
 ```
 

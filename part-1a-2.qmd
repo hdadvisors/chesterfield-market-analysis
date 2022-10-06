@@ -32,7 +32,7 @@ The 30 percent threshold is used because any income used for housing beyond that
 
 This income-to-cost ratio was originally set at 25 percent when the federal government began designing housing assistance programs in the 1960s and 1970s. The threshold was increased to 30 percent in the 1980s. Today, the 30 percent cap is used to set household rent levels for public housing, Housing Choice Vouchers, and many other housing assistance initiatives.
 
-::: callout-note
+::: {.callout-note}
 
 ### Drawbacks of 30 percent standard
 
@@ -121,11 +121,14 @@ chesterfield_cb_table %>%
   kableExtra::kable_styling(
     bootstrap_options = c("condensed", "hover", "striped"),
     latex_options = c("striped")) %>% 
-  kableExtra::row_spec(4, bold=TRUE)
+  kableExtra::row_spec(4, bold=TRUE) %>%
+  kableExtra::footnote(general = "U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25091 and B25070.",
+                       general_title = "Source: ",
+                       footnote_as_chunk = T,
+                       threeparttable = T)
 
 ```
 
-*Source: U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25091 and B25070.*
 
 ## NAR's Housing Affordability Index
 
@@ -133,7 +136,7 @@ The National Association of REALTORS® (NAR) publishes a [Housing Affordability 
 
 For 2021, the national HAI was **150.3**. This reflects the median family income being about 1.5 times greater than the minimum income required to purchase the median priced home, using the current 30-year fixed mortgage rate published by the Federal Housing Finance Board. A higher HAI value reflects higher affordability in the for-sale market.
 
-::: callout-tip
+:::{.callout-tip}
 
 ### More on NAR's HAI
 

@@ -18,7 +18,7 @@ In 2008, a report from the National Association of REALTORS® defined concentrat
 
 > [That there] appears to be no consistent impact of federally assisted housing on nearby residential property values; impacts are contingent on context, concentration, and scale.
 
-More recent research from 2020 investigated spillover effects of more than one LIHTC property on surrounding homes in the City of Los Angeles.^[Voith et al. (2020).] Once again, an explicit definition of a concentration of affordable housing could not be confidently stated. Authors instead differentiated between areas wherein there were zero, one, or two or more LIHTC developments within a half mile radius. Again investigating the impact on property values, the report finds:
+Recent research from 2020 investigated spillover effects of more than one LIHTC property on surrounding homes in the City of Los Angeles.^[Voith et al. (2020).] Once again, an explicit definition of a concentration of affordable housing could not be confidently stated. Authors instead differentiated between areas wherein there were zero, one, or two or more LIHTC developments within a half mile radius. Again investigating the impact on property values, the report finds:
 
 > LIHTC properties positively impact surrounding housing values across the spectrum of Los Angeles’ neighborhoods. Further the concentration of multiple LIHTC properties in a neighborhood additively increases housing prices up to ½ mile away. Finally, these effects though of greater magnitude in lower-income neighborhoods, are fully present in high-income neighborhoods.
 
@@ -90,7 +90,8 @@ leaflet(nhpd) |>
 nhpd_units <- nhpd |> 
   select(fulladdress, property_name, subsidy, assisted_units) |> 
   group_by(subsidy) |> 
-  summarise(units = sum(assisted_units))
+  summarise(units = sum(assisted_units)) %>% 
+  mutate(subsidy = gsub(" ", "\n", subsidy))
 
 set <-c("LIHTC", "Section 8", "HUD Insured", "Section 202 or Section 236")
 

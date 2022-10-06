@@ -96,7 +96,7 @@ ggplot(b25119_cpi,
        aes(x = year,
            y = dollars20,
            fill = tenure)) +
-  geom_col() +
+  geom_col(width = .75) +
   facet_wrap(~tenure) + 
   scale_y_continuous(labels = dollar_format()) +
   theme(axis.title = element_blank(),

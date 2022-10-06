@@ -330,7 +330,7 @@ race_clean <- race_chas %>%
 
 ```{r}
 #| label: fig-race-img
-#| #fig-cap: "Race and ethnicity cost burden"
+#| fig-cap: "Race and ethnicity cost burden"
 
 race_cb <- race_clean |>
   mutate(estimate = parse_number(estimate)) |>
@@ -339,7 +339,8 @@ race_cb <- race_clean |>
   summarise(estimate = sum(estimate)) |>
   mutate(percent = estimate/sum(estimate)) |> 
   filter(costburden == "Cost-burdened") |> 
-  mutate(year = as.character(year))
+  mutate(year = as.character(year),
+         race = gsub(" ", "\n", race))
 # 
 # 
 ggplot(race_cb,

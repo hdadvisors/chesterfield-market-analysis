@@ -79,15 +79,17 @@ b25003_data <- b25003_raw |>
   
 # Create line graph showing change in renter households across time.
 
-renters_plot <- gg_line(
-  b25003_data,
-  x_var = year,
-  y_var = estimate,
-  y_breaks_n = 5,
-  y_zero = TRUE,
-  title = "Renter households",
-  caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25003.",
-  x_title = element_blank())
+renters_plot <- ggplot(b25003_data, 
+                       aes(x = year,
+                           y = estimate)) +
+  geom_line(color = "blue") + 
+  geom_point(color = "blue") +
+  scale_y_continuous(n.breaks = 5, limits = c(0, 35000), labels = dollar_format()) +
+  labs(title = "Renter households",
+  caption = "Source: U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25003.") +
+  theme(axis.title = element_blank()) +
+  scale_x_continuous(labels = number_format(accuracy = 1, big.mark = ""))
+
 
 renters_plot
 
@@ -153,7 +155,7 @@ structure_plot <- gg_bar_col(
   stack = TRUE,
   pal = pals::cubicl(10),
   title = "Rental housing units by structure type",
-  caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25032.",
+  caption = "Source: U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25032.",
   col_title = "Units in structure",
   col_labels = function(x) x,
   x_title = element_blank()
@@ -212,11 +214,12 @@ bedroom_plot <- ggplot(b25042_data,
                        aes(x = year,
                            y = estimate, 
                            fill = bedrooms)) +
-  geom_col() +
+  geom_col(width = .6) +
   facet_wrap(~bedrooms) +
   labs(title = "Rental housing by bedrooms",
-       caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25042.") +
-  theme(axis.title = element_blank(), 
+       caption = "Source: U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25042.",
+       y = "Renter-occupied housing units") +
+  theme(axis.title.x = element_blank(), 
         legend.position = "none") +
   scale_x_continuous(n.breaks = 3, labels = number_format(accuracy = 1, big.mark = "")) +
   scale_y_continuous(n.breaks = 5, labels = number_format(big.mark = ","))
@@ -281,7 +284,7 @@ built_plot <- ggplot(b25036_data,
   theme(axis.title = element_blank(),
         legend.position = "none") +
   labs(title = "Rental housing by year built",
-       caption = "U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25036.") 
+       caption = "Source: U.S. Census Bureau. American Community Survey. 2010-2020 5-year estimates. Table B25036.") 
   
 built_plot
 
@@ -586,7 +589,7 @@ Average market asking rent per unit is expected to climb in the county---signall
 
 ```{r}
 #| label: fig-costar-rents
-#| fig-cap: "Average asking rent in Chesterfield County. Source: CoStar Group, Inc."
+#| fig-cap: "Average asking rent in Chesterfield County."
 
 # This is pulling in average rents for all existing multifamily properties in the county. For some reason, this differs from the previous average rent calculations. I'd resolve this by updating the previous visualization in Part-1B-4.
 
@@ -608,7 +611,7 @@ costar_rent <-gg_line_col(
   alpha_point = 0,
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County",
-  caption = "CoStar Group, Inc.",
+  caption = "Source: CoStar Group, Inc.",
   y_labels = label_dollar(),
   y_title = "Average asking rent",
   x_title = element_blank(),
@@ -656,7 +659,7 @@ costar_br_rent <-gg_line_col(
   alpha_point = 0,
   size_line = 0.75,
   title = "Average asking rent in Chesterfield County by bedroom",
-  caption = "CoStar Group, Inc.",
+  caption = "Source: CoStar Group, Inc.",
   y_labels = label_dollar(),
   y_title = "Average asking rent (inflation-adjusted)",
   x_title = element_blank(),
@@ -735,6 +738,7 @@ permits <- gg_bar_col_facet(
   y_var = units,
   col_var = type,
   facet_var = type,
+  width = 0.6,
   x_title = "",
   y_title = "",
   col_title = "",

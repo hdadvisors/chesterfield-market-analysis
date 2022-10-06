@@ -108,11 +108,12 @@ costar_noah |>
   kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       latex_options = c("striped")) |>
-  row_spec(4, bold=TRUE)
+  row_spec(4, bold=TRUE) %>% 
+  kableExtra::footnote(general = "CoStar Group, Inc.",
+                       general_title = "Source: ",
+                       footnote_as_chunk = T)
 
 ```
-
-*Source: CoStar Group, Inc.*
 
 This NOAH inventory is approximately 16 percent of the county's total number of rental units according to the latest Census Bureau estimates.[^part-1a-3-2] However, that estimate includes the approximately 10,000 single-family homes leased out in Chesterfield.
 
@@ -120,7 +121,7 @@ This NOAH inventory is approximately 16 percent of the county's total number of 
 
 ### Location
 
-NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These includes garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
+NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These include garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
 
 ```{r}
 #| label: fig-noah-map
@@ -162,11 +163,13 @@ rent %>%
        align = "lr") %>% 
   kableExtra::kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
-      latex_options = c("striped"))
+      latex_options = c("striped"))  %>% 
+  kableExtra::footnote(general = "CoStar Group, Inc.",
+                       general_title = "Source: ",
+                       footnote_as_chunk = T)
 
 ```
 
-*Source: CoStar Group, Inc.*
 
 Market rents in Chesterfield's NOAH units have increased significantly as demand for lower-cost apartments continues to exceed the supply. Much of this price growth has occurred since 2015. Prior to that year, the average 3-bedroom NOAH unit could be rented for less than \$1,200 per month.
 
@@ -260,7 +263,7 @@ Chesterfield County also contains 19 multifamily properties with mortgages insur
 
 HUD mortgage insurance programs offer certain financing benefits to developers (e.g. longer terms, lower or fixed rates, nonrecourse loans) in exchange for additional due diligence, federal wage standards, and other considerations to guarantee a high-quality and successful development. Both for profit and nonprofit builders can be eligible in most circumstances. HUD issues hundreds of these mortgages across the nation each year.
 
-::: callout-tip
+:::{.callout-tip}
 
 ### Information on all HUD insurance programs
 
@@ -296,8 +299,6 @@ leaflet(hud_insured_pts) |>
   addControl(source_hud, "bottomright")
 
 ```
-
-*Source: U.S. Department of Housing and Urban Development.*
 
 Of these 19 properties, CoStar has active rent levels for 12. The average asking rent for these units is \$1,600, which is above the range for most NOAH across the county.
 

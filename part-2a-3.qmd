@@ -199,7 +199,8 @@ style_mix_bar <- ggplot(style_mix,
   labs(title = "Share of units by type for existing and recent properties",
   caption = "Source: CoStar Group, Inc.") +
   theme(axis.title = element_blank(),
-        legend.position = "none")
+        legend.position = "none",
+        axis.text.x = element_text(angle = 90))
 
 
 style_mix_bar
