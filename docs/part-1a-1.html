@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -222,19 +227,19 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"> <span class="header-section-number">1.1</span> Background</a></li>
-  <li><a href="#hull-street-corridor-revitalization-plan" id="toc-hull-street-corridor-revitalization-plan" class="nav-link" data-scroll-target="#hull-street-corridor-revitalization-plan"> <span class="header-section-number">1.2</span> Hull Street Corridor Revitalization Plan</a></li>
-  <li><a href="#route-1-formerly-northern-jefferson-davis-special-area-plan" id="toc-route-1-formerly-northern-jefferson-davis-special-area-plan" class="nav-link" data-scroll-target="#route-1-formerly-northern-jefferson-davis-special-area-plan"> <span class="header-section-number">1.3</span> Route 1 (formerly Northern Jefferson Davis) Special Area Plan</a></li>
-  <li><a href="#route-1-formerly-north-jefferson-davis-highway-real-estate-market-study" id="toc-route-1-formerly-north-jefferson-davis-highway-real-estate-market-study" class="nav-link" data-scroll-target="#route-1-formerly-north-jefferson-davis-highway-real-estate-market-study"> <span class="header-section-number">1.4</span> Route 1 (formerly North Jefferson Davis Highway) Real Estate Market Study</a></li>
-  <li><a href="#moving-forward-the-comprehensive-plan-for-chesterfield-county" id="toc-moving-forward-the-comprehensive-plan-for-chesterfield-county" class="nav-link" data-scroll-target="#moving-forward-the-comprehensive-plan-for-chesterfield-county"> <span class="header-section-number">1.5</span> Moving Forward: The Comprehensive Plan for Chesterfield County</a></li>
-  <li><a href="#midlothian-community-special-area-plan" id="toc-midlothian-community-special-area-plan" class="nav-link" data-scroll-target="#midlothian-community-special-area-plan"> <span class="header-section-number">1.6</span> Midlothian Community Special Area Plan</a></li>
-  <li><a href="#richmond-regional-housing-framework" id="toc-richmond-regional-housing-framework" class="nav-link" data-scroll-target="#richmond-regional-housing-framework"> <span class="header-section-number">1.7</span> Richmond Regional Housing Framework</a></li>
-  <li><a href="#analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region" id="toc-analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region" class="nav-link" data-scroll-target="#analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region"> <span class="header-section-number">1.8</span> Analysis of Impediments to Fair Housing Choice in the Greater Richmond and Tri-Cities Region</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"> <span class="header-section-number">1.9</span> Takeaways</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="toc-section-number">1.1</span>  Background</a></li>
+  <li><a href="#hull-street-corridor-revitalization-plan" id="toc-hull-street-corridor-revitalization-plan" class="nav-link" data-scroll-target="#hull-street-corridor-revitalization-plan"><span class="toc-section-number">1.2</span>  Hull Street Corridor Revitalization Plan</a></li>
+  <li><a href="#route-1-formerly-northern-jefferson-davis-special-area-plan" id="toc-route-1-formerly-northern-jefferson-davis-special-area-plan" class="nav-link" data-scroll-target="#route-1-formerly-northern-jefferson-davis-special-area-plan"><span class="toc-section-number">1.3</span>  Route 1 (formerly Northern Jefferson Davis) Special Area Plan</a></li>
+  <li><a href="#route-1-formerly-north-jefferson-davis-highway-real-estate-market-study" id="toc-route-1-formerly-north-jefferson-davis-highway-real-estate-market-study" class="nav-link" data-scroll-target="#route-1-formerly-north-jefferson-davis-highway-real-estate-market-study"><span class="toc-section-number">1.4</span>  Route 1 (formerly North Jefferson Davis Highway) Real Estate Market Study</a></li>
+  <li><a href="#moving-forward-the-comprehensive-plan-for-chesterfield-county" id="toc-moving-forward-the-comprehensive-plan-for-chesterfield-county" class="nav-link" data-scroll-target="#moving-forward-the-comprehensive-plan-for-chesterfield-county"><span class="toc-section-number">1.5</span>  Moving Forward: The Comprehensive Plan for Chesterfield County</a></li>
+  <li><a href="#midlothian-community-special-area-plan" id="toc-midlothian-community-special-area-plan" class="nav-link" data-scroll-target="#midlothian-community-special-area-plan"><span class="toc-section-number">1.6</span>  Midlothian Community Special Area Plan</a></li>
+  <li><a href="#richmond-regional-housing-framework" id="toc-richmond-regional-housing-framework" class="nav-link" data-scroll-target="#richmond-regional-housing-framework"><span class="toc-section-number">1.7</span>  Richmond Regional Housing Framework</a></li>
+  <li><a href="#analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region" id="toc-analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region" class="nav-link" data-scroll-target="#analysis-of-impediments-to-fair-housing-choice-in-the-greater-richmond-and-tri-cities-region"><span class="toc-section-number">1.8</span>  Analysis of Impediments to Fair Housing Choice in the Greater Richmond and Tri-Cities Region</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="toc-section-number">1.9</span>  Takeaways</a></li>
   </ul>
 </nav>
     </div>
@@ -502,7 +507,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

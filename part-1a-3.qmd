@@ -123,6 +123,8 @@ This NOAH inventory is approximately 16 percent of the county's total number of 
 
 NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs---areas that saw early development towards the middle of the 19th century. These include garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-noah-map
 #| fig-cap: "Location and type of NOAH"
@@ -138,8 +140,14 @@ leaflet(costar_noah) |>
   ) |>
   addLegend("bottomright", pal = pal, values = ~style,
             title = "NOAH style", opacity = 1)
-
+  
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![Location and type of NOAH](images/fig-noah-map.png)
+:::
 
 ### Rent levels
 
@@ -270,6 +278,8 @@ HUD mortgage insurance programs offer certain financing benefits to developers (
 More details about these [multifamily mortgage insurance programs](https://www.hud.gov/program_offices/housing/mfh/progdesc) is available on the HUD website.
 :::
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-hud-insured-map
 #| fig-cap: "HUD insured multifamily properties in Chesterfield County"
@@ -299,6 +309,12 @@ leaflet(hud_insured_pts) |>
   addControl(source_hud, "bottomright")
 
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![HUD insured multifamily properties in Chesterfield County](images/fig-hud-insured-map.png)
+:::
 
 Of these 19 properties, CoStar has active rent levels for 12. The average asking rent for these units is \$1,600, which is above the range for most NOAH across the county.
 

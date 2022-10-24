@@ -26,6 +26,8 @@ The last five years have shown fluctuating multifamily development completions b
 
 As of June 2022, there were 33 existing market-rate multifamily developments that were either built in the last five years, under construction, or proposed. An additional development is a mixed-income senior rental housing project by Better Housing Coalition that was completed recently. Development in the past five years has generally been spread across the county, but only one development was completed in the Dale District.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-recent-mf
 #| fig-cap: "Recent multifamily developments by magisterial district"
@@ -89,6 +91,12 @@ new_map <- leaflet(newbuild_map) |>
 new_map
 
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![Recent multifamily developments by magisterial district](images/fig-recent-mf.png)
+:::
 
 Thirty-two percent of recent and future development has been or will be constructed in the Midlothian District. In 2023 and 2024, 3,757 new rental homes are expected to be completed---slightly more than the number of homes completed between 2020 and 2022.
 
@@ -169,8 +177,10 @@ Market affordable rental housing is spread throughout each district of Chesterfi
 
 [^part-2a-2-1]: Hanlon, Bernadette. (2009). "A Typologoy of Inner-Ring Suburbs: Class, Race, and Ethnicity in U.S. Suburbia." City and Community.2009;8(3):221-246. <doi:10.1111/j.1540-6040.2009.01287.x>
 
+::: {.content-visible when-format="html"}
+
 ```{r}
-#| label: fig-noah-map
+#| label: fig-noah-mag-map
 #| fig-cap: "Map of market affordable units by magisterial district"
 
 # Costar filter - Chesterfield County, VA, Property type: Multi-family; Construction status: Existing; Rent Type: Market; Class: B or C; CoStar Building Rating: three or fewer stars
@@ -210,12 +220,13 @@ noah_map_dist <- leaflet(noah_by_district) |>
 
 noah_map_dist
 
-# saveWidget(noah_map_dist, "maps/noah_map_dist.html")
-
-# knitr::include_url("maps/noah_map_dist.html", height = "500px")
-
 ```
 
+:::
+
+::: {.content-visible when-format="pdf"}
+![](images/fig-noah-mag-map.png)
+:::
 
 The Bermuda District, which includes the entirety of the Route 1 corridor, contains the largest number of market affordable rental properties, specifically manufactured home communities (8 from the city border down to Route 10). The only other district with manufactured home communities present is the Midlothian District with an estimated 275 homes across two properties---the majority of which are located in Suburban Village.
 
@@ -277,11 +288,7 @@ noah_t_district <- ggplot(noah_sum_district,
   theme(axis.title = element_blank(),
         legend.position = "top")
 
-
 noah_t_district
-
-# plotly::ggplotly(noah_t_district) |> 
-#   plotly_camera()
 
 ```
 
@@ -296,7 +303,6 @@ Preserving market affordable rentals, especially near the city-county border and
 ```{r}
 #| label: fig-noah-age
 #| fig-cap: "Market affordable housing by year built"
-
 
 # Create map showing NOAH by type.
 
@@ -330,10 +336,11 @@ Rental housing supported by federal affordable housing programs is located in ea
 
 The Dale District compares the second most federally-supported rental housing with 881 homes --- nearly half that of the Bermuda District. The location of subsidized housing in these areas is largely related to the provisions of federal programs like the Low-Income Housing Tax Credit program that favor development in [Qualified Census Tracts (QCTs)](https://www.huduser.gov/portal/datasets/qct.html) and [Difficult Development Areas (DDAs)](https://www.huduser.gov/portal/datasets/qct.html).
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-affordable-map
 #| fig-cap: "Affordable housing by magisterial district"
-#| fig-subcap: "Source: National Housing Preservation Database."
 
 library(lubridate)
 library(stringi)
@@ -380,11 +387,14 @@ aff_map <- leaflet(affordable_by_district) |>
 
 aff_map
 
-# saveWidget(aff_map, "maps/aff_map.html")
-
-# knitr::include_url("maps/aff_map.html", height = "500px")
-
 ```
+
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![Affordable housing by magisterial district](images/fig-affordable-map.png)
+:::
 
 The bulk of affordable rental housing is supported by the Low-Income Housing Tax Credit program --- 2,312 rental homes. Significant research has been doing on the placement of LIHTC developments and their impact on surrounding communities. A review of these studies found that "property value increased when LIHTC developments are built in low-income areas" and furthermore, decreases in crime are associated with LIHTC development.[^part-2a-2-4] Even the location of LIHTC development in high opportunity areas has proven to have positive impacts.[^part-2a-2-5]
 

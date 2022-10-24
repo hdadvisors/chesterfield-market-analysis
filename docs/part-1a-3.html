@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -236,22 +241,22 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"> <span class="header-section-number">3.1</span> Background</a></li>
-  <li><a href="#defining-noah" id="toc-defining-noah" class="nav-link" data-scroll-target="#defining-noah"> <span class="header-section-number">3.2</span> Defining NOAH</a></li>
-  <li><a href="#noah-in-chesterfield-county" id="toc-noah-in-chesterfield-county" class="nav-link" data-scroll-target="#noah-in-chesterfield-county"> <span class="header-section-number">3.3</span> NOAH in Chesterfield County</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="toc-section-number">3.1</span>  Background</a></li>
+  <li><a href="#defining-noah" id="toc-defining-noah" class="nav-link" data-scroll-target="#defining-noah"><span class="toc-section-number">3.2</span>  Defining NOAH</a></li>
+  <li><a href="#noah-in-chesterfield-county" id="toc-noah-in-chesterfield-county" class="nav-link" data-scroll-target="#noah-in-chesterfield-county"><span class="toc-section-number">3.3</span>  NOAH in Chesterfield County</a>
   <ul class="collapse">
-  <li><a href="#amount" id="toc-amount" class="nav-link" data-scroll-target="#amount"> <span class="header-section-number">3.3.1</span> Amount</a></li>
-  <li><a href="#location" id="toc-location" class="nav-link" data-scroll-target="#location"> <span class="header-section-number">3.3.2</span> Location</a></li>
-  <li><a href="#rent-levels" id="toc-rent-levels" class="nav-link" data-scroll-target="#rent-levels"> <span class="header-section-number">3.3.3</span> Rent levels</a></li>
-  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age"> <span class="header-section-number">3.3.4</span> Age</a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"> <span class="header-section-number">3.3.5</span> Examples</a></li>
+  <li><a href="#amount" id="toc-amount" class="nav-link" data-scroll-target="#amount"><span class="toc-section-number">3.3.1</span>  Amount</a></li>
+  <li><a href="#location" id="toc-location" class="nav-link" data-scroll-target="#location"><span class="toc-section-number">3.3.2</span>  Location</a></li>
+  <li><a href="#rent-levels" id="toc-rent-levels" class="nav-link" data-scroll-target="#rent-levels"><span class="toc-section-number">3.3.3</span>  Rent levels</a></li>
+  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age"><span class="toc-section-number">3.3.4</span>  Age</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="toc-section-number">3.3.5</span>  Examples</a></li>
   </ul></li>
-  <li><a href="#hud-insured-multifamily-properties" id="toc-hud-insured-multifamily-properties" class="nav-link" data-scroll-target="#hud-insured-multifamily-properties"> <span class="header-section-number">3.4</span> HUD insured multifamily properties</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"> <span class="header-section-number">3.5</span> Takeaways</a></li>
+  <li><a href="#hud-insured-multifamily-properties" id="toc-hud-insured-multifamily-properties" class="nav-link" data-scroll-target="#hud-insured-multifamily-properties"><span class="toc-section-number">3.4</span>  HUD insured multifamily properties</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="toc-section-number">3.5</span>  Takeaways</a></li>
   </ul>
 </nav>
     </div>
@@ -341,7 +346,7 @@ Manufactured housing undercounted in CoStar data
 <div class="cell-output-display">
 <div id="tbl-noah-amount" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 3.1:  NOAH properties and units by style </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;3.1:  NOAH properties and units by style </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Style </th>
@@ -383,13 +388,15 @@ Manufactured housing undercounted in CoStar data
 <section id="location" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="location"><span class="header-section-number">3.3.2</span> Location</h3>
 <p>NOAH properties are spread throughout all parts of Chesterfield County, but like most NOAH properties nationwide, they are largely located in the inner suburbs—areas that saw early development towards the middle of the 19th century. These include garden style apartments like Falling Creek Apartments along Route One or manufactured home communities like Suburban Village off of Midlothian Turnpike.</p>
+<div>
 <div class="cell">
 <div id="fig-noah-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-6062bdb84ee9dfbd7886" style="width:100%;height:464px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6062bdb84ee9dfbd7886">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[37.3572442,37.356051,37.254604,37.296501,37.516606,37.2370347,37.423032,37.4378792,37.4675151,37.4665308,37.4379419,37.436979,37.453624,37.4525867,37.451721,37.4495076,37.4496538,37.4417441,37.4658015,37.4340498,37.490205,37.5041728,37.4952631,37.3937053,37.507005,37.333061,37.285734,37.432105,37.431387,37.429867,37.420147,37.419156,37.499475,37.350964,37.413111,37.393058],[-77.4906285,-77.447804,-77.415906,-77.409271,-77.612727,-77.4335841,-77.4366379,-77.4393993,-77.5188814,-77.5154124,-77.4518733,-77.458757,-77.446765,-77.4445528,-77.458023,-77.4440923,-77.443458,-77.4503715,-77.5107295,-77.4557458,-77.522548,-77.5900471,-77.5682884,-77.4259763,-77.578991,-77.407056,-77.412208,-77.440428,-77.438358,-77.439408,-77.436961,-77.436607,-77.540569,-77.375573,-77.435152,-77.429344],4,null,null,{"interactive":true,"className":"","stroke":false,"color":["#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000"],"fillOpacity":0.5},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#0000FF","#00FF00","#FF0000"],"labels":["Garden","Low-Rise","Manufactured Home Community"],"na_color":null,"na_label":"NA","opacity":1,"position":"bottomright","type":"factor","title":"NOAH style","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[37.2370347,37.516606],"lng":[-77.612727,-77.375573]}},"evals":[],"jsHooks":[]}</script>
-<p></p><figcaption class="figure-caption">Figure 3.1: Location and type of NOAH</figcaption><p></p>
+<div id="htmlwidget-cbe4558b8d20aed935b3" style="width:100%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cbe4558b8d20aed935b3">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[37.3572442,37.356051,37.254604,37.296501,37.516606,37.2370347,37.423032,37.4378792,37.4675151,37.4665308,37.4379419,37.436979,37.453624,37.4525867,37.451721,37.4495076,37.4496538,37.4417441,37.4658015,37.4340498,37.490205,37.5041728,37.4952631,37.3937053,37.507005,37.333061,37.285734,37.432105,37.431387,37.429867,37.420147,37.419156,37.499475,37.350964,37.413111,37.393058],[-77.4906285,-77.447804,-77.415906,-77.409271,-77.612727,-77.4335841,-77.4366379,-77.4393993,-77.5188814,-77.5154124,-77.4518733,-77.458757,-77.446765,-77.4445528,-77.458023,-77.4440923,-77.443458,-77.4503715,-77.5107295,-77.4557458,-77.522548,-77.5900471,-77.5682884,-77.4259763,-77.578991,-77.407056,-77.412208,-77.440428,-77.438358,-77.439408,-77.436961,-77.436607,-77.540569,-77.375573,-77.435152,-77.429344],4,null,null,{"interactive":true,"className":"","stroke":false,"color":["#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#0000FF","#00FF00","#0000FF","#0000FF","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000"],"fillOpacity":0.5},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#0000FF","#00FF00","#FF0000"],"labels":["Garden","Low-Rise","Manufactured Home Community"],"na_color":null,"na_label":"NA","opacity":1,"position":"bottomright","type":"factor","title":"NOAH style","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[37.2370347,37.516606],"lng":[-77.612727,-77.375573]}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: Location and type of NOAH</figcaption><p></p>
 </figure>
+</div>
 </div>
 </div>
 </section>
@@ -400,7 +407,7 @@ Manufactured housing undercounted in CoStar data
 <div class="cell-output-display">
 <div id="tbl-noah-rent-table" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 3.2:  Current rent by bedroom in NOAH properties </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;3.2:  Current rent by bedroom in NOAH properties </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Bedrooms </th>
@@ -437,8 +444,8 @@ Manufactured housing undercounted in CoStar data
 <div class="cell-output-display">
 <div id="fig-noah-rent-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-1a-3_files/figure-html/fig-noah-rent-plot-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 3.2: Average asking rent by bedroom for NOAH properties</figcaption><p></p>
+<p><img src="part-1a-3_files/figure-html/fig-noah-rent-plot-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.2: Average asking rent by bedroom for NOAH properties</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -456,8 +463,8 @@ Manufactured housing undercounted in CoStar data
 <div class="cell-output-display">
 <div id="fig-noah-age" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-1a-3_files/figure-html/fig-noah-age-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 3.3: NOAH units by year built</figcaption><p></p>
+<p><img src="part-1a-3_files/figure-html/fig-noah-age-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.3: NOAH units by year built</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -515,13 +522,15 @@ Information on all HUD insurance programs
 <p>More details about these <a href="https://www.hud.gov/program_offices/housing/mfh/progdesc">multifamily mortgage insurance programs</a> is available on the HUD website.</p>
 </div>
 </div>
+<div>
 <div class="cell">
 <div id="fig-hud-insured-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div id="htmlwidget-3fdaf665f683f05f71b1" style="width:100%;height:464px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3fdaf665f683f05f71b1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[37.317220999,37.3262319990001,37.3582219990001,37.521899999,37.356119999,37.3584519990001,37.525605999,37.415915999,37.3452999990001,37.4198999990001,37.5097969990001,37.3878599990001,37.463336999,37.361116999,37.344299999,37.3582219990001,37.3452999990001,37.3452999990001,37.512599999],[-77.4099199999999,-77.318479,-77.445748,-77.6383999999999,-77.402102,-77.445726,-77.665657,-77.648419,-77.4372,-77.7730999999999,-77.6633619999999,-77.4274799999999,-77.663779,-77.408168,-77.4904999999999,-77.445748,-77.4372,-77.4372,-77.6251999999999],4,null,null,{"interactive":true,"className":"","stroke":false,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.5},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addControl","args":["<div>Source: U.S. Department of Housing and Urban Development.<\/div>","bottomright",null,"info legend"]}],"limits":{"lat":[37.317220999,37.525605999],"lng":[-77.7730999999999,-77.318479]}},"evals":[],"jsHooks":[]}</script>
-<p></p><figcaption class="figure-caption">Figure 3.4: HUD insured multifamily properties in Chesterfield County</figcaption><p></p>
+<div id="htmlwidget-81a90d28f1a18b53b594" style="width:100%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-81a90d28f1a18b53b594">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[37.317220999,37.3262319990001,37.3582219990001,37.521899999,37.356119999,37.3584519990001,37.525605999,37.415915999,37.3452999990001,37.4198999990001,37.5097969990001,37.3878599990001,37.463336999,37.361116999,37.344299999,37.3582219990001,37.3452999990001,37.3452999990001,37.512599999],[-77.4099199999999,-77.318479,-77.445748,-77.6383999999999,-77.402102,-77.445726,-77.665657,-77.648419,-77.4372,-77.7730999999999,-77.6633619999999,-77.4274799999999,-77.663779,-77.408168,-77.4904999999999,-77.445748,-77.4372,-77.4372,-77.6251999999999],4,null,null,{"interactive":true,"className":"","stroke":false,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.5},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addControl","args":["<div>Source: U.S. Department of Housing and Urban Development.<\/div>","bottomright",null,"info legend"]}],"limits":{"lat":[37.317220999,37.525605999],"lng":[-77.7730999999999,-77.318479]}},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.4: HUD insured multifamily properties in Chesterfield County</figcaption><p></p>
 </figure>
+</div>
 </div>
 </div>
 <p>Of these 19 properties, CoStar has active rent levels for 12. The average asking rent for these units is $1,600, which is above the range for most NOAH across the county.</p>
@@ -529,8 +538,8 @@ Information on all HUD insurance programs
 <div class="cell-output-display">
 <div id="fig-hud-insured-costar" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-1a-3_files/figure-html/fig-hud-insured-costar-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 3.5: Average asking rents for HUD insured multifamily properties in Chesterfield County</figcaption><p></p>
+<p><img src="part-1a-3_files/figure-html/fig-hud-insured-costar-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.5: Average asking rents for HUD insured multifamily properties in Chesterfield County</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -547,11 +556,11 @@ Information on all HUD insurance programs
 
 
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p>Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Per CoStar, this is rating for the building relative to other buildings of the same type throughout the country.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>U.S. Census Bureau, American Community Survey, 2016-2020 5-year estimates. Tables B25003 and B25004.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -625,7 +634,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

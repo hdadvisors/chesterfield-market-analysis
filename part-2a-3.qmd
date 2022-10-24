@@ -387,6 +387,8 @@ New rental development has occurred all across Chesterfield County in recent yea
 
 On the other side of the county, there are five new developments along Route 1, plus several more just to the west following Route 10. These recent properties, unlike those along Route 288, do not make up the majority of multifamily housing in the area.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-location
 #| fig-cap: "Map of recent and existing multifamily rental properties"
@@ -418,19 +420,19 @@ comp_location_map <- leaflet(comp_map2) |>
 
 comp_location_map
 
-# saveWidget(comp_location_map, "maps/comp_location_map.html")
-# 
-# knitr::include_url("maps/comp_location_map.html", height = "500px")
-
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![Map of recent and existing multifamily rental properties](images/fig-location.png)
+:::
 
 ### Proximity to public transportation
 
 Within the county, there are only 20 out of 115 multifamily properties located within a half mile walking distance of a public transit stop. The majority of these properties are existing properties, while only six are recent developments (built in 2017 or later).
 
 These transit stops are mainly located at the city-county border along Midlothian Turnpike or along Route One, where the Greater Richmond Transit Company (GRTC) began local bus service from Falling Creek to John Tyler Community College in March 2020. One recent development (Commonwealth Apartments built in 2022) has taken advantage of an Express Service Park-N-Ride located at Commonwealth Centre Parkway. This transit service provides a direct route from Commonwealth Centre Parkway to Downtown Richmond --- whether for work or leisure. 
-
-
 
 ```{r}
 #| label: transit-setup

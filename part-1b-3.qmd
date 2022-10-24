@@ -697,6 +697,8 @@ cf_tracts <- tracts(state = "VA",
 
 ### Homeowners
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-cb-owner
 #| fig-cap: "Percent of homeowners with cost burden by tract"
@@ -727,14 +729,18 @@ leaflet(cf_cb_owner) %>%
         labFormat = labelFormat(suffix = "%")
       ) |> 
   addControl(source_acs, position = "bottomright")
-# 
-# saveWidget(leaflet_owner, "maps/leaflet_owner.html")
-
-# knitr::include_url("maps/leaflet_owner.html", height = "500px") |
 
 ```
 
+:::
+
+::: {.content-visible when-format="pdf"}
+![Percent of homeowners with cost burden by tract](images/fig-cb-owner.png)
+:::
+
 ### Renters
+
+::: {.content-visible when-format="html"}
 
 ```{r} 
 #| label: fig-cb-renter
@@ -762,13 +768,14 @@ leaflet(cf_cb_renter) %>%
         labFormat = labelFormat(suffix = "%")
       ) |> 
   addControl(source_acs, position = "bottomright")
-# 
-# saveWidget(leaflet_renter, "maps/leaflet_renter.html")
-
-# knitr::include_url("maps/leaflet_renter.html", height = "500px")
 
 ```
 
+:::
+
+::: {.content-visible when-format="pdf"}
+![Percent of renters with cost burden by tract](images/fig-cb-renter.png)
+:::
 
 ## Takeaways
 

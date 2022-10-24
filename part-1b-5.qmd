@@ -44,11 +44,11 @@ A growing Hispanic population along the corridor has helped reignite commercial 
 
 For the purposes of this analysis, the study area is defined as the Census tracts 1003, 1004.04, 1004.05, 1004.06, 1004.07, 1004.09. These tracts all border Route 1 from Northern Chesterfield to Route 10. This encompasses portions of the Bensley, Bellwood, and northern Chester neighborhoods.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-r1-base-map
 #| fig-cap: "Route 1 study area"
-
-# knitr::include_url("maps/r1_neighborhoods.html", height = "500px")
 
 r1_tracts_list <- c("100300", "100404", "100405", "100406", "100407", "100409")
 
@@ -87,6 +87,12 @@ r1_neighborhoods <- leaflet(r1_tracts) |>
 r1_neighborhoods
 
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![](images/fig-r1-base-map.png)
+:::
 
 There are several different housing options along the corridor that serve a diverse population; these includes single-family homes, garden-style apartments, mobile homes, and senior communities. While not included as part of this analysis, it is also important to note that several motels along the corridor are serving as long-term housing options for some Chesterfield residents.
 
@@ -146,7 +152,7 @@ The LEHD does not tabulate jobs by specific occupation, but based on the most co
 
 ```{r}
 #| label: tbl-r1-jobs
-#| tbl-cap: "Wages for common occupations in the study area." 
+#| tbl-cap: "Wages for common occupations in the study area" 
 
 r1_otm %>% 
   filter(level == "Occupation") %>% 
@@ -244,7 +250,7 @@ Along the Route 1 corridor, there have been about 51 home sales each quarter bet
 
 ```{r}
 #| label: fig-r1-med-sales
-#| fig-cap: "Median single-family home sales price in study area."
+#| fig-cap: "Median single-family home sales price in study area"
 
 # SALES OF SINGLE-FAMILY/CONDO FOR AREA FROM 1/1/2012 TO 9/6/2022
 
@@ -294,7 +300,7 @@ Some of the highest price growth occurred in Bellwood neighborhood --- particula
 
 ```{r}
 #| label: fig-r1-sales-tract
-#| fig-cap: "Median single-family home sales price by Census tract."
+#| fig-cap: "Median single-family home sales price by Census tract"
 #| cache: true
 
 # Sys.getenv('GEOCODIO_API_KEY')
@@ -351,7 +357,7 @@ In order to afford a home at median price across the study area, a household wou
 
 ```{r}
 #| label: tbl-r1-home-price
-#| tbl-cap: "Calculated income needed to buy median-priced home in the study area."
+#| tbl-cap: "Calculated income needed to buy median-priced home in the study area"
 
 r1_msp <- 285000
 downpayment <- 0.05 # 5% downpayment
@@ -405,7 +411,7 @@ Census estimates also show that most renters across the study area live in house
 
 ```{r}
 #| label: fig-r1-renter-income
-#| fig-cap: "Median renter income by tract in the study area."
+#| fig-cap: "Median renter income by tract in the study area"
 
 years <- 2010:2020
 
@@ -499,7 +505,7 @@ For workers who live along the Route 1 corridor, these price increases are conti
 
 ```{r}
 #| label: tbl-r1-jobs-price
-#| tbl-cap: "Maximum home sales price for common occupations in the study area." 
+#| tbl-cap: "Maximum home sales price for common occupations in the study area" 
 
 r1_otm %>% 
   filter(level == "Occupation") %>% 
@@ -531,7 +537,7 @@ Since 2010, rents along the corridor have been on the rise, from a low of \$1,10
 
 ```{r}
 #| label: fig-r1-rents
-#| fig-cap: "Median asking rent in the study area."
+#| fig-cap: "Median asking rent in the study area"
 
 # UTILIZE THE SAME FROM 2B-1 - WHICH IS CURRENT AS OF 8.2022
 
@@ -570,9 +576,11 @@ The rise in rental demand---and subsequently, prices---along the corridor is put
 
 Like the single-family market, the rental market in the study area varies by neighborhood. The map below shows the average asking rent for 17 multifamily properties for which data is available. Rents range from roughly \$700 to \$1,400. However, the only communities with rents well above \$1,000 are the two Colony Village properties just north of Route 288, at the far southern end of the study area.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-rents-tract
-#| fig-cap: "Asking rent by rental property."
+#| fig-cap: "Asking rent by rental property"
 
 # Hand draw outline of study area. Filter for Multi-family and existing buildings.
 
@@ -603,6 +611,12 @@ leaflet(r1_rentals) |>
   addControl(source_costar, position = "bottomright")
 
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![Asking rent by rental property](images/fig-rents-tract.png)
+:::
 
 Some of the most common jobs occupied by corridor residents pay an hourly wage that is nearly half that needed to afford the typical rent. Fast wood workers, home health aides, and childcare workers all have an average hourly wage less than \$12.00. In order to afford a rental on a single income, they would need a monthly rent closer to \$600---a rent that is becoming harder and harder to find even in older properties like the Bellwood Maisonettes that now list their one bedroom apartments at $1,000 a month.
 

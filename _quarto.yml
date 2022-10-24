@@ -5,6 +5,7 @@ project:
 
 execute:
   freeze: auto
+  
 
 book: 
   title: "Chesterfield County Rental Market Analysis"
@@ -46,6 +47,7 @@ knitr:
     echo: false
     warning: false
     message: false
+    out.width: "100%"
 
 format:
   html:

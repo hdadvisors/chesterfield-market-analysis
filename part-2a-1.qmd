@@ -455,6 +455,8 @@ write_rds(cf_basemap, "data/cf_basemap.rds")
 
 ```
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-sfr-map
 #| fig-cap: "Single-family rental homes in Chesterfield County"
@@ -474,6 +476,12 @@ sfr_map <- ggplot() +
 sfr_map
 
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![Single-family rental homes in Chesterfield County](images/fig-sfr-map.png)
+:::
 
 When aggregated to the county's five magisterial districts, single-family rentals are most common in the Bermuda and Dale districts. SFRs comprise more than 13 percent of the total single-family stock in these districts, but this is still not significantly above the county average. The Midlothian district has the lowest share of SFRs at 9 percent.
 

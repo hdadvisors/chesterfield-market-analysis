@@ -46,6 +46,8 @@ A full analysis of the spatial concentration of affordable housing in Chesterfie
 
 Based on data from the National Housing Preservation Database (NHPD), affordable housing properties supported by the federal government are spread throughout the suburban parts of the county. There are 32 federally assisted properties in Chesterfield County, compared to 60 in Henrico County and 134 in the City of Richmond. In Chesterfield, the majority of assisted units are supported by the Low Income Housing Tax Credit program, where market-rate units are often included in the development.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-subsidy-map
 #| fig-cap: "Federally assisted rental properties in Chesterfield County"
@@ -83,6 +85,12 @@ leaflet(nhpd) |>
 
 ```
 
+:::
+
+::: {.content-visible when-format="pdf"}
+![Federally assisted rental properties in Chesterfield County](images/fig-subsidy-map.png)
+:::
+
 ```{r}
 #| label: fig-subsidy-chart
 #| fig-cap: "Federally assisted units by subsidy type in Chesterfield County"
@@ -119,6 +127,8 @@ ggplot(nhpd_units,
 
 Naturally-occurring affordable housing (NOAH) is much more prevalent across the county than its income-restricted counterparts, as discussed in [Chapter 3](#part-1a-3). These properties can be found throughout most populated areas, with the highest concentrations within several miles of the border with the City of Richmond, particularly between Hull Street and Route 1.
 
+::: {.content-visible when-format="html"}
+
 ```{r}
 #| label: fig-noah-map
 #| fig-cap: "Location and type of NOAH"
@@ -147,6 +157,12 @@ leaflet(costar_noah) |>
 
 ```
 
+:::
+
+::: {.content-visible when-format="pdf"}
+![Location and type of NOAH](images/fig-noah-map.png)
+:::
+
 ### Housing Choice Vouchers
 
 The Section 8 Housing Choice Voucher (HCV) program is the federal government's main program for assisting very low-income families, elderly, and disabled persons afford housing. Vouchers provide rental assistance to help individuals and families that make no more than 50 percent AMI find housing in the private market. Voucher holders are able to choose where they want to live, but the property must meet Section 8 requirements (i.e. meet health, safety, and proper maintenance requirements).
@@ -160,6 +176,8 @@ Tenants are required to 30 percent of their monthly adjusted gross income on ren
 In the Richmond region, the FMR for a two-bedroom rental in 2021 was $1,189. 
 
 :::
+
+::: {.content-visible when-format="html"}
 
 ```{r}
 #| label: fig-hcvs
@@ -208,6 +226,12 @@ leaflet(chesterfield_hcv) |>
   addControl(source_hud, "bottomright")
 
 ```
+
+:::
+
+::: {.content-visible when-format="pdf"}
+![HCV utilization in Chesterfield County](images/fig-hcvs.png)
+:::
 
 In the county, there were 930 HCVs in use as of February 15, 2022. The map above shows the spatial concentration of HCVs as a percentage of total renter-occupied housing units. HCVs are largely concentrated in the county's more densely populated areas where there are multifamily housing options. Areas wherein at least one in four renter households utilize vouchers are located in the northern section of Route 1, along the Chippenham Parkway, and south towards Ettrick. 
 

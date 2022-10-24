@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -225,31 +230,31 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#rental-housing-stock" id="toc-rental-housing-stock" class="nav-link active" data-scroll-target="#rental-housing-stock"> <span class="header-section-number">11.1</span> Rental housing stock</a>
+  <li><a href="#rental-housing-stock" id="toc-rental-housing-stock" class="nav-link active" data-scroll-target="#rental-housing-stock"><span class="toc-section-number">11.1</span>  Rental housing stock</a>
   <ul class="collapse">
-  <li><a href="#total-renters" id="toc-total-renters" class="nav-link" data-scroll-target="#total-renters"> <span class="header-section-number">11.1.1</span> Total renters</a></li>
-  <li><a href="#rental-housing-type" id="toc-rental-housing-type" class="nav-link" data-scroll-target="#rental-housing-type"> <span class="header-section-number">11.1.2</span> Rental housing type</a></li>
-  <li><a href="#number-of-bedrooms" id="toc-number-of-bedrooms" class="nav-link" data-scroll-target="#number-of-bedrooms"> <span class="header-section-number">11.1.3</span> Number of bedrooms</a></li>
-  <li><a href="#rental-housing-age" id="toc-rental-housing-age" class="nav-link" data-scroll-target="#rental-housing-age"> <span class="header-section-number">11.1.4</span> Rental housing age</a></li>
+  <li><a href="#total-renters" id="toc-total-renters" class="nav-link" data-scroll-target="#total-renters"><span class="toc-section-number">11.1.1</span>  Total renters</a></li>
+  <li><a href="#rental-housing-type" id="toc-rental-housing-type" class="nav-link" data-scroll-target="#rental-housing-type"><span class="toc-section-number">11.1.2</span>  Rental housing type</a></li>
+  <li><a href="#number-of-bedrooms" id="toc-number-of-bedrooms" class="nav-link" data-scroll-target="#number-of-bedrooms"><span class="toc-section-number">11.1.3</span>  Number of bedrooms</a></li>
+  <li><a href="#rental-housing-age" id="toc-rental-housing-age" class="nav-link" data-scroll-target="#rental-housing-age"><span class="toc-section-number">11.1.4</span>  Rental housing age</a></li>
   </ul></li>
-  <li><a href="#special-types-of-rental-housing" id="toc-special-types-of-rental-housing" class="nav-link" data-scroll-target="#special-types-of-rental-housing"> <span class="header-section-number">11.2</span> Special types of rental housing</a>
+  <li><a href="#special-types-of-rental-housing" id="toc-special-types-of-rental-housing" class="nav-link" data-scroll-target="#special-types-of-rental-housing"><span class="toc-section-number">11.2</span>  Special types of rental housing</a>
   <ul class="collapse">
-  <li><a href="#single-family-rentals" id="toc-single-family-rentals" class="nav-link" data-scroll-target="#single-family-rentals"> <span class="header-section-number">11.2.1</span> Single-family rentals</a></li>
-  <li><a href="#manufactured-homes" id="toc-manufactured-homes" class="nav-link" data-scroll-target="#manufactured-homes"> <span class="header-section-number">11.2.2</span> Manufactured homes</a></li>
+  <li><a href="#single-family-rentals" id="toc-single-family-rentals" class="nav-link" data-scroll-target="#single-family-rentals"><span class="toc-section-number">11.2.1</span>  Single-family rentals</a></li>
+  <li><a href="#manufactured-homes" id="toc-manufactured-homes" class="nav-link" data-scroll-target="#manufactured-homes"><span class="toc-section-number">11.2.2</span>  Manufactured homes</a></li>
   </ul></li>
-  <li><a href="#rental-housing-costs" id="toc-rental-housing-costs" class="nav-link" data-scroll-target="#rental-housing-costs"> <span class="header-section-number">11.3</span> Rental housing costs</a>
+  <li><a href="#rental-housing-costs" id="toc-rental-housing-costs" class="nav-link" data-scroll-target="#rental-housing-costs"><span class="toc-section-number">11.3</span>  Rental housing costs</a>
   <ul class="collapse">
-  <li><a href="#average-asking-rent" id="toc-average-asking-rent" class="nav-link" data-scroll-target="#average-asking-rent"> <span class="header-section-number">11.3.1</span> Average asking rent</a></li>
-  <li><a href="#rent-by-bedrooms" id="toc-rent-by-bedrooms" class="nav-link" data-scroll-target="#rent-by-bedrooms"> <span class="header-section-number">11.3.2</span> Rent by bedrooms</a></li>
+  <li><a href="#average-asking-rent" id="toc-average-asking-rent" class="nav-link" data-scroll-target="#average-asking-rent"><span class="toc-section-number">11.3.1</span>  Average asking rent</a></li>
+  <li><a href="#rent-by-bedrooms" id="toc-rent-by-bedrooms" class="nav-link" data-scroll-target="#rent-by-bedrooms"><span class="toc-section-number">11.3.2</span>  Rent by bedrooms</a></li>
   </ul></li>
-  <li><a href="#rental-housing-construction" id="toc-rental-housing-construction" class="nav-link" data-scroll-target="#rental-housing-construction"> <span class="header-section-number">11.4</span> Rental housing construction</a>
+  <li><a href="#rental-housing-construction" id="toc-rental-housing-construction" class="nav-link" data-scroll-target="#rental-housing-construction"><span class="toc-section-number">11.4</span>  Rental housing construction</a>
   <ul class="collapse">
-  <li><a href="#multifamily-building-permits" id="toc-multifamily-building-permits" class="nav-link" data-scroll-target="#multifamily-building-permits"> <span class="header-section-number">11.4.1</span> Multifamily building permits</a></li>
-  <li><a href="#proposed-and-in-progress-developments" id="toc-proposed-and-in-progress-developments" class="nav-link" data-scroll-target="#proposed-and-in-progress-developments"> <span class="header-section-number">11.4.2</span> Proposed and in-progress developments</a></li>
+  <li><a href="#multifamily-building-permits" id="toc-multifamily-building-permits" class="nav-link" data-scroll-target="#multifamily-building-permits"><span class="toc-section-number">11.4.1</span>  Multifamily building permits</a></li>
+  <li><a href="#proposed-and-in-progress-developments" id="toc-proposed-and-in-progress-developments" class="nav-link" data-scroll-target="#proposed-and-in-progress-developments"><span class="toc-section-number">11.4.2</span>  Proposed and in-progress developments</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -288,8 +293,8 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="fig-tenure" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-tenure-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.1: Number of renter households in Chesterfield County</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-tenure-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.1: Number of renter households in Chesterfield County</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -303,8 +308,8 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="fig-structure" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-structure-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.2: Rental housing units by structure type</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-structure-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.2: Rental housing units by structure type</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -318,8 +323,8 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="fig-bedrooms" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-bedrooms-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.3: Rental housing by bedrooms</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-bedrooms-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.3: Rental housing by bedrooms</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -332,8 +337,8 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="fig-yearbuilt" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-yearbuilt-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.4: Rental housing by year built</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-yearbuilt-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.4: Rental housing by year built</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -356,7 +361,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-sfr-summary" class="anchored">
 
-<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table 11.1:  Single-family rentals in Chesterfield County </caption>
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;11.1:  Single-family rentals in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Ownership </th>
@@ -385,13 +390,15 @@ ul.task-list{list-style: none;}
 <div class="cell">
 
 </div>
+<div>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-sfr-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-sfr-map-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.5: Single-family rental homes in Chesterfield County</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-sfr-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.5: Single-family rental homes in Chesterfield County</figcaption><p></p>
 </figure>
+</div>
 </div>
 </div>
 </div>
@@ -400,8 +407,8 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="fig-sfr-magisterial" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-sfr-magisterial-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.6: Single-family rentals as percent of all single-family homes by magisterial district</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-sfr-magisterial-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.6: Single-family rentals as percent of all single-family homes by magisterial district</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -414,8 +421,8 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="fig-sfr-owners-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-sfr-owners-map-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.7: Location of single-family rental owners</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-sfr-owners-map-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.7: Location of single-family rental owners</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -455,8 +462,8 @@ Note
 <div class="cell-output-display">
 <div id="fig-costar-rents" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-costar-rents-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.8: Average asking rent in Chesterfield County.</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-costar-rents-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.8: Average asking rent in Chesterfield County.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -469,8 +476,8 @@ Note
 <div class="cell-output-display">
 <div id="fig-bedroom-rents" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-bedroom-rents-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.9: Average asking rent in Chesterfield County by bedroom.</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-bedroom-rents-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.9: Average asking rent in Chesterfield County by bedroom.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -488,8 +495,8 @@ Note
 <div class="cell-output-display">
 <div id="fig-permits" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-permits-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.10: Annual building permits in Chesterfield County by structure type</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-permits-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.10: Annual building permits in Chesterfield County by structure type</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -502,8 +509,8 @@ Note
 <div class="cell-output-display">
 <div id="fig-costar-construction" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="part-2a-1_files/figure-html/fig-costar-construction-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 11.11: Upcoming rental units in Chesterfield County by delivery year</figcaption><p></p>
+<p><img src="part-2a-1_files/figure-html/fig-costar-construction-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.11: Upcoming rental units in Chesterfield County by delivery year</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -512,11 +519,11 @@ Note
 
 </section>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p>https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Three properties do not have number of units listed and are slated for a 2027 completion date<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>https://www.nmhc.org/research-insight/research-notes/2021/an-overview-of-single-family-rentals/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Three properties do not have number of units listed and are slated for a 2027 completion date<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -590,7 +597,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

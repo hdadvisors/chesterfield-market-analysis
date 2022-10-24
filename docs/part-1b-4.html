@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -225,14 +230,14 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"> <span class="header-section-number">9.1</span> Background</a></li>
-  <li><a href="#homeowner-affordability" id="toc-homeowner-affordability" class="nav-link" data-scroll-target="#homeowner-affordability"> <span class="header-section-number">9.2</span> Homeowner affordability</a></li>
-  <li><a href="#renter-affordability" id="toc-renter-affordability" class="nav-link" data-scroll-target="#renter-affordability"> <span class="header-section-number">9.3</span> Renter affordability</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"> <span class="header-section-number">9.4</span> Takeaways</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="toc-section-number">9.1</span>  Background</a></li>
+  <li><a href="#homeowner-affordability" id="toc-homeowner-affordability" class="nav-link" data-scroll-target="#homeowner-affordability"><span class="toc-section-number">9.2</span>  Homeowner affordability</a></li>
+  <li><a href="#renter-affordability" id="toc-renter-affordability" class="nav-link" data-scroll-target="#renter-affordability"><span class="toc-section-number">9.3</span>  Renter affordability</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="toc-section-number">9.4</span>  Takeaways</a></li>
   </ul>
 </nav>
     </div>
@@ -266,7 +271,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-top-occupations" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.1:  Top five most common occupations in Chesterfield County </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.1:  Top five most common occupations in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Occupation </th>
@@ -321,7 +326,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-public-sector" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.2:  Public sector occupations in Chesterfield County </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.2:  Public sector occupations in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Occupation </th>
@@ -372,7 +377,7 @@ ul.task-list{list-style: none;}
 <div id="fig-cf-med-sales" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="part-1b-4_files/figure-html/fig-cf-med-sales-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 9.1: Median single-family home sales price in Chesterfield County</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;9.1: Median single-family home sales price in Chesterfield County</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -382,7 +387,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-cf-home-price" class="anchored">
 
-<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.3:  Calculated income needed to buy median-priced home in Chesterfield County </caption>
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.3:  Calculated income needed to buy median-priced home in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Variable </th>
@@ -439,7 +444,7 @@ ul.task-list{list-style: none;}
 <div id="fig-cf-renter-income-afford" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="part-1b-4_files/figure-html/fig-cf-renter-income-afford-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 9.2: Median household income for renters in Chesterfield County</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;9.2: Median household income for renters in Chesterfield County</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -449,7 +454,7 @@ ul.task-list{list-style: none;}
 <div id="fig-cf-afford" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="part-1b-4_files/figure-html/fig-cf-afford-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 9.3: Affordable home sales price for renters in Chesterfield County</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;9.3: Affordable home sales price for renters in Chesterfield County</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -460,7 +465,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-cf-jobs-price" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.4:  Maximum home sales price for five most common occupations in Chesterfield County </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.4:  Maximum home sales price for five most common occupations in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Occupation </th>
@@ -507,7 +512,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-cf-public-price" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.5:  Maximum home sales price for public sector occupations in Chesterfield County </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.5:  Maximum home sales price for public sector occupations in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Occupation </th>
@@ -558,7 +563,7 @@ ul.task-list{list-style: none;}
 <div id="fig-cf-rents" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="part-1b-4_files/figure-html/fig-cf-rents-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 9.4: Average asking rent in Chesterfield County: 2000 Q1 to 2022 Q2</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;9.4: Average asking rent in Chesterfield County: 2000 Q1 to 2022 Q2</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -568,7 +573,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-cf-rents-br" class="anchored">
 
-<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.6:  Calculated income needed to afford average rents by bedroom in Chesterfield County </caption>
+<table class="table table-condensed table-hover table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.6:  Calculated income needed to afford average rents by bedroom in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Bedrooms </th>
@@ -610,7 +615,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-cf-renter-affordability" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.7:  Maximum monthly rent for five most common occupations in Chesterfield County </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.7:  Maximum monthly rent for five most common occupations in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Occupation </th>
@@ -657,7 +662,7 @@ ul.task-list{list-style: none;}
 <div class="cell-output-display">
 <div id="tbl-cf-renter-public-affordability" class="anchored">
 
-<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table 9.8:  Maximum monthly rent for public sector occupations in Chesterfield County </caption>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;border-bottom: 0;"><caption>Table&nbsp;9.8:  Maximum monthly rent for public sector occupations in Chesterfield County </caption>
  <thead>
   <tr>
    <th style="text-align:left;"> Occupation </th>
@@ -708,12 +713,12 @@ ul.task-list{list-style: none;}
 
 
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p>As of August 31, 2022.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Freddie Mac 30-Year Fixed Rate Mortgage Annual Average as of August 31, 2022.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Data current through 2022 Q2.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>As of August 31, 2022.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Freddie Mac 30-Year Fixed Rate Mortgage Annual Average as of August 31, 2022.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Data current through 2022 Q2.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -787,7 +792,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
